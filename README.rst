@@ -84,18 +84,13 @@ AUCP                  Area Under Curve Precentage thresholder			       None
 BOOT                  Bootstrapping thresholder					       None
 CHAU		      Chauvenet's criterion thresholder				       method: ['mean', 'median', default='gmean']
 CLF		      Trained Classifier thresholder				       None
-DSN		      Distance Shift from Normal thresholder			       metric: ['JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 
-_                     _                                                                         'BHT': Bhattacharyya, 'HLL': Hellinger 'HI':  Histogram intersection, 
-_                     _                                                                         default = 'LK':  Lukaszyk–Karmowski metric for normal distributions, 
-_                     _                                                                         'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 
-_        	      _										'RES': Studentized residual distance]
+DSN		      Distance Shift from Normal thresholder			       metric: ['JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger 'HI':  Histogram intersection, default = 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance]
 EB		      Elliptical Boundary thresholder				       None
 FGD		      Fixed Gradient Descent thresholder			       None
 FWFM		      Full Width at Full Minimum thresholder			       None
 GESD		      Generalized Extreme Studentized Deviate thresholder	       max_outliers: int, default=None; alpha: float, default=0.05 
 GF		      Gaussian Filter thresholder				       None
-HIST		      Histogram based thresholders			               n_bins: int, default=None, method: [default='otsu', 'yen', 'isodata', 'li',
-_                     _                                                                                                    'minimum', 'triangle']
+HIST		      Histogram based thresholders			               n_bins: int, default=None, method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
 IQR		      Inter-Qaurtile Region thresholder		                       None
 KMEANS		      KMEANS clustering thresholder				       None
 MAD		      Median Absolute Deviation thresholder			       None
