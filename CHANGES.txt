@@ -1,2 +1,3 @@
 v<0.1.0>, <05/29/2022> -- Initial release.
-
+v<0.1.1>, <05/30/2022> -- README.rst update, addition of all.py, bug fix to shift.py.
+v<0.1.2>, <05/30/2022> -- Fix to README.rst.
