@@ -67,7 +67,7 @@ API Cheatsheet
 
 * **eval(score)**\ : evaluate outlier score.
 
-Key Attributes of a fitted model:
+Key Attributes of threshold:
 
 
 * **thresh_**\ : Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
@@ -75,35 +75,35 @@ Key Attributes of a fitted model:
 Implemented Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^
 
-**(i) Individual Detection Algorithms** :
+**(i) Individual Thresholding Algorithms** :
 
 ===================== ================================================================ ==============================================================================
 Abbr                  Description                                                      Parameters    
 ===================== ================================================================ ==============================================================================
-AUCP                  Area Under Curve Precentage thresholder			       None
-BOOT                  Bootstrapping thresholder					       None
-CHAU		      Chauvenet's criterion thresholder				       method: ['mean', 'median', default='gmean']
-CLF		      Trained Classifier thresholder				       None
-DSN		      Distance Shift from Normal thresholder			       metric: ['JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger 'HI':  Histogram intersection, default = 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance]
-EB		      Elliptical Boundary thresholder				       None
-FGD		      Fixed Gradient Descent thresholder			       None
-FWFM		      Full Width at Full Minimum thresholder			       None
-GESD		      Generalized Extreme Studentized Deviate thresholder	       max_outliers: int, default=None; alpha: float, default=0.05 
-GF		      Gaussian Filter thresholder				       None
-HIST		      Histogram based thresholders			               n_bins: int, default=None, method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
-IQR		      Inter-Qaurtile Region thresholder		                       None
-KMEANS		      KMEANS clustering thresholder				       None
-MAD		      Median Absolute Deviation thresholder			       None
-MCST		      Monte Carlo Shapiro Tests thresholder			       None
-MOLL		      Friedrichs' mollifier thresholder				       None
-MTT		      Modified Thompson Tau test thresholder			       strictness: [1,2,3,default=4,5]
-QMCD                  Quasi-Monte Carlo Discreprancy thresholder		       method: ['CD', default='WD', 'MD', 'L2-star'], lim: ['Q', default='P']
-REGR		      Regression based thresholder				       method: [default='siegel', 'theil']
-SHIFT		      Mean Shift clustering thresholder				       None
-WIND		      Topological Winding number thresholder			       None
-YJ		      Yeo-Johnson transformation thresholder			       None
-ZSCORE		      ZSCORE thresholder					       None
-
+AUCP                  Area Under Curve Precentage             			       None
+BOOT                  Bootstrapping             				       None
+CHAU		      Chauvenet's Criterion      				       method: ['mean', 'median', default='gmean']
+CLF		      Trained Classifier         				       None
+DSN		      Distance Shift from Normal         			       metric: ['JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger 'HI':  Histogram intersection, default = 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance]
+EB		      Elliptical Boundary        				       None
+FGD		      Fixed Gradient Descent             			       None
+FWFM		      Full Width at Full Minimum         			       None
+GESD		      Generalized Extreme Studentized Deviate            	       max_outliers: int, default=None; alpha: float, default=0.05 
+GF		      Gaussian Filter            				       None
+HIST		      Histogram Based            			               n_bins: int, default=None, method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
+IQR		      Inter-Qaurtile Region		                               None
+KMEANS		      K-means Clustering                      			       None
+MAD		      Median Absolute Deviation 			               None
+MCST		      Monte Carlo Shapiro Tests			                       None
+MOLL		      Friedrichs' Mollifier			                       None
+MTT		      Modified Thompson Tau Test			               strictness: [1,2,3,default=4,5]
+QMCD                  Quasi-Monte Carlo Discreprancy		                       method: ['CD', default='WD', 'MD', 'L2-star'], lim: ['Q', default='P']
+REGR		      Regression Based       				       	       method: [default='siegel', 'theil']
+SHIFT		      Mean Shift Clustering			       		       None
+WIND		      Topological Winding Number     			               None
+YJ		      Yeo-Johnson Transformation			               None
+ZSCORE		      Z-score					                       None
+ALL                   All Thresholders Combined                                        thresholders: list, default='all'; max_contam: float, default=0.5; method: [default='mean', 'median', 'gmean']
 ===================== ================================================================ ==============================================================================
 
 Implementations & Benchmarks
@@ -111,6 +111,10 @@ Implementations & Benchmarks
 
 **The comparison among implemented models and general implementation** is made available below
 
-For Jupyter Notebooks, please navigate to **"/notebooks/"**.
+For Jupyter Notebooks, please navigate to `notebooks <https://github.com/KulikDM/pythresh/tree/main/notebooks>`_.
 
+A quick look at all the thresholders performance can be found at **"/notebooks/Compare All Models.ipynb"**
 
+.. image:: https://raw.githubusercontent.com//KulikDM/pythresh/main/imgs/All.png
+   :target: https://raw.githubusercontent.com//KulikDM/pythresh/main/imgs/All.png
+   :alt: Comparision_of_All
