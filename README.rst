@@ -24,7 +24,7 @@ PyThresh includes more than 30 thresholding algorithms. These alogorithms range 
     
     # get outlier labels 
     thres = DSN()
-    labels = thresh.eval(decision_scores)
+    labels = thres.eval(decision_scores)
     
 
 Installation
