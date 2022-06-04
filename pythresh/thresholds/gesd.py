@@ -34,7 +34,7 @@ class GESD(BaseThresholder):
        Paramaters
        ----------
 
-       max_outliers : int, optional (default=None)
+       max_outliers : int, optional (default='native')
            if None max_outliers will be set to half the size of the dataset
 
        alpha : float, optional (default=0.05)
@@ -48,7 +48,7 @@ class GESD(BaseThresholder):
 
     """
 
-    def __init__(self, max_outliers=None, alpha=0.05):
+    def __init__(self, max_outliers='native', alpha=0.05):
 
         self.max_outliers = max_outliers
         self.alpha = alpha
@@ -79,7 +79,7 @@ class GESD(BaseThresholder):
 
         limit = 1.1
 
-        if self.max_outliers is None:
+        if self.max_outliers=='native':
             self.max_outliers = int(len(decision)/2)
 
         for i in range(self.max_outliers):

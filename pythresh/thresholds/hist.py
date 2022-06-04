@@ -192,7 +192,7 @@ class HIST(BaseThresholder):
        Paramaters
        ----------
        nbins : number of bins to use in the hostogram
-               int, optional (default=None)
+               int, optional (default='native')
                
        method : str, optional (default='otsu')
                {'otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle'}
@@ -205,7 +205,7 @@ class HIST(BaseThresholder):
 
     """
 
-    def __init__(self, method='otsu', nbins=None):
+    def __init__(self, method='otsu', nbins='native'):
 
         super(HIST, self).__init__()
         self.nbins = nbins
@@ -237,7 +237,7 @@ class HIST(BaseThresholder):
         decision = normalize(decision)
 
         #  Set adaptive default if bins are None
-        if self.nbins is None:
+        if self.nbins=='native':
             self.nbins = int(len(decision)*0.7)
 
         # Generate histogram 

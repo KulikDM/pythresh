@@ -30,7 +30,7 @@ class CHAU(BaseThresholder):
 
     def __init__(self, method='gmean'):
 
-        super(CHAU, self).__init__()
+        super(CHAU, self).__init__()z
         stat = {'mean':np.mean, 'median':np.median, 'gmean':stats.gmean}
         self.method = stat[method]
 
@@ -55,13 +55,14 @@ class CHAU(BaseThresholder):
 
         decision = normalize(decision)
 
-        # Calculate Chauvenet's criterion
-        criterion = 1/(2*len(decision))
+        # Calculate Chauvenet's criterion for one tail
+        Pz = 1/(4*len(decision))
+        criterion = 1/abs(stats.norm.ppf(Pz))
 
         # Get area normal to distance
         prob = erfc(np.abs(decision-self.method(decision))/decision.std())
 
-        self.thresh_ = 1-criterion
+        self.thresh_ = criterion * (1-np.min(prob))/np.max(prob)
 
-        return 1-cut(prob, criterion)
+        return cut(prob, criterion)
 
