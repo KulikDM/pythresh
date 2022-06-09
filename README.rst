@@ -3,24 +3,29 @@ Python Outlier Detection Thresholding (PyThresh)
 
 **Deployment, Stats, & License**
 
-.. image:: https://img.shields.io/pypi/v/pythresh.svg?color=brightgreen
+.. image:: https://img.shields.io/pypi/v/pythresh.svg?color=brightgreen&logo=pypi&logoColor=white
    :target: https://pypi.org/project/pythresh/
    :alt: PyPI version
 
-.. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg
+.. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white
    :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars
 
 
-.. image:: https://img.shields.io/github/forks/KulikDM/pythresh.svg?color=blue
+.. image:: https://img.shields.io/github/forks/KulikDM/pythresh.svg?color=blue&logo=github&logoColor=white
    :target: https://github.com/KulikDM/pythresh/network
    :alt: GitHub forks
 
 
-.. image:: https://pepy.tech/badge/pythresh
+.. image:: https://pepy.tech/badge/pythresh?
    :target: https://pepy.tech/project/pythresh
    :alt: Downloads
-
+   
+  
+.. image:: https://img.shields.io/pypi/pyversions/pythresh.svg?logo=python&logoColor=white
+   :target: https://pypi.org/project/pythresh/
+   :alt: Python versions
+  
 
 .. image:: https://img.shields.io/github/license/KulikDM/pythresh.svg
    :target: https://github.com/KulikDM/pythresh/blob/master/LICENSE
@@ -106,9 +111,9 @@ Abbr                  Description                                               
 ===================== ================================================================ ==============================================================================
 AUCP                  Area Under Curve Precentage [#aucp1]_            		       None
 BOOT                  Bootstrapping [#boot1]_            			       None
-CHAU		      Chauvenet's Criterion [#chau1]_     			       method: ['mean', 'median', default='gmean']
+CHAU		      Chauvenet's Criterion [#chau1]_     			       method: [default='mean', 'median', 'gmean']
 CLF		      Trained Classifier [#clf1]_        			       None
-DSN		      Distance Shift from Normal [#dsn1]_        		       metric: ['JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger 'HI':  Histogram intersection, default = 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance]
+DSN		      Distance Shift from Normal [#dsn1]_        		       metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance]
 EB		      Elliptical Boundary [#eb1]_       			       None
 FGD		      Fixed Gradient Descent [#fgd1]_            		       None
 FWFM		      Full Width at Full Minimum [#fwfm1]_        		       None
