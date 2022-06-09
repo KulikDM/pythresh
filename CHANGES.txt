@@ -4,3 +4,4 @@ v<0.1.2>, <05/30/2022> -- Fix to README.rst.
 v<0.1.3>, <05/31/2022> -- README.rst typo.
 v<0.1.4>, <05/31/2022> -- Fix to README.rst image.
 v<0.1.5>, <06/04/2022> -- Added references README.rst, Fixed chau.py, changed parameter default name from None to 'native' for gesd.py and hist.py.
+v<0.1.6>, <06/09/2022> -- Replaced numpy random functions with scipy random due to random state for dsn.py, mcst.py, and wind.py
