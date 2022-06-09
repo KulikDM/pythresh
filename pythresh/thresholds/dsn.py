@@ -15,12 +15,12 @@ def JS_metric(val_data, val_norm):
 def WS_metric(val_data, val_norm):
     """Calculate the Wasserstein or Earth Movers distance"""
 
-    return stats.wasserstein_distance(val_data, val_norm)
+    return 1-stats.wasserstein_distance(val_data, val_norm)
 
 def ENG_metric(val_data, val_norm):
     """Calculate the Energy distance"""
 
-    return stats.energy_distance(val_data, val_norm)
+    return 1-stats.energy_distance(val_data, val_norm)
 
 def BHT_metric(val_data, val_norm):
     """Calculate the Bhattacharyya distance"""
@@ -52,7 +52,7 @@ def LK_metric(val_data, val_norm):
     """Calculate the Lukaszyk–Karmowski metric for normal distributions"""
             
     # Get expected values for both distributions
-    rng = np.linspace(-1,1,len(val_data))
+    rng = np.linspace(0,1,len(val_data))
     exp_data = (rng*val_data).sum()/val_data.sum()
     exp_norm = (rng*val_norm).sum()/val_norm.sum()
             
@@ -127,7 +127,7 @@ class DSN(BaseThresholder):
        Paramaters
        ----------
 
-       metric : str, optional (default='LK')
+       metric : str, optional (default='JS')
         {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES'}
         'JS':  Jensen-Shannon distance
         'WS':  Wasserstein or Earth Movers distance
@@ -149,7 +149,7 @@ class DSN(BaseThresholder):
 
     """
 
-    def __init__(self, metric='LK'):
+    def __init__(self, metric='JS'):
 
         super(DSN, self).__init__()
         self.metric = metric
@@ -179,26 +179,23 @@ class DSN(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
 
-        decision = normalize(decision)
+        decision = np.sort(normalize(decision))
 
         #Create a normal distribution and normalize
-        norm = np.random.normal(loc=0.0, scale=1.0, size=decision.shape)
-        norm = normalize(norm)
+        norm = stats.norm.rvs(size=len(decision), loc=0.0, scale=1.0, random_state=123)
+        norm = np.sort(normalize(norm))
 
         if (self.metric!='LP') or (self.metric!='RES'):
             # Create a KDE of the decision scores and the normal distribution
             # Generate KDE
-            val_data, _ = gen_kde(decision,-1,1,len(decision)*3)
-            val_norm, _ = gen_kde(norm,-1,1,len(decision)*3)
-
-            val_data = val_data/np.max(val_data)
-            val_norm = val_norm/np.max(val_norm)
+            val_data, _ = gen_kde(decision,0,1,len(decision)*3)
+            val_norm, _ = gen_kde(norm,0,1,len(decision)*3)
 
         
             limit = self.metric_funcs[str(self.metric)](val_data, val_norm)
             
         else:
-            limit = self.metric_funcs[str(self.metric)](np.sort(decision), norm)
+            limit = self.metric_funcs[str(self.metric)](decision, norm)
 
         self.thresh_ = limit
 

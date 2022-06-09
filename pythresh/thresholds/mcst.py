@@ -55,7 +55,8 @@ class MCST(BaseThresholder):
         p_std = stats.shapiro(decision).pvalue
 
         # Create random dataset to insert and test p values
-        rnd = np.random.uniform(0,1,len(decision))
+        rnd = stats.uniform.rvs(loc=0, scale=1, size=len(decision), random_state=123)
+        rnd = normalize(rnd)
         povr = []
 
         # Iterate and add a new random variable
