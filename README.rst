@@ -119,7 +119,6 @@ FGD		      Fixed Gradient Descent [#fgd1]_            		       None
 FILTER                Filtering Based [#filter1]_                                      method: ['gaussian', 'savgol', 'hilbert', default = 'wiener', 'medfilt', 'decimate', 'detrend', 'resample']; sigma: int, default='native'
 FWFM		      Full Width at Full Minimum [#fwfm1]_        		       None
 GESD		      Generalized Extreme Studentized Deviate  [#gesd1]_               max_outliers: int, default='native'; alpha: float, default=0.05 
-GF		      Gaussian Filter [#gf1]_           			       None
 HIST		      Histogram Based [#hist1]_           			       n_bins: int, default='native', method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
 IQR		      Inter-Qaurtile Region [#iqr1]_		                       None
 KARCH                 Karcher mean (Riemannian Center of Mass) [#karch1]_              ndim: int, default = 2; method: ['simple', default = 'complex']
