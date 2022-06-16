@@ -182,7 +182,8 @@ class DSN(BaseThresholder):
         decision = np.sort(normalize(decision))
 
         #Create a normal distribution and normalize
-        norm = stats.norm.rvs(size=len(decision), loc=0.0, scale=1.0, random_state=123)
+        size = max(len(decision),5000)
+        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=1234)
         norm = np.sort(normalize(norm))
 
         if (self.metric!='LP') or (self.metric!='RES'):

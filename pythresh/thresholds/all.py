@@ -16,7 +16,7 @@ from .qmcd import QMCD
 from .fgd import FGD
 from .dsn import DSN
 from .clf import CLF
-from .gf import GF
+from .filter import FILTER
 from .wind import WIND
 from .eb import EB
 from .regr import REGR
@@ -28,6 +28,7 @@ from .chau import CHAU
 from .gesd import GESD
 from .mtt import MTT
 from .shift import SHIFT
+from .karch import KARCH
 
 
 class ALL(BaseThresholder):
@@ -90,9 +91,9 @@ class ALL(BaseThresholder):
         if self.thresholders=='all':
             self.thresholders = [IQR(), MAD(), FWFM(), YJ(), KMEANS(),
                                  ZSCORE(), AUCP(), QMCD(), FGD(), DSN(),
-                                 CLF(), GF(), WIND(), EB(), REGR(), BOOT(),
+                                 CLF(), FILTER(), WIND(), EB(), REGR(), BOOT(),
                                  MCST(), HIST(), MOLL(), CHAU(), GESD(),
-                                 MTT(), SHIFT()]
+                                 MTT(), SHIFT(), KARCH()]
 
         # Apply each thresholder
         contam = []

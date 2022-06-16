@@ -45,10 +45,8 @@ def mollifier(time, position, refinement=5, width=1.0):
 
     ### Perform convolution to make smooth reconstruction
     if s.shape[0] > 500:
-        #print('Convolving with FFT.')
         smooth = signal.fftconvolve(ds*position_interp,rho,mode='same')
     else:
-        #print('Convolving without FFT.')
         smooth = np.convolve(ds*position_interp,rho,mode='same')
 
     ### remove padding

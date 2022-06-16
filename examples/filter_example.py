@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Example of using a Gaussian filter for outlier thresholding
+"""Example of using distance shift from normal for outlier thresholding
 """
 # Author: D Kulik
 # License: BSD 2 clause
@@ -21,7 +21,7 @@ from pyod.utils.data import generate_data
 from pyod.utils.data import evaluate_print
 from pyod.utils.example import visualize
 
-from pythresh.thresholds.gf import GF
+from pythresh.thresholds.filter import FILTER
 
 if __name__ == "__main__":
     contamination = 0.1  # percentage of outliers
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     clf_name = 'KNN'
     clf = KNN()
     clf.fit(X_train)
-    thres = GF()
+    thres = FILTER()
 
     # get the prediction labels and outlier scores of the training data
     y_train_scores = clf.decision_scores_  # raw outlier scores

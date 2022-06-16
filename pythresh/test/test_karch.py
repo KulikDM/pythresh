@@ -17,7 +17,7 @@ from numpy.testing import assert_raises
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
 
-from pythresh.thresholds.dsn import DSN
+from pythresh.thresholds.karch import KARCH
 
 from pyod.models.knn import KNN
 from pyod.utils.data import generate_data
@@ -36,28 +36,33 @@ class TestDSN(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.metrics = ['JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK',
-                        'LP', 'MAH', 'TMT', 'RES']
+
+        self.ndim = range(1,10)
+        
+        self.method = ['simple', 'complex']
 
     def test_prediction_labels(self):
 
-        for metric in self.metrics:
+        for method in self.method:
 
-            self.thres = DSN(metric=metric)
-            pred_labels = self.thres.eval(self.scores)
-            assert (self.thres.thresh_ != None)
-    
-            assert_equal(pred_labels.shape, self.y_train.shape)
+            for ndim in self.ndim:
 
-            try:
-                assert (pred_labels.min() == 0)
-            except:
-                assert (pred_labels.min() == 1)
+                self.thres = KARCH(ndim=ndim, method=method)
+                pred_labels = self.thres.eval(self.scores)
+                assert (self.thres.thresh_ != None)
+        
+                assert_equal(pred_labels.shape, self.y_train.shape)
 
-            try:
-                assert (pred_labels.max() == 1)
-            except:
-                assert (pred_labels.max() == 0)
+
+                try:
+                    assert (pred_labels.min() == 0)
+                except:
+                    assert (pred_labels.min() == 1)
+
+                try:
+                    assert (pred_labels.max() == 1)
+                except:
+                    assert (pred_labels.max() == 0)
 
 
     def tearDown(self):

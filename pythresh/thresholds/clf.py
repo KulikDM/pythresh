@@ -24,8 +24,8 @@ class CLF(BaseThresholder):
 
     def __init__(self):
 
-        self.m = 6.252101632002534
-        self.c = -2.7630070467775503
+        self.m = 4.0581548062264075
+        self.c = -1.5357998356223497
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

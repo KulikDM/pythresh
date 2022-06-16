@@ -17,13 +17,13 @@ from numpy.testing import assert_raises
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
 
-from pythresh.thresholds.gf import GF
+from pythresh.thresholds.filter import FILTER
 
 from pyod.models.knn import KNN
 from pyod.utils.data import generate_data
 
 
-class TestGF(unittest.TestCase):
+class TestDSN(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
         self.n_test = 100
@@ -36,17 +36,31 @@ class TestGF(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.thres = GF()
+        
+        self.method = ['gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt',
+                        'decimate','detrend', 'resample']
+        self.sigma = 'native'
 
     def test_prediction_labels(self):
-        
-        pred_labels = self.thres.eval(self.scores)
-        assert (self.thres.thresh_ != None)
-    
-        assert_equal(pred_labels.shape, self.y_train.shape)
 
-        assert (pred_labels.min() == 0)
-        assert (pred_labels.max() == 1)
+        for method in self.method:
+
+            self.thres = FILTER(method=method, sigma=self.sigma)
+            pred_labels = self.thres.eval(self.scores)
+            assert (self.thres.thresh_ != None)
+    
+            assert_equal(pred_labels.shape, self.y_train.shape)
+
+
+            try:
+                assert (pred_labels.min() == 0)
+            except:
+                assert (pred_labels.min() == 1)
+
+            try:
+                assert (pred_labels.max() == 1)
+            except:
+                assert (pred_labels.max() == 0)
 
 
     def tearDown(self):
