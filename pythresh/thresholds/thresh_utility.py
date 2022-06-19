@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.stats as stats
+from scipy.special import ndtr
 
 
 def normalize(data):
@@ -18,8 +19,18 @@ def cut(decision, limit):
 
 def gen_kde(data, lower, upper, size):
 
-    # Create a KDE of the labels
+    # Create a KDE of the data
     kde = stats.gaussian_kde(data)
     dat_range = np.linspace(lower,upper,size)
 
     return kde(dat_range), dat_range
+
+def gen_kde(data, lower, upper, size):
+
+    # Create a KDE & CDF of the data
+    kde = stats.gaussian_kde(data)
+    dat_range = np.linspace(lower,upper,size)
+    cdf = np.array(tuple(ndtr(np.ravel(item - kde.dataset) / kde.factor).mean()
+            for item in dat_range))
+
+    return cdf, dat_range

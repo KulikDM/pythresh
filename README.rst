@@ -82,12 +82,13 @@ Alternatively, you could clone and run setup.py file:
 **Required Dependencies**\ :
 
 
+* geomstats
 * matplotlib
 * numpy>=1.13
+* pyod
 * scipy>=1.3.1
 * scikit_learn>=0.20.0
 * six
-* pyod
 
 
 API Cheatsheet
@@ -113,7 +114,7 @@ AUCP                  Area Under Curve Precentage [#aucp1]_            		       
 BOOT                  Bootstrapping [#boot1]_            			       None
 CHAU		      Chauvenet's Criterion [#chau1]_     			       method: [default='mean', 'median', 'gmean']
 CLF		      Trained Classifier [#clf1]_        			       None
-DSN		      Distance Shift from Normal [#dsn1]_        		       metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance]
+DSN		      Distance Shift from Normal [#dsn1]_        		       metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance, 'KS': Kolmogorov–Smirnov]
 EB		      Elliptical Boundary [#eb1]_       			       None
 FGD		      Fixed Gradient Descent [#fgd1]_            		       None
 FILTER                Filtering Based [#filter1]_                                      method: ['gaussian', 'savgol', 'hilbert', default = 'wiener', 'medfilt', 'decimate', 'detrend', 'resample']; sigma: int, default='native'

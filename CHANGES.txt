@@ -8,3 +8,4 @@ v<0.1.6>, <06/09/2022> -- Replaced numpy random functions with scipy random due 
 v<0.1.7>, <06/10/2022> -- Fixed missing scipy.stats import in wind.py, description update to README.rst
 v<0.1.8>, <06/16/2022> -- Replaced gf.py with filter.py, added karch.py, updated all.py, clf.py, dsn.py, wind.py as well as README.rst and all the jupyter notebooks 
 v<0.1.9>, <06/16/2022> -- chau.py syntax error bug fix
+v<0.2.0>, <06/19/2022> -- Updated dsn.py, new cdf calc
