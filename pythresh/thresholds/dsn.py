@@ -197,17 +197,23 @@ class DSN(BaseThresholder):
         norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=1234)
         norm = np.sort(normalize(norm))
 
+        n = 3
+
         if self.metric in ['JS','BHT']:
             # Create a KDE of the decision scores and the normal distribution
             # Generate KDE
-            val_data, _ = gen_kde(decision,0,1,len(decision)*3)
-            val_norm, _ = gen_kde(norm,0,1,len(decision)*3)
+
+            if self.metric=='LP':
+                n=1
+
+            val_data, _ = gen_kde(decision,0,1,len(decision)*n)
+            val_norm, _ = gen_kde(norm,0,1,len(decision)*n)
             
         else:
             # Create a KDE of the decision scores and the normal distribution
             # Generate CDF
-            val_data, _ = gen_cdf(decision,0,1,len(decision)*3)
-            val_norm, _ = gen_cdf(norm,0,1,len(decision)*3)
+            val_data, _ = gen_cdf(decision,0,1,len(decision)*n)
+            val_norm, _ = gen_cdf(norm,0,1,len(decision)*n)
 
         limit = self.metric_funcs[str(self.metric)](val_data, val_norm)
 
