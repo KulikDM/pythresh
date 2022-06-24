@@ -1,6 +1,4 @@
 import numpy as np
-import scipy.linalg as linalg
-import scipy.stats as stats
 from geomstats.learning.frechet_mean import FrechetMean
 from geomstats.geometry.euclidean import Euclidean
 from sklearn.utils import check_array
