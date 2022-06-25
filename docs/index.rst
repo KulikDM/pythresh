@@ -76,30 +76,30 @@ Implemented Algorithms
 =========== ================================================================ ==============================================================================
 Abbr        Description                                                      Parameters    
 =========== ================================================================ ==============================================================================
-AUCP        Area Under Curve Precentage [#aucp1]_            		           None
-BOOT        Bootstrapping [#boot1]_            			                       None
-CHAU		   Chauvenet's Criterion [#chau1]_     			                    method: [default='mean', 'median', 'gmean']
-CLF		   Trained Classifier [#clf1]_        			                       None
-DSN		   Distance Shift from Normal [#dsn1]_        		                 metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance, 'KS': Kolmogorov–Smirnov]
-EB		      Elliptical Boundary [#eb1]_       			                       None
-FGD		   Fixed Gradient Descent [#fgd1]_            		                 None
-FILTER      Filtering Based [#filter1]_                                      method: ['gaussian', 'savgol', 'hilbert', default = 'wiener', 'medfilt', 'decimate', 'detrend', 'resample']; sigma: int, default='native'
-FWFM		   Full Width at Full Minimum [#fwfm1]_        		                 None
-GESD		   Generalized Extreme Studentized Deviate  [#gesd1]_               max_outliers: int, default='native'; alpha: float, default=0.05 
-HIST		   Histogram Based [#hist1]_           			                    n_bins: int, default='native', method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
-IQR		   Inter-Qaurtile Region [#iqr1]_		                             None
-KARCH       Karcher mean (Riemannian Center of Mass) [#karch1]_              ndim: int, default = 2; method: ['simple', default = 'complex']
-KMEANS		K-means Clustering [#kmeans1]_                     	           None
-MAD		   Median Absolute Deviation [#mad1]_			                       None
-MCST		   Monte Carlo Shapiro Tests	[#mcst1]_		                       None
-MOLL		   Friedrichs' Mollifier [#moll1]_ [#moll2]_			                 None
-MTT		   Modified Thompson Tau Test [#mtt1]_			                       strictness: [1,2,3,default=4,5]
-QMCD        Quasi-Monte Carlo Discreprancy [#qmcd1]_		                    method: ['CD', default='WD', 'MD', 'L2-star'], lim: ['Q', default='P']
-REGR		   Regression Based [#regr1]_      				                       method: [default='siegel', 'theil']
-SHIFT		   Mean Shift Clustering [#shift1]_			       	                 None
-WIND		   Topological Winding Number [#wind1]_    			                 None
-YJ		      Yeo-Johnson Transformation [#yj1]_			                       None
-ZSCORE		Z-score [#zscore1]_					                                None
+AUCP        Area Under Curve Precentage                     		           None
+BOOT        Bootstrapping                     			                       None
+CHAU		   Chauvenet's Criterion                			                    method: [default='mean', 'median', 'gmean']
+CLF		   Trained Classifier                 			                       None
+DSN		   Distance Shift from Normal                 		                 metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance, 'KS': Kolmogorov–Smirnov]
+EB		      Elliptical Boundary              			                       None
+FGD		   Fixed Gradient Descent                     		                 None
+FILTER      Filtering Based                                                  method: ['gaussian', 'savgol', 'hilbert', default = 'wiener', 'medfilt', 'decimate', 'detrend', 'resample']; sigma: int, default='native'
+FWFM		   Full Width at Full Minimum                  		                 None
+GESD		   Generalized Extreme Studentized Deviate                          max_outliers: int, default='native'; alpha: float, default=0.05 
+HIST		   Histogram Based                       			                    n_bins: int, default='native', method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
+IQR		   Inter-Qaurtile Regression     		                             None
+KARCH       Karcher mean (Riemannian Center of Mass)                         ndim: int, default = 2; method: ['simple', default = 'complex']
+KMEANS		K-means Clustering                                 	           None
+MAD		   Median Absolute Deviation        			                       None
+MCST		   Monte Carlo Shapiro Tests           		                       None
+MOLL		   Friedrichs' Mollifier                     		                 None
+MTT		   Modified Thompson Tau Test          		                       strictness: [1,2,3,default=4,5]
+QMCD        Quasi-Monte Carlo Discreprancy            	                    method: ['CD', default='WD', 'MD', 'L2-star'], lim: ['Q', default='P']
+REGR		   Regression Based              				                       method: [default='siegel', 'theil']
+SHIFT		   Mean Shift Clustering            		       	                 None
+WIND		   Topological Winding Number              			                 None
+YJ		      Yeo-Johnson Transformation       			                       None
+ZSCORE		Z-score           					                                None
 ALL         All Thresholders Combined                                        thresholders: list, default='all'; max_contam: float, default=0.5; method: [default='mean', 'median', 'gmean']
 =========== ================================================================ ==============================================================================
 
