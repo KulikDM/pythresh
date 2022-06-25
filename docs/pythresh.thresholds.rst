@@ -97,7 +97,7 @@ pythresh.thresholds.gesd module
 
 .. automodule:: pythresh.thresholds.gesd
     :members:
-    :exclude-members:
+    :exclude-members: calc_crit, grubbs_stat
     :undoc-members:
     :show-inheritance:
     :inherited-members:
@@ -212,15 +212,6 @@ pythresh.thresholds.shift module
     :show-inheritance:
     :inherited-members:
 
-pythresh.thresholds.thresh_utility module
-------------------------
-
-.. automodule:: pythresh.thresholds.thresh_utility
-    :members:
-    :exclude-members:
-    :undoc-members:
-    :show-inheritance:
-    :inherited-members:
 
 pythresh.thresholds.wind module
 ----------------------
