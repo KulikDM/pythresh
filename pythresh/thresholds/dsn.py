@@ -3,7 +3,7 @@ import scipy.stats as stats
 import scipy.special as special
 import scipy.spatial.distance as distance
 from sklearn.covariance import MinCovDet
-#from itertools import combinations
+from itertools import combinations
 from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde, gen_cdf
