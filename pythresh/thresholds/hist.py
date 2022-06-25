@@ -191,11 +191,20 @@ class HIST(BaseThresholder):
        
        Paramaters
        ----------
-       nbins : number of bins to use in the hostogram
-               int, optional (default='native')
+       
+       nbins : int, optional (default='native')
+            Number of bins to use in the hostogram, default set to int(len(scores)**0.7)
                
-       method : str, optional (default='otsu')
-               {'otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle'}
+       method : {'otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle'}, optional (default='otsu')
+            Histogram filtering based method
+            
+            - 'otsu':     OTSU's method for filtering
+            - 'yen':      Yen's method for filtering
+            - 'isodata':  Ridler-Calvard or inter-means method for filtering
+            - 'li':       Li's iterative Minimum Cross Entropy method for filtering
+            - 'minimum':  Minimum between two maxima via smoothing method for filtering
+            - 'triangle': Triangle algorithm method for filtering
+               
 
        Attributes
        ----------
@@ -238,7 +247,7 @@ class HIST(BaseThresholder):
 
         #  Set adaptive default if bins are None
         if self.nbins=='native':
-            self.nbins = int(len(decision)*0.7)
+            self.nbins = int(len(decision)**0.7)
 
         # Generate histogram 
         bin_centers, counts = histogram(decision, self.nbins)

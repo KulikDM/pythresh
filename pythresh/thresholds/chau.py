@@ -17,8 +17,12 @@ class CHAU(BaseThresholder):
        Paramaters
        ----------
 
-       method : str, optional (default='gmean')
-       {'mean', 'median', 'gmean'}
+       method : {'mean', 'median', 'gmean'}, optional (default='gmean')
+            Calculate the area normal to distance using a scaler
+       
+            - 'mean':  Construct a scaler with the the mean of the scores
+            - 'median: Construct a scaler with the the median of the scores
+            - 'gmean': Construct a scaler with the geometric mean of the scores
 
        Attributes
        ----------

@@ -49,8 +49,9 @@ class MTT(BaseThresholder):
        Paramaters
        ----------
 
-       strictness : int, optional (default=4)
-        [1,2,3,4,5]
+       strictness : [1,2,3,4,5], optional (default=4)
+            Level of strictness corresponding to the t-Student distribution map to sample
+        
 
        Attributes
        ----------

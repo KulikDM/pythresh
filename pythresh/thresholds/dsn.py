@@ -137,20 +137,21 @@ class DSN(BaseThresholder):
        Paramaters
        ----------
 
-       metric : str, optional (default='JS')
-        {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS'}
-        'JS' : Jensen-Shannon distance
-        'WS' : Wasserstein or Earth Movers distance
-        'ENG': Energy distance
-        'BHT': Bhattacharyya distance
-        'HLL': Hellinger distance
-        'HI' : Histogram intersection distance
-        'LK' : Lukaszyk–Karmowski metric for normal distributions
-        'LP' : Levy-Prokhorov metric
-        'MAH': Mahalanobis distance
-        'TMT': Tanimoto distance
-        'RES': Studentized residual distance
-        'KS' : Kolmogorov–Smirnov distance
+       metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS'}, optional (default='JS')
+            Metric to use for distance computation
+        
+            - 'JS': Jensen-Shannon distance
+            - 'WS': Wasserstein or Earth Movers distance
+            - 'ENG': Energy distance
+            - 'BHT': Bhattacharyya distance
+            - 'HLL': Hellinger distance
+            - 'HI': Histogram intersection distance
+            - 'LK': Lukaszyk–Karmowski metric for normal distributions
+            - 'LP': Levy-Prokhorov metric
+            - 'MAH': Mahalanobis distance
+            - 'TMT': Tanimoto distance
+            - 'RES': Studentized residual distance
+            - 'KS': Kolmogorov–Smirnov distance
 
        Attributes
        ----------

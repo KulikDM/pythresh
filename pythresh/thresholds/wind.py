@@ -37,9 +37,6 @@ class WIND(BaseThresholder):
 
         Parameters
         ----------
-        decision : np.array or list of shape (n_samples)
-                   which are the decision scores from a
-                   outlier detection.
         
         Returns
         -------

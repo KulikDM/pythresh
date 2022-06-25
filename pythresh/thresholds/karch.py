@@ -18,9 +18,14 @@ class KARCH(BaseThresholder):
        ----------
 
        ndim : int, optional (default=2)
+            Number of dimensions to constric the Euclidean manifold
 
-       method : str, optional (default='complex')
-       {'simple', 'complex'}
+       method : {'simple', 'complex'}, optional (default='complex')
+            Method for computing the Karcher mean
+       
+            - 'simple':  Compute the Karcher mean using the 1D array of scores
+            - 'complex': Compute the Karcher mean between a 2D array dot product of the scores
+                        and the sorted scores arrays
 
        Attributes
        ----------

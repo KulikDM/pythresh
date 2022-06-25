@@ -15,7 +15,7 @@ class SHIFT(BaseThresholder):
 
        Paramaters
        ----------
-
+       
        Attributes
        ----------
 

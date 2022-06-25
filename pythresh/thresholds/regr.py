@@ -15,9 +15,12 @@ class REGR(BaseThresholder):
        Paramaters
        ----------
 
-       method : str, optional (default='siegel')
-       {'siegel', 'theil'}
-
+       method : {'siegel', 'theil'}, optional (default='siegel')
+            Regression based method to calculate the y-intercept
+            
+            - 'siegel': implements a method for robust linear regression using repeated medians
+            - 'theil':  implements a method for robust linear regression using paired values
+       
        Attributes
        ----------
 

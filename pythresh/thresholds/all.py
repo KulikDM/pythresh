@@ -43,13 +43,20 @@ class ALL(BaseThresholder):
        ----------
 
        thresholders : list, optional (default='all')
-            list of instantiated thresholders, e.g. [DSN()]
+            List of instantiated thresholders, e.g. [DSN()]
        
        max_contam : float, optional (default=0.5)
+            Maximum contamination allowed for each threshold output. Thresholded scores
+            above the maximum contamination will not be included in the final combined
+            threshold
 
-       method : str, optional (default='mean')
+       method : {'mean', 'median', 'gmean'}, optional (default='mean')
            statistic to apply to contamination levels
-           {'mean', 'median', 'gmean'}
+           
+           - 'mean':   calculate the mean combined threshold
+           - 'median': calculate the median combined threshold
+           - 'gmean':  calculate the geometric mean combined threshold
+           
 
        Attributes
        ----------

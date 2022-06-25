@@ -35,10 +35,11 @@ class GESD(BaseThresholder):
        ----------
 
        max_outliers : int, optional (default='native')
-           if None max_outliers will be set to half the size of the dataset
+            mamiximum number of outliers that the dataset may have. Default sets 
+            max_outliers to be set to half the size of the dataset
 
        alpha : float, optional (default=0.05)
-           significance level
+            significance level
 
        Attributes
        ----------

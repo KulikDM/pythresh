@@ -18,17 +18,19 @@ class QMCD(BaseThresholder):
        Paramaters
        ----------
 
-       method : str, optional (default='WD')
-        {'CD', 'WD', 'MD', 'L2-star'}
-        CD:      Centered Discrepancy
-        WD:      Wrap-around Discrepancy
-        MD:      Mix between CD/WD
-        L2-star: L2-star discrepancy
+       method : {'CD', 'WD', 'MD', 'L2-star'}, optional (default='WD')
+            Type of discrepancy
+        
+            - 'CD':      Centered Discrepancy
+            - 'WD':      Wrap-around Discrepancy
+            - 'MD':      Mix between CD/WD
+            - 'L2-star': L2-star discrepancy
 
-       lim : str, optional (default='P')
-        {'Q', 'P'}
-        Q: Use quntile limiting
-        P: Use percentile limiting
+       lim : {'Q', 'P'}, optional (default='P')
+            Filtering method to threshold scores using 1 - discrepancy
+        
+            - 'Q': Use quntile limiting
+            - 'P': Use percentile limiting
         
 
        Attributes

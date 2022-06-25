@@ -4,30 +4,34 @@ from scipy import signal
 from scipy.ndimage import gaussian_filter
 from sklearn.utils import check_array
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde
+from .thresh_utility import normalize, cut
 
-def GAU_fltr(decision, sig):
+def GAU_fltr(decision, sig, sigma):
     """Gaussian filter scores"""
 
     return gaussian_filter(decision, sigma=sig)
 
-def SAV_fltr(decision, sig):
+def SAV_fltr(decision, sig, sigma):
     """Savgol filter scores"""
 
-    return signal.savgol_filter(decision, window_length=round(0.5*sig),
-                                polyorder=1)
+    if sigma=='native':
+        return signal.savgol_filter(decision, window_length=round(0.5*sig),
+                                    polyorder=1)
+    else:
+        return signal.savgol_filter(decision, window_length=round(sig),
+                                    polyorder=1)
 
-def HIL_fltr(decision, sig):
+def HIL_fltr(decision, sig, sigma):
     """Hilbert filter scores"""
 
     return signal.hilbert(decision, N=round(sig))
 
-def WIE_fltr(decision, sig):
+def WIE_fltr(decision, sig, sigma):
     """Wiener filter scores"""
 
     return signal.wiener(decision, mysize=len(decision))
 
-def MED_fltr(decision, sig):
+def MED_fltr(decision, sig, sigma):
     """Medfilt filter scores"""
     
     sig = round(sig)
@@ -38,21 +42,25 @@ def MED_fltr(decision, sig):
     return signal.medfilt(decision, kernel_size=[sig])
 
 
-def DEC_fltr(decision, sig):
+def DEC_fltr(decision, sig, sigma):
     """Decimate filter scores"""
 
     return signal.decimate(decision, q=round(sig), ftype='fir')
 
-def DET_fltr(decision, sig):
+def DET_fltr(decision, sig, sigma):
     """Detrend filter scores"""
 
     return signal.detrend(decision, bp=np.linspace(0,len(decision)-1,round(sig)).astype(int))
 
-def RES_fltr(decision, sig):
+def RES_fltr(decision, sig, sigma):
     """Resampling filter scores"""
 
-    return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                           window=round(np.sqrt(sig)))
+    if sigma=='native':
+        return signal.resample(decision, num=round(np.sqrt(len(decision))),
+                            window=round(np.sqrt(sig)))
+    else:
+        return signal.resample(decision, num=round(np.sqrt(len(decision))),
+                            window=round(sig))
 
 
 class FILTER(BaseThresholder):
@@ -65,11 +73,29 @@ class FILTER(BaseThresholder):
        Paramaters
        ----------
 
-       method : str, optional (default='wiener')
-        {'gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt', 'decimate',
-        'detrend', 'resample'}
+       method : {'gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt', 'decimate','detrend', 'resample'}, optional (default='wiener')
+            Method to filter the scores
+       
+            - 'gaussian': use a gaussian based filter
+            - 'savgol':   use the savgol based filter
+            - 'hilbert':  use the hilbert based filter
+            - 'wiener':   use the wiener based filter
+            - 'medfilt:   use a median based filter
+            - 'decimate': use a decimate based filter
+            - 'detrend':  use a detrend based filter
+            - 'resample': use a resampling based filter
+        
 
        sigma : int, optional (default='native') 
+            Variable specific to each filter type, default sets segma to len(scores)*np.std(scores)
+       
+            - 'gaussian': standard deviation for Gaussian kernel
+            - 'savgol':   savgol filter window size
+            - 'hilbert':  number of Fourier components
+            - 'medfilt:   kernel size
+            - 'decimate': downsampling factor
+            - 'detrend':  number of break points
+            - 'resample': resampling window size
 
        Attributes
        ----------
@@ -114,9 +140,11 @@ class FILTER(BaseThresholder):
         # Get sigma variables for various applications for each filter
         if self.sigma=='native':
             sig = len(decision)*np.std(decision)
+        else:
+            sig = self.sigma
 
         # Filter scores
-        fltr = self.method_funcs[str(self.method)](decision, sig)
+        fltr = self.method_funcs[str(self.method)](decision, sig, self.sigma)
         limit = np.max(fltr)
 
         self.thresh_ = limit

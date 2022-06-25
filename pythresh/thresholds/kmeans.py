@@ -15,6 +15,7 @@ class KMEANS(BaseThresholder):
 
        Paramaters
        ----------
+       
 
        Attributes
        ----------

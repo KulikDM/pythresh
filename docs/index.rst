@@ -1,5 +1,10 @@
-Python Outlier Detection Thresholding (PyThresh)
-================================================
+.. pyod documentation master file, created by
+   sphinx-quickstart on Sun May 27 10:56:38 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to PyThresh Documentation
+=================================
 
 **Deployment, Stats, & License**
 
@@ -39,7 +44,7 @@ PyThresh is a comprehensive and scalable **Python toolkit** for **thresholding o
 PyThresh includes more than 30 thresholding algorithms. These algorithms range from using simple statistical analysis like the Z-score to more complex mathematical methods that involve graph theory and topology. 
 
 
-**Outlier Detection Thresholding with 7 Lines of Code**\ :
+**API Demo**\ :
 
 
 .. code-block:: python
@@ -58,49 +63,10 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
     # get outlier labels 
     thres = DSN()
     labels = thres.eval(decision_scores)
-    
-
-Installation
-^^^^^^^^^^^^
-
-It is recommended to use **pip** for installation:
-
-.. code-block:: bash
-
-   pip install pythresh            # normal install
-   pip install --upgrade pythresh  # or update if needed
-
-Alternatively, you could clone and run setup.py file:
-
-.. code-block:: bash
-
-   git clone https://github.com/KulikDM/pythresh.git
-   cd pythresh
-   pip install .
 
 
-**Required Dependencies**\ :
 
-
-* geomstats
-* matplotlib
-* numpy>=1.13
-* pyod
-* scipy>=1.3.1
-* scikit_learn>=0.20.0
-* six
-
-
-API Cheatsheet
-^^^^^^^^^^^^^^
-
-
-* **eval(score)**\ : evaluate outlier score.
-
-Key Attributes of threshold:
-
-
-* **thresh_**\ : Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
+----
 
 Implemented Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -137,71 +103,55 @@ ZSCORE		Z-score [#zscore1]_					                                None
 ALL         All Thresholders Combined                                        thresholders: list, default='all'; max_contam: float, default=0.5; method: [default='mean', 'median', 'gmean']
 =========== ================================================================ ==============================================================================
 
-Implementations & Benchmarks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**The comparison among of implemented models** is made available below
+(\ `Figure <https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png>`_\).
+For Jupyter Notebooks, please navigate to **"/notebooks/Compare All Thesholders.ipynb"**.
 
-**The comparison among implemented models and general implementation** is made available below
 
-For Jupyter Notebooks, please navigate to `notebooks <https://github.com/KulikDM/pythresh/tree/main/notebooks>`_.
+.. figure:: figs/All.png
+    :alt: Comparison of selected models
 
-A quick look at all the thresholders performance can be found at **"/notebooks/Compare All Models.ipynb"**
 
-.. image:: https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png
-   :target: https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png
-   :alt: Comparision_of_All
-   
-   
-References
-^^^^^^^^^^
+API Cheatsheet & Reference
+==========================
 
-**Please Note** not all references' exact methods have been employed in PyThresh. Rather, the references serve to demonstrate the validity of the threshold types available in PyThresh. 
+The following APIs are applicable for all detector models for easy use. 
 
-.. [#aucp1] `A Robust AUC Maximization Framework With Simultaneous Outlier Detection and Feature Selection for Positive-Unlabeled Classification <https://arxiv.org/abs/1803.06604>`_
 
-.. [#boot1] `An evaluation of bootstrap methods for outlier detection in least squares regression <https://www.researchgate.net/publication/24083638_An_evaluation_of_bootstrap_methods_for_outlier_detection_in_least_squares_regression>`_
+* :func:`pythresh.thresholders.base.BaseDetector.eval`: evaluate outlier score.
 
-.. [#chau1] `Chauvenet's and Peirce's Criterion <https://www.researchgate.net/publication/299829851_Chauvenet%27s_and_Peirce%27s_Criterion_literature_review>`_
+Key Attributes of a threshold:
 
-.. [#clf1] `Linear Models for Outlier Detection <https://link.springer.com/chapter/10.1007/978-3-319-47578-3_3>`_
+* :attr:`pythresh.thresholders.base.BaseDetector.thres_`: Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
 
-.. [#dsn1] `Fast and Exact Outlier Detection in Metric Spaces: A Proximity Graph-based Approach <https://arxiv.org/abs/2110.08959>`_
+----
 
-.. [#eb1] `Elliptical Insights: Understanding Statistical Methods through Elliptical Geometry <https://arxiv.org/abs/1302.4881>`_
 
-.. [#fgd1] `Iterative gradient descent for outlier detection <https://www.worldscientific.com/doi/10.1142/S0219691321500041>`_
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Getting Started
 
-.. [#filter1] `Fitting, Filtering and Analysis: Feature Extraction in Dimensional Metrology Applications <https://digitalmetrology.com/Papers/IDW2002-Abstract.pdf>`_
 
-.. [#fwfm1] `Sparse Auto-Regressive: Robust Estimation of AR Parameters <https://arxiv.org/abs/1306.3317>`_
+   install
+   example
 
-.. [#gesd1] `An adjusted Grubbs' and generalized extreme studentized deviation <https://www.degruyter.com/document/doi/10.1515/dema-2021-0041/html?lang=en>`_
 
-.. [#hist1] `Effective Histogram Thresholding Techniques for Natural Images Using Segmentation <http://www.joig.net/uploadfile/2015/0116/20150116042320548.pdf>`_
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Documentation
 
-.. [#iqr1] `A new non-parametric detector of univariate outliers for distributions with unbounded support <https://arxiv.org/abs/1509.02473>`_
+   api_cc
+   pythresh
 
-.. [#karch1] `Riemannian center of mass and mollifier smoothing <https://www.jstor.org/stable/41059320>`_
 
-.. [#kmeans1] `Outlier Detection and Removal Algorithm in K-Means and Hierarchical Clustering <https://www.researchgate.net/publication/319395842_Outlier_Detection_and_Removal_Algorithm_in_K-Means_and_Hierarchical_Clustering>`_
+----
 
-.. [#mad1] `Periodicity Detection of Outlier Sequences Using Constraint Based Pattern Tree with MAD <https://arxiv.org/abs/1507.01685>`_
 
-.. [#mcst1] `Testing normality in the presence of outliers <https://www.researchgate.net/publication/24065017_Testing_normality_in_the_presence_of_outliers>`_
+.. rubric:: References
 
-.. [#moll1] `Riemannian center of mass and mollifier smoothing <https://www.jstor.org/stable/41059320>`_
-
-.. [#moll2] `Using the mollifier method to characterize datasets and models: The case of the Universal Soil Loss Equation <https://www.researchgate.net/publication/286670128_Using_the_mollifier_method_to_characterize_datasets_and_models_The_case_of_the_Universal_Soil_Loss_Equation>`_
-
-.. [#mtt1] `Towards a More Reliable Interpretation of Machine Learning Outputs for Safety-Critical Systems using Feature Importance Fusion <https://arxiv.org/abs/2009.05501>`_
-
-.. [#qmcd1] `Deterministic and quasi-random sampling of optimized Gaussian mixture distributions for vibronic Monte Carlo <https://arxiv.org/abs/1912.11594>`_
-
-.. [#regr1] `Linear Models for Outlier Detection <https://link.springer.com/chapter/10.1007/978-3-319-47578-3_3>`_
-
-.. [#shift1] `Mean-shift outlier detection and filtering <https://www.sciencedirect.com/science/article/pii/S0031320321000613>`_
-
-.. [#wind1] `Robust Inside-Outside Segmentation Using Generalized Winding Numbers <https://www.researchgate.net/publication/262165781_Robust_Inside-Outside_Segmentation_Using_Generalized_Winding_Numbers>`_
-
-.. [#yj1] `Transforming variables to central normality <https://arxiv.org/abs/2005.07946>`_
-
-.. [#zscore1] `Multiple outlier detection tests for parametric models <https://arxiv.org/abs/1910.10426>`_
+.. bibliography::
+   :cited:
+   :labelprefix: A
+   :keyprefix: a-

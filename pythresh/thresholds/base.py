@@ -10,10 +10,6 @@ import six
 class BaseThresholder(object):
     """Abstract class for all outlier detection thresholding algorithms.
 
-    .. warning::
-    pyod would stop supporting Python 2 in the future. Consider move to
-    Python 3.5+.
-
        
        Paramaters
        ----------
