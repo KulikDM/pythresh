@@ -174,14 +174,14 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
     
     exclusions = ('calc_crit', 'grubbs_stat')
     exclude = name in exclusions
-    
+    print(name)
     return True if exclude else None
- 
-def setup(app):
-    app.connect('autodoc-skip-member', autodoc_skip_member)
     
 
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/': None}
+
+def setup(app):
+    app.connect('autodoc-skip-member', autodoc_skip_member)
