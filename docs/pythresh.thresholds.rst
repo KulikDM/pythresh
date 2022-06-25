@@ -92,12 +92,11 @@ pythresh.thresholds.filter module
     :show-inheritance:
     :inherited-members:
 
-pythresh.thresholds.gesd module
+pythresh.thresholds.gesd.GESD module
 -----------------------------------
 
-.. automodule:: pythresh.thresholds.gesd
+.. automodule:: pythresh.thresholds.gesd.GESD
     :members: 
-    :special-members: GESD
     :exclude-members: 
     :undoc-members: 
     :show-inheritance:
