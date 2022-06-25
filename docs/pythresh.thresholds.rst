@@ -95,8 +95,8 @@ pythresh.thresholds.filter module
 pythresh.thresholds.gesd module
 -----------------------------------
 
-.. automodule:: pythresh.thresholds.gesd
-    :members: GESD
+.. automodule:: pythresh.thresholds.gesd.GESD
+    :members: 
     :exclude-members: 
     :undoc-members: 
     :show-inheritance:
