@@ -22,18 +22,18 @@ class DSN(BaseThresholder):
        metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS'}, optional (default='JS')
             Metric to use for distance computation
         
-            - 'JS': Jensen-Shannon distance
-            - 'WS': Wasserstein or Earth Movers distance
+            - 'JS':  Jensen-Shannon distance
+            - 'WS':  Wasserstein or Earth Movers distance
             - 'ENG': Energy distance
             - 'BHT': Bhattacharyya distance
             - 'HLL': Hellinger distance
-            - 'HI': Histogram intersection distance
-            - 'LK': Lukaszyk-Karmowski metric for normal distributions
-            - 'LP': Levy-Prokhorov metric
+            - 'HI':  Histogram intersection distance
+            - 'LK':  Lukaszyk-Karmowski metric for normal distributions
+            - 'LP':  Levy-Prokhorov metric
             - 'MAH': Mahalanobis distance
             - 'TMT': Tanimoto distance
             - 'RES': Studentized residual distance
-            - 'KS': Kolmogorov-Smirnov distance
+            - 'KS':  Kolmogorov-Smirnov distance
 
        Attributes
        ----------
@@ -145,7 +145,7 @@ class DSN(BaseThresholder):
         return 1-np.sum(np.minimum(val_data,val_norm))
 
     def _LK_metric(self, val_data, val_norm):
-        """Calculate the Lukaszyk–Karmowski metric for normal distributions"""
+        """Calculate the Lukaszyk-Karmowski metric for normal distributions"""
                 
         # Get expected values for both distributions
         rng = np.linspace(0,1,len(val_data))
@@ -217,6 +217,6 @@ class DSN(BaseThresholder):
         return np.abs(np.sum(studentized_residuals))
 
     def _KS_metric(self, val_data, val_norm):
-        """Calculate the Kolmogorov–Smirnov distance"""
+        """Calculate the Kolmogorov-Smirnov distance"""
 
         return np.max(np.abs(val_data-val_norm))
