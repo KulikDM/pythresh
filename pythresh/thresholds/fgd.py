@@ -63,7 +63,7 @@ class FGD(BaseThresholder):
 
             if (deriv[i]>0)&(deriv[i+1]<=0):
                 count+=1
-                ind.append[i]
+                ind.append(i)
                 if count==2:
                     break
         try:
