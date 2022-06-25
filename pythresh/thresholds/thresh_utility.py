@@ -25,7 +25,7 @@ def gen_kde(data, lower, upper, size):
 
     return kde(dat_range), dat_range
 
-def gen_kde(data, lower, upper, size):
+def gen_cdf(data, lower, upper, size):
 
     # Create a KDE & CDF of the data
     kde = stats.gaussian_kde(data)
