@@ -14,7 +14,7 @@ from .zscore import ZSCORE
 from .aucp import AUCP
 from .qmcd import QMCD
 from .fgd import FGD
-#from .dsn import DSN
+from .dsn import DSN
 from .clf import CLF
 from .filter import FILTER
 from .wind import WIND
