@@ -97,7 +97,6 @@ pythresh.thresholds.gesd module
 
 .. automodule:: pythresh.thresholds.gesd
     :members:
-    :exclude-members: calc_crit, grubbs_stat
     :undoc-members:
     :show-inheritance:
     :inherited-members:
