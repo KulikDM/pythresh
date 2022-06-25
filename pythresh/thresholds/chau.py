@@ -27,8 +27,7 @@ class CHAU(BaseThresholder):
        Attributes
        ----------
 
-       eval_: numpy array of binary labels of the training data. 0 stands
-           for inliers and 1 for outliers/anomalies.
+       thres_ : threshold value that seperates inliers from outliers
 
     """
 

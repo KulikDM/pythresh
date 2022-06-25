@@ -28,18 +28,17 @@ class DSN(BaseThresholder):
             - 'BHT': Bhattacharyya distance
             - 'HLL': Hellinger distance
             - 'HI': Histogram intersection distance
-            - 'LK': Lukaszyk–Karmowski metric for normal distributions
+            - 'LK': Lukaszyk-Karmowski metric for normal distributions
             - 'LP': Levy-Prokhorov metric
             - 'MAH': Mahalanobis distance
             - 'TMT': Tanimoto distance
             - 'RES': Studentized residual distance
-            - 'KS': Kolmogorov–Smirnov distance
+            - 'KS': Kolmogorov-Smirnov distance
 
        Attributes
        ----------
 
-       eval_: numpy array of binary labels of the training data. 0 stands
-           for inliers and 1 for outliers/anomalies.
+       thres_ : threshold value that seperates inliers from outliers
 
     """
 

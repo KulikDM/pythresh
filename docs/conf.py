@@ -169,13 +169,6 @@ texinfo_documents = [
 ]
 
 # -- Extension configuration -------------------------------------------------
-
-def autodoc_skip_member(app, what, name, obj, skip, options):
-    
-    exclusions = ('calc_crit', 'grubbs_stat')
-    exclude = name in exclusions
-    print(name)
-    return True if exclude else None
     
 
 # -- Options for intersphinx extension ---------------------------------------

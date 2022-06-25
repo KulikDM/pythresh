@@ -31,7 +31,7 @@ class FILTER(BaseThresholder):
         
 
        sigma : int, optional (default='native') 
-            Variable specific to each filter type, default sets segma to len(scores)*np.std(scores)
+            Variable specific to each filter type, default sets sigma to len(scores)*np.std(scores)
        
             - 'gaussian': standard deviation for Gaussian kernel
             - 'savgol':   savgol filter window size
@@ -44,9 +44,8 @@ class FILTER(BaseThresholder):
        Attributes
        ----------
 
-       eval_: numpy array of binary labels of the training data. 0 stands
-           for inliers and 1 for outliers/anomalies.
-
+       thres_ : threshold value that seperates inliers from outliers
+       
     """
 
     def __init__(self, method='wiener', sigma='native'):
