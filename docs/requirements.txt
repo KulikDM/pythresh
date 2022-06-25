@@ -9,6 +9,4 @@ scikit_learn>=0.20.0
 six
 sphinx-rtd-theme
 sphinxcontrib-bibtex
-more-itertools
-
 
