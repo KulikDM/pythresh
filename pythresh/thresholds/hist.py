@@ -74,7 +74,7 @@ class HIST(BaseThresholder):
             self.nbins = int(len(decision)**0.7)
 
         # Generate histogram 
-        bin_centers, counts = self.histogram(decision, self.nbins)
+        bin_centers, counts = self._histogram(decision, self.nbins)
 
         # Threshold histogram
         if self.method!='li':
