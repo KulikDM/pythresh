@@ -182,6 +182,3 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/': None}
-
-def setup(app):
-    app.connect('autodoc-skip-member', autodoc_skip_member)
