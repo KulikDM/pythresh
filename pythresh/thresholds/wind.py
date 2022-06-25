@@ -4,11 +4,6 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
 
-def dtheta(x,y,dx,dy,r2):
-    """Calculate dtheta for the intergrand"""
-    return (x*dy - y*dx)/r2
-
-
 class WIND(BaseThresholder):
     """WIND class for topological Winding number thresholder.
 
@@ -72,7 +67,7 @@ class WIND(BaseThresholder):
         deriv_norm = np.gradient(val_norm, dat_range[1]-dat_range[0])
 
         # Compute intergrand
-        integrand = dtheta(val_data,val_norm,deriv_data,deriv_norm,r2)
+        integrand = self._dtheta(val_data,val_norm,deriv_data,deriv_norm,r2)
 
         # Intergrate to find winding numbers mean intersection point
         limit = integrate.simpson(integrand)/np.sum((val_data+val_norm)/2)
@@ -80,3 +75,7 @@ class WIND(BaseThresholder):
         self.thresh_ = limit 
           
         return cut(decision, limit)
+    
+    def _dtheta(self,x,y,dx,dy,r2):
+        """Calculate dtheta for the intergrand"""
+        return (x*dy - y*dx)/r2

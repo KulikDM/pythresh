@@ -6,62 +6,6 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut
 
-def GAU_fltr(decision, sig, sigma):
-    """Gaussian filter scores"""
-
-    return gaussian_filter(decision, sigma=sig)
-
-def SAV_fltr(decision, sig, sigma):
-    """Savgol filter scores"""
-
-    if sigma=='native':
-        return signal.savgol_filter(decision, window_length=round(0.5*sig),
-                                    polyorder=1)
-    else:
-        return signal.savgol_filter(decision, window_length=round(sig),
-                                    polyorder=1)
-
-def HIL_fltr(decision, sig, sigma):
-    """Hilbert filter scores"""
-
-    return signal.hilbert(decision, N=round(sig))
-
-def WIE_fltr(decision, sig, sigma):
-    """Wiener filter scores"""
-
-    return signal.wiener(decision, mysize=len(decision))
-
-def MED_fltr(decision, sig, sigma):
-    """Medfilt filter scores"""
-    
-    sig = round(sig)
-
-    if sig%2==0:
-        sig+=1
-
-    return signal.medfilt(decision, kernel_size=[sig])
-
-
-def DEC_fltr(decision, sig, sigma):
-    """Decimate filter scores"""
-
-    return signal.decimate(decision, q=round(sig), ftype='fir')
-
-def DET_fltr(decision, sig, sigma):
-    """Detrend filter scores"""
-
-    return signal.detrend(decision, bp=np.linspace(0,len(decision)-1,round(sig)).astype(int))
-
-def RES_fltr(decision, sig, sigma):
-    """Resampling filter scores"""
-
-    if sigma=='native':
-        return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                            window=round(np.sqrt(sig)))
-    else:
-        return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                            window=round(sig))
-
 
 class FILTER(BaseThresholder):
     """FILTER class for Filtering based thresholders.
@@ -109,10 +53,10 @@ class FILTER(BaseThresholder):
 
         super(FILTER, self).__init__()
         self.method = method
-        self.method_funcs = {'gaussian': GAU_fltr, 'savgol': SAV_fltr,
-                             'hilbert': HIL_fltr, 'wiener': WIE_fltr,
-                             'medfilt': MED_fltr, 'decimate': DEC_fltr,
-                             'detrend':DET_fltr, 'resample':RES_fltr}
+        self.method_funcs = {'gaussian': self._GAU_fltr, 'savgol': self._SAV_fltr,
+                             'hilbert': self._HIL_fltr, 'wiener': self._WIE_fltr,
+                             'medfilt': self._MED_fltr, 'decimate': self._DEC_fltr,
+                             'detrend': self._DET_fltr, 'resample': self._RES_fltr}
         
         self.sigma = sigma
 
@@ -144,9 +88,65 @@ class FILTER(BaseThresholder):
             sig = self.sigma
 
         # Filter scores
-        fltr = self.method_funcs[str(self.method)](decision, sig, self.sigma)
+        fltr = self.method_funcs[str(self.method)](decision, sig)
         limit = np.max(fltr)
 
         self.thresh_ = limit
 
         return cut(decision, limit)
+    
+    def _GAU_fltr(self, decision, sig):
+        """Gaussian filter scores"""
+
+        return gaussian_filter(decision, sigma=sig)
+
+    def _SAV_fltr(self, decision, sig):
+        """Savgol filter scores"""
+
+        if self.sigma=='native':
+            return signal.savgol_filter(decision, window_length=round(0.5*sig),
+                                        polyorder=1)
+        else:
+            return signal.savgol_filter(decision, window_length=round(sig),
+                                        polyorder=1)
+
+    def _HIL_fltr(self, decision, sig):
+        """Hilbert filter scores"""
+
+        return signal.hilbert(decision, N=round(sig))
+
+    def _WIE_fltr(self, decision, sig):
+        """Wiener filter scores"""
+
+        return signal.wiener(decision, mysize=len(decision))
+
+    def _MED_fltr(self, decision, sig):
+        """Medfilt filter scores"""
+        
+        sig = round(sig)
+
+        if sig%2==0:
+            sig+=1
+
+        return signal.medfilt(decision, kernel_size=[sig])
+
+
+    def _DEC_fltr(self, decision, sig):
+        """Decimate filter scores"""
+
+        return signal.decimate(decision, q=round(sig), ftype='fir')
+
+    def _DET_fltr(self, decision, sig):
+        """Detrend filter scores"""
+
+        return signal.detrend(decision, bp=np.linspace(0,len(decision)-1,round(sig)).astype(int))
+
+    def _RES_fltr(self, decision, sig):
+        """Resampling filter scores"""
+
+        if self.sigma=='native':
+            return signal.resample(decision, num=round(np.sqrt(len(decision))),
+                                window=round(np.sqrt(sig)))
+        else:
+            return signal.resample(decision, num=round(np.sqrt(len(decision))),
+                                window=round(sig))

@@ -17,7 +17,7 @@ class CHAU(BaseThresholder):
        Paramaters
        ----------
 
-       method : {'mean', 'median', 'gmean'}, optional (default='gmean')
+       method : {'mean', 'median', 'gmean'}, optional (default='mean')
             Calculate the area normal to distance using a scaler
        
             - 'mean':  Construct a scaler with the the mean of the scores
@@ -32,7 +32,7 @@ class CHAU(BaseThresholder):
 
     """
 
-    def __init__(self, method='gmean'):
+    def __init__(self, method='mean'):
 
         super(CHAU, self).__init__()
         stat = {'mean':np.mean, 'median':np.median, 'gmean':stats.gmean}
