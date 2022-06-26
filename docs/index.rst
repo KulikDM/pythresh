@@ -76,30 +76,30 @@ Implemented Algorithms
 =========== ================================================================ ==============================================================================
 Abbr        Description                                                      Parameters    
 =========== ================================================================ ==============================================================================
-AUCP        Area Under Curve Precentage                     		           None
-BOOT        Bootstrapping                     			                       None
-CHAU		   Chauvenet's Criterion                			                    method: [default='mean', 'median', 'gmean']
-CLF		   Trained Classifier                 			                       None
-DSN		   Distance Shift from Normal                 		                 metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance, 'KS': Kolmogorov–Smirnov]
-EB		      Elliptical Boundary              			                       None
-FGD		   Fixed Gradient Descent                     		                 None
+AUCP        Area Under Curve Precentage                                      None
+BOOT        Bootstrapping                                                    None
+CHAU        Chauvenet's Criterion                                            method: [default='mean', 'median', 'gmean']
+CLF         Trained Classifier                                               None
+DSN         Distance Shift from Normal                                       metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance, 'KS': Kolmogorov–Smirnov]
+EB          Elliptical Boundary                                              None
+FGD         Fixed Gradient Descent                                           None
 FILTER      Filtering Based                                                  method: ['gaussian', 'savgol', 'hilbert', default = 'wiener', 'medfilt', 'decimate', 'detrend', 'resample']; sigma: int, default='native'
-FWFM		   Full Width at Full Minimum                  		                 None
-GESD		   Generalized Extreme Studentized Deviate                          max_outliers: int, default='native'; alpha: float, default=0.05 
-HIST		   Histogram Based                       			                    n_bins: int, default='native', method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
-IQR		   Inter-Qaurtile Regression     		                             None
+FWFM        Full Width at Full Minimum                                       None
+GESD        Generalized Extreme Studentized Deviate                          max_outliers: int, default='native'; alpha: float, default=0.05 
+HIST        Histogram Based                                                  n_bins: int, default='native', method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
+IQR         Inter-Qaurtile Regression                                        None
 KARCH       Karcher mean (Riemannian Center of Mass)                         ndim: int, default = 2; method: ['simple', default = 'complex']
-KMEANS		K-means Clustering                                 	           None
-MAD		   Median Absolute Deviation        			                       None
-MCST		   Monte Carlo Shapiro Tests           		                       None
-MOLL		   Friedrichs' Mollifier                     		                 None
-MTT		   Modified Thompson Tau Test          		                       strictness: [1,2,3,default=4,5]
-QMCD        Quasi-Monte Carlo Discreprancy            	                    method: ['CD', default='WD', 'MD', 'L2-star'], lim: ['Q', default='P']
-REGR		   Regression Based              				                       method: [default='siegel', 'theil']
-SHIFT		   Mean Shift Clustering            		       	                 None
-WIND		   Topological Winding Number              			                 None
-YJ		      Yeo-Johnson Transformation       			                       None
-ZSCORE		Z-score           					                                None
+KMEANS      K-means Clustering                                               None
+MAD         Median Absolute Deviation                                        None
+MCST        Monte Carlo Shapiro Tests                                        None
+MOLL        Friedrichs' Mollifier                                            None
+MTT         Modified Thompson Tau Test                                       strictness: [1,2,3,default=4,5]
+QMCD        Quasi-Monte Carlo Discreprancy                                   method: ['CD', default='WD', 'MD', 'L2-star'], lim: ['Q', default='P']
+REGR        Regression Based                                                 method: [default='siegel', 'theil']
+SHIFT       Mean Shift Clustering                                            None
+WIND        Topological Winding Number                                       None
+YJ          Yeo-Johnson Transformation                                       None
+ZSCORE      Z-score                                                          None
 ALL         All Thresholders Combined                                        thresholders: list, default='all'; max_contam: float, default=0.5; method: [default='mean', 'median', 'gmean']
 =========== ================================================================ ==============================================================================
 
