@@ -7,6 +7,10 @@ Python Outlier Detection Thresholding (PyThresh)
    :target: https://pypi.org/project/pythresh/
    :alt: PyPI version
 
+.. image:: https://readthedocs.org/projects/pythresh/badge/?version=latest
+   :target: http://pythresh.readthedocs.io/?badge=latest
+   :alt: Documentation status
+
 .. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white
    :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars

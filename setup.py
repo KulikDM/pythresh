@@ -34,6 +34,7 @@ setup(
     download_url='https://github.com/KulikDM/pythresh/archive/master.zip',
     keywords=['outlier detection', 'anomaly detection', 'outlier ensembles',
               'thresholding', 'cutoff'],
+    project_urls={"Documentation": 'https://pythresh.readthedocs.io/en/latest/'},
     packages=find_packages(exclude=['test']),
     include_package_data=True,
     install_requires=requirements,
