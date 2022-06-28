@@ -37,7 +37,7 @@ class TestDSN(unittest.TestCase):
 
         self.scores = self.clf.decision_scores_
         self.metrics = ['JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK',
-                        'LP', 'MAH', 'TMT', 'RES']
+                        'LP', 'MAH', 'TMT', 'RES', 'KS']
 
     def test_prediction_labels(self):
 

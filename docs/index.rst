@@ -77,35 +77,35 @@ Implemented Algorithms
 
 **(i) Individual Thresholding Algorithms** :
 
-=========== ================================================================ ==============================================================================
-Abbr        Description                                                      Parameters    
-=========== ================================================================ ==============================================================================
-AUCP        Area Under Curve Precentage                                      None
-BOOT        Bootstrapping                                                    None
-CHAU        Chauvenet's Criterion                                            method: [default='mean', 'median', 'gmean']
-CLF         Trained Classifier                                               None
-DSN         Distance Shift from Normal                                       metric: [default = 'JS':  Jensen-Shannon, 'WS':  Wasserstein, 'ENG': Energy, 'BHT': Bhattacharyya, 'HLL': Hellinger, 'HI':  Histogram intersection, 'LK':  Lukaszyk–Karmowski metric for normal distributions, 'LP':  Levy-Prokhorov, 'MAH': Mahalanobis, 'TMT': Tanimoto, 'RES': Studentized residual distance, 'KS': Kolmogorov–Smirnov]
-EB          Elliptical Boundary                                              None
-FGD         Fixed Gradient Descent                                           None
-FILTER      Filtering Based                                                  method: ['gaussian', 'savgol', 'hilbert', default = 'wiener', 'medfilt', 'decimate', 'detrend', 'resample']; sigma: int, default='native'
-FWFM        Full Width at Full Minimum                                       None
-GESD        Generalized Extreme Studentized Deviate                          max_outliers: int, default='native'; alpha: float, default=0.05 
-HIST        Histogram Based                                                  n_bins: int, default='native', method: [default='otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle']
-IQR         Inter-Qaurtile Regression                                        None
-KARCH       Karcher mean (Riemannian Center of Mass)                         ndim: int, default = 2; method: ['simple', default = 'complex']
-KMEANS      K-means Clustering                                               None
-MAD         Median Absolute Deviation                                        None
-MCST        Monte Carlo Shapiro Tests                                        None
-MOLL        Friedrichs' Mollifier                                            None
-MTT         Modified Thompson Tau Test                                       strictness: [1,2,3,default=4,5]
-QMCD        Quasi-Monte Carlo Discreprancy                                   method: ['CD', default='WD', 'MD', 'L2-star'], lim: ['Q', default='P']
-REGR        Regression Based                                                 method: [default='siegel', 'theil']
-SHIFT       Mean Shift Clustering                                            None
-WIND        Topological Winding Number                                       None
-YJ          Yeo-Johnson Transformation                                       None
-ZSCORE      Z-score                                                          None
-ALL         All Thresholders Combined                                        thresholders: list, default='all'; max_contam: float, default=0.5; method: [default='mean', 'median', 'gmean']
-=========== ================================================================ ==============================================================================
+=========== ================================================================ =========================
+Abbr        Description                                                      Ref    
+=========== ================================================================ =========================
+AUCP        Area Under Curve Precentage                                      :cite:`a-ren2018aucp`
+BOOT        Bootstrapping                                                    :cite:`a-martin2006boot`
+CHAU        Chauvenet's Criterion                                            :cite:`a-rochim2016chau`
+CLF         Trained Classifier                                               :cite:`a-aggarwal2017clf`
+DSN         Distance Shift from Normal                                       :cite:`a-amagata2021dsn`
+EB          Elliptical Boundary                                              :cite:`a-friendly2013eb`
+FGD         Fixed Gradient Descent                                           :cite:`a-qi2021fgd`
+FILTER      Filtering Based                                                  :cite:`a-malburg2002filter`
+FWFM        Full Width at Full Minimum                                       :cite:`a-joneidi2013fwfm`
+GESD        Generalized Extreme Studentized Deviate                          :cite:`a-alrawashdeh2021gesd`
+HIST        Histogram Based                                                  :cite:`a-thanammal2015hist`
+IQR         Inter-Qaurtile Regression                                        :cite:`a-bardet2015iqr`
+KARCH       Karcher mean (Riemannian Center of Mass)                         :cite:`a-afsari2011karch`
+KMEANS      K-means Clustering                                               :cite:`a-dey2017kmeans`
+MAD         Median Absolute Deviation                                        :cite:`a-archana2015mad`
+MCST        Monte Carlo Shapiro Tests                                        :cite:`a-coin2008mcst`
+MOLL        Friedrichs' Mollifier                                            :cite:`a-keyzer1997moll`
+MTT         Modified Thompson Tau Test                                       :cite:`a-rengasamy2020mtt`
+QMCD        Quasi-Monte Carlo Discreprancy                                   :cite:`a-iouchtchenko2019qmcd`
+REGR        Regression Based                                                 :cite:`a-aggarwal2017clf`
+SHIFT       Mean Shift Clustering                                            :cite:`a-yang2021shift`
+WIND        Topological Winding Number                                       :cite:`a-jacobson2013wind`
+YJ          Yeo-Johnson Transformation                                       :cite:`a-raymaekers2021yj`
+ZSCORE      Z-score                                                          :cite:`a-bagdonavicius2020zscore`
+ALL         All Thresholders Combined                                        
+=========== ================================================================ =========================
 
 **The comparison among of implemented models** is made available below
 (\ `Figure <https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png>`_\).
