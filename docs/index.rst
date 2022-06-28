@@ -157,5 +157,5 @@ Key Attributes of a threshold:
 
 .. bibliography::
    :cited:
-   :labelprefix: A
+   :labelprefix:
    :keyprefix: a-
