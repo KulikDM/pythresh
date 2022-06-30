@@ -1,9 +1,22 @@
 from setuptools import find_packages, setup
-from pythresh.version import __version__
 
 # read the contents of README file
 from os import path
-from io import open  # for Python 3 compatibility
+from io import open
+import sys, re
+
+# get __version__ from version.py  
+try:
+    verpath = path.join('pythresh', 'version.py')
+    version_file = open(verpath)
+    __version__ ,= re.findall('__version__ = "(.*)"', version_file.read())
+
+except Exception as error:
+    __version__ = "0.0.1"
+    sys.stderr.write("Warning: Could not open '%s' due %s\n" % (verpath, error))
+
+finally:
+    version_file.close()    
 
 this_directory = path.abspath(path.dirname(__file__))
 
