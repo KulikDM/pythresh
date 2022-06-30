@@ -16,26 +16,22 @@ Welcome to PyThresh Documentation
    :target: http://pythresh.readthedocs.io/?badge=latest
    :alt: Documentation status
 
+.. image:: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml/badge.svg
+   :target: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml
+   :alt: testing
+
 .. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white
    :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars
-
-
-.. image:: https://img.shields.io/github/forks/KulikDM/pythresh.svg?color=blue&logo=github&logoColor=white
-   :target: https://github.com/KulikDM/pythresh/network
-   :alt: GitHub forks
-
 
 .. image:: https://pepy.tech/badge/pythresh?
    :target: https://pepy.tech/project/pythresh
    :alt: Downloads
    
-  
 .. image:: https://img.shields.io/pypi/pyversions/pythresh.svg?logo=python&logoColor=white
    :target: https://pypi.org/project/pythresh/
    :alt: Python versions
   
-
 .. image:: https://img.shields.io/github/license/KulikDM/pythresh.svg
    :target: https://github.com/KulikDM/pythresh/blob/master/LICENSE
    :alt: License
