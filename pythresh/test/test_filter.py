@@ -2,7 +2,7 @@
 from __future__ import division
 from __future__ import print_function
 
-import os
+from os.path import dirname as up
 import sys
 
 import unittest
@@ -12,10 +12,11 @@ from numpy.testing import assert_array_less
 from numpy.testing import assert_equal
 from numpy.testing import assert_raises
 
-# temporary solution for relative imports in case pyod is not installed
-# if pyod is installed, no need to use the following line
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
+# temporary solution for relative imports in case pythresh is not installed
+# if pythresh is installed, no need to use the following line
+
+path = up(up(up(__file__)))
+sys.path.append(path)
 
 from pythresh.thresholds.filter import FILTER
 
