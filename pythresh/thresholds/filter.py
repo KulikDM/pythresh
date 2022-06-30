@@ -101,12 +101,14 @@ class FILTER(BaseThresholder):
 
     def _SAV_fltr(self, decision, sig):
         """Savgol filter scores"""
-
+        
         if self.sigma=='native':
-            return signal.savgol_filter(decision, window_length=round(0.5*sig),
-                                        polyorder=1)
-        else:
-            return signal.savgol_filter(decision, window_length=round(sig),
+            sig = round(0.5*sig)
+
+        if sig%2==0:
+            sig+=1
+
+        return signal.savgol_filter(decision, window_length=round(sig),
                                         polyorder=1)
 
     def _HIL_fltr(self, decision, sig):

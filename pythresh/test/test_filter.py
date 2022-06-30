@@ -24,7 +24,7 @@ from pyod.models.knn import KNN
 from pyod.utils.data import generate_data
 
 
-class TestDSN(unittest.TestCase):
+class TestFilter(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
         self.n_test = 100
@@ -40,6 +40,7 @@ class TestDSN(unittest.TestCase):
         
         self.method = ['gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt',
                         'decimate','detrend', 'resample']
+        
         self.sigma = 'native'
 
     def test_prediction_labels(self):
