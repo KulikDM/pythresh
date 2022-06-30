@@ -1,13 +1,9 @@
 from setuptools import find_packages, setup
+from pythresh.version import __version__
 
 # read the contents of README file
 from os import path
 from io import open  # for Python 3 compatibility
-
-# get __version__ from _version.py
-ver_file = path.join('pythresh', 'version.py')
-with open(ver_file) as f:
-    exec(f.read())
 
 this_directory = path.abspath(path.dirname(__file__))
 
