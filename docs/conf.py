@@ -14,14 +14,26 @@
 #
 
 import os
-import sys
+import sys, re
 from os.path import dirname, abspath
+from io import open
 
 sys.path.insert(0, abspath('..'))
 pythresh_dir = dirname(dirname(abspath(__file__)))
 
-version_path = os.path.join(pythresh_dir, 'pythresh', 'version.py')
-exec(open(version_path).read())
+
+try:
+    verpath = os.path.join(pythresh_dir, 'pythresh', 'version.py')
+    version_file = open(verpath)
+    __version__ ,= re.findall('__version__ = "(.*)"', version_file.read())
+
+except Exception as error:
+    __version__ = "0.0.1"
+    sys.stderr.write("Warning: Could not open '%s' due %s\n" % (verpath, error))
+
+finally:
+    version_file.close() 
+    
 # -- Project information -----------------------------------------------------
 
 project = 'pythresh'
