@@ -14,6 +14,7 @@ class MCST(BaseThresholder):
        iterative Shapiro-Wilk tests have occured. Note** accuracy decreases with
        array size. For good results the should be array<1000. However still this
        threshold method may fail at any array size.
+       See :cite:`coin2008mcst` for details.
        
        Paramaters
        ----------

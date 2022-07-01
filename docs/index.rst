@@ -78,12 +78,12 @@ Abbr        Description                                                      Ref
 =========== ================================================================ =========================
 AUCP        Area Under Curve Precentage                                      :cite:`a-ren2018aucp`
 BOOT        Bootstrapping                                                    :cite:`a-martin2006boot`
-CHAU        Chauvenet's Criterion                                            :cite:`a-rochim2016chau`
+CHAU        Chauvenet's Criterion                                            :cite:`a-bolshev2016chau`
 CLF         Trained Classifier                                               :cite:`a-aggarwal2017clf`
 DSN         Distance Shift from Normal                                       :cite:`a-amagata2021dsn`
 EB          Elliptical Boundary                                              :cite:`a-friendly2013eb`
 FGD         Fixed Gradient Descent                                           :cite:`a-qi2021fgd`
-FILTER      Filtering Based                                                  :cite:`a-malburg2002filter`
+FILTER      Filtering Based                                                  :cite:`a-hashemi2019filter`
 FWFM        Full Width at Full Minimum                                       :cite:`a-joneidi2013fwfm`
 GESD        Generalized Extreme Studentized Deviate                          :cite:`a-alrawashdeh2021gesd`
 HIST        Histogram Based                                                  :cite:`a-thanammal2015hist`

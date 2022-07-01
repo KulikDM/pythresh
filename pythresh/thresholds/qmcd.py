@@ -13,7 +13,8 @@ class QMCD(BaseThresholder):
        are set to any value beyond and percentile or quantile of one minus the
        descreperancy (Note** A discrepancy quantifies the distance between the
        continuous uniform distribution on a hypercube and the discrete uniform
-       distribution on distinct sample points)
+       distribution on distinct sample points).
+       See :cite:`iouchtchenko2019qmcd` for details.
        
        Paramaters
        ----------

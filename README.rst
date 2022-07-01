@@ -160,7 +160,7 @@ References
 
 .. [#boot1] `An evaluation of bootstrap methods for outlier detection in least squares regression <https://www.researchgate.net/publication/24083638_An_evaluation_of_bootstrap_methods_for_outlier_detection_in_least_squares_regression>`_
 
-.. [#chau1] `Chauvenet's and Peirce's Criterion <https://www.researchgate.net/publication/299829851_Chauvenet%27s_and_Peirce%27s_Criterion_literature_review>`_
+.. [#chau1] `Chauvenet’s Test in the Classical Theory of Errors <https://epubs.siam.org/doi/10.1137/1119078>`_
 
 .. [#clf1] `Linear Models for Outlier Detection <https://link.springer.com/chapter/10.1007/978-3-319-47578-3_3>`_
 
@@ -170,7 +170,7 @@ References
 
 .. [#fgd1] `Iterative gradient descent for outlier detection <https://www.worldscientific.com/doi/10.1142/S0219691321500041>`_
 
-.. [#filter1] `Fitting, Filtering and Analysis: Feature Extraction in Dimensional Metrology Applications <https://digitalmetrology.com/Papers/IDW2002-Abstract.pdf>`_
+.. [#filter1] `Filtering Approaches for Dealing with Noise in Anomaly Detection <https://ieeexplore.ieee.org/document/9029258/>`_
 
 .. [#fwfm1] `Sparse Auto-Regressive: Robust Estimation of AR Parameters <https://arxiv.org/abs/1306.3317>`_
 
