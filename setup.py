@@ -9,14 +9,13 @@ import sys, re
 try:
     verpath = path.join('pythresh', 'version.py')
     version_file = open(verpath)
-    __version__ ,= re.findall('__version__ = "(.*)"', version_file.read())
+    __version__ = str(re.findall(r'\b\d+(?:\.\d+)+', version_file.read())[0])
+    version_file.close() 
 
 except Exception as error:
     __version__ = "0.0.1"
     sys.stderr.write("Warning: Could not open '%s' due %s\n" % (verpath, error))
-
-finally:
-    version_file.close()    
+     
 
 this_directory = path.abspath(path.dirname(__file__))
 
