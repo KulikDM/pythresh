@@ -68,10 +68,8 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
 
 ----
 
-Implemented Algorithms
-^^^^^^^^^^^^^^^^^^^^^^
-
-**(i) Individual Thresholding Algorithms** :
+Available Thresholding Algorithms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 =========== ================================================================ =========================
 Abbr        Description                                                      Ref    

@@ -63,9 +63,9 @@ class CHAU(BaseThresholder):
         criterion = 1/abs(stats.norm.ppf(Pz))
 
         # Get area normal to distance
-        prob = erfc(np.abs(decision-self.method(decision))/decision.std())
+        prob = erfc(np.abs(decision-self.method(decision))/decision.std()/2.0**0.5)
 
         self.thresh_ = criterion * (1-np.min(prob))/np.max(prob)
 
-        return cut(prob, criterion)
+        return 1-cut(prob, criterion)
 
