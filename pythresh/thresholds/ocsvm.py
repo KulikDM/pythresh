@@ -31,7 +31,7 @@ class OCSVM(BaseThresholder):
        criterion : {'aic', 'bic'}, optional (default='bic')
            regression performance metric. AIC is the Akaike Information Criterion,
            and BIC is the Bayesian Information Criterion. This only applies
-           when degree is set to None
+           when degree is set to 'auto'
 
         nu : float, optional (default=0.85)
             An upper bound on the fraction of training errors and a lower bound
@@ -78,43 +78,9 @@ class OCSVM(BaseThresholder):
 
         if self.degree=='auto':
 
-            # Generate kde
-            kde, dat_range = gen_kde(decision,0,1,len(decision))
+            self.degree = self._auto_crit(decision)
 
-            # Set polynomial degrees to test
-            polys = [2,3,4,5,6,7,8,9,10]
-            n = len(decision)
-
-            decision = decision.reshape(-1,1)
-            kde = kde.reshape(-1,1)
-
-            scores = []
-            
-            for poly in polys:
-
-                # Calculate the polynomial features for the kde
-                poly_features = PolynomialFeatures(degree=poly, include_bias=True)
-                poly_fit = poly_features.fit_transform(kde)
-
-                # Use regression to fit the polynomial 
-                poly_reg = RidgeCV(alphas=np.logspace(-3,1,1000))
-                poly_reg.fit(poly_fit, dat_range)
-                poly_pred = poly_reg.predict(poly_fit)
-
-                # Get the mse and apply the regression performance metric
-                mse = mean_squared_error(dat_range, poly_pred)
-
-                if self.crit=='aic':
-                    scores.append(n*np.log(mse) + 2*(poly+1))
-                else:
-                    scores.append(n*np.log(mse) + (poly+1)*np.log(n))
-
-            # Set degree from smallest metric score
-            self.degree = polys[np.argmin(scores)]
-
-        else:
-
-            decision = decision.reshape(-1,1)
+        decision = decision.reshape(-1,1)
 
         # Create a one-class svm
         clf = OneClassSVM(gamma=self.gamma, kernel='poly',
@@ -130,3 +96,42 @@ class OCSVM(BaseThresholder):
 
         
         return res
+    
+    def _auto_crit(self, decision):
+        '''Decide polynomial degree using criterion'''
+        
+        # Generate kde
+        kde, dat_range = gen_kde(decision,0,1,len(decision))
+
+        # Set polynomial degrees to test
+        polys = [2,3,4,5,6,7,8,9,10]
+        n = len(decision)
+
+        decision = decision.reshape(-1,1)
+        kde = kde.reshape(-1,1)
+
+        scores = []
+        
+        for poly in polys:
+
+            # Calculate the polynomial features for the kde
+            poly_features = PolynomialFeatures(degree=poly, include_bias=True)
+            poly_fit = poly_features.fit_transform(kde)
+
+            # Use regression to fit the polynomial 
+            poly_reg = RidgeCV(alphas=np.logspace(-1,2,100))
+            poly_reg.fit(poly_fit, dat_range)
+            poly_pred = poly_reg.predict(poly_fit)
+
+            # Get the mse and apply the regression performance metric
+            mse = mean_squared_error(dat_range, poly_pred)
+
+            if self.crit=='aic':
+                scores.append(n*np.log(mse) + 2*(poly+1))
+            else:
+                scores.append(n*np.log(mse) + (poly+1)*np.log(n))
+
+        # Set degree from smallest metric score
+        deg = polys[np.argmin(scores)]
+        
+        return deg

@@ -187,7 +187,7 @@ pythresh.thresholds.ocsvm module
 
 .. automodule:: pythresh.thresholds.ocsvm
     :members:
-    :exclude-members:
+    :exclude-members: _auto_crit
     :undoc-members:
     :show-inheritance:
     :inherited-members:

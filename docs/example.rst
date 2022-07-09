@@ -43,7 +43,7 @@ Full example: `karch_example.py <https://github.com/KulikDM/pythresh/blob/main/e
         n_train = 200  # number of training points
         n_test = 100  # number of testing points
 
-        X_train, y_train, X_test, y_test = \
+        X_train, X_test, y_train, y_test = \
         generate_data(n_train=n_train,
                       n_test=n_test,
                       n_features=2,
@@ -97,7 +97,7 @@ the outlier detection scores.
 
     .. code-block:: python
 
-        visualize(clf_name, X_train, y_train, X_test, y_test, y_train_pred,
+        visualize(clf_name, X_train, X_test, y_train, y_test, y_train_pred,
                   y_test_pred, show_figure=True, save_figure=False)
 
 
