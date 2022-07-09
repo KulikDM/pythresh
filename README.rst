@@ -126,6 +126,7 @@ MAD         Median Absolute Deviation                   [#mad1]_			     `pythres
 MCST        Monte Carlo Shapiro Tests                   [#mcst1]_            `pythresh.thresholds.mcst module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mcst>`_
 MOLL        Friedrichs' Mollifier                       [#moll1]_ [#moll2]_  `pythresh.thresholds.moll module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.moll>`_
 MTT         Modified Thompson Tau Test                  [#mtt1]_			     `pythresh.thresholds.mtt module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mtt>`_
+OCSVM       One-Class Support Vector Machine            [#ocsvm]_            `pythresh.thresholds.ocsvm module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.ocsvm>`_`
 QMCD        Quasi-Monte Carlo Discreprancy              [#qmcd1]_		        `pythresh.thresholds.qmcd module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.qmcd>`_
 REGR        Regression Based                            [#regr1]_            `pythresh.thresholds.regr module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.regr>`_
 SHIFT       Mean Shift Clustering                       [#shift1]_			  `pythresh.thresholds.shift module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.shift>`_
@@ -191,6 +192,8 @@ References
 .. [#moll2] `Using the mollifier method to characterize datasets and models: The case of the Universal Soil Loss Equation <https://www.researchgate.net/publication/286670128_Using_the_mollifier_method_to_characterize_datasets_and_models_The_case_of_the_Universal_Soil_Loss_Equation>`_
 
 .. [#mtt1] `Towards a More Reliable Interpretation of Machine Learning Outputs for Safety-Critical Systems using Feature Importance Fusion <https://arxiv.org/abs/2009.05501>`_
+
+.. [#ocsvm] `Rule extraction in unsupervised anomaly detection for model explainability: Application to OneClass SVM <https://arxiv.org/abs/1911.09315>`_
 
 .. [#qmcd1] `Deterministic and quasi-random sampling of optimized Gaussian mixture distributions for vibronic Monte Carlo <https://arxiv.org/abs/1912.11594>`_
 

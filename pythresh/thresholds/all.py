@@ -1,6 +1,5 @@
 import numpy as np
 import scipy.stats as stats
-from sklearn.metrics import auc
 from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
@@ -29,6 +28,7 @@ from .gesd import GESD
 from .mtt import MTT
 from .shift import SHIFT
 from .karch import KARCH
+from .ocsvm import OCSVM
 
 
 class ALL(BaseThresholder):
@@ -99,7 +99,7 @@ class ALL(BaseThresholder):
                                  ZSCORE(), AUCP(), QMCD(), FGD(), DSN(),
                                  CLF(), FILTER(), WIND(), EB(), REGR(), BOOT(),
                                  MCST(), HIST(), MOLL(), CHAU(), GESD(),
-                                 MTT(), SHIFT(), KARCH()]
+                                 MTT(), SHIFT(), KARCH(), OCSVM()]
 
         # Apply each thresholder
         contam = []

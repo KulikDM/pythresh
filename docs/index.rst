@@ -92,6 +92,7 @@ MAD         Median Absolute Deviation                                        :ci
 MCST        Monte Carlo Shapiro Tests                                        :cite:`a-coin2008mcst`
 MOLL        Friedrichs' Mollifier                                            :cite:`a-keyzer1997moll`
 MTT         Modified Thompson Tau Test                                       :cite:`a-rengasamy2020mtt`
+OCSVM       One-Class Support Vector Machine                                 :cite:`a-barbado2022ocsvm`
 QMCD        Quasi-Monte Carlo Discreprancy                                   :cite:`a-iouchtchenko2019qmcd`
 REGR        Regression Based                                                 :cite:`a-aggarwal2017clf`
 SHIFT       Mean Shift Clustering                                            :cite:`a-yang2021shift`

@@ -46,7 +46,7 @@ class WIND(BaseThresholder):
         decision = normalize(decision)
 
         # Create a normal distribution and normalize
-        size = max(len(decision),1500)
+        size = min(len(decision),1500)
         norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=1234)
         norm = normalize(norm)
 

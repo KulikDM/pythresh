@@ -182,6 +182,16 @@ pythresh.thresholds.mtt module
     :show-inheritance:
     :inherited-members:
 
+pythresh.thresholds.ocsvm module
+----------------------
+
+.. automodule:: pythresh.thresholds.ocsvm
+    :members:
+    :exclude-members:
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:
+
 pythresh.thresholds.qmcd module
 ----------------------
 
@@ -259,4 +269,4 @@ Module contents
 
 .. bibliography::
    :cited:
-   :labelprefix: B
+   :labelprefix:
