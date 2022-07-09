@@ -33,7 +33,7 @@ class OCSVM(BaseThresholder):
            and BIC is the Bayesian Information Criterion. This only applies
            when degree is set to 'auto'
 
-        nu : float, optional (default=0.85)
+        nu : float, optional (default=0.75)
             An upper bound on the fraction of training errors and a lower bound
             of the fraction of support vectors
 
@@ -47,7 +47,7 @@ class OCSVM(BaseThresholder):
 
     """
 
-    def __init__(self, degree='auto', gamma='auto', criterion='bic', nu=0.85, tol=1e-3):
+    def __init__(self, degree='auto', gamma='auto', criterion='bic', nu=0.75, tol=1e-3):
 
         self.degree = degree
         self.gamma = gamma
@@ -75,6 +75,7 @@ class OCSVM(BaseThresholder):
 
 
         decision = check_array(decision, ensure_2d=False)
+        decision = normalize(decision)
 
         if self.degree=='auto':
 
@@ -91,6 +92,11 @@ class OCSVM(BaseThresholder):
         res = clf.predict(decision)
 
         res[res==-1] = 0
+        
+        # Remove outliers from the left tail
+        decision = np.squeeze(decision)
+        mask = np.where(decision<=np.mean(decision))
+        res[mask] = 0
         
         self.thresh_ = None
 

@@ -22,7 +22,7 @@ from pyod.utils.data import generate_data
 from pyod.utils.data import evaluate_print
 from pyod.utils.example import visualize
 
-from pythreshh.thresholds.ocsvm import OCSVM
+from pythresh.thresholds.ocsvm import OCSVM
 
 if __name__ == "__main__":
     contamination = 0.1  # percentage of outliers
