@@ -19,7 +19,7 @@ class KARCH(BaseThresholder):
        ----------
 
        ndim : int, optional (default=2)
-            Number of dimensions to constric the Euclidean manifold
+            Number of dimensions to construct the Euclidean manifold
 
        method : {'simple', 'complex'}, optional (default='complex')
             Method for computing the Karcher mean

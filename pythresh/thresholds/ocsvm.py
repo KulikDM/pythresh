@@ -33,15 +33,15 @@ class OCSVM(BaseThresholder):
            and BIC is the Bayesian Information Criterion. This only applies
            when degree is set to 'auto'
 
-        nu : float, optional (default='auto')
-            An upper bound on the fraction of training errors and a lower bound
-            of the fraction of support vectors. Default 'auto' sets nu as the ratio
-            between the any point that is less than or equal to the median plus
-            the absolute difference between the mean and geometric mean over the
-            the number of points in the entire dataset 
+       nu : float, optional (default='auto')
+           An upper bound on the fraction of training errors and a lower bound
+           of the fraction of support vectors. Default 'auto' sets nu as the ratio
+           between the any point that is less than or equal to the median plus
+           the absolute difference between the mean and geometric mean over the
+           the number of points in the entire dataset 
 
-        tol : float, optional (default=1e-3)
-            The stopping criterion for the one-class svm
+       tol : float, optional (default=1e-3)
+           The stopping criterion for the one-class svm
 
        Attributes
        ----------
