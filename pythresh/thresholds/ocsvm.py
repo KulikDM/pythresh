@@ -1,4 +1,5 @@
 import numpy as np
+import scipy.stats as stats
 from sklearn.linear_model import RidgeCV
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import PolynomialFeatures
@@ -6,7 +7,6 @@ from sklearn.svm import OneClassSVM
 from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
-
 
 class OCSVM(BaseThresholder):
     """OCSVM class for One-Class Support Vector Machine thresholder.
@@ -33,9 +33,12 @@ class OCSVM(BaseThresholder):
            and BIC is the Bayesian Information Criterion. This only applies
            when degree is set to 'auto'
 
-        nu : float, optional (default=0.75)
+        nu : float, optional (default='auto')
             An upper bound on the fraction of training errors and a lower bound
-            of the fraction of support vectors
+            of the fraction of support vectors. Default 'auto' sets nu as the ratio
+            between the any point that is less than or equal to the median plus
+            the absolute difference between the mean and geometric mean over the
+            the number of points in the entire dataset 
 
         tol : float, optional (default=1e-3)
             The stopping criterion for the one-class svm
@@ -47,7 +50,7 @@ class OCSVM(BaseThresholder):
 
     """
 
-    def __init__(self, degree='auto', gamma='auto', criterion='bic', nu=0.75, tol=1e-3):
+    def __init__(self, degree='auto', gamma='auto', criterion='bic', nu='auto', tol=1e-3):
 
         self.degree = degree
         self.gamma = gamma
@@ -76,7 +79,18 @@ class OCSVM(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
         decision = normalize(decision)
+        
+        # Get auto nu calculation
+        if self.nu=='auto':
 
+            np.seterr(divide='ignore')
+            gmean = stats.gmean(decision)
+            mean = np.mean(decision)
+            med = np.median(decision)
+            
+            self.nu = len(decision[decision<=med+abs(mean-gmean)])/len(decision)
+
+        # Get auto degree calculation
         if self.degree=='auto':
 
             self.degree = self._auto_crit(decision)
@@ -93,7 +107,7 @@ class OCSVM(BaseThresholder):
 
         res[res==-1] = 0
         
-        # Remove outliers from the left tail
+        # Remove outliers from the left tail (precaution step)
         decision = np.squeeze(decision)
         mask = np.where(decision<=np.mean(decision))
         res[mask] = 0
