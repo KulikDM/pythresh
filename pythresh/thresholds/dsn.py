@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.stats as stats
 import scipy.special as special
+from scipy.integrate import simpson
 import scipy.spatial.distance as distance
 from sklearn.covariance import MinCovDet
 from itertools import combinations
@@ -121,10 +122,8 @@ class DSN(BaseThresholder):
     def _BHT_metric(self, val_data, val_norm):
         """Calculate the Bhattacharyya distance"""
 
-        val_data = val_data/np.sum(val_data)
-        val_norm = val_norm/np.sum(val_norm)
-
-        bht = np.sum(np.sqrt(val_data*val_norm))
+        bht = simpson(np.sqrt(val_data*val_norm), dx=1/len(val_data))
+        
         return np.log1p(bht)
 
     def _HLL_metric(self, val_data, val_norm):
