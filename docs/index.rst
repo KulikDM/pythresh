@@ -20,6 +20,10 @@ Welcome to PyThresh Documentation
    :target: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml
    :alt: testing
 
+.. image:: https://codecov.io/gh/KulikDM/pythresh/branch/master/graph/badge.svg?token=8ZAPXTLW9Y
+   :target: https://codecov.io/gh/KulikDM/pythresh
+   :alt: Codecov
+
 .. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white
    :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars
