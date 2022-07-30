@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: [3.7, 3.8, 3.9, 3.10]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
 
     steps:
     - uses: actions/checkout@v3
@@ -38,9 +38,11 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Check static typing
+      working-directory: ${{ github.workspace }}
       run: |
         make type-check
     - name: Test with pytest
+      working-directory: ${{ github.workspace }}
       run: |
         make coverage
     - name: Code coverage
