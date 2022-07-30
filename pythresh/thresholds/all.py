@@ -115,7 +115,12 @@ class ALL(BaseThresholder):
 
         # Get [mean, median, or gmean] of inliers
         inlier_ratio = 1-self.method(np.array(decision))
-        limit = decision[int(len(decision)*inlier_ratio)]
+        
+        idx = int(len(decision)*inlier_ratio)
+        if idx==len(decision):
+            limit=1.0
+        else:    
+            limit = decision[idx]
         
         self.thresh_ = limit
         
