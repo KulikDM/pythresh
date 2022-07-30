@@ -40,7 +40,7 @@ jobs:
     - name: Check static typing
       working-directory: ${{ github.workspace }}
       run: |
-        make type-check
+        make types
     - name: Test with pytest
       working-directory: ${{ github.workspace }}
       run: |
