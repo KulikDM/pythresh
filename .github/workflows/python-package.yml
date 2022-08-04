@@ -39,7 +39,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -vs --doctest-modules --cov-branch --cov=pythresh --cov-report term-missing --pyargs pythresh
+        pytest -vs --doctest-modules --cov-fail-under=90 --cov-branch --cov=pythresh --cov-report term-missing --pyargs pythresh
     - name: Code coverage
       run: |
         codecov
