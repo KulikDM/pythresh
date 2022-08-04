@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 from scipy.cluster.vq import kmeans
 from sklearn.utils import check_array
@@ -27,6 +28,8 @@ class KMEANS(BaseThresholder):
     def __init__(self):
 
         super(KMEANS, self).__init__()
+        warnings.warn("KMEANS will be depreciated in the next version. Rather use CLUST(method='kmeans')",
+                         category=DeprecationWarning, stacklevel=2)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

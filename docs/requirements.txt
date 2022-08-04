@@ -3,6 +3,7 @@ docutils
 geomstats
 matplotlib
 numpy
+pyclustering
 pyod
 scipy
 scikit-learn

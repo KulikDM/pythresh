@@ -8,7 +8,6 @@ from .iqr import IQR
 from .mad import MAD
 from .fwfm import FWFM
 from .yj import YJ
-from .kmeans import KMEANS
 from .zscore import ZSCORE
 from .aucp import AUCP
 from .qmcd import QMCD
@@ -26,9 +25,9 @@ from .moll import MOLL
 from .chau import CHAU
 from .gesd import GESD
 from .mtt import MTT
-from .shift import SHIFT
 from .karch import KARCH
 from .ocsvm import OCSVM
+from .clust import CLUST
 
 
 class ALL(BaseThresholder):
@@ -95,11 +94,11 @@ class ALL(BaseThresholder):
 
         # Initialize thresholders
         if self.thresholders=='all':
-            self.thresholders = [IQR(), MAD(), FWFM(), YJ(), KMEANS(),
-                                 ZSCORE(), AUCP(), QMCD(), FGD(), DSN(),
-                                 CLF(), FILTER(), WIND(), EB(), REGR(), BOOT(),
+            self.thresholders = [IQR(), MAD(), FWFM(), YJ(), ZSCORE(),
+                                 AUCP(), QMCD(), FGD(), DSN(), CLF(),
+                                 FILTER(), WIND(), EB(), REGR(), BOOT(),
                                  MCST(), HIST(), MOLL(), CHAU(), GESD(),
-                                 MTT(), SHIFT(), KARCH(), OCSVM()]
+                                 MTT(), KARCH(), OCSVM(), CLUST()]
 
         # Apply each thresholder
         contam = []

@@ -89,6 +89,7 @@ Alternatively, you could clone and run setup.py file:
 * geomstats
 * matplotlib
 * numpy>=1.13
+* pyclustering
 * pyod
 * scipy>=1.3.1
 * scikit_learn>=0.20.0
@@ -116,6 +117,7 @@ AUCP        Area Under Curve Precentage                 [#aucp1]_            `py
 BOOT        Bootstrapping                               [#boot1]_            `pythresh.thresholds.boot module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.boot>`_
 CHAU        Chauvenet's Criterion                       [#chau1]_            `pythresh.thresholds.chau module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.chau>`_
 CLF         Trained Classifier                          [#clf1]_             `pythresh.thresholds.clf module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clf>`_
+CLUST       Clustering Based                            [#clust1]_           `pythresh.thresholds.clust module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clust>`_
 DSN         Distance Shift from Normal                  [#dsn1]_             `pythresh.thresholds.dsn module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.dsn>`_
 EB          Elliptical Boundary                         [#eb1]_              `pythresh.thresholds.eb module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.eb>`_
 FGD         Fixed Gradient Descent                      [#fgd1]_             `pythresh.thresholds.fgd module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.fgd>`_
@@ -166,6 +168,8 @@ References
 .. [#chau1] `Chauvenet’s Test in the Classical Theory of Errors <https://epubs.siam.org/doi/10.1137/1119078>`_
 
 .. [#clf1] `Linear Models for Outlier Detection <https://link.springer.com/chapter/10.1007/978-3-319-47578-3_3>`_
+
+.. [#clust1] `Cluster Analysis for Outlier Detection <https://www.researchgate.net/publication/224990195_Cluster_Analysis_for_Outlier_Detection>`_
 
 .. [#dsn1] `Fast and Exact Outlier Detection in Metric Spaces: A Proximity Graph-based Approach <https://arxiv.org/abs/2110.08959>`_
 

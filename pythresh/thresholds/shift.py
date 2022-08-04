@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 from sklearn.cluster import MeanShift, estimate_bandwidth
 from scipy.spatial.distance import cityblock
@@ -27,6 +28,8 @@ class SHIFT(BaseThresholder):
     def __init__(self):
 
         super(SHIFT, self).__init__()
+        warnings.warn("SHIFT will be depreciated in the next version. Rather use CLUST(method='mshift')",
+                         category=DeprecationWarning, stacklevel=2)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

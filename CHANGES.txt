@@ -13,4 +13,5 @@ v<0.2.0>, <06/21/2022> -- Updated fgd.py, dsn.py fix
 v<0.2.1>, <06/25/2022> -- Documentation and updated docstrings
 v<0.2.2>, <06/25/2022> -- Documentation, and general bug fixes with moving all functions into classes
 v<0.2.3>, <07/02/2022> -- Updated references, documentation, and version control. General bug fixes
-v<0.2.4>, <07/09/2022> -- Added ocsvm threshold, fixed all tests and examples, updated documentation
+v<0.2.4>, <07/09/2022> -- Added ocsvm thresholder, fixed all tests and examples, updated documentation
+v<0.2.5>, <08/04/2022> -- Added clust thresholders, Python 3.10 intergration, CodeCov, and minor changes to thresholders

@@ -82,6 +82,7 @@ AUCP        Area Under Curve Precentage                                      :ci
 BOOT        Bootstrapping                                                    :cite:`a-martin2006boot`
 CHAU        Chauvenet's Criterion                                            :cite:`a-bolshev2016chau`
 CLF         Trained Classifier                                               :cite:`a-aggarwal2017clf`
+CLUST       Clustering Based                                                 :cite:`a-klawonn2088clust`
 DSN         Distance Shift from Normal                                       :cite:`a-amagata2021dsn`
 EB          Elliptical Boundary                                              :cite:`a-friendly2013eb`
 FGD         Fixed Gradient Descent                                           :cite:`a-qi2021fgd`

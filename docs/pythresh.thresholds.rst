@@ -52,6 +52,16 @@ pythresh.thresholds.clf module
     :show-inheritance:
     :inherited-members:
 
+pythresh.thresholds.clust module
+----------------------
+
+.. automodule:: pythresh.thresholds.clust
+    :members:
+    :exclude-members: _pyclust_eval, _sklearn_eval, _AGG_clust, _BIRCH_clust, _BANG_clust, _BSAS_clust, _DBSCAN_clust, _EMA_clust, _KMEAN_clust, _MBSAS_clust, _MSHIFT_clust, _OPTICS_clust, _SOMSC_clust, _SPEC_clust, _XMEANS_clust
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:
+
 pythresh.thresholds.dsn module
 ------------------------------
 
