@@ -27,9 +27,9 @@ class AUCP(BaseThresholder):
        
        The area under the curve (AUC) is defined as follows:
        
-       ..math::
+       .. math::
         
-          AUC = \mathrm{lim}_{x\rightarrow\inf} \sum_{i=1}^{n} f(x) \delta x mathrm{,}
+          AUC = \mathrm{lim}_{x\rightarrow\inf} \sum_{i=1}^{n} f(x) \delta x \mathrm{,}
           
        where :math:`f(x)` is the curve and :math:`\delta x` is the incremental step size
        of the rectangles whose areas will be summed up. The AUCP method generates a 
@@ -43,7 +43,7 @@ class AUCP(BaseThresholder):
        is the mean decision score, and :math:`\tilde{x}` is the median decision score.
        
        The first AUC that is greater than the total AUC of the pdf multiplied by the 
-       :math: `\mathrm{lim}` is set as the threshold between inliers and outliers.
+       :math:`\mathrm{lim}` is set as the threshold between inliers and outliers.
        
 
     """
