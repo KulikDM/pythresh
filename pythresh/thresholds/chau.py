@@ -61,13 +61,13 @@ class CHAU(BaseThresholder):
            
            Z = \frac{x-\bar{x}}{\sigma} \mathrm{,}
            
-        with :math:`\bar{x}` as the mean and :math:`\sigma` the standard deviation
-        of the decsion scores.
+       with :math:`\bar{x}` as the mean and :math:`\sigma` the standard deviation
+       of the decsion scores.
         
-        CHAU employs variants of the classical Chauvenet's criterion as the mean can be 
-        replaced with the geometric mean or the median.
+       CHAU employs variants of the classical Chauvenet's criterion as the mean can be 
+       replaced with the geometric mean or the median.
         
-        Any z-score above than the Chauvenet's criterion is considered an outlier.
+       Any z-score above than the Chauvenet's criterion is considered an outlier.
            
            
     """

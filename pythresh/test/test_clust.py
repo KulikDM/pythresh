@@ -37,7 +37,7 @@ class TestCLUST(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.methods = ['agg', 'birch', 'bang', 'dbscan', 'ema', 'kmeans',
+        self.methods = ['agg', 'birch', 'bang', 'bgm', 'bsas','dbscan', 'ema', 'kmeans',
                         'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans']
 
     def test_prediction_labels(self):

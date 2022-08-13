@@ -19,6 +19,28 @@ class EB(BaseThresholder):
        ----------
 
        thres_ : threshold value that seperates inliers from outliers
+       
+       Notes
+       -----
+       
+       Pseudo-random eccentricities are used to generate elliptical boundaries
+       and threshold the decision scores. This is done by using the farthest 
+       point on the perimeter of an ellispe from its center and is defined as:
+        
+       .. math::
+       
+          A=a(1+e) \mathrm(,)
+          
+       where :math:`e` is the eccentricity and :math:`a` is the semi-major axis.
+       If the decision scores are normalized the farthest point on the perimeter
+       of an ellispe from its center is equal to 1, and the semi-major 
+       axis can be solved. The threshold is then set as the closest point on the 
+       perimeter of an ellispe from its center.
+       
+       This is repeated with Monte Carlo simulations and the median number of inliers 
+       is selected from these thresholds. The pseudo-random eccentricity that produces 
+       a threshold that is closest to median sampled inlier count is applied as the 
+       output threshold.
 
     """
 
@@ -47,12 +69,8 @@ class EB(BaseThresholder):
 
         decision = normalize(decision)
 
-        # Generate KDE
-        val, dat_range = gen_kde(decision,0,1,len(decision)*3)
-
-        val = val/np.max(val)
-
         # Generate random set of eccentricities to test
+        np.random.seed(1234)
         rnd = np.random.uniform(0,1,5000)
 
         # Create pseudo-random elliptical boundaries using each eccentricity

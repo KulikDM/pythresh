@@ -24,8 +24,8 @@ class CLF(BaseThresholder):
        
        The classifier was trained using a linear stochastic gradient decent method. 
        A warm start was assigned to the classifier was partially fit with the decision 
-       scores and true labels from multiple outlier detection methods available in PyOD.
-       The `generate_data` function from PyOD was used to create the outlier data,
+       scores and true labels from multiple outlier detection methods available in `PyOD`.
+       The :code:`generate_data` function from `PyOD` was used to create the outlier data,
        and the contaminations and random states were randomized each iterative step.
        
 

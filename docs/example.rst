@@ -11,7 +11,7 @@ Featured Tutorials
 
 PyThresh has a variety of different thresholding methods and an online example can be found at.
 
-**Medium**: `Thresholding Outlier Detection Scores with PyThresh  <https://medium.com/@dkulikm/thresholding-outlier-detection-scores-with-pythresh-f26299d14fa>`_
+**Towards Data Science**: `Thresholding Outlier Detection Scores with PyThresh  <https://towardsdatascience.com/thresholding-outlier-detection-scores-with-pythresh-f26299d14fa>`_
 
 ----
 

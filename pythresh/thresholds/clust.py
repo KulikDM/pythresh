@@ -10,6 +10,7 @@ from pyclustering.cluster.optics import optics
 from pyclustering.cluster.somsc import somsc
 from pyclustering.cluster.xmeans import xmeans
 from sklearn.cluster import Birch, MeanShift, KMeans, SpectralClustering, estimate_bandwidth
+from sklearn.mixture import BayesianGaussianMixture
 from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
@@ -26,12 +27,13 @@ class CLUST(BaseThresholder):
        Paramaters
        ----------
         
-       method : {'agg', 'birch', 'bang', 'bsas', 'dbscan', 'ema', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='dbscan')
+       method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='dbscan')
             Clustering method
         
             - 'agg':    Agglomerative
             - 'birch':  Balanced Iterative Reducing and Clustering using Hierarchies
             - 'bang':   BANG
+            - 'bgm':    Bayesian Gaussian Mixture
             - 'bsas':   Basic Sequential Algorithmic Scheme
             - 'dbscan': Density-based spatial clustering of applications with noise
             - 'ema':    Expectation-Maximization clustering algorithm for Gaussian Mixture Model
@@ -56,12 +58,12 @@ class CLUST(BaseThresholder):
         super(CLUST, self).__init__()
         self.method = method
         self.method_funcs = {'agg': self._AGG_clust, 'birch': self._BIRCH_clust,
-                             'bang': self._BANG_clust, 'bsas': self._BSAS_clust,
-                             'dbscan': self._DBSCAN_clust, 'ema': self._EMA_clust,
-                             'kmeans': self._KMEANS_clust, 'mbsas': self._MBSAS_clust,
-                             'mshift': self._MSHIFT_clust, 'optics': self._OPTICS_clust,
-                             'somsc': self._SOMSC_clust, 'spec': self._SPEC_clust,
-                             'xmeans': self._XMEANS_clust}
+                             'bang': self._BANG_clust, 'bgm': self._BGM_clust,
+                             'bsas': self._BSAS_clust, 'dbscan': self._DBSCAN_clust, 
+                             'ema': self._EMA_clust, 'kmeans': self._KMEANS_clust, 
+                             'mbsas': self._MBSAS_clust, 'mshift': self._MSHIFT_clust, 
+                             'optics': self._OPTICS_clust, 'somsc': self._SOMSC_clust, 
+                             'spec': self._SPEC_clust, 'xmeans': self._XMEANS_clust}
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -143,12 +145,27 @@ class CLUST(BaseThresholder):
         return labels
 
     def _BANG_clust(self, decision):
-        """ BANG clustering algorithms for cluster analysis """
+        """ BANG clustering algorithm for cluster analysis """
 
         cl = bang(data=decision,levels=8, ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
             
+        return labels
+    
+    def _BGM_clust(self, decision):
+        """ Bayesian Gaussian Mixture algorithm for cluster analysis """
+        
+        cl = BayesianGaussianMixture(n_components=2,
+                                     covariance_type='tied',
+                                     random_state=1234).fit(decision)
+
+        labels = cl.predict(decision)
+        
+        # Flip if outliers were clustered
+        if sum(labels)>np.ceil(len(decision)/2):
+            labels = 1-labels
+        
         return labels
 
     def _BSAS_clust(self, decision):

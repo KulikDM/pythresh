@@ -20,6 +20,15 @@ class FGD(BaseThresholder):
        ----------
 
        thres_ : threshold value that seperates inliers from outliers
+       
+       Notes
+       -----
+       
+       A probability distribution of the decision scores is generated using
+       kernel density estimation. The first derivative of the pdf is 
+       calculated, and the threshold is set as the middle point between the
+       first and second inflection points starting from left side of the data 
+       range.  
 
     """
 
