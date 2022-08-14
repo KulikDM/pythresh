@@ -67,7 +67,7 @@ class CHAU(BaseThresholder):
        CHAU employs variants of the classical Chauvenet's criterion as the mean can be 
        replaced with the geometric mean or the median.
         
-       Any z-score above than the Chauvenet's criterion is considered an outlier.
+       Any z-score greater than the Chauvenet's criterion is considered an outlier.
            
            
     """

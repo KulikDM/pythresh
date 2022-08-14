@@ -27,8 +27,8 @@ class FGD(BaseThresholder):
        A probability distribution of the decision scores is generated using
        kernel density estimation. The first derivative of the pdf is 
        calculated, and the threshold is set as the middle point between the
-       first and second inflection points starting from left side of the data 
-       range.  
+       first and second inflection points starting from the left side of the 
+       data range.  
 
     """
 

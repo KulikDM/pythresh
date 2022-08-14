@@ -102,6 +102,16 @@ pythresh.thresholds.filter module
     :show-inheritance:
     :inherited-members:
 
+pythresh.thresholds.fwfm module
+------------------------
+
+.. automodule:: pythresh.thresholds.fwfm
+    :members:
+    :exclude-members: 
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:
+
 pythresh.thresholds.gesd module
 -----------------------------------
 
