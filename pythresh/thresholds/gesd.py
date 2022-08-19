@@ -19,7 +19,7 @@ class GESD(BaseThresholder):
 
        max_outliers : int, optional (default='native')
             mamiximum number of outliers that the dataset may have. Default sets 
-            max_outliers to be set to half the size of the dataset
+            max_outliers to be half the size of the dataset
 
        alpha : float, optional (default=0.05)
             significance level
@@ -54,7 +54,7 @@ class GESD(BaseThresholder):
        
        .. math::
        
-           \lambda_i = \frac{(n-i)t_{p,n-i-1}}{\sqrt{\left(n-i-1+t_{p,n-i-1}^2\right)(n-i+1)}} i = 1,2,...,r \mathrm{,}
+           \lambda_i = \frac{(n-i)t_{p,n-i-1}}{\sqrt{\left(n-i-1+t_{p,n-i-1}^2\right)(n-i+1)}} \,\, i = 1,2,...,r \mathrm{,}
            
        where :math:`t_{p,v}` is the :math:`p_{100}` for a t-distribution with
        :math:`v` degrees of freedom such that for a selected significance level
