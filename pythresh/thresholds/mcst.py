@@ -33,17 +33,17 @@ class MCST(BaseThresholder):
        
        .. math::
        
-          W = \frac{\lvert(\sum_{i=1}^n a_i x_{(i)} \rvert)^2}{\sum_{i=1}^n \lvert(x_i - \bar{x} \rvert)^2} \mathrm{,}
+          W = \frac{\left(\sum_{i=1}^n a_i x_{(i)} \right)^2}{\sum_{i=1}^n \left(x_i - \bar{x} \right)^2} \mathrm{,}
           
-       where :math:`\bar{x}` is the mean of the scores and :math:`x_{(i)}
+       where :math:`\bar{x}` is the mean of the scores and :math:`x_{(i)}`
        is the ith-smallest number in the sample (kth order statistic). The 
        coefficients :math:`a_i` is given by:
        
        .. math::
        
-          (a_1,...,a_n) = \frac{m\topV^{-1}}{\sqrt{m\topV^{-1}V^{-1}m}} \mathrm{,}
+          (a_1,...,a_n) = \frac{m^{\top}V^{-1}}{\sqrt{m^{\top}V^{-1}V^{-1}m}} \mathrm{,}
           
-       where the vector :math:`m=\lvert(m_1,...,m_n \rvert)\top` and :math:`V`
+       where the vector :math:`m=\lvert(m_1,...,m_n \rvert)^{\top}` and :math:`V`
        is the covariance matrix of the order statistics.
        
        The threshold is set by first calculating an initial Shapiro-Wilk test 

@@ -20,6 +20,20 @@ class ZSCORE(BaseThresholder):
        ----------
 
        thres_ : threshold value that seperates inliers from outliers
+       
+       Notes
+       -----
+       
+       The z-score can be calculated as follows:
+       
+       .. math::
+           
+           Z = \frac{x-\bar{x}}{\sigma} \mathrm{,}
+           
+       where :math:`\bar{x}` and :math:`\sigma` are the mean and the 
+       standard deviation of the decsion scores respectively. The threshold
+       is set that any value beyond an absolute z-score of 1 is considered
+       and outlier.
 
     """
 
