@@ -20,7 +20,16 @@ class FWFM(BaseThresholder):
        ----------
 
        thres_ : threshold value that seperates inliers from outliers
-
+       
+       Notes
+       -----
+       
+       The outlier detection scores are assumed to be a mixture of Gaussian
+       distributions. The probability density function of this Gaussian mixture 
+       is approximated using kernel density estimation. The highest peak within the 
+       PDF is used to find the base width of the mixture and the threshold is set 
+       to the base width divided by the number of scores.
+       
     """
 
     def __init__(self):

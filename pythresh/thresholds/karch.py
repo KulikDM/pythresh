@@ -43,8 +43,8 @@ class KARCH(BaseThresholder):
            f(x) = \sum_{i=1}^n \delta^2(A,x) \mathrm{,}
            
        where :math:`A` is a member of a special orthoganal group where the group qualities are
-       :math:`\left(X \in \R^{n \times n} \vert X^{\top}X=I, \mathrm{det}X=1 \right)` such 
-       that the group is a Lie group.
+       :math:`\left(X \in \mathbb{R}^{n \times n} \vert X^{\top}X=I \text{,} \mathrm{det}X=1 \right)` 
+       such that the group is a Lie group.
        
     """
 
