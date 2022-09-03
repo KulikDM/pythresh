@@ -28,7 +28,7 @@ from .mtt import MTT
 from .karch import KARCH
 from .ocsvm import OCSVM
 from .clust import CLUST
-
+from .decomp import DECOMP
 
 class ALL(BaseThresholder):
     """ALL class for Combined thresholder.
@@ -98,7 +98,7 @@ class ALL(BaseThresholder):
                                  AUCP(), QMCD(), FGD(), DSN(), CLF(),
                                  FILTER(), WIND(), EB(), REGR(), BOOT(),
                                  MCST(), HIST(), MOLL(), CHAU(), GESD(),
-                                 MTT(), KARCH(), OCSVM(), CLUST()]
+                                 MTT(), KARCH(), OCSVM(), CLUST(), DECOMP()]
 
         # Apply each thresholder
         contam = []

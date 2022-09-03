@@ -118,6 +118,7 @@ BOOT        Bootstrapping                               [#boot1]_            `py
 CHAU        Chauvenet's Criterion                       [#chau1]_            `pythresh.thresholds.chau module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.chau>`_
 CLF         Trained Classifier                          [#clf1]_             `pythresh.thresholds.clf module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clf>`_
 CLUST       Clustering Based                            [#clust1]_           `pythresh.thresholds.clust module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clust>`_
+DECOMP      Decomposition                               [#decomp1]_          `pythresh.thresholds.decomp module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.decomp>`_
 DSN         Distance Shift from Normal                  [#dsn1]_             `pythresh.thresholds.dsn module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.dsn>`_
 EB          Elliptical Boundary                         [#eb1]_              `pythresh.thresholds.eb module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.eb>`_
 FGD         Fixed Gradient Descent                      [#fgd1]_             `pythresh.thresholds.fgd module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.fgd>`_
@@ -170,6 +171,8 @@ References
 .. [#clf1] `Linear Models for Outlier Detection <https://link.springer.com/chapter/10.1007/978-3-319-47578-3_3>`_
 
 .. [#clust1] `Cluster Analysis for Outlier Detection <https://www.researchgate.net/publication/224990195_Cluster_Analysis_for_Outlier_Detection>`_
+
+.. [#decomp1] `Influence functions and outlier detection under the common principal components model: A robust approach <https://www.researchgate.net/publication/5207186_Influence_functions_and_outlier_detection_under_the_common_principal_components_model_A_robust_approach>`_
 
 .. [#dsn1] `Fast and Exact Outlier Detection in Metric Spaces: A Proximity Graph-based Approach <https://arxiv.org/abs/2110.08959>`_
 
