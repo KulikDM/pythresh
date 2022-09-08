@@ -28,7 +28,7 @@ class SHIFT(BaseThresholder):
     def __init__(self):
 
         super(SHIFT, self).__init__()
-        warnings.warn("SHIFT will be depreciated in the next version. Rather use CLUST(method='mshift')",
+        warnings.warn("SHIFT is depreciated and will be removed in the next version. Use CLUST(method='mshift')",
                          category=DeprecationWarning, stacklevel=2)
 
     def eval(self, decision):

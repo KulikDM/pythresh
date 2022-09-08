@@ -28,7 +28,7 @@ class KMEANS(BaseThresholder):
     def __init__(self):
 
         super(KMEANS, self).__init__()
-        warnings.warn("KMEANS will be depreciated in the next version. Rather use CLUST(method='kmeans')",
+        warnings.warn("KMEANS is depreciated and will be removed in the next version. Use CLUST(method='kmeans')",
                          category=DeprecationWarning, stacklevel=2)
 
     def eval(self, decision):

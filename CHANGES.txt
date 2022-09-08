@@ -16,3 +16,4 @@ v<0.2.3>, <07/02/2022> -- Updated references, documentation, and version control
 v<0.2.4>, <07/09/2022> -- Added ocsvm thresholder, fixed all tests and examples, updated documentation
 v<0.2.5>, <08/04/2022> -- Added clust thresholders, Python 3.10 intergration, CodeCov, and minor changes to thresholders
 v<0.2.5>, <09/03/2022> -- Added decomp thresholder, additional description notes in docstrings
+v<0.2.6>, <09/08/2022> -- Added majority vote to ALL, depreciated kmeans and shift thresholders

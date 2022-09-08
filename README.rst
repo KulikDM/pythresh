@@ -128,7 +128,6 @@ GESD        Generalized Extreme Studentized Deviate     [#gesd1]_            `py
 HIST        Histogram Based                             [#hist1]_            `pythresh.thresholds.hist module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.hist>`_
 IQR         Inter-Quartile Region                       [#iqr1]_		        `pythresh.thresholds.iqr module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.iqr>`_
 KARCH       Karcher mean (Riemannian Center of Mass)    [#karch1]_           `pythresh.thresholds.karch module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.karch>`_
-KMEANS      K-means Clustering                          [#kmeans1]_          `pythresh.thresholds.kmeans module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.kmeans>`_
 MAD         Median Absolute Deviation                   [#mad1]_			     `pythresh.thresholds.mad module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mad>`_
 MCST        Monte Carlo Shapiro Tests                   [#mcst1]_            `pythresh.thresholds.mcst module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mcst>`_
 MOLL        Friedrichs' Mollifier                       [#moll1]_ [#moll2]_  `pythresh.thresholds.moll module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.moll>`_
@@ -136,7 +135,6 @@ MTT         Modified Thompson Tau Test                  [#mtt1]_			     `pythres
 OCSVM       One-Class Support Vector Machine            [#ocsvm]_            `pythresh.thresholds.ocsvm module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#pythresh-thresholds-ocsvm-module>`_
 QMCD        Quasi-Monte Carlo Discreprancy              [#qmcd1]_		        `pythresh.thresholds.qmcd module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.qmcd>`_
 REGR        Regression Based                            [#regr1]_            `pythresh.thresholds.regr module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.regr>`_
-SHIFT       Mean Shift Clustering                       [#shift1]_			  `pythresh.thresholds.shift module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.shift>`_
 WIND        Topological Winding Number                  [#wind1]_            `pythresh.thresholds.wind module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.wind>`_
 YJ          Yeo-Johnson Transformation                  [#yj1]_			     `pythresh.thresholds.yj module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.yj>`_
 ZSCORE      Z-score                                     [#zscore1]_			  `pythresh.thresholds.zscore module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.zscore>`_
@@ -192,8 +190,6 @@ References
 
 .. [#karch1] `Riemannian center of mass and mollifier smoothing <https://www.jstor.org/stable/41059320>`_
 
-.. [#kmeans1] `Outlier Detection and Removal Algorithm in K-Means and Hierarchical Clustering <https://www.researchgate.net/publication/319395842_Outlier_Detection_and_Removal_Algorithm_in_K-Means_and_Hierarchical_Clustering>`_
-
 .. [#mad1] `Periodicity Detection of Outlier Sequences Using Constraint Based Pattern Tree with MAD <https://arxiv.org/abs/1507.01685>`_
 
 .. [#mcst1] `Testing normality in the presence of outliers <https://www.researchgate.net/publication/24065017_Testing_normality_in_the_presence_of_outliers>`_
@@ -209,8 +205,6 @@ References
 .. [#qmcd1] `Deterministic and quasi-random sampling of optimized Gaussian mixture distributions for vibronic Monte Carlo <https://arxiv.org/abs/1912.11594>`_
 
 .. [#regr1] `Linear Models for Outlier Detection <https://link.springer.com/chapter/10.1007/978-3-319-47578-3_3>`_
-
-.. [#shift1] `Mean-shift outlier detection and filtering <https://www.sciencedirect.com/science/article/pii/S0031320321000613>`_
 
 .. [#wind1] `Robust Inside-Outside Segmentation Using Generalized Winding Numbers <https://www.researchgate.net/publication/262165781_Robust_Inside-Outside_Segmentation_Using_Generalized_Winding_Numbers>`_
 

@@ -93,7 +93,6 @@ GESD        Generalized Extreme Studentized Deviate                          :ci
 HIST        Histogram Based                                                  :cite:`a-thanammal2015hist`
 IQR         Inter-Quartile Regression                                        :cite:`a-bardet2015iqr`
 KARCH       Karcher mean (Riemannian Center of Mass)                         :cite:`a-afsari2011karch`
-KMEANS      K-means Clustering                                               :cite:`a-dey2017kmeans`
 MAD         Median Absolute Deviation                                        :cite:`a-archana2015mad`
 MCST        Monte Carlo Shapiro Tests                                        :cite:`a-coin2008mcst`
 MOLL        Friedrichs' Mollifier                                            :cite:`a-keyzer1997moll`
@@ -101,7 +100,6 @@ MTT         Modified Thompson Tau Test                                       :ci
 OCSVM       One-Class Support Vector Machine                                 :cite:`a-barbado2022ocsvm`
 QMCD        Quasi-Monte Carlo Discreprancy                                   :cite:`a-iouchtchenko2019qmcd`
 REGR        Regression Based                                                 :cite:`a-aggarwal2017clf`
-SHIFT       Mean Shift Clustering                                            :cite:`a-yang2021shift`
 WIND        Topological Winding Number                                       :cite:`a-jacobson2013wind`
 YJ          Yeo-Johnson Transformation                                       :cite:`a-raymaekers2021yj`
 ZSCORE      Z-score                                                          :cite:`a-bagdonavicius2020zscore`

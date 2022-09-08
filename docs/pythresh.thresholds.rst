@@ -162,16 +162,6 @@ pythresh.thresholds.karch module
     :show-inheritance:
     :inherited-members:
 
-pythresh.thresholds.kmeans module
------------------------
-
-.. automodule:: pythresh.thresholds.kmeans
-    :members:
-    :exclude-members:
-    :undoc-members:
-    :show-inheritance:
-    :inherited-members:
-
 pythresh.thresholds.mad module
 -----------------------
 
@@ -236,16 +226,6 @@ pythresh.thresholds.regr module
 ----------------------
 
 .. automodule:: pythresh.thresholds.regr
-    :members:
-    :exclude-members:
-    :undoc-members:
-    :show-inheritance:
-    :inherited-members:
-
-pythresh.thresholds.shift module
----------------------------
-
-.. automodule:: pythresh.thresholds.shift
     :members:
     :exclude-members:
     :undoc-members:
