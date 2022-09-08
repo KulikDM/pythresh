@@ -10,13 +10,20 @@ It is recommended to use **pip**  installation. Please make sure
    pip install --upgrade pythresh  # or update if needed
 
 
-Alternatively, you could clone and run setup.py file:
+Alternatively, you can get the version with the latest updates by
+cloning the repo and run setup.py file:
 
 .. code-block:: bash
 
    git clone https://github.com/KulikDM/pythresh.git
-   cd pyod
+   cd pythresh
    pip install .
+
+Or with **pip**:
+
+.. code-block:: bash
+
+   pip install https://github.com/KulikDM/pythresh/archive/main.zip
 
 
 **Required Dependencies**\ :
