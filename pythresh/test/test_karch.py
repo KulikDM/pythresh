@@ -6,7 +6,8 @@ from os.path import dirname as up
 import sys
 
 import unittest
-# noinspection PyProtectedMember
+# noinspection 
+import numpy as np
 from numpy.testing import assert_allclose
 from numpy.testing import assert_array_less
 from numpy.testing import assert_equal
@@ -55,15 +56,10 @@ class TestDSN(unittest.TestCase):
                 assert_equal(pred_labels.shape, self.y_train.shape)
 
 
-                try:
+                if not np.all((pred_labels==0)|(pred_labels==1)):
+            
                     assert (pred_labels.min() == 0)
-                except:
-                    assert (pred_labels.min() == 1)
-
-                try:
                     assert (pred_labels.max() == 1)
-                except:
-                    assert (pred_labels.max() == 0)
 
 
     def tearDown(self):
