@@ -30,6 +30,7 @@ from .ocsvm import OCSVM
 from .clust import CLUST
 from .decomp import DECOMP
 
+
 class ALL(BaseThresholder):
     """ALL class for Combined thresholder.
 
@@ -54,7 +55,7 @@ class ALL(BaseThresholder):
            
            - 'mean':   calculate the mean combined threshold
            - 'median': calculate the median combined threshold
-           - 'gmean':  calculate the geometric mean combined threshold
+           - 'mode':  calculate the majority vote or mode of the thresholded labels
            
 
        Attributes
@@ -68,8 +69,9 @@ class ALL(BaseThresholder):
 
         self.thresholders = thresholders
         self.max_contam = max_contam
-        stat = {'mean':np.mean, 'median':np.median, 'gmean':stats.gmean}
-        self.method = stat[method]
+        stat = {'mean':np.mean, 'median':np.median, 'mode':stats.mode}
+        self.method = method
+        self.method_func = stat[method]
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -102,25 +104,38 @@ class ALL(BaseThresholder):
 
         # Apply each thresholder
         contam = []
+        counts = len(decision)
         
         for thresholder in self.thresholders:
             
             labels = thresholder.eval(decision)
-            outlier_ratio = np.sum(labels)/len(labels)
+            outlier_ratio = np.sum(labels)/counts
             
             if outlier_ratio<self.max_contam:
-            
-                contam.append(outlier_ratio)
 
-        # Get [mean, median, or gmean] of inliers
-        inlier_ratio = 1-self.method(np.array(decision))
+                contam.append(labels)
+
+        contam = np.array(contam)
         
-        idx = int(len(decision)*inlier_ratio)
-        if idx==len(decision):
-            limit=1.0
-        else:    
-            limit = decision[idx]
+        # Get [mean, median, or mode] of inliers
+        if self.method=='mode':
+
+            self.thresh_ = None
+            lbls = self.method_func(contam, axis=0)
+            
+            return np.squeeze(lbls[0])
+            
+        else:
+
+            contam = np.sum(contam, axis=1)/contam.shape[1]
+            inlier_ratio = 1-self.method_func(contam)
         
-        self.thresh_ = limit
+            idx = int(counts*inlier_ratio)
+            if idx==counts:
+                limit=1.0
+            else:    
+                limit = decision[idx]
         
-        return cut(decision, limit)
+            self.thresh_ = limit
+        
+            return cut(decision, limit)

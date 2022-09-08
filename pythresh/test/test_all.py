@@ -37,7 +37,7 @@ class TestALL(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.methods = ['mean', 'median', 'gmean']
+        self.methods = ['mean', 'median', 'mode']
         
 
     def test_prediction_labels(self):
@@ -45,7 +45,6 @@ class TestALL(unittest.TestCase):
         for method in self.methods:
             self.thres = ALL(method=method)
             pred_labels = self.thres.eval(self.scores)
-            assert (self.thres.thresh_ != None)
         
             assert_equal(pred_labels.shape, self.y_train.shape)
 
