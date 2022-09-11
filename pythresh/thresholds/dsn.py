@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.stats as stats
+from scipy import interpolate
 import scipy.special as special
 from scipy.integrate import simpson
 import scipy.spatial.distance as distance
@@ -20,7 +21,7 @@ class DSN(BaseThresholder):
        Paramaters
        ----------
 
-       metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS'}, optional (default='JS')
+       metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS', 'INT'}, optional (default='JS')
             Metric to use for distance computation
         
             - 'JS':  Jensen-Shannon distance
@@ -35,6 +36,7 @@ class DSN(BaseThresholder):
             - 'TMT': Tanimoto distance
             - 'RES': Studentized residual distance
             - 'KS':  Kolmogorov-Smirnov distance
+            - 'INT': Weighted spline interpolated distance
 
        Attributes
        ----------
@@ -52,7 +54,8 @@ class DSN(BaseThresholder):
                              'HLL': self._HLL_metric, 'HI': self._HI_metric,
                              'LK': self._LK_metric, 'LP': self._LP_metric,
                              'MAH': self._MAH_metric, 'TMT': self._TMT_metric,
-                             'RES': self._RES_metric, 'KS': self._KS_metric}
+                             'RES': self._RES_metric, 'KS': self._KS_metric,
+                             'INT': self._INTER_metric}
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -73,83 +76,83 @@ class DSN(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
 
-        decision = np.sort(normalize(decision))
+        decision = normalize(decision)
 
         #Create a normal distribution and normalize
         size = min(len(decision),1500)
         norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=1234)
-        norm = np.sort(normalize(norm))
+        self.norm = normalize(norm)
 
-        n = 3
+        n = 1
+        if self.metric!='LP':
+            n = 3
 
-        if self.metric in ['JS','BHT']:
+        if self.metric in ['JS', 'BHT', 'INT']:
             # Create a KDE of the decision scores and the normal distribution
             # Generate KDE
 
-            if self.metric=='LP':
-                n=1
-
-            val_data, _ = gen_kde(decision,0,1,len(decision)*n)
-            val_norm, _ = gen_kde(norm,0,1,len(decision)*n)
+            self.val_data, self.data_range = gen_kde(decision,0,1,len(decision)*n)
+            self.val_norm, self.norm_range = gen_kde(self.norm,0,1,len(decision)*n)
             
         else:
             # Create a KDE of the decision scores and the normal distribution
             # Generate CDF
-            val_data, _ = gen_cdf(decision,0,1,len(decision)*n)
-            val_norm, _ = gen_cdf(norm,0,1,len(decision)*n)
+            self.val_data, self.data_range = gen_cdf(decision,0,1,len(decision)*n)
+            self.val_norm, self.norm_range = gen_cdf(self.norm,0,1,len(decision)*n)
 
-        limit = self.metric_funcs[str(self.metric)](val_data, val_norm)
+        limit = self.metric_funcs[str(self.metric)]()
 
         self.thresh_ = limit
 
         return cut(decision, limit)
     
-    def _JS_metric(self, val_data, val_norm):
+    def _JS_metric(self):
         """Calculate the Jensen-Shannon distance"""
 
-        return 1-distance.jensenshannon(val_data, val_norm)
+        return 1-distance.jensenshannon(self.val_data, self.val_norm)
 
-    def _WS_metric(self, val_data, val_norm):
+    def _WS_metric(self):
         """Calculate the Wasserstein or Earth Movers distance"""
 
-        return stats.wasserstein_distance(val_data, val_norm)
+        return stats.wasserstein_distance(self.val_data, self.val_norm)
 
-    def _ENG_metric(self, val_data, val_norm):
+    def _ENG_metric(self):
         """Calculate the Energy distance"""
 
-        return stats.energy_distance(val_data, val_norm)
+        return stats.energy_distance(self.val_data, self.val_norm)
 
-    def _BHT_metric(self, val_data, val_norm):
+    def _BHT_metric(self):
         """Calculate the Bhattacharyya distance"""
 
-        bht = simpson(np.sqrt(val_data*val_norm), dx=1/len(val_data))
+        bht = simpson(np.sqrt(self.val_data*self.val_norm),
+                      dx=1/len(self.val_data))
         
         return np.log1p(bht)
 
-    def _HLL_metric(self, val_data, val_norm):
+    def _HLL_metric(self):
         """Calculate the Hellinger distance"""
 
-        val_data = val_data/np.sum(val_data)
-        val_norm = val_norm/np.sum(val_norm)
+        val_data = self.val_data/np.sum(self.val_data)
+        val_norm = self.val_norm/np.sum(self.val_norm)
 
         return (distance.euclidean(np.sqrt(val_data), np.sqrt(val_norm))
                         /np.sqrt(2))
 
-    def _HI_metric(self, val_data, val_norm):
+    def _HI_metric(self):
         """Calculate the Histogram intersection distance"""
 
-        val_data = val_data/np.sum(val_data)
-        val_norm = val_norm/np.sum(val_norm)
+        val_data = self.val_data/np.sum(self.val_data)
+        val_norm = self.val_norm/np.sum(self.val_norm)
         
         return 1-np.sum(np.minimum(val_data,val_norm))
 
-    def _LK_metric(self, val_data, val_norm):
+    def _LK_metric(self):
         """Calculate the Lukaszyk-Karmowski metric for normal distributions"""
                 
         # Get expected values for both distributions
-        rng = np.linspace(0,1,len(val_data))
-        exp_data = (rng*val_data).sum()/val_data.sum()
-        exp_norm = (rng*val_norm).sum()/val_norm.sum()
+        rng = np.linspace(0,1,len(self.val_data))
+        exp_data = (rng*self.val_data).sum()/self.val_data.sum()
+        exp_norm = (rng*self.val_norm).sum()/self.val_norm.sum()
                 
         nu_xy = np.abs(exp_data-exp_norm)
 
@@ -160,32 +163,32 @@ class DSN(BaseThresholder):
         return (nu_xy + 2*std/np.sqrt(np.pi)*np.exp(-nu_xy**2/(4*std**2))
                         - nu_xy*special.erfc(nu_xy/(2*std)))
 
-    def _LP_metric(self, val_data, val_norm):
+    def _LP_metric(self):
         """Calculate the Levy-Prokhorov metric"""
 
         # Get the edges for the complete graphs of the datasets
-        f1 = np.array(list(combinations(val_data.tolist(),2)))
-        f2 = np.array(list(combinations(val_norm.tolist(),2)))
+        f1 = np.array(list(combinations(self.val_data.tolist(),2)))
+        f2 = np.array(list(combinations(self.val_norm.tolist(),2)))
 
         return (distance.directed_hausdorff(f1,f2)[0]/
-                distance.correlation(val_data,val_norm))
+                distance.correlation(self.val_data,self.val_norm))
 
-    def _MAH_metric(self, val_data, val_norm):
+    def _MAH_metric(self):
         """Calculate the Mahalanobis distance"""
 
         # fit a Minimum Covariance Determinant (MCD) robust estimator to data 
-        robust_cov = MinCovDet().fit(np.array([val_norm]).T)
+        robust_cov = MinCovDet().fit(np.array([self.val_norm]).T)
     
         # Get the Mahalanobis distance
-        dist = robust_cov.mahalanobis(np.array([val_data]).T)
+        dist = robust_cov.mahalanobis(np.array([self.val_data]).T)
         
         return 1-np.mean(dist)/np.max(dist)
 
-    def _TMT_metric(self, val_data, val_norm):
+    def _TMT_metric(self):
         """Calculate the Tanimoto distance"""
 
-        val_data = val_data/np.sum(val_data)
-        val_norm = val_norm/np.sum(val_norm)
+        val_data = self.val_data/np.sum(self.val_data)
+        val_norm = self.val_norm/np.sum(self.val_norm)
         
         p = np.sum(val_data)
         q = np.sum(val_norm)
@@ -193,29 +196,66 @@ class DSN(BaseThresholder):
 
         return (p+q-2*m)/(p+q-m)
 
-    def _RES_metric(self, val_data, val_norm):
+    def _RES_metric(self):
         """Calculate the studentized residual distance"""
 
-        mean_X = np.mean(val_data)
-        mean_Y = np.mean(val_norm)
-        n = len(val_data)
+        mean_X = np.mean(self.val_data)
+        mean_Y = np.mean(self.val_norm)
+        n = len(self.val_data)
         
-        diff_mean_sqr = np.dot((val_data - mean_X), (val_data - mean_X))
-        beta1 = np.dot((val_data - mean_X), (val_norm - mean_Y)) / diff_mean_sqr
+        diff_mean_sqr = np.dot((self.val_data - mean_X),
+                               (self.val_data - mean_X))
+        
+        beta1 = (np.dot((self.val_data - mean_X),
+                       (self.val_norm - mean_Y)) /
+                 diff_mean_sqr)
+        
         beta0 = mean_Y - beta1 * mean_X
         
-        y_hat = beta0 + beta1 * val_data
-        residuals = val_norm - y_hat
+        y_hat = beta0 + beta1 * self.val_data
+        residuals = self.val_norm - y_hat
         
-        h_ii = (val_data - mean_X) ** 2 / diff_mean_sqr + (1 / n)
-        Var_e = np.sqrt(np.sum((val_norm - y_hat) ** 2)/(n-2))
+        h_ii = (self.val_data - mean_X) ** 2 / diff_mean_sqr + (1 / n)
+        Var_e = np.sqrt(np.sum((self.val_norm - y_hat) ** 2)/(n-2))
         
         SE_regression = Var_e*((1-h_ii) ** 0.5)
         studentized_residuals = residuals/SE_regression
         
         return np.abs(np.sum(studentized_residuals))
 
-    def _KS_metric(self, val_data, val_norm):
+    def _KS_metric(self):
         """Calculate the Kolmogorov-Smirnov distance"""
 
-        return np.max(np.abs(val_data-val_norm))
+        return np.max(np.abs(self.val_data-self.val_norm))
+
+    def _INTER_metric(self):
+        """Calculate the weighted spline interpolation distance"""
+
+        # Get splines
+        data_spl = self._interp(self.data_range, self.val_data)
+        norm_spl = self._interp(self.norm_range, self.val_norm)
+
+        # Get distance of new weight shifted spline
+        dist = []
+        for i in range(99):
+
+            weight = (i+1)/99
+            spline = (data_spl[0]*(1.0-weight)+
+                      norm_spl[0]*weight)
+            dist.append(np.max(spline))
+
+        return np.mean(dist)-np.mean(self.norm)
+
+    def _interp(self, x, y):
+        """Spline interpolation"""        
+
+        # Smooth approximating B-spline coefficients
+        tck, _ = interpolate.splprep([x, y], s=0)
+
+        # Resample points
+        points = np.arange(0.0, 1.0, 1e-2)
+
+        # Generate spline
+        spline = interpolate.splev(points, tck)
+        
+        return np.array(spline)
