@@ -130,12 +130,11 @@ class ALL(BaseThresholder):
             contam = np.sum(contam, axis=1)/contam.shape[1]
             inlier_ratio = 1-self.method_func(contam)
         
+            limit=1.0
             idx = int(counts*inlier_ratio)
-            if idx==counts:
-                limit=1.0
-            else:    
+            if idx<counts:
                 limit = decision[idx]
-        
+
             self.thresh_ = limit
         
             return cut(decision, limit)

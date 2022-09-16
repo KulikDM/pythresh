@@ -103,10 +103,9 @@ class MCST(BaseThresholder):
                 povr.append(rnd[i])       
 
         # Set the limit to the minimum found outlier
+        limit = 1.1
         if len(povr)>0:
             limit = np.min(povr)
-        else:
-            limit = 1.0
 
         self.thresh_ = limit
 

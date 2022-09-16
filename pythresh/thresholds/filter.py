@@ -82,10 +82,9 @@ class FILTER(BaseThresholder):
         decision = normalize(decision)
 
         # Get sigma variables for various applications for each filter
+        sig = self.sigma
         if self.sigma=='native':
             sig = len(decision)*np.std(decision)
-        else:
-            sig = self.sigma
 
         # Filter scores
         fltr = self.method_funcs[str(self.method)](decision, sig)
