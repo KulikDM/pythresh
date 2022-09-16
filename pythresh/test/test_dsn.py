@@ -51,7 +51,7 @@ class TestDSN(unittest.TestCase):
     
             assert_equal(pred_labels.shape, self.y_train.shape)
 
-            if not np.all((pred_labels==0)|(pred_labels==1)):
+            if (not np.all(pred_labels==0)) & (not np.all(pred_labels==1)):
             
                 assert (pred_labels.min() == 0)
                 assert (pred_labels.max() == 1)
