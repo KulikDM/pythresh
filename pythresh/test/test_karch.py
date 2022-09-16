@@ -61,10 +61,3 @@ class TestKARCH(unittest.TestCase):
                     assert (pred_labels.min() == 0)
                     assert (pred_labels.max() == 1)
 
-
-    def tearDown(self):
-        pass
-
-
-if __name__ == '__main__':
-    unittest.main()
