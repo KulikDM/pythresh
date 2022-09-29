@@ -25,7 +25,6 @@ from .moll import MOLL
 from .chau import CHAU
 from .gesd import GESD
 from .mtt import MTT
-from .karch import KARCH
 from .ocsvm import OCSVM
 from .clust import CLUST
 from .decomp import DECOMP
@@ -100,7 +99,7 @@ class ALL(BaseThresholder):
                                  AUCP(), QMCD(), FGD(), DSN(), CLF(),
                                  FILTER(), WIND(), EB(), REGR(), BOOT(),
                                  MCST(), HIST(), MOLL(), CHAU(), GESD(),
-                                 MTT(), KARCH(), OCSVM(), CLUST(), DECOMP()]
+                                 MTT(), OCSVM(), CLUST(), DECOMP()]
 
         # Apply each thresholder
         contam = []

@@ -135,7 +135,7 @@ IQR         Inter-Quartile Region                       [#iqr1]_		        `pythr
 KARCH       Karcher mean (Riemannian Center of Mass)    [#karch1]_           `pythresh.thresholds.karch module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.karch>`_
 MAD         Median Absolute Deviation                   [#mad1]_			     `pythresh.thresholds.mad module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mad>`_
 MCST        Monte Carlo Shapiro Tests                   [#mcst1]_            `pythresh.thresholds.mcst module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mcst>`_
-META        Meta-model Trained Classifier               [#meta1]_			     `pythresh.thresholds.mad module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.meta>`_
+META        Meta-model Trained Classifier               [#meta1]_			     `pythresh.thresholds.meta module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.meta>`_
 MOLL        Friedrichs' Mollifier                       [#moll1]_ [#moll2]_  `pythresh.thresholds.moll module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.moll>`_
 MTT         Modified Thompson Tau Test                  [#mtt1]_			     `pythresh.thresholds.mtt module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mtt>`_
 OCSVM       One-Class Support Vector Machine            [#ocsvm]_            `pythresh.thresholds.ocsvm module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#pythresh-thresholds-ocsvm-module>`_

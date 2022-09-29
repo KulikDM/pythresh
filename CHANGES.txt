@@ -18,3 +18,4 @@ v<0.2.5>, <08/04/2022> -- Added clust thresholders, Python 3.10 intergration, Co
 v<0.2.5>, <09/03/2022> -- Added decomp thresholder, additional description notes in docstrings
 v<0.2.6>, <09/08/2022> -- Added majority vote to ALL, depreciated kmeans and shift thresholders
 v<0.2.6>, <09/11/2022> -- Add INT metric, fix sort bug for DSN
+v<0.2.6>, <09/29/2022> -- Added meta thresholder, updated requirements
