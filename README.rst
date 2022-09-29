@@ -92,7 +92,6 @@ Or with **pip**:
 **Required Dependencies**\ :
 
 
-* geomstats
 * matplotlib
 * numpy>=1.13
 * pyclustering
@@ -122,7 +121,7 @@ Abbr        Description                                 References           Doc
 AUCP        Area Under Curve Precentage                 [#aucp1]_            `pythresh.thresholds.aucp module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.aucp>`_
 BOOT        Bootstrapping                               [#boot1]_            `pythresh.thresholds.boot module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.boot>`_
 CHAU        Chauvenet's Criterion                       [#chau1]_            `pythresh.thresholds.chau module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.chau>`_
-CLF         Trained Classifier                          [#clf1]_             `pythresh.thresholds.clf module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clf>`_
+CLF         Trained Linear Classifier                   [#clf1]_             `pythresh.thresholds.clf module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clf>`_
 CLUST       Clustering Based                            [#clust1]_           `pythresh.thresholds.clust module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clust>`_
 DECOMP      Decomposition                               [#decomp1]_          `pythresh.thresholds.decomp module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.decomp>`_
 DSN         Distance Shift from Normal                  [#dsn1]_             `pythresh.thresholds.dsn module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.dsn>`_
@@ -136,6 +135,7 @@ IQR         Inter-Quartile Region                       [#iqr1]_		        `pythr
 KARCH       Karcher mean (Riemannian Center of Mass)    [#karch1]_           `pythresh.thresholds.karch module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.karch>`_
 MAD         Median Absolute Deviation                   [#mad1]_			     `pythresh.thresholds.mad module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mad>`_
 MCST        Monte Carlo Shapiro Tests                   [#mcst1]_            `pythresh.thresholds.mcst module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mcst>`_
+META        Meta-model Trained Classifier               [#meta1]_			     `pythresh.thresholds.mad module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.meta>`_
 MOLL        Friedrichs' Mollifier                       [#moll1]_ [#moll2]_  `pythresh.thresholds.moll module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.moll>`_
 MTT         Modified Thompson Tau Test                  [#mtt1]_			     `pythresh.thresholds.mtt module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mtt>`_
 OCSVM       One-Class Support Vector Machine            [#ocsvm]_            `pythresh.thresholds.ocsvm module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#pythresh-thresholds-ocsvm-module>`_
@@ -199,6 +199,8 @@ References
 .. [#mad1] `Periodicity Detection of Outlier Sequences Using Constraint Based Pattern Tree with MAD <https://arxiv.org/abs/1507.01685>`_
 
 .. [#mcst1] `Testing normality in the presence of outliers <https://www.researchgate.net/publication/24065017_Testing_normality_in_the_presence_of_outliers>`_
+
+.. [#meta1] `Automating Outlier Detection via Meta-Learning <https://arxiv.org/abs/2009.10606>`_
 
 .. [#moll1] `Riemannian center of mass and mollifier smoothing <https://www.jstor.org/stable/41059320>`_
 

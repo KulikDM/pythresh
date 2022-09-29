@@ -81,7 +81,7 @@ Abbr        Description                                                      Ref
 AUCP        Area Under Curve Precentage                                      :cite:`a-ren2018aucp`
 BOOT        Bootstrapping                                                    :cite:`a-martin2006boot`
 CHAU        Chauvenet's Criterion                                            :cite:`a-bolshev2016chau`
-CLF         Trained Classifier                                               :cite:`a-aggarwal2017clf`
+CLF         Trained Linear Classifier                                        :cite:`a-aggarwal2017clf`
 CLUST       Clustering Based                                                 :cite:`a-klawonn2008clust`
 DECOMP      Decomposition                                                    :cite:`a-boente2002decomp`
 DSN         Distance Shift from Normal                                       :cite:`a-amagata2021dsn`
@@ -95,6 +95,7 @@ IQR         Inter-Quartile Regression                                        :ci
 KARCH       Karcher mean (Riemannian Center of Mass)                         :cite:`a-afsari2011karch`
 MAD         Median Absolute Deviation                                        :cite:`a-archana2015mad`
 MCST        Monte Carlo Shapiro Tests                                        :cite:`a-coin2008mcst`
+META        Metamodel Trained Classifier                                     :cite:`a-zhao2022meta`
 MOLL        Friedrichs' Mollifier                                            :cite:`a-keyzer1997moll`
 MTT         Modified Thompson Tau Test                                       :cite:`a-rengasamy2020mtt`
 OCSVM       One-Class Support Vector Machine                                 :cite:`a-barbado2022ocsvm`

@@ -182,6 +182,16 @@ pythresh.thresholds.mcst module
     :show-inheritance:
     :inherited-members:
 
+pythresh.thresholds.meta module
+----------------------
+
+.. automodule:: pythresh.thresholds.meta
+    :members:
+    :exclude-members:
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:
+
 pythresh.thresholds.moll module
 -----------------------
 

@@ -1,6 +1,5 @@
 
 docutils
-geomstats
 matplotlib
 numpy
 pyclustering

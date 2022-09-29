@@ -28,7 +28,6 @@ Or with **pip**:
 
 **Required Dependencies**\ :
 
-* geomstats
 * matplotlib
 * numpy>=1.13
 * pyclustering
