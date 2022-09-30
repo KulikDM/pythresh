@@ -19,7 +19,7 @@ from os.path import dirname, abspath
 from io import open
 
 sys.path.insert(0, abspath('..'))
-pythresh_dir = dirname(dirname(abspath(__file__)))
+pythresh_dir = dirname(abspath(__file__))
 
 
 try:

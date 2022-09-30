@@ -1,11 +1,15 @@
 
 docutils
+geomstats
+joblib
 matplotlib
 numpy
+pandas
 pyclustering
 pyod
 scipy
 scikit-learn
+scikit-lego
 six
 sphinx-rtd-theme
 sphinxcontrib-bibtex
