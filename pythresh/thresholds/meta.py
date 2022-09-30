@@ -34,17 +34,17 @@ class META(BaseThresholder):
        Notes
        -----
        
-       Meta-modelling is the creation of a model of models. A dataset
-       that contains only the explanatory variables (X), yet the target
-       variable can still be predicted for by using a meta-model. This 
+       Meta-modelling is the creation of a model of models. If a dataset
+       that contains only the explanatory variables (X), yet no response
+       variable, it can still be predicted for by using a meta-model. This 
        is done modelling datasets with known response variables that
        are similar to the dataset that is missing the response variable.
        
        The META thresholder was trained using the ``PyOd`` outlier
        detection methods ``GMM, KNN, KDE, PCA, Sampling, IForest`` on the
        datasets OD benchmark datasets are available at 
-       `datasets folder <https://github.com/yzhao062/pytod/tree/main/reproducibility/datasets/ODDS>`_.
-       META uses a majoriy vote of all the models to determine the 
+       `ODDS dataset <https://github.com/yzhao062/pytod/tree/main/reproducibility/datasets/ODDS>`_.
+       META uses a majoriy vote of all the trained models to determine the 
        inlier/outlier labels.
 
     """
