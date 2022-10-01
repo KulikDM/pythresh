@@ -35,3 +35,10 @@ Or with **pip**:
 * scipy>=1.3.1
 * scikit_learn>=0.20.0
 * six
+
+**Optional Dependencies**\ :
+
+* geomstats (used in the KARCH thresholder)
+* scikit-lego (used in the META thresholder)
+* joblib (used in the META thresholder)
+* pandas (used in the META thresholder)

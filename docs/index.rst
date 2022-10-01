@@ -72,6 +72,13 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
 
 ----
 
+External Feature Cases
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Towards Data Science**: `Thresholding Outlier Detection Scores with PyThresh  <https://towardsdatascience.com/thresholding-outlier-detection-scores-with-pythresh-f26299d14fa>`_
+
+----
+
 Available Thresholding Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

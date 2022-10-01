@@ -62,7 +62,7 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
     # get outlier labels 
     thres = DSN()
     labels = thres.eval(decision_scores)
-    
+
 
 Installation
 ^^^^^^^^^^^^
@@ -100,6 +100,13 @@ Or with **pip**:
 * scikit_learn>=0.20.0
 * six
 
+**Optional Dependencies**\ :
+
+* geomstats (used in the KARCH thresholder)
+* scikit-lego (used in the META thresholder)
+* joblib (used in the META thresholder)
+* pandas (used in the META thresholder)
+
 
 API Cheatsheet
 ^^^^^^^^^^^^^^
@@ -111,6 +118,11 @@ Key Attributes of threshold:
 
 
 * **thresh_**\ : Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
+
+External Feature Cases
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Towards Data Science**: `Thresholding Outlier Detection Scores with PyThresh  <https://towardsdatascience.com/thresholding-outlier-detection-scores-with-pythresh-f26299d14fa>`_ 
 
 Available Thresholding Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
