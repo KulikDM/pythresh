@@ -119,6 +119,8 @@ Key Attributes of threshold:
 
 * **thresh_**\ : Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
 
+* **confidence_interval_**\ : Return the lower and upper confidence interval of the contamination level. Only applies to the ALL thresholder
+
 External Feature Cases
 ^^^^^^^^^^^^^^^^^^^^^^
 

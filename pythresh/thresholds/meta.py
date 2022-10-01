@@ -42,7 +42,7 @@ class META(BaseThresholder):
        
        The META thresholder was trained using the ``PyOD`` outlier
        detection methods ``MCD, GMM, KNN, KDE, PCA, Sampling, IForest`` on the
-       datasets OD benchmark datasets are available at 
+       datasets OD benchmark datasets available at 
        `ODDS dataset <https://github.com/yzhao062/pytod/tree/main/reproducibility/datasets/ODDS>`_.
        META uses a majoriy vote of all the trained models to determine the 
        inlier/outlier labels.

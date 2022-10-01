@@ -25,6 +25,7 @@ class BaseThresholder(object):
     def __init__(self):
 
         self.thresh_ = None
+        self.confidence_interval_ = None
 
     @abc.abstractmethod
     def eval(self, decision):

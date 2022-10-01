@@ -45,6 +45,7 @@ class TestALL(unittest.TestCase):
         for method in self.methods:
             self.thres = ALL(method=method)
             pred_labels = self.thres.eval(self.scores)
+            assert (self.thres.confidence_interval_ != None)
         
             assert_equal(pred_labels.shape, self.y_train.shape)
 

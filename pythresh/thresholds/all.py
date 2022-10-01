@@ -62,6 +62,8 @@ class ALL(BaseThresholder):
 
        thres_ : threshold value that seperates inliers from outliers
 
+       confidence_interval_ : lower and upper confidence interval of the contamination level
+
     """
 
     def __init__(self, thresholders='all', max_contam=0.5, method='mean'):
@@ -103,6 +105,7 @@ class ALL(BaseThresholder):
 
         # Apply each thresholder
         contam = []
+        ratio = []
         counts = len(decision)
         
         for thresholder in self.thresholders:
@@ -113,8 +116,16 @@ class ALL(BaseThresholder):
             if outlier_ratio<self.max_contam:
 
                 contam.append(labels)
+                ratio.append(outlier_ratio)
 
         contam = np.array(contam)
+        ratio = np.array(ratio)
+
+        # Get lower and upper confidence interval
+        low, high = stats.bootstrap(ratio.reshape(1,-1),
+                                    np.mean, paired=True,
+                                    random_state=1234).confidence_interval
+        self.confidence_interval_ = [low, high]
         
         # Get [mean, median, or mode] of inliers
         if self.method=='mode':
