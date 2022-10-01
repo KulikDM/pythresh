@@ -104,7 +104,7 @@ Or with **pip**:
 
 * geomstats (used in the KARCH thresholder)
 * scikit-lego (used in the META thresholder)
-* joblib (used in the META thresholder)
+* joblib>=0.14.1 (used in the META thresholder)
 * pandas (used in the META thresholder)
 
 
