@@ -40,8 +40,8 @@ class META(BaseThresholder):
        is done modelling datasets with known response variables that
        are similar to the dataset that is missing the response variable.
        
-       The META thresholder was trained using the ``PyOd`` outlier
-       detection methods ``GMM, KNN, KDE, PCA, Sampling, IForest`` on the
+       The META thresholder was trained using the ``PyOD`` outlier
+       detection methods ``MCD, GMM, KNN, KDE, PCA, Sampling, IForest`` on the
        datasets OD benchmark datasets are available at 
        `ODDS dataset <https://github.com/yzhao062/pytod/tree/main/reproducibility/datasets/ODDS>`_.
        META uses a majoriy vote of all the trained models to determine the 
@@ -84,7 +84,7 @@ class META(BaseThresholder):
         parent = up(up(__file__))
         model = joblib.load(os.path.join(parent, 'models', clf))
             
-        for i in range(150):
+        for i in range(170):
                 
             df = pd.DataFrame()
             df['scores'] = decision
