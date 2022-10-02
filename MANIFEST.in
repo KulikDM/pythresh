@@ -3,3 +3,5 @@ prune notebooks
 prune pythresh/test
 include README.rst
 include requirements.txt
+include pythresh/models/meta_model_GNB.pkl
+include pythresh/models/meta_model_LIN.pkl
