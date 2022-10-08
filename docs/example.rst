@@ -116,9 +116,46 @@ various thresholders outputs, e.g., by averaging, to improve its robustness.
 Luckily this has already been written for covenience as the function 
 "pythresh.thresholds.all"
 
+----
 
-For Jupyter Notebooks, please navigate to **"/notebooks/Thresholder Combination.ipynb"** for a manual
-design of thresholder combinations
+
+Additional API Example
+----------------------
+
+1. Get the normalized threshold value that seperates the inliers from outliers after the 
+scores have been evaluated. Note, the outlier detection scores are normalized between 0 and 1.
+
+    .. code-block:: python
+
+        # train kNN detector
+        clf_name = 'KNN'
+        clf = KNN()
+        clf.fit(X_train)
+
+        scores = clf.decision_function(X_train)
+        thres = OCSVM()
+        labels = thres.eval(scores)
+
+        threshold = thres.thresh_
+
+2. Similarly, the lower and upper confidence interval of the contamination level for the
+:class:`pythresh.thresholds.all.ALL` thresholder can be retrieved.
+
+    .. code-block:: python
+
+        # train kNN detector
+        clf_name = 'KNN'
+        clf = KNN()
+        clf.fit(X_train)
+
+        scores = clf.decision_function(X_train)
+        thres = ALL()
+        labels = thres.eval(scores)
+
+        threshold = thres.confidence_interval_
+
+For Jupyter Notebooks, please navigate to `notebooks <https://github.com/KulikDM/pythresh/tree/main/notebooks>`_ 
+for additional use case references
 
 
 .. rubric:: References
