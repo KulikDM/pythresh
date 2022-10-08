@@ -25,7 +25,7 @@ pythresh_dir = dirname(dirname(abspath(__file__)))
 try:
     verpath = os.path.join(pythresh_dir, 'pythresh', 'version.py')
     version_file = open(verpath)
-    __version__ ,= re.findall('__version__ = "(.*)"', version_file.read())
+    __version__ = str(re.findall(r'\b\d+(?:\.\d+)+', version_file.read())[0])
 
 except Exception as error:
     __version__ = "0.0.1"

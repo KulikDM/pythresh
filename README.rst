@@ -51,7 +51,7 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
 
     # train the KNN detector
     from pyod.models.knn import KNN
-    from pythresh.thresholds.dsn import DSN
+    from pythresh.thresholds.clust import CLUST
     
     clf = KNN()
     clf.fit(X_train)
@@ -60,7 +60,7 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
     decision_scores = clf.decision_scores_  # raw outlier scores on the train data
     
     # get outlier labels 
-    thres = DSN()
+    thres = CLUST()
     labels = thres.eval(decision_scores)
 
 

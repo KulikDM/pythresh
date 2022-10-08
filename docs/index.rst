@@ -1,8 +1,3 @@
-.. pyod documentation master file, created by
-   sphinx-quickstart on Sun May 27 10:56:38 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to PyThresh Documentation
 =================================
 
@@ -56,7 +51,7 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
 
     # train the KNN detector
     from pyod.models.knn import KNN
-    from pythresh.thresholds.dsn import DSN
+    from pythresh.thresholds.clust import CLUST
     
     clf = KNN()
     clf.fit(X_train)
@@ -65,7 +60,7 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
     decision_scores = clf.decision_scores_  # raw outlier scores on the train data
     
     # get outlier labels 
-    thres = DSN()
+    thres = CLUST()
     labels = thres.eval(decision_scores)
 
 
