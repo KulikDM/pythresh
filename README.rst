@@ -106,7 +106,7 @@ Or with **pip**:
 * scikit-lego (used in the META thresholder)
 * joblib>=0.14.1 (used in the META thresholder)
 * pandas (used in the META thresholder)
-* pytorch (used in the VAE thresholder)
+* torch (used in the VAE thresholder)
 * tqdm (used in the VAE thresholder)
 
 
