@@ -152,7 +152,7 @@ scores have been evaluated. Note, the outlier detection scores are normalized be
         thres = ALL()
         labels = thres.eval(scores)
 
-        threshold = thres.confidence_interval_
+        conf_interval = thres.confidence_interval_
 
 For Jupyter Notebooks, please navigate to `notebooks <https://github.com/KulikDM/pythresh/tree/main/notebooks>`_ 
 for additional use case references

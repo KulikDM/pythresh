@@ -243,6 +243,17 @@ pythresh.thresholds.regr module
     :inherited-members:
 
 
+pythresh.thresholds.vae module
+----------------------
+
+.. automodule:: pythresh.thresholds.vae
+    :members:
+    :exclude-members: _train, VAE_model, data_encoder, data_decoder, forward, predict, reconstructed_probability
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:
+
+
 pythresh.thresholds.wind module
 ----------------------
 

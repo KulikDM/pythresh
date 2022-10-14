@@ -7,10 +7,12 @@ numpy
 pandas
 pyclustering
 pyod
+pytorch
 scipy
 scikit-learn
 scikit-lego
 six
 sphinx-rtd-theme
 sphinxcontrib-bibtex
+tqdm
 

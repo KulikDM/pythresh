@@ -106,6 +106,8 @@ Or with **pip**:
 * scikit-lego (used in the META thresholder)
 * joblib>=0.14.1 (used in the META thresholder)
 * pandas (used in the META thresholder)
+* pytorch (used in the VAE thresholder)
+* tqdm (used in the VAE thresholder)
 
 
 API Cheatsheet
@@ -155,6 +157,7 @@ MTT         Modified Thompson Tau Test                  [#mtt1]_			     `pythres
 OCSVM       One-Class Support Vector Machine            [#ocsvm]_            `pythresh.thresholds.ocsvm module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#pythresh-thresholds-ocsvm-module>`_
 QMCD        Quasi-Monte Carlo Discreprancy              [#qmcd1]_		        `pythresh.thresholds.qmcd module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.qmcd>`_
 REGR        Regression Based                            [#regr1]_            `pythresh.thresholds.regr module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.regr>`_
+VAE         Variational Autoencoder                     [#vae1]_             `pythresh.thresholds.vae module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.vae>`_ 
 WIND        Topological Winding Number                  [#wind1]_            `pythresh.thresholds.wind module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.wind>`_
 YJ          Yeo-Johnson Transformation                  [#yj1]_			     `pythresh.thresholds.yj module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.yj>`_
 ZSCORE      Z-score                                     [#zscore1]_			  `pythresh.thresholds.zscore module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.zscore>`_
@@ -227,6 +230,8 @@ References
 .. [#qmcd1] `Deterministic and quasi-random sampling of optimized Gaussian mixture distributions for vibronic Monte Carlo <https://arxiv.org/abs/1912.11594>`_
 
 .. [#regr1] `Linear Models for Outlier Detection <https://link.springer.com/chapter/10.1007/978-3-319-47578-3_3>`_
+
+.. [#vae1] `Likelihood Regret: An Out-of-Distribution Detection Score For Variational Auto-encoder <https://arxiv.org/abs/2003.02977>`_
 
 .. [#wind1] `Robust Inside-Outside Segmentation Using Generalized Winding Numbers <https://www.researchgate.net/publication/262165781_Robust_Inside-Outside_Segmentation_Using_Generalized_Winding_Numbers>`_
 

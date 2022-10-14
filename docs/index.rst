@@ -103,6 +103,7 @@ MTT         Modified Thompson Tau Test                                       :ci
 OCSVM       One-Class Support Vector Machine                                 :cite:`a-barbado2022ocsvm`
 QMCD        Quasi-Monte Carlo Discreprancy                                   :cite:`a-iouchtchenko2019qmcd`
 REGR        Regression Based                                                 :cite:`a-aggarwal2017clf`
+VAE         Variational Autoencoder                                          :cite:`a-xiao2020vae`
 WIND        Topological Winding Number                                       :cite:`a-jacobson2013wind`
 YJ          Yeo-Johnson Transformation                                       :cite:`a-raymaekers2021yj`
 ZSCORE      Z-score                                                          :cite:`a-bagdonavicius2020zscore`
