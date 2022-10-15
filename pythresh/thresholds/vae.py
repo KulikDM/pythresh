@@ -121,7 +121,7 @@ class VAE(BaseThresholder):
         m = len(vals)
         profile_lik = []
         
-        for i in range(1,m+1):
+        for i in range(1,m):
             
             mu1 = np.mean(vals[:i])
             mu2 = np.mean(vals[i:])
@@ -211,6 +211,8 @@ class VAE_model(nn.Module):
             kl = kl_divergence(pred_result['latent_dist'],
                             self.prior).mean(dim=0).sum()
             loss = kl - log_lik
+            
+            return dict(loss=loss, kl=kl, recon_loss=log_lik, **pred_result)
         
         # calculate the mmd and the forward loss    
         else:
@@ -228,7 +230,7 @@ class VAE_model(nn.Module):
 
             loss = mmd - log_lik
             
-        return dict(loss=loss, kl=kl, recon_loss=log_lik, **pred_result)
+            return dict(loss=loss, kl=mmd, recon_loss=log_lik, **pred_result)
 
     def predict(self, x):
 
@@ -260,7 +262,7 @@ class VAE_model(nn.Module):
         x = x.unsqueeze(0)
         p = recon_dist.log_prob(x).exp().mean(dim=0).mean(dim=-1)
         
-        return 
+        return p
     
     def compute_kernel(self, x, y):
 
