@@ -21,3 +21,5 @@ v<0.2.6>, <09/11/2022> -- Add INT metric, fix sort bug for DSN
 v<0.2.6>, <09/29/2022> -- Added meta thresholder, updated requirements
 v<0.2.6>, <10/01/2022> -- Updated trained meta-models, added confidence threshold attribute
 v<0.2.7>, <10/02/2022> -- Removed kmeans and shift thresholders
+v<0.2.7>, <10/14/2022> -- Added vae thresholder
+v<0.2.7>, <10/15/2022> -- Added mmd loss and autodim to vae
