@@ -74,7 +74,7 @@ External Feature Cases
 
 **Towards Data Science**: `When Outliers are Significant: Weighted Linear Regression <https://towardsdatascience.com/when-outliers-are-significant-weighted-linear-regression-bcdc8389ab10>`_
 
-**Arxiv**: `Estimating the Contamination Factor's Distribution in Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
+**ArXiv**: `Estimating the Contamination Factor's Distribution in Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 
 ----
 

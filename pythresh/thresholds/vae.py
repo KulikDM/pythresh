@@ -115,7 +115,7 @@ class VAE(BaseThresholder):
         return cut(scores, limit)
     
     def _autodim(self, vals):
-        ''' Estimate the dimension using the method of Zhu and Ghodsi (2006) '''
+        ''' Estimate the latent dimension size using the method of Zhu and Ghodsi (2006) '''
         
         vals = np.sort(vals)[::-1]
         m = len(vals)
@@ -150,7 +150,7 @@ class VAE(BaseThresholder):
                     
                 x = x.to(self.device)
                 optimizer.zero_grad()
-                x_hat = self.model.forward(x)
+                _ = self.model.forward(x)
                     
                 optimizer.step()
                     
@@ -223,7 +223,7 @@ class VAE_model(nn.Module):
             z = pred_result['latent_dist'].rsample([self.L])
             z = z.view(self.L * batch_size, self.latent_size)
             
-            x = self.prior.rsample([self.L*len(x) * self.latent_size])
+            x = self.prior.rsample([self.L * batch_size * self.latent_size])
             x = x.view(self.L * batch_size, self.latent_size)
             
             mmd = self.compute_mmd(z, x)
