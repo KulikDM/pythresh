@@ -24,7 +24,7 @@ class CLUST(BaseThresholder):
        are set to any value not labelled as part of the main cluster.
        See :cite:`klawonn2008clust` for details.
 
-       Paramaters
+       Parameters
        ----------
         
        method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='dbscan')

@@ -17,7 +17,7 @@ class META(BaseThresholder):
        are set based on the trained meta-model classifier. 
        See :cite:`zhao2022meta` for details.
        
-       Paramaters
+       Parameters
        ----------
        
        method : {'LIN', 'GNB'}, optional (default='GNB')

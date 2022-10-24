@@ -13,7 +13,7 @@ class ZSCORE(BaseThresholder):
        to any value beyond a zscore of one.
        See :cite:`bagdonavicius2020zscore` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes

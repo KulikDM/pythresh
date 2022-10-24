@@ -13,7 +13,7 @@ class FGD(BaseThresholder):
        with respect to the decision scores passes the mean of the first 
        and second inflection points. See :cite:`qi2021fgd` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes

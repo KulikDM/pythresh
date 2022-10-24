@@ -24,7 +24,7 @@ from pyod.models.knn import KNN
 from pyod.utils.data import generate_data
 
 
-class TestALL(unittest.TestCase):
+class TestMETA(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
         self.n_test = 100

@@ -15,7 +15,7 @@ class DECOMP(BaseThresholder):
        function of the decision scores.
        See :cite:`boente2002decomp` for details
        
-       Paramaters
+       Parameters
        ----------
        
        method: {'NMF', 'PCA'}, optional (default='PCA')

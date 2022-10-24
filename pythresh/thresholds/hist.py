@@ -15,7 +15,7 @@ class HIST(BaseThresholder):
        thresholds depending on the selected methods. 
        See :cite:`thanammal2015hist` for details.
        
-       Paramaters
+       Parameters
        ----------
        
        nbins : int, optional (default='native')

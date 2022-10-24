@@ -14,7 +14,7 @@ class AUCP(BaseThresholder):
        than the (mean + abs(mean-median)) percent of the total kde auc.
        See :cite:`ren2018aucp` for details
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes

@@ -13,7 +13,7 @@ class IQR(BaseThresholder):
        plus 1.5 times the inter-quartile region.
        See :cite:`bardet2015iqr` for details.
 
-       Paramaters
+       Parameters
        ----------
 
        Attributes

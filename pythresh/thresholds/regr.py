@@ -13,7 +13,7 @@ class REGR(BaseThresholder):
        are set to any value beyond the y-intercept value of the linear fit.
        See :cite:`aggarwal2017clf` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        method : {'siegel', 'theil'}, optional (default='siegel')

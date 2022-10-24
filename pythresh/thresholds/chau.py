@@ -14,7 +14,7 @@ class CHAU(BaseThresholder):
        where outliers are set to any value below the Chauvenet's
        criterion. See :cite:`bolshev2016chau` for details
 
-       Paramaters
+       Parameters
        ----------
 
        method : {'mean', 'median', 'gmean'}, optional (default='mean')

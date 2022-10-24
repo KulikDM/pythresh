@@ -13,7 +13,7 @@ class FWFM(BaseThresholder):
        decision_scores where outliers are set to any value beyond the base
        width. See :cite:`joneidi2013fwfm` for details.
 
-       Paramaters
+       Parameters
        ----------
 
        Attributes

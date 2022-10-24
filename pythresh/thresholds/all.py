@@ -38,7 +38,7 @@ class ALL(BaseThresholder):
        are set to any value beyond the (mean, median, or mode) of the
        contamination from all the combined thresholders.
        
-       Paramaters
+       Parameters
        ----------
 
        thresholders : list, optional (default='all')

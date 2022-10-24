@@ -16,7 +16,7 @@ class QMCD(BaseThresholder):
        distribution on distinct sample points).
        See :cite:`iouchtchenko2019qmcd` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        method : {'CD', 'WD', 'MD', 'L2-star'}, optional (default='WD')

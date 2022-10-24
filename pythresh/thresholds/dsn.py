@@ -18,7 +18,7 @@ class DSN(BaseThresholder):
        are set to any value beyond the distance calculated by the selected
        metric. See :cite:`amagata2021dsn` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS', 'INT'}, optional (default='JS')

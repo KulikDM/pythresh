@@ -14,7 +14,7 @@ class GESD(BaseThresholder):
        where outliers are set to any less than the smallest detected outlier.
        See :cite:`alrawashdeh2021gesd` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        max_outliers : int, optional (default='native')

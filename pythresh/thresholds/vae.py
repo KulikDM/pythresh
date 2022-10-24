@@ -20,7 +20,7 @@ class VAE(BaseThresholder):
        reconstructed distribution probabilities after encoding.
        See :cite:`xiao2020vae` for details
        
-       Paramaters
+       Parameters
        ----------
        
        verbose : bool, optional (default=False)

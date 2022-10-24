@@ -14,7 +14,7 @@ class MAD(BaseThresholder):
        median absolute deviation over the standard deviation. 
        See :cite:`archana2015mad` for details.
 
-       Paramaters
+       Parameters
        ----------
 
        Attributes

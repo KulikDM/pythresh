@@ -15,7 +15,7 @@ class KARCH(BaseThresholder):
        Karcher mean + one standard deviation of the decision_scores.
        See :cite:`afsari2011karch` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        ndim : int, optional (default=2)

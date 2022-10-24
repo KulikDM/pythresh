@@ -12,7 +12,7 @@ class EB(BaseThresholder):
        are set to any value beyond a pseudo-random elliptical boundary set
        between inliers and outliers. See :cite:`friendly2013eb` for details. 
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes

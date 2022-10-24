@@ -17,7 +17,7 @@ class OCSVM(BaseThresholder):
        with the polynomial degree either set or determined by regression
        internally. See :cite:`barbado2022ocsvm` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        degree : int, optional (default='auto')

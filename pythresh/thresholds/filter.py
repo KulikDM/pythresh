@@ -15,7 +15,7 @@ class FILTER(BaseThresholder):
        are set to any value beyond the maximum filter value.
        See :cite:`hashemi2019filter` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        method : {'gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt', 'decimate','detrend', 'resample'}, optional (default='wiener')

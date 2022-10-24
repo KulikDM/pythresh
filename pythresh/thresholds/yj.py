@@ -14,7 +14,7 @@ class YJ(BaseThresholder):
        max value in the YJ transformed data. 
        See :cite:`raymaekers2021yj` for details.
 
-       Paramaters
+       Parameters
        ----------
 
        Attributes

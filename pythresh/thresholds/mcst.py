@@ -16,7 +16,7 @@ class MCST(BaseThresholder):
        threshold method may fail at any array size.
        See :cite:`coin2008mcst` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes

@@ -13,7 +13,7 @@ class BOOT(BaseThresholder):
        are set to any value beyond the mean of the confidence intervals.
        See :cite:`martin2006boot` for details
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes

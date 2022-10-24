@@ -13,7 +13,7 @@ class MTT(BaseThresholder):
        are set to any value beyond the smallest outlier detected by the test.
        See :cite:`rengasamy2020mtt` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        strictness : [1,2,3,4,5], optional (default=4)

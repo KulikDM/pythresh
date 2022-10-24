@@ -15,7 +15,7 @@ class MOLL(BaseThresholder):
        are set to any value beyond one minus the  maximum of the smoothed
        dataset via convolution. See :cite:`keyzer1997moll` for details.
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes

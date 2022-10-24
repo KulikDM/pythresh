@@ -11,7 +11,7 @@ class BaseThresholder(object):
     """Abstract class for all outlier detection thresholding algorithms.
 
        
-       Paramaters
+       Parameters
        ----------
 
        Attributes
