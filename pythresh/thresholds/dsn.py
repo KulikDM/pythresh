@@ -21,7 +21,7 @@ class DSN(BaseThresholder):
        Parameters
        ----------
 
-       metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS', 'INT'}, optional (default='JS')
+       metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS', 'INT', 'MMD'}, optional (default='JS')
             Metric to use for distance computation
         
             - 'JS':  Jensen-Shannon distance
@@ -37,6 +37,7 @@ class DSN(BaseThresholder):
             - 'RES': Studentized residual distance
             - 'KS':  Kolmogorov-Smirnov distance
             - 'INT': Weighted spline interpolated distance
+            - 'MMD': Maximum Mean Discrepancy distance
 
        Attributes
        ----------
@@ -55,7 +56,7 @@ class DSN(BaseThresholder):
                              'LK': self._LK_metric, 'LP': self._LP_metric,
                              'MAH': self._MAH_metric, 'TMT': self._TMT_metric,
                              'RES': self._RES_metric, 'KS': self._KS_metric,
-                             'INT': self._INTER_metric}
+                             'INT': self._INTER_metric, 'MMD': self._MMD_metric}
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -87,7 +88,7 @@ class DSN(BaseThresholder):
         if self.metric!='LP':
             n = 3
 
-        if self.metric in ['JS', 'BHT', 'INT']:
+        if self.metric in ['JS', 'BHT', 'INT', 'MMD']:
             # Create a KDE of the decision scores and the normal distribution
             # Generate KDE
 
@@ -259,3 +260,14 @@ class DSN(BaseThresholder):
         spline = interpolate.splev(points, tck)
         
         return np.array(spline)
+
+    def _MMD_metric(self):
+        """Calculate the Maximum Mean Discrepancy distance using a linear kernel"""
+
+        delta = self.val_data - self.val_norm
+        delta = normalize(delta)
+        delta = delta.dot(delta.T)
+
+        dist = delta/np.sum(self.data_range)
+
+        return dist

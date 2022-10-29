@@ -77,7 +77,7 @@ pythresh.thresholds.dsn module
 
 .. automodule:: pythresh.thresholds.dsn
     :members:
-    :exclude-members: _JS_metric, _WS_metric, _ENG_metric, _BHT_metric, _HLL_metric, _HI_metric, _LK_metric, _LP_metric, _MAH_metric, _TMT_metric, _RES_metric, _KS_metric
+    :exclude-members: _JS_metric, _WS_metric, _ENG_metric, _BHT_metric, _HLL_metric, _HI_metric, _LK_metric, _LP_metric, _MAH_metric, _TMT_metric, _RES_metric, _KS_metric, _INT_metric, _interp, _MMD_metric
     :undoc-members:
     :show-inheritance:
     :inherited-members:
