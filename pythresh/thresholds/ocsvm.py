@@ -1,9 +1,11 @@
 import numpy as np
 import scipy.stats as stats
-from sklearn.linear_model import RidgeCV
+from sklearn.linear_model import RidgeCV, SGDOneClassSVM
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import OneClassSVM
+from sklearn.kernel_approximation import AdditiveChi2Sampler
+from sklearn.pipeline import make_pipeline
 from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
@@ -19,6 +21,12 @@ class OCSVM(BaseThresholder):
        
        Parameters
        ----------
+       
+       model : {'poly', 'sgd'}, optional (default='poly')
+           OCSVM model to apply
+           
+           - 'poly':  Use a polynomial kernel with a regular OCSVM
+           - 'sgd':   Used the Adittive Chi2 kernel approximation with a SGDOneClassSVM
 
        degree : int, optional (default='auto')
            Polynomial degree to use for the one-class svm.
@@ -50,8 +58,10 @@ class OCSVM(BaseThresholder):
 
     """
 
-    def __init__(self, degree='auto', gamma='auto', criterion='bic', nu='auto', tol=1e-3):
+    def __init__(self, model='poly', degree='auto', gamma='auto', 
+                 criterion='bic', nu='auto', tol=1e-3):
 
+        self.model = model
         self.degree = degree
         self.gamma = gamma
         self.crit = criterion
@@ -91,16 +101,23 @@ class OCSVM(BaseThresholder):
             self.nu = len(decision[decision<=med+abs(mean-gmean)])/len(decision)
 
         # Get auto degree calculation
-        if self.degree=='auto':
+        if (self.degree=='auto') & (self.model=='poly'):
 
             self.degree = self._auto_crit(decision)
 
         decision = decision.reshape(-1,1)
 
         # Create a one-class svm
-        clf = OneClassSVM(gamma=self.gamma, kernel='poly',
-                          degree=self.degree, nu=self.nu,
-                          tol=self.tol).fit(decision)
+        if self.model=='poly':
+            clf = OneClassSVM(gamma=self.gamma, kernel='poly',
+                              degree=self.degree, nu=self.nu,
+                              tol=self.tol).fit(decision)
+        else:
+            transform = AdditiveChi2Sampler()
+            sgd = SGDOneClassSVM(nu=self.nu,
+                                 random_state=1234)
+            clf = make_pipeline(transform, sgd)
+            clf.fit(decision)
 
         # Predict inliers and outliers
         res = clf.predict(decision)

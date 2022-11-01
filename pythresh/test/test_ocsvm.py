@@ -39,6 +39,7 @@ class TestOCSVM(unittest.TestCase):
 
         self.scores = self.clf.decision_scores_
 
+        self.models = ['poly', 'sgd']
         self.degree = ['auto', 2, 3, 4, 7, 10]
         self.gamma = ['auto', 0.1, 0.5, 0.9]
         self.criterion = ['aic', 'bic']
@@ -47,23 +48,25 @@ class TestOCSVM(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for degree in self.degree:
-            for gamma in self.gamma:
-                for criterion in self.criterion:
-                    for nu in self.nu:
-                        for tol in self.tol:
+        for model in self.models:
+            for degree in self.degree:
+                for gamma in self.gamma:
+                    for criterion in self.criterion:
+                        for nu in self.nu:
+                            for tol in self.tol:
 
-                            self.thres = OCSVM(degree=degree, gamma=gamma,
-                                               criterion=criterion, nu=nu,
-                                               tol=tol)
-                            pred_labels = self.thres.eval(self.scores)
-                            assert (self.thres.thresh_ == None)
-                    
-                            assert_equal(pred_labels.shape, self.y_train.shape)
+                                self.thres = OCSVM(model=model, degree=degree, 
+                                                   gamma=gamma, criterion=criterion, 
+                                                   nu=nu,tol=tol)
+                                
+                                pred_labels = self.thres.eval(self.scores)
+                                assert (self.thres.thresh_ == None)
+                        
+                                assert_equal(pred_labels.shape, self.y_train.shape)
 
 
-                            if (not np.all(pred_labels==0)) & (not np.all(pred_labels==1)):
-            
-                                assert (pred_labels.min() == 0)
-                                assert (pred_labels.max() == 1)
+                                if (not np.all(pred_labels==0)) & (not np.all(pred_labels==1)):
+                
+                                    assert (pred_labels.min() == 0)
+                                    assert (pred_labels.max() == 1)
 

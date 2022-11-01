@@ -24,3 +24,4 @@ v<0.2.7>, <10/02/2022> -- Removed kmeans and shift thresholders
 v<0.2.7>, <10/14/2022> -- Added vae thresholder
 v<0.2.7>, <10/15/2022> -- Added mmd loss and autodim to vae
 v<0.2.7>, <10/29/2022> -- Added mmd metric to DSN
+v<0.2.7>, <11/01/2022> -- Added sgd model to ocsvm
