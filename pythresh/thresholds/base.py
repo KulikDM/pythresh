@@ -10,14 +10,14 @@ import six
 class BaseThresholder(object):
     """Abstract class for all outlier detection thresholding algorithms.
 
-       
+
        Parameters
        ----------
 
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
     """
 

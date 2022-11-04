@@ -19,17 +19,17 @@ class FWFM(BaseThresholder):
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
-       
+       thresh_ : threshold value that seperates inliers from outliers
+
        Notes
        -----
-       
+
        The outlier detection scores are assumed to be a mixture of Gaussian
-       distributions. The probability density function of this Gaussian mixture 
-       is approximated using kernel density estimation. The highest peak within the 
-       PDF is used to find the base width of the mixture and the threshold is set 
+       distributions. The probability density function of this Gaussian mixture
+       is approximated using kernel density estimation. The highest peak within the
+       PDF is used to find the base width of the mixture and the threshold is set
        to the base width divided by the number of scores.
-       
+
     """
 
     def __init__(self):
@@ -44,7 +44,7 @@ class FWFM(BaseThresholder):
         decision : np.array or list of shape (n_samples)
                    which are the decision scores from a
                    outlier detection.
-        
+
         Returns
         -------
         outlier_labels : numpy array of shape (n_samples,)
@@ -61,7 +61,7 @@ class FWFM(BaseThresholder):
         val, _ = gen_kde(decision,-1,1,len(decision)*3)
         val = normalize(val)
 
-        # Find the greatest peak of the KDE 
+        # Find the greatest peak of the KDE
         peaks, _ = find_peaks(val, prominence=0.75)
 
         # Find the base width of the peak

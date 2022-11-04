@@ -3,7 +3,7 @@ All Models
 
 
 pythresh.thresholds.all module
------------------------
+------------------------------
 
 .. automodule:: pythresh.thresholds.all
     :members:
@@ -13,7 +13,7 @@ pythresh.thresholds.all module
     :inherited-members:
 
 pythresh.thresholds.aucp module
---------------------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.aucp
     :members:
@@ -23,7 +23,7 @@ pythresh.thresholds.aucp module
     :inherited-members:
 
 pythresh.thresholds.boot module
----------------------------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.boot
     :members:
@@ -33,7 +33,7 @@ pythresh.thresholds.boot module
     :inherited-members:
 
 pythresh.thresholds.chau module
-------------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.chau
     :members:
@@ -43,7 +43,7 @@ pythresh.thresholds.chau module
     :inherited-members:
 
 pythresh.thresholds.clf module
-----------------------
+------------------------------
 
 .. automodule:: pythresh.thresholds.clf
     :members:
@@ -53,7 +53,7 @@ pythresh.thresholds.clf module
     :inherited-members:
 
 pythresh.thresholds.clust module
-----------------------
+--------------------------------
 
 .. automodule:: pythresh.thresholds.clust
     :members:
@@ -63,7 +63,7 @@ pythresh.thresholds.clust module
     :inherited-members:
 
 pythresh.thresholds.decomp module
-------------------------
+---------------------------------
 
 .. automodule:: pythresh.thresholds.decomp
     :members:
@@ -83,7 +83,7 @@ pythresh.thresholds.dsn module
     :inherited-members:
 
 pythresh.thresholds.eb module
-------------------------
+-----------------------------
 
 .. automodule:: pythresh.thresholds.eb
     :members:
@@ -93,7 +93,7 @@ pythresh.thresholds.eb module
     :inherited-members:
 
 pythresh.thresholds.fgd module
------------------------------
+------------------------------
 
 .. automodule:: pythresh.thresholds.fgd
     :members:
@@ -103,7 +103,7 @@ pythresh.thresholds.fgd module
     :inherited-members:
 
 pythresh.thresholds.filter module
-------------------------
+---------------------------------
 
 .. automodule:: pythresh.thresholds.filter
     :members:
@@ -113,27 +113,27 @@ pythresh.thresholds.filter module
     :inherited-members:
 
 pythresh.thresholds.fwfm module
-------------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.fwfm
     :members:
-    :exclude-members: 
+    :exclude-members:
     :undoc-members:
     :show-inheritance:
     :inherited-members:
 
 pythresh.thresholds.gesd module
------------------------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.gesd
-    :members:  
+    :members:
     :exclude-members: _calc_crit, _grubbs_stat
-    :undoc-members: 
+    :undoc-members:
     :show-inheritance:
     :inherited-members:
 
 pythresh.thresholds.hist module
------------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.hist
     :members:
@@ -143,7 +143,7 @@ pythresh.thresholds.hist module
     :inherited-members:
 
 pythresh.thresholds.iqr module
---------------------------
+------------------------------
 
 .. automodule:: pythresh.thresholds.iqr
     :members:
@@ -153,7 +153,7 @@ pythresh.thresholds.iqr module
     :inherited-members:
 
 pythresh.thresholds.karch module
-----------------------
+--------------------------------
 
 .. automodule:: pythresh.thresholds.karch
     :members:
@@ -163,7 +163,7 @@ pythresh.thresholds.karch module
     :inherited-members:
 
 pythresh.thresholds.mad module
------------------------
+------------------------------
 
 .. automodule:: pythresh.thresholds.mad
     :members:
@@ -173,7 +173,7 @@ pythresh.thresholds.mad module
     :inherited-members:
 
 pythresh.thresholds.mcst module
-----------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.mcst
     :members:
@@ -183,7 +183,7 @@ pythresh.thresholds.mcst module
     :inherited-members:
 
 pythresh.thresholds.meta module
-----------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.meta
     :members:
@@ -193,7 +193,7 @@ pythresh.thresholds.meta module
     :inherited-members:
 
 pythresh.thresholds.moll module
------------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.moll
     :members:
@@ -203,7 +203,7 @@ pythresh.thresholds.moll module
     :inherited-members:
 
 pythresh.thresholds.mtt module
------------------------
+------------------------------
 
 .. automodule:: pythresh.thresholds.mtt
     :members:
@@ -213,7 +213,7 @@ pythresh.thresholds.mtt module
     :inherited-members:
 
 pythresh.thresholds.ocsvm module
-----------------------
+--------------------------------
 
 .. automodule:: pythresh.thresholds.ocsvm
     :members:
@@ -223,7 +223,7 @@ pythresh.thresholds.ocsvm module
     :inherited-members:
 
 pythresh.thresholds.qmcd module
-----------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.qmcd
     :members:
@@ -233,7 +233,7 @@ pythresh.thresholds.qmcd module
     :inherited-members:
 
 pythresh.thresholds.regr module
-----------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.regr
     :members:
@@ -244,7 +244,7 @@ pythresh.thresholds.regr module
 
 
 pythresh.thresholds.vae module
-----------------------
+------------------------------
 
 .. automodule:: pythresh.thresholds.vae
     :members:
@@ -255,7 +255,7 @@ pythresh.thresholds.vae module
 
 
 pythresh.thresholds.wind module
-----------------------
+-------------------------------
 
 .. automodule:: pythresh.thresholds.wind
     :members:
@@ -266,7 +266,7 @@ pythresh.thresholds.wind module
 
 
 pythresh.thresholds.yj module
-----------------------
+-----------------------------
 
 .. automodule:: pythresh.thresholds.yj
     :members:
@@ -277,7 +277,7 @@ pythresh.thresholds.yj module
 
 
 pythresh.thresholds.zscore module
-----------------------
+---------------------------------
 
 .. automodule:: pythresh.thresholds.zscore
     :members:

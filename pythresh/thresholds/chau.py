@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.stats as stats
-from scipy.special import erfc 
+from scipy.special import erfc
 from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut
@@ -19,7 +19,7 @@ class CHAU(BaseThresholder):
 
        method : {'mean', 'median', 'gmean'}, optional (default='mean')
             Calculate the area normal to distance using a scaler
-       
+
             - 'mean':  Construct a scaler with the the mean of the scores
             - 'median: Construct a scaler with the the median of the scores
             - 'gmean': Construct a scaler with the geometric mean of the scores
@@ -27,49 +27,49 @@ class CHAU(BaseThresholder):
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
-       
+       thresh_ : threshold value that seperates inliers from outliers
+
        Notes
        -----
-       
-       The Chauvenet's criterion for a one tail of a distribution is defined 
+
+       The Chauvenet's criterion for a one tail of a distribution is defined
        as follows:
-       
+
        .. math::
-       
+
            D_{\mathrm{max}}>Z \mathrm{,}
-           
-       where :math:`D_{\mathrm{max}}` is the bounds of the probability band 
+
+       where :math:`D_{\mathrm{max}}` is the bounds of the probability band
        around the mean given by,
-       
+
        .. math::
-       
+
            D_{\mathrm{max}} = \lvert norm.ppf(Pz) \rvert \mathrm{,}
-         
-       where this bounds is equal to the inverse of a cumulative distribution function 
-       for a probability of one of the tails of the normal distribution, and :math:`P_z` 
+
+       where this bounds is equal to the inverse of a cumulative distribution function
+       for a probability of one of the tails of the normal distribution, and :math:`P_z`
        is therefore defined as,
-       
-       .. math:: 
-         
+
+       .. math::
+
            P_z = \frac{1}{4n} \mathrm{,}
-           
+
        with :math:`n` being the number of samples in the decision scores. Finally the z-score
        can be calculated as follows:
-       
+
        .. math::
-           
+
            Z = \frac{x-\bar{x}}{\sigma} \mathrm{,}
-           
+
        with :math:`\bar{x}` as the mean and :math:`\sigma` the standard deviation
        of the decsion scores.
-        
-       CHAU employs variants of the classical Chauvenet's criterion as the mean can be 
+
+       CHAU employs variants of the classical Chauvenet's criterion as the mean can be
        replaced with the geometric mean or the median.
-        
+
        Any z-score greater than the Chauvenet's criterion is considered an outlier.
-           
-           
+
+
     """
 
     def __init__(self, method='mean'):
@@ -86,7 +86,7 @@ class CHAU(BaseThresholder):
         decision : np.array or list of shape (n_samples)
                    which are the decision scores from a
                    outlier detection.
-        
+
         Returns
         -------
         outlier_labels : numpy array of shape (n_samples,)

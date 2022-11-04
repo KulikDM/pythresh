@@ -18,13 +18,13 @@ class OCSVM(BaseThresholder):
        are determined by the one-class svm using a polynomial kernel
        with the polynomial degree either set or determined by regression
        internally. See :cite:`barbado2022ocsvm` for details.
-       
+
        Parameters
        ----------
-       
+
        model : {'poly', 'sgd'}, optional (default='poly')
            OCSVM model to apply
-           
+
            - 'poly':  Use a polynomial kernel with a regular OCSVM
            - 'sgd':   Used the Adittive Chi2 kernel approximation with a SGDOneClassSVM
 
@@ -46,7 +46,7 @@ class OCSVM(BaseThresholder):
            of the fraction of support vectors. Default 'auto' sets nu as the ratio
            between the any point that is less than or equal to the median plus
            the absolute difference between the mean and geometric mean over the
-           the number of points in the entire dataset 
+           the number of points in the entire dataset
 
        tol : float, optional (default=1e-3)
            The stopping criterion for the one-class svm
@@ -54,11 +54,11 @@ class OCSVM(BaseThresholder):
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that seperates inliers from outliers
 
     """
 
-    def __init__(self, model='poly', degree='auto', gamma='auto', 
+    def __init__(self, model='poly', degree='auto', gamma='auto',
                  criterion='bic', nu='auto', tol=1e-3):
 
         self.model = model
@@ -67,7 +67,7 @@ class OCSVM(BaseThresholder):
         self.crit = criterion
         self.nu = nu
         self.tol = tol
-        
+
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -89,7 +89,7 @@ class OCSVM(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
         decision = normalize(decision)
-        
+
         # Get auto nu calculation
         if self.nu=='auto':
 
@@ -97,7 +97,7 @@ class OCSVM(BaseThresholder):
             gmean = stats.gmean(decision)
             mean = np.mean(decision)
             med = np.median(decision)
-            
+
             self.nu = len(decision[decision<=med+abs(mean-gmean)])/len(decision)
 
         # Get auto degree calculation
@@ -123,20 +123,20 @@ class OCSVM(BaseThresholder):
         res = clf.predict(decision)
 
         res[res==-1] = 0
-        
+
         # Remove outliers from the left tail (precaution step)
         decision = np.squeeze(decision)
         mask = np.where(decision<=np.mean(decision))
         res[mask] = 0
-        
+
         self.thresh_ = None
 
-        
+
         return res
-    
+
     def _auto_crit(self, decision):
         '''Decide polynomial degree using criterion'''
-        
+
         # Generate kde
         kde, dat_range = gen_kde(decision,0,1,len(decision))
 
@@ -148,14 +148,14 @@ class OCSVM(BaseThresholder):
         kde = kde.reshape(-1,1)
 
         scores = []
-        
+
         for poly in polys:
 
             # Calculate the polynomial features for the kde
             poly_features = PolynomialFeatures(degree=poly, include_bias=True)
             poly_fit = poly_features.fit_transform(kde)
 
-            # Use regression to fit the polynomial 
+            # Use regression to fit the polynomial
             poly_reg = RidgeCV(alphas=np.logspace(-1,2,100))
             poly_reg.fit(poly_fit, dat_range)
             poly_pred = poly_reg.predict(poly_fit)
@@ -170,5 +170,5 @@ class OCSVM(BaseThresholder):
 
         # Set degree from smallest metric score
         deg = polys[np.argmin(scores)]
-        
+
         return deg

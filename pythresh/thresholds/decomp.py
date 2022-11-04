@@ -14,20 +14,20 @@ class DECOMP(BaseThresholder):
        matrix that results from decomposing the cumulative distribution
        function of the decision scores.
        See :cite:`boente2002decomp` for details
-       
+
        Parameters
        ----------
-       
+
        method: {'NMF', 'PCA'}, optional (default='PCA')
             Method to use for decomposition
-        
+
             - 'NMF':  Non-Negative Matrix Factorization
             - 'PCA':  Principal component analysis
 
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that seperates inliers from outliers
 
     """
 
@@ -69,7 +69,7 @@ class DECOMP(BaseThresholder):
         limit = np.max(dec)
         if limit>0.5:
             limit = 1-limit
-            
+
         self.thresh_ = limit
-        
+
         return cut(decision, limit)
