@@ -1,11 +1,6 @@
 Examples
 ========
 
-
-----
-
-
-
 Featured Tutorials
 ------------------
 
@@ -17,7 +12,7 @@ PyThresh has a variety of different thresholding methods and an online example c
 
 
 Karcher Mean Example
------------
+--------------------
 
 
 Full example: `karch_example.py <https://github.com/KulikDM/pythresh/blob/main/examples/karch_example.py>`_
@@ -50,7 +45,7 @@ Full example: `karch_example.py <https://github.com/KulikDM/pythresh/blob/main/e
                       contamination=contamination,
                       random_state=42)
 
-3. Initialize a :class:`pyod.models.knn.KNN` detector, fit the model, and threshold 
+3. Initialize a :class:`pyod.models.knn.KNN` detector, fit the model, and threshold
 the outlier detection scores.
 
     .. code-block:: python
@@ -111,9 +106,9 @@ Model Combination Example
 -------------------------
 
 Just as outlier detection often suffers from model instability, a thresholding
-method may as well due to its unsupervised nature. Thus, it is recommended to combine 
-various thresholders outputs, e.g., by averaging, to improve its robustness. 
-Luckily this has already been written for covenience as the function 
+method may as well due to its unsupervised nature. Thus, it is recommended to combine
+various thresholders outputs, e.g., by averaging, to improve its robustness.
+Luckily this has already been written for covenience as the function
 "pythresh.thresholds.all"
 
 ----
@@ -122,7 +117,7 @@ Luckily this has already been written for covenience as the function
 Additional API Example
 ----------------------
 
-1. Get the normalized threshold value that seperates the inliers from outliers after the 
+1. Get the normalized threshold value that seperates the inliers from outliers after the
 scores have been evaluated. Note, the outlier detection scores are normalized between 0 and 1.
 
     .. code-block:: python
@@ -154,7 +149,7 @@ scores have been evaluated. Note, the outlier detection scores are normalized be
 
         conf_interval = thres.confidence_interval_
 
-For Jupyter Notebooks, please navigate to `notebooks <https://github.com/KulikDM/pythresh/tree/main/notebooks>`_ 
+For Jupyter Notebooks, please navigate to `notebooks <https://github.com/KulikDM/pythresh/tree/main/notebooks>`_
 for additional use case references
 
 

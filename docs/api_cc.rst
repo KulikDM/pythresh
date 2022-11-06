@@ -12,10 +12,10 @@ Key Attributes of a fitted model:
 
 See base class definition below:
 
-pythresh.thresholders.base module
------------------------
+pythresh.thresholds.base module
+-------------------------------
 
-.. automodule:: pythresh.thresholders.base
+.. automodule:: pythresh.thresholds.base
     :members:
     :undoc-members:
     :show-inheritance:

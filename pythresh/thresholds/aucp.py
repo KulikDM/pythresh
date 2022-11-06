@@ -13,38 +13,38 @@ class AUCP(BaseThresholder):
        are set to any value beyond where the auc of the kde is less
        than the (mean + abs(mean-median)) percent of the total kde auc.
        See :cite:`ren2018aucp` for details
-       
+
        Parameters
        ----------
 
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
-       
+       thresh_ : threshold value that seperates inliers from outliers
+
        Notes
        -----
-       
+
        The area under the curve (AUC) is defined as follows:
-       
+
        .. math::
-        
+
           AUC = \mathrm{lim}_{x\rightarrow\inf} \sum_{i=1}^{n} f(x) \delta x \mathrm{,}
-          
+
        where :math:`f(x)` is the curve and :math:`\delta x` is the incremental step size
-       of the rectangles whose areas will be summed up. The AUCP method generates a 
-       curve using the pdf of the normalized decision scores over a range of 0-1. 
-       This is done with a kernel density estimation. The incremental size step is 
+       of the rectangles whose areas will be summed up. The AUCP method generates a
+       curve using the pdf of the normalized decision scores over a range of 0-1.
+       This is done with a kernel density estimation. The incremental size step is
        :math:`1/2n`, with :math:`n` being the number of points of the decision scores.
-       
-       The AUC is continuously calculated in steps from the left to right of the data 
-       range starting from 0. The stopping limit is set to 
-       :math:`\mathrm{lim} = \bar{x} + \lvert \bar{x}-\tilde{x} \rvert`, where :math:`\bar{x}` 
+
+       The AUC is continuously calculated in steps from the left to right of the data
+       range starting from 0. The stopping limit is set to
+       :math:`\mathrm{lim} = \bar{x} + \lvert \bar{x}-\tilde{x} \rvert`, where :math:`\bar{x}`
        is the mean decision score, and :math:`\tilde{x}` is the median decision score.
-       
-       The first AUC that is greater than the total AUC of the pdf multiplied by the 
+
+       The first AUC that is greater than the total AUC of the pdf multiplied by the
        :math:`\mathrm{lim}` is set as the threshold between inliers and outliers.
-       
+
 
     """
 
@@ -83,13 +83,13 @@ class AUCP(BaseThresholder):
         # Get area percentage limit
         mean = np.mean(decision)
         perc = mean+abs(mean-np.median(decision))
-        
+
 
         # Apply the limit to where the area is less than that limit percentage
         # of the total area under the curve
         limit = 1
         for i in range(len(dat_range)):
-   
+
             splt_area = auc(dat_range[i:], val[i:])
 
             if splt_area<perc*tot_area:
@@ -97,5 +97,5 @@ class AUCP(BaseThresholder):
                 break
 
         self.thresh_ = limit
-        
+
         return cut(decision, limit)

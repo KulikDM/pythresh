@@ -32,8 +32,8 @@ except Exception as error:
     sys.stderr.write("Warning: Could not open '%s' due %s\n" % (verpath, error))
 
 finally:
-    version_file.close() 
-    
+    version_file.close()
+
 # -- Project information -----------------------------------------------------
 
 project = 'pythresh'
@@ -85,7 +85,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -181,7 +181,7 @@ texinfo_documents = [
 ]
 
 # -- Extension configuration -------------------------------------------------
-    
+
 
 # -- Options for intersphinx extension ---------------------------------------
 

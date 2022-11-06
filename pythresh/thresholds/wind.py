@@ -12,38 +12,38 @@ class WIND(BaseThresholder):
        the decision_scores where outliers are set to any value beyond the
        mean intersection point calculated from the winding number.
        See :cite:`jacobson2013wind` for details.
-       
+
        Parameters
        ----------
 
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
-       
+       thresh_ : threshold value that seperates inliers from outliers
+
        Notes
        -----
-       
-       The topological winding number or the degree of a continuous mapping. It is an 
-       integer sum of the number of completed/closed counterclockwise rotations in a plane 
+
+       The topological winding number or the degree of a continuous mapping. It is an
+       integer sum of the number of completed/closed counterclockwise rotations in a plane
        around a point. And is given by,
-       
+
        .. math::
-       
+
            \mathrm{d}\theta = \frac{1}{r^2} \left(x\mathrm{d}y - y\mathrm{d}x \right) \mathrm{,}
-           
+
        where :math:`r^2 = x^2 + y^2`
-       
+
        .. math::
-       
+
            wind(\gamma,0) = \frac{1}{2\pi} \oint_\gamma \mathrm{d}\theta
-           
-       The winding number intuitively captures self-intersections/contours, with a change in the 
+
+       The winding number intuitively captures self-intersections/contours, with a change in the
        distribution of the dataset or shift from inliers to outliers relating to these intersections.
        With this, it is assumed that if an intersection exists, then adjacent/incident regions
-       must have different region labels. Since multiple intersection regions may exist. The 
+       must have different region labels. Since multiple intersection regions may exist. The
        threshold between inliers and outliers is taken as the mean intersection point.
-       
+
     """
 
     def __init__(self):
@@ -55,7 +55,7 @@ class WIND(BaseThresholder):
 
         Parameters
         ----------
-        
+
         Returns
         -------
         outlier_labels : numpy array of shape (n_samples,)
@@ -95,10 +95,10 @@ class WIND(BaseThresholder):
         # Intergrate to find winding numbers mean intersection point
         limit = integrate.simpson(integrand)/np.sum((val_data+val_norm)/2)
 
-        self.thresh_ = limit 
-          
+        self.thresh_ = limit
+
         return cut(decision, limit)
-    
+
     def _dtheta(self,x,y,dx,dy,r2):
         """Calculate dtheta for the intergrand"""
         return (x*dy - y*dx)/r2

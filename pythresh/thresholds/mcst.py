@@ -15,43 +15,43 @@ class MCST(BaseThresholder):
        array size. For good results the should be array<1000. However still this
        threshold method may fail at any array size.
        See :cite:`coin2008mcst` for details.
-       
+
        Parameters
        ----------
 
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
-       
+       thresh_ : threshold value that seperates inliers from outliers
+
        Notes
        -----
-       
+
        The Shapiro-Wilk test is a frequentist statstical test for normality.
        It is used to test the null-hypothesis that the decision scores came
        from a normal distribution. This test statstic is defined as:
-       
+
        .. math::
-       
+
           W = \frac{\left(\sum_{i=1}^n a_i x_{(i)} \right)^2}{\sum_{i=1}^n \left(x_i - \bar{x} \right)^2} \mathrm{,}
-          
+
        where :math:`\bar{x}` is the mean of the scores and :math:`x_{(i)}`
-       is the ith-smallest number in the sample (kth order statistic). The 
+       is the ith-smallest number in the sample (kth order statistic). The
        coefficients :math:`a_i` is given by:
-       
+
        .. math::
-       
+
           (a_1,...,a_n) = \frac{m^{\top}V^{-1}}{\sqrt{m^{\top}V^{-1}V^{-1}m}} \mathrm{,}
-          
+
        where the vector :math:`m=\lvert(m_1,...,m_n \rvert)^{\top}` and :math:`V`
        is the covariance matrix of the order statistics.
-       
-       The threshold is set by first calculating an initial Shapiro-Wilk test 
-       p-value on the decision scores. Using Monte Carlo simulations, random values 
-       between 0-1 are inserted into the normalized decision scores and p-values are 
-       calculated. if the p-value is higher than the initial p-value, the initial p-value 
-       is set to this value and the random value is stored. The minimum stored random 
-       value is set as the threshold as it is the minimum found outlier. 
+
+       The threshold is set by first calculating an initial Shapiro-Wilk test
+       p-value on the decision scores. Using Monte Carlo simulations, random values
+       between 0-1 are inserted into the normalized decision scores and p-values are
+       calculated. if the p-value is higher than the initial p-value, the initial p-value
+       is set to this value and the random value is stored. The minimum stored random
+       value is set as the threshold as it is the minimum found outlier.
 
     """
 
@@ -67,7 +67,7 @@ class MCST(BaseThresholder):
         decision : np.array or list of shape (n_samples)
                    which are the decision scores from a
                    outlier detection.
-        
+
         Returns
         -------
         outlier_labels : numpy array of shape (n_samples,)
@@ -100,7 +100,7 @@ class MCST(BaseThresholder):
             if p_check>p_std:
 
                 p_std = p_check
-                povr.append(rnd[i])       
+                povr.append(rnd[i])
 
         # Set the limit to the minimum found outlier
         limit = 1.1

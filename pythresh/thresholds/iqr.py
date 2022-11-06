@@ -19,24 +19,24 @@ class IQR(BaseThresholder):
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
-       
+       thresh_ : threshold value that seperates inliers from outliers
+
        Notes
        -----
-       
+
        The inter-quartile region is given as:
-       
+
        .. math::
-       
+
            IQR = \lvert Q_3-Q_1 \rvert
-           
-       where :math:`Q_1` and :math:`Q_3` are the first and third quartile 
+
+       where :math:`Q_1` and :math:`Q_3` are the first and third quartile
        respectively. The threshold for the decision scores is set as:
-       
+
        .. math::
-       
+
            t = Q_3 + 1.5 IQR
-       
+
     """
 
     def __init__(self):
@@ -51,7 +51,7 @@ class IQR(BaseThresholder):
         decision : np.array or list of shape (n_samples)
                    which are the decision scores from a
                    outlier detection.
-        
+
         Returns
         -------
         outlier_labels : numpy array of shape (n_samples,)
@@ -67,13 +67,13 @@ class IQR(BaseThresholder):
         try:
             # First quartile (Q1)
             P1 = np.percentile(decision, 25, interpolation='midpoint')
-  
+
             # Third quartile (Q3)
             P3 = np.percentile(decision, 75, interpolation='midpoint')
         except TypeError:
             # First quartile (Q1)
             P1 = np.percentile(decision, 25, method='midpoint')
-  
+
             # Third quartile (Q3)
             P3 = np.percentile(decision, 75, method='midpoint')
 

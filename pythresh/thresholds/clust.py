@@ -26,10 +26,10 @@ class CLUST(BaseThresholder):
 
        Parameters
        ----------
-        
+
        method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='dbscan')
             Clustering method
-        
+
             - 'agg':    Agglomerative
             - 'birch':  Balanced Iterative Reducing and Clustering using Hierarchies
             - 'bang':   BANG
@@ -41,15 +41,15 @@ class CLUST(BaseThresholder):
             - 'mbsas':  Modified Basic Sequential Algorithmic Scheme
             - 'mshift': Mean shift
             - 'optics': Ordering Points To Identify Clustering Structure
-            - 'somsc':  Self-organized feature map 
-            - 'spec':   Clustering to a projection of the normalized Laplacian 
+            - 'somsc':  Self-organized feature map
+            - 'spec':   Clustering to a projection of the normalized Laplacian
             - 'xmeans': X-means
-            
-       
+
+
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that seperates inliers from outliers
 
     """
 
@@ -59,10 +59,10 @@ class CLUST(BaseThresholder):
         self.method = method
         self.method_funcs = {'agg': self._AGG_clust, 'birch': self._BIRCH_clust,
                              'bang': self._BANG_clust, 'bgm': self._BGM_clust,
-                             'bsas': self._BSAS_clust, 'dbscan': self._DBSCAN_clust, 
-                             'ema': self._EMA_clust, 'kmeans': self._KMEANS_clust, 
-                             'mbsas': self._MBSAS_clust, 'mshift': self._MSHIFT_clust, 
-                             'optics': self._OPTICS_clust, 'somsc': self._SOMSC_clust, 
+                             'bsas': self._BSAS_clust, 'dbscan': self._DBSCAN_clust,
+                             'ema': self._EMA_clust, 'kmeans': self._KMEANS_clust,
+                             'mbsas': self._MBSAS_clust, 'mshift': self._MSHIFT_clust,
+                             'optics': self._OPTICS_clust, 'somsc': self._SOMSC_clust,
                              'spec': self._SPEC_clust, 'xmeans': self._XMEANS_clust}
 
     def eval(self, decision):
@@ -73,7 +73,7 @@ class CLUST(BaseThresholder):
         decision : np.array or list of shape (n_samples)
                    which are the decision scores from a
                    outlier detection.
-        
+
         Returns
         -------
         outlier_labels : numpy array of shape (n_samples,)
@@ -91,7 +91,7 @@ class CLUST(BaseThresholder):
         self.thresh_ = None
 
         return labels
-        
+
 
     def _pyclust_eval(self, cl, decision):
         """ Evaluate cluster labels from pyclustering methods """
@@ -99,7 +99,7 @@ class CLUST(BaseThresholder):
         cl.process()
 
         pred =  np.squeeze(np.array(cl.get_clusters(), dtype=object))
-        
+
         if type(pred[0])==list:
             pred = np.array(pred[0])
 
@@ -122,7 +122,7 @@ class CLUST(BaseThresholder):
         if sum(labels)>np.ceil(len(decision)/2):
             labels = 1-labels
 
-        return labels    
+        return labels
 
     def _AGG_clust(self, decision):
         """ Agglomerative algorithm for cluster analysis """
@@ -130,7 +130,7 @@ class CLUST(BaseThresholder):
         cl = agglomerative(data=decision, number_clusters=2, link=2, ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
 
     def _BIRCH_clust(self, decision):
@@ -141,7 +141,7 @@ class CLUST(BaseThresholder):
         cl = Birch(n_clusters=2, threshold=np.std(decision)/np.sqrt(2))
 
         labels = self._sklearn_eval(cl, decision)
-            
+
         return labels
 
     def _BANG_clust(self, decision):
@@ -150,22 +150,22 @@ class CLUST(BaseThresholder):
         cl = bang(data=decision,levels=8, ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
-    
+
     def _BGM_clust(self, decision):
         """ Bayesian Gaussian Mixture algorithm for cluster analysis """
-        
+
         cl = BayesianGaussianMixture(n_components=2,
                                      covariance_type='tied',
                                      random_state=1234).fit(decision)
 
         labels = cl.predict(decision)
-        
+
         # Flip if outliers were clustered
         if sum(labels)>np.ceil(len(decision)/2):
             labels = 1-labels
-        
+
         return labels
 
     def _BSAS_clust(self, decision):
@@ -177,7 +177,7 @@ class CLUST(BaseThresholder):
                   threshold=np.std(decision), ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
 
     def _DBSCAN_clust(self, decision):
@@ -189,7 +189,7 @@ class CLUST(BaseThresholder):
                     neighbors=int(len(decision)/2), ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-        
+
         return labels
 
     def _EMA_clust(self, decision):
@@ -200,7 +200,7 @@ class CLUST(BaseThresholder):
         cl = ema(data=decision, amount_clusters=2)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
 
     def _KMEANS_clust(self, decision):
@@ -209,7 +209,7 @@ class CLUST(BaseThresholder):
         cl = KMeans(n_clusters=2)
 
         labels = self._sklearn_eval(cl, decision)
-            
+
         return labels
 
     def _MBSAS_clust(self, decision):
@@ -221,7 +221,7 @@ class CLUST(BaseThresholder):
                    threshold=np.std(decision), ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
 
     def _MSHIFT_clust(self, decision):
@@ -230,7 +230,7 @@ class CLUST(BaseThresholder):
         # Get quantile value for bandwidth estimation
         dat = np.squeeze(decision)
         q = cityblock(dat, np.sort(dat))/np.sum(dat)
-        
+
         if q>1.0: q=1.0
 
         # Estimate bandwidth
@@ -250,7 +250,7 @@ class CLUST(BaseThresholder):
         mode = np.bincount(lbls).argmax()
         labels = np.ones(len(lbls))
         labels[lbls==mode] = 0
-            
+
         return labels
 
     def _OPTICS_clust(self, decision):
@@ -263,7 +263,7 @@ class CLUST(BaseThresholder):
                     ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
 
     def _SOMSC_clust(self, decision):
@@ -272,7 +272,7 @@ class CLUST(BaseThresholder):
         cl = somsc(data=decision, amount_clusters=2, ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
 
     def _SPEC_clust(self, decision):
@@ -281,7 +281,7 @@ class CLUST(BaseThresholder):
         cl = SpectralClustering(n_clusters=2)
 
         labels = self._sklearn_eval(cl, decision)
-        
+
         return labels
 
     def _XMEANS_clust(self, decision):
@@ -290,7 +290,7 @@ class CLUST(BaseThresholder):
         cl = xmeans(data=decision, kmax=2, ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
-            
+
         return labels
 
 
