@@ -51,15 +51,18 @@ class OCSVM(BaseThresholder):
        tol : float, optional (default=1e-3)
            The stopping criterion for the one-class svm
 
+       random_state : int, optional (default=1234)
+            Random seed for the SVM's data sampling. Can also be set to None.
+
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
     """
 
     def __init__(self, model='poly', degree='auto', gamma='auto',
-                 criterion='bic', nu='auto', tol=1e-3):
+                 criterion='bic', nu='auto', tol=1e-3, random_state=1234):
 
         self.model = model
         self.degree = degree
@@ -67,6 +70,7 @@ class OCSVM(BaseThresholder):
         self.crit = criterion
         self.nu = nu
         self.tol = tol
+        self.random_state = random_state
 
 
     def eval(self, decision):
@@ -115,7 +119,7 @@ class OCSVM(BaseThresholder):
         else:
             transform = AdditiveChi2Sampler()
             sgd = SGDOneClassSVM(nu=self.nu,
-                                 random_state=1234)
+                                 random_state=self.random_state)
             clf = make_pipeline(transform, sgd)
             clf.fit(decision)
 

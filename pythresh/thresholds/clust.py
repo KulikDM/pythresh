@@ -45,15 +45,18 @@ class CLUST(BaseThresholder):
             - 'spec':   Clustering to a projection of the normalized Laplacian
             - 'xmeans': X-means
 
+       random_state : int, optional (default=1234)
+            Random seed for the BayesianGaussianMixture clustering (method='bgm'). Can
+            also be set to None.
 
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
     """
 
-    def __init__(self, method='dbscan'):
+    def __init__(self, method='dbscan', random_state=1234):
 
         super(CLUST, self).__init__()
         self.method = method
@@ -64,6 +67,7 @@ class CLUST(BaseThresholder):
                              'mbsas': self._MBSAS_clust, 'mshift': self._MSHIFT_clust,
                              'optics': self._OPTICS_clust, 'somsc': self._SOMSC_clust,
                              'spec': self._SPEC_clust, 'xmeans': self._XMEANS_clust}
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -158,7 +162,7 @@ class CLUST(BaseThresholder):
 
         cl = BayesianGaussianMixture(n_components=2,
                                      covariance_type='tied',
-                                     random_state=1234).fit(decision)
+                                     random_state=self.random_state).fit(decision)
 
         labels = cl.predict(decision)
 

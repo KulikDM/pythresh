@@ -24,18 +24,23 @@ class DECOMP(BaseThresholder):
             - 'NMF':  Non-Negative Matrix Factorization
             - 'PCA':  Principal component analysis
 
+       random_state : int, optional (default=1234)
+            Random seed for the decomposition algorithm. Can also be set to None.
+
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
     """
 
-    def __init__(self, method='PCA'):
+    def __init__(self, method='PCA', random_state=1234):
 
         self.method = method
-        self.method_funcs = {'NMF':NMF(random_state=1234),
-                             'PCA':PCA(random_state=1234)}
+        self.method_funcs = {'NMF': NMF(random_state=random_state),
+                             'PCA': PCA(random_state=random_state)}
+        # make available as property for consistency with other thresholders
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

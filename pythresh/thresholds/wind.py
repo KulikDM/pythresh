@@ -16,10 +16,13 @@ class WIND(BaseThresholder):
        Parameters
        ----------
 
+       random_state : int, optional (default=1234)
+            Random seed for the normal distribution. Can also be set to None.
+
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
@@ -46,9 +49,9 @@ class WIND(BaseThresholder):
 
     """
 
-    def __init__(self):
-
+    def __init__(self, random_state=1234):
         super(WIND, self).__init__()
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -70,7 +73,7 @@ class WIND(BaseThresholder):
 
         # Create a normal distribution and normalize
         size = min(len(decision),1500)
-        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=1234)
+        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=self.random_state)
         norm = normalize(norm)
 
         # Create a KDE of the labels and the normal distribution

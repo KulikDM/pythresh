@@ -39,14 +39,17 @@ class DSN(BaseThresholder):
             - 'INT': Weighted spline interpolated distance
             - 'MMD': Maximum Mean Discrepancy distance
 
+       random_state : int, optional (default=1234)
+            Random seed for the normal distribution. Can also be set to None.
+
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
     """
 
-    def __init__(self, metric='JS'):
+    def __init__(self, metric='JS', random_state=1234):
 
         super(DSN, self).__init__()
         self.metric = metric
@@ -57,6 +60,7 @@ class DSN(BaseThresholder):
                              'MAH': self._MAH_metric, 'TMT': self._TMT_metric,
                              'RES': self._RES_metric, 'KS': self._KS_metric,
                              'INT': self._INTER_metric, 'MMD': self._MMD_metric}
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -81,7 +85,7 @@ class DSN(BaseThresholder):
 
         #Create a normal distribution and normalize
         size = min(len(decision),1500)
-        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=1234)
+        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=self.random_state)
         self.norm = normalize(norm)
 
         n = 1
