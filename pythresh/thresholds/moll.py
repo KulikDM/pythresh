@@ -21,7 +21,7 @@ class MOLL(BaseThresholder):
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
@@ -47,7 +47,7 @@ class MOLL(BaseThresholder):
 
            C = \left(\int_{-1}^{1} e^{\frac{1}{(x^2-1)}}\right)^{-1} \mathrm{.}
 
-       The mollifier is inserted into a descrete convolution operator and the smoothed
+       The mollifier is inserted into a discrete convolution operator and the smoothed
        scores are returned. The threshold is set at one minus the maximum of the smoothed
        scores.
 

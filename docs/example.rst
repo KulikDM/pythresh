@@ -108,7 +108,7 @@ Model Combination Example
 Just as outlier detection often suffers from model instability, a thresholding
 method may as well due to its unsupervised nature. Thus, it is recommended to combine
 various thresholders outputs, e.g., by averaging, to improve its robustness.
-Luckily this has already been written for covenience as the function
+Luckily this has already been written for convenience as the function
 "pythresh.thresholds.all"
 
 ----
@@ -117,7 +117,7 @@ Luckily this has already been written for covenience as the function
 Additional API Example
 ----------------------
 
-1. Get the normalized threshold value that seperates the inliers from outliers after the
+1. Get the normalized threshold value that separates the inliers from outliers after the
 scores have been evaluated. Note, the outlier detection scores are normalized between 0 and 1.
 
     .. code-block:: python

@@ -19,7 +19,7 @@ class HIST(BaseThresholder):
        ----------
 
        nbins : int, optional (default='native')
-            Number of bins to use in the hostogram, default set to int(len(scores)**0.7)
+            Number of bins to use in the histogram, default set to int(len(scores)**0.7)
 
        method : {'otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle'}, optional (default='otsu')
             Histogram filtering based method
@@ -35,7 +35,7 @@ class HIST(BaseThresholder):
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
     """
 
@@ -94,7 +94,7 @@ class HIST(BaseThresholder):
         return  scores
 
     def _histogram(self, decision, nbins):
-        """Generate histograms and get bin ceneters"""
+        """Generate histograms and get bin centers"""
 
         counts, bin_edges = np.histogram(decision, bins=nbins, range=(0,1))
         bin_centers = (bin_edges[:-1] + bin_edges[1:])/2.
@@ -169,7 +169,7 @@ class HIST(BaseThresholder):
         # intensity_sum contains the total score intensity from each bin
         intensity_sum = counts * bin_centers
 
-        # Get the lower and higher average value of all scoresin that bin or lower, and
+        # Get the lower and higher average value of all scores in that bin or lower, and
         # in all bins strictly higher than that bin, respectively.
         csum_intensity = np.cumsum(intensity_sum)
         lower = csum_intensity[:-1] / csuml[:-1]

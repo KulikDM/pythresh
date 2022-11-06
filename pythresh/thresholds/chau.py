@@ -27,7 +27,7 @@ class CHAU(BaseThresholder):
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
@@ -62,7 +62,7 @@ class CHAU(BaseThresholder):
            Z = \frac{x-\bar{x}}{\sigma} \mathrm{,}
 
        with :math:`\bar{x}` as the mean and :math:`\sigma` the standard deviation
-       of the decsion scores.
+       of the decision scores.
 
        CHAU employs variants of the classical Chauvenet's criterion as the mean can be
        replaced with the geometric mean or the median.

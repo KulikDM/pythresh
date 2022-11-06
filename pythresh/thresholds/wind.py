@@ -92,10 +92,10 @@ class WIND(BaseThresholder):
         deriv_data = np.gradient(val_data, dat_range[1]-dat_range[0])
         deriv_norm = np.gradient(val_norm, dat_range[1]-dat_range[0])
 
-        # Compute intergrand
+        # Compute integrand
         integrand = self._dtheta(val_data,val_norm,deriv_data,deriv_norm,r2)
 
-        # Intergrate to find winding numbers mean intersection point
+        # Integrate to find winding numbers mean intersection point
         limit = integrate.simpson(integrand)/np.sum((val_data+val_norm)/2)
 
         self.thresh_ = limit
@@ -103,5 +103,5 @@ class WIND(BaseThresholder):
         return cut(decision, limit)
 
     def _dtheta(self,x,y,dx,dy,r2):
-        """Calculate dtheta for the intergrand"""
+        """Calculate dtheta for the integrand"""
         return (x*dy - y*dx)/r2

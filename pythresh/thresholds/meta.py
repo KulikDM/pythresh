@@ -29,7 +29,7 @@ class META(BaseThresholder):
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
@@ -44,7 +44,7 @@ class META(BaseThresholder):
        detection methods ``MCD, GMM, KNN, KDE, PCA, Sampling,`` and ``IForest``
        on the OD benchmark datasets available at
        `ODDS dataset <https://github.com/yzhao062/pytod/tree/main/reproducibility/datasets/ODDS>`_.
-       META uses a majoriy vote of all the trained models to determine the
+       META uses a majority vote of all the trained models to determine the
        inlier/outlier labels.
 
     """

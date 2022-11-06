@@ -119,7 +119,7 @@ API Cheatsheet
 Key Attributes of threshold:
 
 
-* **thresh_**\ : Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
+* **thresh_**\ : Return the threshold value that separates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
 
 * **confidence_interval_**\ : Return the lower and upper confidence interval of the contamination level. Only applies to the ALL thresholder
 
@@ -138,7 +138,7 @@ Available Thresholding Algorithms
 =========== =========================================== ==================== ==============================================================================
 Abbr        Description                                 References           Documentation   
 =========== =========================================== ==================== ==============================================================================
-AUCP        Area Under Curve Precentage                 [#aucp1]_            `pythresh.thresholds.aucp module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.aucp>`_
+AUCP        Area Under Curve Percentage                 [#aucp1]_            `pythresh.thresholds.aucp module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.aucp>`_
 BOOT        Bootstrapping                               [#boot1]_            `pythresh.thresholds.boot module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.boot>`_
 CHAU        Chauvenet's Criterion                       [#chau1]_            `pythresh.thresholds.chau module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.chau>`_
 CLF         Trained Linear Classifier                   [#clf1]_             `pythresh.thresholds.clf module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.clf>`_
@@ -159,7 +159,7 @@ META        Meta-model Trained Classifier               [#meta1]_			     `pythre
 MOLL        Friedrichs' Mollifier                       [#moll1]_ [#moll2]_  `pythresh.thresholds.moll module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.moll>`_
 MTT         Modified Thompson Tau Test                  [#mtt1]_			     `pythresh.thresholds.mtt module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mtt>`_
 OCSVM       One-Class Support Vector Machine            [#ocsvm]_            `pythresh.thresholds.ocsvm module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#pythresh-thresholds-ocsvm-module>`_
-QMCD        Quasi-Monte Carlo Discreprancy              [#qmcd1]_		        `pythresh.thresholds.qmcd module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.qmcd>`_
+QMCD        Quasi-Monte Carlo Discrepancy              [#qmcd1]_		        `pythresh.thresholds.qmcd module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.qmcd>`_
 REGR        Regression Based                            [#regr1]_            `pythresh.thresholds.regr module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.regr>`_
 VAE         Variational Autoencoder                     [#vae1]_             `pythresh.thresholds.vae module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.vae>`_ 
 WIND        Topological Winding Number                  [#wind1]_            `pythresh.thresholds.wind module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.wind>`_

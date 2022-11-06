@@ -18,7 +18,7 @@ class GESD(BaseThresholder):
        ----------
 
        max_outliers : int, optional (default='native')
-            mamiximum number of outliers that the dataset may have. Default sets
+            maximum number of outliers that the dataset may have. Default sets
             max_outliers to be half the size of the dataset
 
        alpha : float, optional (default=0.05)
@@ -27,7 +27,7 @@ class GESD(BaseThresholder):
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
@@ -65,7 +65,7 @@ class GESD(BaseThresholder):
            p = 1-\frac{\alpha}{2(n-i+1)} \mathrm{.}
 
        The threshold for the decision scores is set to the smallest score that
-       fufills the condition :math:`R_i>\lambda_i`.
+       fulfills the condition :math:`R_i>\lambda_i`.
 
     """
 

@@ -23,14 +23,14 @@ class MTT(BaseThresholder):
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
 
        The Modified Thompson Tau test is a modified univariate t-test that eliminates outliers
        that are more than a number of standard deviations away from the mean. This method is
-       done iteratively with the Tau citical value being recalculated after each outlier removal
+       done iteratively with the Tau critical value being recalculated after each outlier removal
        until the dataset no longer has data points that fall outside of the criterion. The Tau
        critical value can be obtained by,
 

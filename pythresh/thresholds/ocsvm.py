@@ -26,7 +26,7 @@ class OCSVM(BaseThresholder):
            OCSVM model to apply
 
            - 'poly':  Use a polynomial kernel with a regular OCSVM
-           - 'sgd':   Used the Adittive Chi2 kernel approximation with a SGDOneClassSVM
+           - 'sgd':   Used the Additive Chi2 kernel approximation with a SGDOneClassSVM
 
        degree : int, optional (default='auto')
            Polynomial degree to use for the one-class svm.

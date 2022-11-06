@@ -84,7 +84,7 @@ Available Thresholding Algorithms
 =========== ================================================================ =========================
 Abbr        Description                                                      Ref    
 =========== ================================================================ =========================
-AUCP        Area Under Curve Precentage                                      :cite:`a-ren2018aucp`
+AUCP        Area Under Curve Percentage                                      :cite:`a-ren2018aucp`
 BOOT        Bootstrapping                                                    :cite:`a-martin2006boot`
 CHAU        Chauvenet's Criterion                                            :cite:`a-bolshev2016chau`
 CLF         Trained Linear Classifier                                        :cite:`a-aggarwal2017clf`
@@ -105,7 +105,7 @@ META        Metamodel Trained Classifier                                     :ci
 MOLL        Friedrichs' Mollifier                                            :cite:`a-keyzer1997moll`
 MTT         Modified Thompson Tau Test                                       :cite:`a-rengasamy2020mtt`
 OCSVM       One-Class Support Vector Machine                                 :cite:`a-barbado2022ocsvm`
-QMCD        Quasi-Monte Carlo Discreprancy                                   :cite:`a-iouchtchenko2019qmcd`
+QMCD        Quasi-Monte Carlo Discrepancy                                   :cite:`a-iouchtchenko2019qmcd`
 REGR        Regression Based                                                 :cite:`a-aggarwal2017clf`
 VAE         Variational Autoencoder                                          :cite:`a-xiao2020vae`
 WIND        Topological Winding Number                                       :cite:`a-jacobson2013wind`
@@ -133,7 +133,7 @@ The following APIs are applicable for all detector models for easy use.
 
 Key Attributes of a threshold:
 
-* :attr:`pythresh.thresholders.base.BaseDetector.thres_`: Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
+* :attr:`pythresh.thresholders.base.BaseDetector.thresh_`: Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
 
 ----
 
