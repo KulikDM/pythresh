@@ -15,11 +15,13 @@ class BOOT(BaseThresholder):
 
        Parameters
        ----------
+       random_state : int, optional (default=1234)
+            Random seed for bootstrapping a confidence interval. Can also be set to None.
 
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
@@ -37,9 +39,8 @@ class BOOT(BaseThresholder):
 
     """
 
-    def __init__(self):
-
-        pass
+    def __init__(self, random_state=1234):
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -62,9 +63,12 @@ class BOOT(BaseThresholder):
 
         decision = normalize(decision)
 
-        limit1, limit2 = stats.bootstrap(decision.reshape(1,-1),
-                                         np.std, paired=True,
-                                         random_state=1234).confidence_interval
+        limit1, limit2 = stats.bootstrap(
+            decision.reshape(1, -1),
+            np.std,
+            paired=True,
+            random_state=self.random_state
+        ).confidence_interval
 
         self.thresh_ = (limit1+limit2)/2
 

@@ -19,10 +19,13 @@ class MCST(BaseThresholder):
        Parameters
        ----------
 
+       random_state : int, optional (default=1234)
+            Random seed for the uniform distribution. Can also be set to None.
+
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        Notes
        -----
@@ -55,9 +58,8 @@ class MCST(BaseThresholder):
 
     """
 
-    def __init__(self):
-
-        pass
+    def __init__(self, random_state=1234):
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -84,7 +86,7 @@ class MCST(BaseThresholder):
         p_std = stats.shapiro(decision).pvalue
 
         # Create random dataset to insert and test p-values
-        rnd = stats.uniform.rvs(loc=0, scale=1, size=len(decision), random_state=123)
+        rnd = stats.uniform.rvs(loc=0, scale=1, size=len(decision), random_state=self.random_state)
         rnd = normalize(rnd)
         povr = []
 

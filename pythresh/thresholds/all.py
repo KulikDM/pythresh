@@ -56,23 +56,28 @@ class ALL(BaseThresholder):
            - 'median': calculate the median combined threshold
            - 'mode':  calculate the majority vote or mode of the thresholded labels
 
+       random_state : int, optional (default=1234)
+            Random seed for the random number generators of the thresholders. Can also
+            be set to None.
+
 
        Attributes
        ----------
 
-       thresh_ : threshold value that seperates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        confidence_interval_ : lower and upper confidence interval of the contamination level
 
     """
 
-    def __init__(self, thresholders='all', max_contam=0.5, method='mean'):
+    def __init__(self, thresholders='all', max_contam=0.5, method='mean', random_state=1234):
 
         self.thresholders = thresholders
         self.max_contam = max_contam
         stat = {'mean':np.mean, 'median':np.median, 'mode':stats.mode}
         self.method = method
         self.method_func = stat[method]
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -96,12 +101,17 @@ class ALL(BaseThresholder):
         decision = np.sort(normalize(decision))
 
         # Initialize thresholders
-        if self.thresholders=='all':
-            self.thresholders = [IQR(), MAD(), FWFM(), YJ(), ZSCORE(),
-                                 AUCP(), QMCD(), FGD(), DSN(), CLF(),
-                                 FILTER(), WIND(), EB(), REGR(), BOOT(),
-                                 MCST(), HIST(), MOLL(), CHAU(), GESD(),
-                                 MTT(), OCSVM(), CLUST(), DECOMP()]
+        if self.thresholders == 'all':
+            self.thresholders = [IQR(), MAD(), FWFM(), YJ(), ZSCORE(), AUCP(), QMCD(),
+                                 FGD(), DSN(random_state=self.random_state), CLF(),
+                                 FILTER(), WIND(random_state=self.random_state), EB(),
+                                 REGR(random_state=self.random_state),
+                                 BOOT(random_state=self.random_state),
+                                 MCST(random_state=self.random_state), HIST(), MOLL(),
+                                 CHAU(), GESD(), MTT(),
+                                 OCSVM(random_state=self.random_state),
+                                 CLUST(random_state=self.random_state),
+                                 DECOMP(random_state=self.random_state)]
 
         # Apply each thresholder
         contam = []
@@ -124,7 +134,7 @@ class ALL(BaseThresholder):
         # Get lower and upper confidence interval
         low, high = stats.bootstrap(ratio.reshape(1,-1),
                                     np.mean, paired=True,
-                                    random_state=1234).confidence_interval
+                                    random_state=self.random_state).confidence_interval
         self.confidence_interval_ = [low, high]
 
         # Get [mean, median, or mode] of inliers
