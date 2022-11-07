@@ -41,15 +41,19 @@ class META(BaseThresholder):
        are similar to the dataset that is missing the response variable.
 
        The META thresholder was trained using the ``PyOD`` outlier
-       detection methods ``MCD, GMM, KNN, KDE, PCA, Sampling,`` and ``IForest``
-       on the OD benchmark datasets available at
-       `ODDS dataset <https://github.com/yzhao062/pytod/tree/main/reproducibility/datasets/ODDS>`_.
+       detection methods ``LODA, QMCD, CD, MCD, GMM, KNN, KDE, PCA, Sampling`` and ``IForest``
+       on the AD benchmark datasets: ``ALOI, annthyroid, breastw, campaign, cardio, 
+       Cardiotocography, fault, glass, Hepatitis, Ionosphere, landsat, letter, Lymphography, 
+       magic.gamma, mammography, mnist, musk, optdigits, PageBlocks, pendigits, Pima, 
+       satellite, satimage-2, shuttle, smtp, SpamBase, speech, Stamps, thyroid, vertebral, 
+       vowels, Waveform,  WBC, WDBC, Wilt, wine, WPBC, yeast`` available at
+       `ADBench dataset <https://github.com/Minqi824/ADBench/tree/main/datasets/Classical>`_.
        META uses a majority vote of all the trained models to determine the
        inlier/outlier labels.
 
     """
 
-    def __init__(self, method='GNB'):
+    def __init__(self, method='LIN'):
 
         self.method = method
 
@@ -84,7 +88,7 @@ class META(BaseThresholder):
         parent = up(up(__file__))
         model = joblib.load(os.path.join(parent, 'models', clf))
 
-        for i in range(170):
+        for i in range(380):
 
             df = pd.DataFrame()
             df['scores'] = decision
