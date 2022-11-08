@@ -20,7 +20,7 @@ class META(BaseThresholder):
        Parameters
        ----------
 
-       method : {'LIN', 'GNB'}, optional (default='GNB')
+       method : {'LIN', 'GNB'}, optional (default='LIN')
            select
 
            - 'LIN': RidgeCV trained linear classifier meta-model
