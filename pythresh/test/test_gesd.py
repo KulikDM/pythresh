@@ -38,7 +38,7 @@ class TestGESD(unittest.TestCase):
 
         self.scores = self.clf.decision_scores_
 
-        self.max_outliers = [5,10,15,20,'native']
+        self.max_outliers = [5,10,15,20,'auto']
         self.alphas = [0.025,0.05,0.075,0.1] 
         
 

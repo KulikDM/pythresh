@@ -31,7 +31,7 @@ class FILTER(BaseThresholder):
             - 'resample': use a resampling based filter
 
 
-       sigma : int, optional (default='native')
+       sigma : int, optional (default='auto')
             Variable specific to each filter type, default sets sigma to len(scores)*np.std(scores)
 
             - 'gaussian': standard deviation for Gaussian kernel
@@ -49,7 +49,7 @@ class FILTER(BaseThresholder):
 
     """
 
-    def __init__(self, method='wiener', sigma='native'):
+    def __init__(self, method='wiener', sigma='auto'):
 
         super(FILTER, self).__init__()
         self.method = method
@@ -83,7 +83,7 @@ class FILTER(BaseThresholder):
 
         # Get sigma variables for various applications for each filter
         sig = self.sigma
-        if self.sigma=='native':
+        if self.sigma=='auto':
             sig = len(decision)*np.std(decision)
 
         # Filter scores
@@ -102,7 +102,7 @@ class FILTER(BaseThresholder):
     def _SAV_fltr(self, decision, sig):
         """Savgol filter scores"""
 
-        if self.sigma=='native':
+        if self.sigma=='auto':
             sig = round(0.5*sig)
 
         if sig%2==0:
@@ -145,7 +145,7 @@ class FILTER(BaseThresholder):
     def _RES_fltr(self, decision, sig):
         """Resampling filter scores"""
 
-        if self.sigma=='native':
+        if self.sigma=='auto':
             return signal.resample(decision, num=round(np.sqrt(len(decision))),
                                 window=round(np.sqrt(sig)))
         else:

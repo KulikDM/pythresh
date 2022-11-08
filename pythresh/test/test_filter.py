@@ -42,7 +42,7 @@ class TestFilter(unittest.TestCase):
         self.method = ['gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt',
                         'decimate','detrend', 'resample']
         
-        self.sigma = 'native'
+        self.sigma = 'auto'
 
     def test_prediction_labels(self):
 

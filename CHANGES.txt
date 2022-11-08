@@ -27,3 +27,4 @@ v<0.2.7>, <10/29/2022> -- Added mmd metric to DSN
 v<0.2.7>, <11/01/2022> -- Added sgd model to ocsvm
 v<0.2.7>, <11/06/2022> -- Exposed random_state variable for required thresholders
 v<0.2.7>, <11/07/2022> -- Updated trained meta-models (better thresholding accuracy)
+v<0.2.8>, <11/08/2022> -- 'native' parameter to 'auto' (code consistency)

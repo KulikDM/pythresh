@@ -39,7 +39,7 @@ class TestHIST(unittest.TestCase):
         self.scores = self.clf.decision_scores_
         self.methods = ['otsu', 'yen', 'isodata', 'li',
                         'minimum', 'triangle']
-        self.nbins = [25,50,75,100,'native']
+        self.nbins = [25,50,75,100,'auto']
 
     def test_prediction_labels(self):
 
