@@ -105,7 +105,7 @@ META        Metamodel Trained Classifier                                     :ci
 MOLL        Friedrichs' Mollifier                                            :cite:`a-keyzer1997moll`
 MTT         Modified Thompson Tau Test                                       :cite:`a-rengasamy2020mtt`
 OCSVM       One-Class Support Vector Machine                                 :cite:`a-barbado2022ocsvm`
-QMCD        Quasi-Monte Carlo Discrepancy                                   :cite:`a-iouchtchenko2019qmcd`
+QMCD        Quasi-Monte Carlo Discrepancy                                    :cite:`a-iouchtchenko2019qmcd`
 REGR        Regression Based                                                 :cite:`a-aggarwal2017clf`
 VAE         Variational Autoencoder                                          :cite:`a-xiao2020vae`
 WIND        Topological Winding Number                                       :cite:`a-jacobson2013wind`
