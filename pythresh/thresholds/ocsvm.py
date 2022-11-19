@@ -103,6 +103,8 @@ class OCSVM(BaseThresholder):
             med = np.median(decision)
 
             self.nu = len(decision[decision<=med+abs(mean-gmean)])/len(decision)
+            if self.nu==1.0:
+                self.nu = 0.5 # use sklearn default
 
         # Get auto degree calculation
         if (self.degree=='auto') & (self.model=='poly'):
