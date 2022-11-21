@@ -132,7 +132,7 @@ class VAE(BaseThresholder):
                             np.sum(stats.norm.logpdf(vals[i:], loc=mu2, scale=sigma))]
 
         dims = round(np.log(np.argsort(profile_lik)[-1]))
-        valen = len(vals)
+        valen = round(np.log(len(vals)**2))
         dims = np.nan_to_num(dims, neginf=valen, posinf=valen, nan=valen)
         return dims
 
