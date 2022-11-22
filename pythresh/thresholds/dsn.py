@@ -10,6 +10,7 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde, gen_cdf
 
+
 class DSN(BaseThresholder):
     """DSN class for Distance Shift from Normal thresholder.
 
@@ -83,27 +84,32 @@ class DSN(BaseThresholder):
 
         decision = normalize(decision)
 
-        #Create a normal distribution and normalize
-        size = min(len(decision),1500)
-        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=self.random_state)
+        # Create a normal distribution and normalize
+        size = min(len(decision), 1500)
+        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0,
+                              random_state=self.random_state)
         self.norm = normalize(norm)
 
         n = 1
-        if self.metric!='LP':
+        if self.metric != 'LP':
             n = 3
 
         if self.metric in ['JS', 'BHT', 'INT', 'MMD']:
             # Create a KDE of the decision scores and the normal distribution
             # Generate KDE
 
-            self.val_data, self.data_range = gen_kde(decision,0,1,len(decision)*n)
-            self.val_norm, self.norm_range = gen_kde(self.norm,0,1,len(decision)*n)
+            self.val_data, self.data_range = gen_kde(
+                decision, 0, 1, len(decision)*n)
+            self.val_norm, self.norm_range = gen_kde(
+                self.norm, 0, 1, len(decision)*n)
 
         else:
             # Create a KDE of the decision scores and the normal distribution
             # Generate CDF
-            self.val_data, self.data_range = gen_cdf(decision,0,1,len(decision)*n)
-            self.val_norm, self.norm_range = gen_cdf(self.norm,0,1,len(decision)*n)
+            self.val_data, self.data_range = gen_cdf(
+                decision, 0, 1, len(decision)*n)
+            self.val_norm, self.norm_range = gen_cdf(
+                self.norm, 0, 1, len(decision)*n)
 
         limit = self.metric_funcs[str(self.metric)]()
 
@@ -141,7 +147,7 @@ class DSN(BaseThresholder):
         val_norm = self.val_norm/np.sum(self.val_norm)
 
         return (distance.euclidean(np.sqrt(val_data), np.sqrt(val_norm))
-                        /np.sqrt(2))
+                / np.sqrt(2))
 
     def _HI_metric(self):
         """Calculate the Histogram intersection distance"""
@@ -149,13 +155,13 @@ class DSN(BaseThresholder):
         val_data = self.val_data/np.sum(self.val_data)
         val_norm = self.val_norm/np.sum(self.val_norm)
 
-        return 1-np.sum(np.minimum(val_data,val_norm))
+        return 1-np.sum(np.minimum(val_data, val_norm))
 
     def _LK_metric(self):
         """Calculate the Lukaszyk-Karmowski metric for normal distributions"""
 
         # Get expected values for both distributions
-        rng = np.linspace(0,1,len(self.val_data))
+        rng = np.linspace(0, 1, len(self.val_data))
         exp_data = (rng*self.val_data).sum()/self.val_data.sum()
         exp_norm = (rng*self.val_norm).sum()/self.val_norm.sum()
 
@@ -166,17 +172,17 @@ class DSN(BaseThresholder):
 
         # Get the LK distance
         return (nu_xy + 2*std/np.sqrt(np.pi)*np.exp(-nu_xy**2/(4*std**2))
-                        - nu_xy*special.erfc(nu_xy/(2*std)))
+                - nu_xy*special.erfc(nu_xy/(2*std)))
 
     def _LP_metric(self):
         """Calculate the Levy-Prokhorov metric"""
 
         # Get the edges for the complete graphs of the datasets
-        f1 = np.array(list(combinations(self.val_data.tolist(),2)))
-        f2 = np.array(list(combinations(self.val_norm.tolist(),2)))
+        f1 = np.array(list(combinations(self.val_data.tolist(), 2)))
+        f2 = np.array(list(combinations(self.val_norm.tolist(), 2)))
 
-        return (distance.directed_hausdorff(f1,f2)[0]/
-                distance.correlation(self.val_data,self.val_norm))
+        return (distance.directed_hausdorff(f1, f2)[0] /
+                distance.correlation(self.val_data, self.val_norm))
 
     def _MAH_metric(self):
         """Calculate the Mahalanobis distance"""
@@ -197,7 +203,7 @@ class DSN(BaseThresholder):
 
         p = np.sum(val_data)
         q = np.sum(val_norm)
-        m = np.sum(np.minimum(val_data,val_norm))
+        m = np.sum(np.minimum(val_data, val_norm))
 
         return (p+q-2*m)/(p+q-m)
 
@@ -212,7 +218,7 @@ class DSN(BaseThresholder):
                                (self.val_data - mean_X))
 
         beta1 = (np.dot((self.val_data - mean_X),
-                       (self.val_norm - mean_Y)) /
+                        (self.val_norm - mean_Y)) /
                  diff_mean_sqr)
 
         beta0 = mean_Y - beta1 * mean_X
@@ -245,7 +251,7 @@ class DSN(BaseThresholder):
         for i in range(99):
 
             weight = (i+1)/99
-            spline = (data_spl[0]*(1.0-weight)+
+            spline = (data_spl[0]*(1.0-weight) +
                       norm_spl[0]*weight)
             dist.append(np.max(spline))
 

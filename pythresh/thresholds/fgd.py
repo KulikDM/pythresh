@@ -58,7 +58,7 @@ class FGD(BaseThresholder):
         decision = normalize(decision)
 
         # Generate KDE
-        val, dat_range = gen_kde(decision,0,1,len(decision)*3)
+        val, dat_range = gen_kde(decision, 0, 1, len(decision)*3)
 
         # Calculate the first derivative of the KDE with respect
         # to the data range
@@ -70,10 +70,10 @@ class FGD(BaseThresholder):
         # Find the first two inflection points
         for i in range(len(deriv)-1):
 
-            if (deriv[i]>0)&(deriv[i+1]<=0):
-                count+=1
+            if (deriv[i] > 0) & (deriv[i+1] <= 0):
+                count += 1
                 ind.append(i)
-                if count==2:
+                if count == 2:
                     break
         try:
             limit = (dat_range[ind[0]]+dat_range[ind[1]])/2

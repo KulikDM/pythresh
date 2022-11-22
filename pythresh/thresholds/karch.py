@@ -78,25 +78,24 @@ class KARCH(BaseThresholder):
         manifold = Euclidean(dim=self.ndim)
         estimator = FrechetMean(metric=manifold.metric)
 
-        if self.method=='complex':
+        if self.method == 'complex':
 
             # Create kde of scores
-            val_data, _ = gen_kde(decision,0,1,len(decision))
-            val_data = val_data.reshape(-1,1)
-            val_norm = np.sort(decision).reshape(1,-1)
+            val_data, _ = gen_kde(decision, 0, 1, len(decision))
+            val_data = val_data.reshape(-1, 1)
+            val_norm = np.sort(decision).reshape(1, -1)
 
             try:
                 # find kde and score dot product and solve the
-                vals = np.dot(val_data,val_norm)
+                vals = np.dot(val_data, val_norm)
                 estimator.fit(vals)
                 kmean = np.mean(estimator.estimate_)+np.std(decision)
 
             except ValueError:
                 kmean = 1.0
         else:
-            estimator.fit(decision.reshape(1,-1))
+            estimator.fit(decision.reshape(1, -1))
             kmean = np.mean(estimator.estimate_) + np.std(decision)
-
 
         # Get the mean of each dimension's Karcher mean
         limit = kmean

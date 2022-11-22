@@ -90,24 +90,24 @@ class VAE(BaseThresholder):
         decision = check_array(decision, ensure_2d=False)
         scores = normalize(decision.copy())
 
-        if self.latent_dims=='auto':
+        if self.latent_dims == 'auto':
             self.latent_dims = self._autodim(scores)
 
-        decision = normalize(decision).astype(np.float32).reshape(-1,1)
+        decision = normalize(decision).astype(np.float32).reshape(-1, 1)
 
         self.model = VAE_model(1, self.latent_dims,
-                          self.random_state, self.dist,
-                          self.loss).to(self.device)
+                               self.random_state, self.dist,
+                               self.loss).to(self.device)
 
         self.data = torch.utils.data.DataLoader(
-                            torch.from_numpy(decision),
-                            batch_size=self.batch_size,
-                            shuffle=True)
+            torch.from_numpy(decision),
+            batch_size=self.batch_size,
+            shuffle=True)
 
         self._train()
         with torch.no_grad():
             z = self.model.reconstructed_probability(torch.from_numpy(decision).to(
-                                        self.device)).to('cpu').detach().numpy()
+                self.device)).to('cpu').detach().numpy()
 
         limit = np.max(z)-np.min(z)
         self.thresh_ = limit
@@ -121,7 +121,7 @@ class VAE(BaseThresholder):
         m = len(vals)
         profile_lik = []
 
-        for i in range(1,m):
+        for i in range(1, m):
 
             mu1 = np.mean(vals[:i])
             mu2 = np.mean(vals[i:])
@@ -139,14 +139,14 @@ class VAE(BaseThresholder):
     def _train(self):
 
         optimizer = torch.optim.Adam(self.model.parameters(),
-                                weight_decay=1e-4,
-                                lr=1e-2)
+                                     weight_decay=1e-4,
+                                     lr=1e-2)
 
         scheduler = opt.lr_scheduler.ExponentialLR(optimizer,
-                                                  gamma=0.95)
+                                                   gamma=0.95)
 
         for epoch in (tqdm(range(self.epochs), ascii=True, desc="Training")
-                        if self.verbose else range(self.epochs)):
+                      if self.verbose else range(self.epochs)):
 
             for x in self.data:
 
@@ -157,6 +157,7 @@ class VAE(BaseThresholder):
                 optimizer.step()
 
             scheduler.step()
+
 
 class VAE_model(nn.Module):
 
@@ -205,13 +206,13 @@ class VAE_model(nn.Module):
         # average over sample dimension
         log_lik = self.dist(pred_result['recon_mu'],
                             pred_result['recon_sigma']).log_prob(x).mean(
-                            dim=0)
+            dim=0)
         log_lik = log_lik.mean(dim=0).sum()
 
         # calculate the kl divergence and the forward loss
-        if self.loss=='kl':
+        if self.loss == 'kl':
             kl = kl_divergence(pred_result['latent_dist'],
-                            self.prior).mean(dim=0).sum()
+                               self.prior).mean(dim=0).sum()
             loss = kl - log_lik
 
             return dict(loss=loss, kl=kl, recon_loss=log_lik, **pred_result)
@@ -290,5 +291,3 @@ class VAE_model(nn.Module):
         mmd = x_kernel.mean() + y_kernel.mean() - 2*xy_kernel.mean()
 
         return mmd
-
-

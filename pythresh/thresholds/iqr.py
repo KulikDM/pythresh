@@ -84,4 +84,3 @@ class IQR(BaseThresholder):
         self.thresh_ = limit
 
         return cut(decision, limit)
-

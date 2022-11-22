@@ -88,7 +88,7 @@ class CLUST(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
 
-        decision = normalize(decision).reshape(-1,1)
+        decision = normalize(decision).reshape(-1, 1)
 
         labels = self.method_funcs[str(self.method)](decision)
 
@@ -96,22 +96,21 @@ class CLUST(BaseThresholder):
 
         return labels
 
-
     def _pyclust_eval(self, cl, decision):
         """ Evaluate cluster labels from pyclustering methods """
 
         cl.process()
 
-        pred =  np.squeeze(np.array(cl.get_clusters(), dtype=object))
+        pred = np.squeeze(np.array(cl.get_clusters(), dtype=object))
 
-        if type(pred[0])==list:
+        if type(pred[0]) == list:
             pred = np.array(pred[0])
 
         labels = np.ones(len(decision))
         labels[pred.astype(int)] = 0
 
         # Flip if outliers were clustered
-        if sum(labels)>np.ceil(len(decision)/2):
+        if sum(labels) > np.ceil(len(decision)/2):
             labels = 1-labels
 
         return labels
@@ -123,7 +122,7 @@ class CLUST(BaseThresholder):
         labels = cl.labels_
 
         # Flip if outliers were clustered
-        if sum(labels)>np.ceil(len(decision)/2):
+        if sum(labels) > np.ceil(len(decision)/2):
             labels = 1-labels
 
         return labels
@@ -131,7 +130,8 @@ class CLUST(BaseThresholder):
     def _AGG_clust(self, decision):
         """ Agglomerative algorithm for cluster analysis """
 
-        cl = agglomerative(data=decision, number_clusters=2, link=2, ccore=True)
+        cl = agglomerative(data=decision, number_clusters=2,
+                           link=2, ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
 
@@ -151,7 +151,7 @@ class CLUST(BaseThresholder):
     def _BANG_clust(self, decision):
         """ BANG clustering algorithm for cluster analysis """
 
-        cl = bang(data=decision,levels=8, ccore=True)
+        cl = bang(data=decision, levels=8, ccore=True)
 
         labels = self._pyclust_eval(cl, decision)
 
@@ -167,7 +167,7 @@ class CLUST(BaseThresholder):
         labels = cl.predict(decision)
 
         # Flip if outliers were clustered
-        if sum(labels)>np.ceil(len(decision)/2):
+        if sum(labels) > np.ceil(len(decision)/2):
             labels = 1-labels
 
         return labels
@@ -235,7 +235,8 @@ class CLUST(BaseThresholder):
         dat = np.squeeze(decision)
         q = cityblock(dat, np.sort(dat))/np.sum(dat)
 
-        if q>1.0: q=1.0
+        if q > 1.0:
+            q = 1.0
 
         # Estimate bandwidth
         try:
@@ -243,7 +244,7 @@ class CLUST(BaseThresholder):
         except ValueError:
             bw = estimate_bandwidth(decision)
 
-        if bw!=0:
+        if bw != 0:
             cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
         else:
             cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
@@ -253,7 +254,7 @@ class CLUST(BaseThresholder):
 
         mode = np.bincount(lbls).argmax()
         labels = np.ones(len(lbls))
-        labels[lbls==mode] = 0
+        labels[lbls == mode] = 0
 
         return labels
 
@@ -296,5 +297,3 @@ class CLUST(BaseThresholder):
         labels = self._pyclust_eval(cl, decision)
 
         return labels
-
-

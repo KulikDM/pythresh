@@ -78,7 +78,7 @@ class META(BaseThresholder):
 
         decision = normalize(decision)
 
-        if self.method=='LIN':
+        if self.method == 'LIN':
             clf = 'meta_model_LIN.pkl'
         else:
             clf = 'meta_model_GNB.pkl'
@@ -96,7 +96,7 @@ class META(BaseThresholder):
             labels = model.predict(df)
             outlier_ratio = np.sum(labels)/counts
 
-            if (outlier_ratio<0.5) & (outlier_ratio>0):
+            if (outlier_ratio < 0.5) & (outlier_ratio > 0):
 
                 contam.append(labels)
 

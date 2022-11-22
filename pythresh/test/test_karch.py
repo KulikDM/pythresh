@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from pyod.utils.data import generate_data
+from pyod.models.knn import KNN
+from pythresh.thresholds.karch import KARCH
 from __future__ import print_function
 
 from os.path import dirname as up
 import sys
 
 import unittest
-# noinspection 
+# noinspection
 import numpy as np
 from numpy.testing import assert_allclose
 from numpy.testing import assert_array_less
@@ -18,11 +21,6 @@ from numpy.testing import assert_raises
 
 path = up(up(up(__file__)))
 sys.path.append(path)
-
-from pythresh.thresholds.karch import KARCH
-
-from pyod.models.knn import KNN
-from pyod.utils.data import generate_data
 
 
 class TestKARCH(unittest.TestCase):
@@ -39,8 +37,8 @@ class TestKARCH(unittest.TestCase):
 
         self.scores = self.clf.decision_scores_
 
-        self.ndim = range(1,10)
-        
+        self.ndim = range(1, 10)
+
         self.method = ['simple', 'complex']
 
     def test_prediction_labels(self):
@@ -52,12 +50,10 @@ class TestKARCH(unittest.TestCase):
                 self.thres = KARCH(ndim=ndim, method=method)
                 pred_labels = self.thres.eval(self.scores)
                 assert (self.thres.thresh_ != None)
-        
+
                 assert_equal(pred_labels.shape, self.y_train.shape)
 
+                if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
 
-                if (not np.all(pred_labels==0)) & (not np.all(pred_labels==1)):
-            
                     assert (pred_labels.min() == 0)
                     assert (pred_labels.max() == 1)
-

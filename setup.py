@@ -3,19 +3,21 @@ from setuptools import find_packages, setup
 # read the contents of README file
 from os import path
 from io import open
-import sys, re
+import sys
+import re
 
-# get __version__ from version.py  
+# get __version__ from version.py
 try:
     verpath = path.join('pythresh', 'version.py')
     version_file = open(verpath)
     __version__ = str(re.findall(r'\b\d+(?:\.\d+)+', version_file.read())[0])
-    version_file.close() 
+    version_file.close()
 
 except Exception as error:
     __version__ = "0.0.1"
-    sys.stderr.write("Warning: Could not open '%s' due %s\n" % (verpath, error))
-     
+    sys.stderr.write("Warning: Could not open '%s' due %s\n" %
+                     (verpath, error))
+
 
 this_directory = path.abspath(path.dirname(__file__))
 
@@ -40,9 +42,10 @@ setup(
     author='D Kulik',
     url='https://github.com/KulikDM/pythresh',
     download_url='https://github.com/KulikDM/pythresh/archive/master.zip',
-    keywords=['outlier detection', 'anomaly detection', 'thresholding', 'cutoff', 
+    keywords=['outlier detection', 'anomaly detection', 'thresholding', 'cutoff',
               'contamintion level', 'data science', 'machine learning'],
-    project_urls={"Documentation": 'https://pythresh.readthedocs.io/en/latest/'},
+    project_urls={
+        "Documentation": 'https://pythresh.readthedocs.io/en/latest/'},
     packages=find_packages(exclude=['test']),
     include_package_data=True,
     install_requires=requirements,

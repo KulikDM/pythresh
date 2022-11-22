@@ -74,16 +74,15 @@ class AUCP(BaseThresholder):
         decision = normalize(decision)
 
         # Generate KDE
-        val, dat_range = gen_kde(decision,0,1,len(decision)*2)
+        val, dat_range = gen_kde(decision, 0, 1, len(decision)*2)
         val = normalize(val)
 
         # Get the total area under the curve
-        tot_area = auc(dat_range,val)
+        tot_area = auc(dat_range, val)
 
         # Get area percentage limit
         mean = np.mean(decision)
         perc = mean+abs(mean-np.median(decision))
-
 
         # Apply the limit to where the area is less than that limit percentage
         # of the total area under the curve
@@ -92,7 +91,7 @@ class AUCP(BaseThresholder):
 
             splt_area = auc(dat_range[i:], val[i:])
 
-            if splt_area<perc*tot_area:
+            if splt_area < perc*tot_area:
                 limit = dat_range[i]
                 break
 

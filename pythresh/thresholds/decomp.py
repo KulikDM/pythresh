@@ -64,15 +64,16 @@ class DECOMP(BaseThresholder):
         decision = normalize(decision)
 
         # Generate a CDF of the decision scores
-        val, dat_range = gen_cdf(decision,0,1,len(decision)*3)
+        val, dat_range = gen_cdf(decision, 0, 1, len(decision)*3)
         val = normalize(val)
 
         # Apply decomposition
-        dec = self.method_funcs[str(self.method)].fit_transform(val.reshape(-1,1))
+        dec = self.method_funcs[str(self.method)].fit_transform(
+            val.reshape(-1, 1))
 
         # Set limit to max value from decomposition matrix
         limit = np.max(dec)
-        if limit>0.5:
+        if limit > 0.5:
             limit = 1-limit
 
         self.thresh_ = limit

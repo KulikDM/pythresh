@@ -5,6 +5,11 @@
 # License: BSD 2 clause
 
 from __future__ import division
+from pythresh.thresholds.chau import CHAU
+from pyod.utils.example import visualize
+from pyod.utils.data import evaluate_print
+from pyod.utils.data import generate_data
+from pyod.models.knn import KNN
 from __future__ import print_function
 
 import os
@@ -15,13 +20,6 @@ import sys
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
 
-from pyod.models.knn import KNN
-from pyod.utils.data import generate_data
-
-from pyod.utils.data import evaluate_print
-from pyod.utils.example import visualize
-
-from pythresh.thresholds.chau import CHAU
 
 if __name__ == "__main__":
     contamination = 0.1  # percentage of outliers
@@ -44,7 +42,8 @@ if __name__ == "__main__":
 
     # get the prediction labels and outlier scores of the training data
     y_train_scores = clf.decision_scores_  # raw outlier scores
-    y_train_pred = thres.eval(y_train_scores)  # binary labels (0: inliers, 1: outliers)
+    # binary labels (0: inliers, 1: outliers)
+    y_train_pred = thres.eval(y_train_scores)
 
     # get the prediction on the test data
     y_test_scores = clf.decision_function(X_test)  # outlier scores

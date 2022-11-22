@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from pyod.utils.data import generate_data
+from pyod.models.knn import KNN
+from pythresh.thresholds.decomp import DECOMP
 from __future__ import print_function
 
 from os.path import dirname as up
@@ -19,12 +22,6 @@ path = up(up(up(__file__)))
 sys.path.append(path)
 
 
-from pythresh.thresholds.decomp import DECOMP
-
-from pyod.models.knn import KNN
-from pyod.utils.data import generate_data
-
-
 class TestDECOMP(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
@@ -41,12 +38,11 @@ class TestDECOMP(unittest.TestCase):
         self.thres = DECOMP()
 
     def test_prediction_labels(self):
-        
+
         pred_labels = self.thres.eval(self.scores)
         assert (self.thres.thresh_ != None)
-    
+
         assert_equal(pred_labels.shape, self.y_train.shape)
 
         assert (pred_labels.min() == 0)
         assert (pred_labels.max() == 1)
-

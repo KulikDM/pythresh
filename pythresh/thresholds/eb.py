@@ -71,11 +71,11 @@ class EB(BaseThresholder):
 
         # Generate random set of eccentricities to test
         np.random.seed(1234)
-        rnd = np.random.uniform(0,1,5000)
+        rnd = np.random.uniform(0, 1, 5000)
 
         # Create pseudo-random elliptical boundaries using each eccentricity
         # and compute the inlier/outlier labels
-        counts = [] # Get number of inliers
+        counts = []  # Get number of inliers
         for i in range(5000):
             e = rnd[i]
             a = 1/(1+e)
@@ -84,7 +84,7 @@ class EB(BaseThresholder):
 
         # Calculate the median count of expected inliers
         med = np.round(np.median(counts))
-        ec = np.linspace(0,1,5000)
+        ec = np.linspace(0, 1, 5000)
 
         # Randomly find eccentricity that generates
         # the closest value to the median inliers
@@ -94,7 +94,7 @@ class EB(BaseThresholder):
             a = 1/(1+e)
             lb = cut(decision, a*(1-e))
             count = len(decision)-np.sum(lb)
-            if abs(med-count)<abs(med-close):
+            if abs(med-count) < abs(med-close):
                 close = count
                 limit = a*(1-e)
 

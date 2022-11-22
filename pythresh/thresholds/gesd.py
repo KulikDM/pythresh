@@ -6,6 +6,7 @@ from .thresh_utility import normalize, cut
 
 # https://github.com/bhattbhavesh91/outlier-detection-grubbs-test-and-generalized-esd-test-python/blob/master/generalized-esd-test-for-outliers.ipynb
 
+
 class GESD(BaseThresholder):
     r"""GESD class for Generalized Extreme Studentized Deviate thresholder.
 
@@ -74,7 +75,6 @@ class GESD(BaseThresholder):
         self.max_outliers = max_outliers
         self.alpha = alpha
 
-
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
 
@@ -100,14 +100,14 @@ class GESD(BaseThresholder):
 
         limit = 1.1
 
-        if self.max_outliers=='auto':
+        if self.max_outliers == 'auto':
             self.max_outliers = int(len(decision)/2)
 
         for i in range(self.max_outliers):
             Gc = self._calc_crit(len(arr), self.alpha)
             Gs, max_index = self._grubbs_stat(arr)
 
-            if (Gs>Gc) & (arr[max_index]<limit):
+            if (Gs > Gc) & (arr[max_index] < limit):
                 limit = arr[max_index]
             arr = np.delete(arr, max_index)
 
@@ -119,7 +119,7 @@ class GESD(BaseThresholder):
 
         dev = np.abs(y - y.mean())
         max_ind = np.argmax(dev)
-        Gcal = np.max(dev)/ y.std()
+        Gcal = np.max(dev) / y.std()
 
         return Gcal, max_ind
 

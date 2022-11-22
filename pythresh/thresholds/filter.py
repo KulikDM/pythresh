@@ -83,7 +83,7 @@ class FILTER(BaseThresholder):
 
         # Get sigma variables for various applications for each filter
         sig = self.sigma
-        if self.sigma=='auto':
+        if self.sigma == 'auto':
             sig = len(decision)*np.std(decision)
 
         # Filter scores
@@ -102,14 +102,14 @@ class FILTER(BaseThresholder):
     def _SAV_fltr(self, decision, sig):
         """Savgol filter scores"""
 
-        if self.sigma=='auto':
+        if self.sigma == 'auto':
             sig = round(0.5*sig)
 
-        if sig%2==0:
-            sig+=1
+        if sig % 2 == 0:
+            sig += 1
 
         return signal.savgol_filter(decision, window_length=round(sig),
-                                        polyorder=1)
+                                    polyorder=1)
 
     def _HIL_fltr(self, decision, sig):
         """Hilbert filter scores"""
@@ -126,11 +126,10 @@ class FILTER(BaseThresholder):
 
         sig = round(sig)
 
-        if sig%2==0:
-            sig+=1
+        if sig % 2 == 0:
+            sig += 1
 
         return signal.medfilt(decision, kernel_size=[sig])
-
 
     def _DEC_fltr(self, decision, sig):
         """Decimate filter scores"""
@@ -140,14 +139,14 @@ class FILTER(BaseThresholder):
     def _DET_fltr(self, decision, sig):
         """Detrend filter scores"""
 
-        return signal.detrend(decision, bp=np.linspace(0,len(decision)-1,round(sig)).astype(int))
+        return signal.detrend(decision, bp=np.linspace(0, len(decision)-1, round(sig)).astype(int))
 
     def _RES_fltr(self, decision, sig):
         """Resampling filter scores"""
 
-        if self.sigma=='auto':
+        if self.sigma == 'auto':
             return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                                window=round(np.sqrt(sig)))
+                                   window=round(np.sqrt(sig)))
         else:
             return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                                window=round(sig))
+                                   window=round(sig))

@@ -69,9 +69,9 @@ class MAD(BaseThresholder):
 
         # Set limit equal to 3 median abolute deviations
         mean = np.mean(decision)
-        limit = mean + stats.median_abs_deviation(decision, scale=np.std(decision))
+        limit = mean + \
+            stats.median_abs_deviation(decision, scale=np.std(decision))
 
         self.thresh_ = limit
 
         return cut(decision, limit)
-

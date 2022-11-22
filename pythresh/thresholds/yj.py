@@ -75,7 +75,7 @@ class YJ(BaseThresholder):
         decision = normalize(decision)
 
         # Generate KDE
-        val, _ = gen_kde(decision,0,1,len(decision)*3)
+        val, _ = gen_kde(decision, 0, 1, len(decision)*3)
 
         # Use Yeo-Johnson transformation to reshape distribution
         # iterate to get average transformation
@@ -91,4 +91,3 @@ class YJ(BaseThresholder):
         self.thresh_ = limit
 
         return cut(decision, limit)
-

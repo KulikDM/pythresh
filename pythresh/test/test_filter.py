@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from pyod.utils.data import generate_data
+from pyod.models.knn import KNN
+from pythresh.thresholds.filter import FILTER
 from __future__ import print_function
 
 from os.path import dirname as up
@@ -19,11 +22,6 @@ from numpy.testing import assert_raises
 path = up(up(up(__file__)))
 sys.path.append(path)
 
-from pythresh.thresholds.filter import FILTER
-
-from pyod.models.knn import KNN
-from pyod.utils.data import generate_data
-
 
 class TestFilter(unittest.TestCase):
     def setUp(self):
@@ -38,10 +36,10 @@ class TestFilter(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        
+
         self.method = ['gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt',
-                        'decimate','detrend', 'resample']
-        
+                       'decimate', 'detrend', 'resample']
+
         self.sigma = 'auto'
 
     def test_prediction_labels(self):
@@ -51,12 +49,10 @@ class TestFilter(unittest.TestCase):
             self.thres = FILTER(method=method, sigma=self.sigma)
             pred_labels = self.thres.eval(self.scores)
             assert (self.thres.thresh_ != None)
-    
+
             assert_equal(pred_labels.shape, self.y_train.shape)
 
+            if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
 
-            if (not np.all(pred_labels==0)) & (not np.all(pred_labels==1)):
-            
                 assert (pred_labels.min() == 0)
                 assert (pred_labels.max() == 1)
-

@@ -86,16 +86,19 @@ class QMCD(BaseThresholder):
         decision = normalize(decision)
 
         # Get the quasi Monte-Carlo discrepancy of the labels
-        disc = stats.qmc.discrepancy(decision.reshape(-1,1), method=self.method)
+        disc = stats.qmc.discrepancy(
+            decision.reshape(-1, 1), method=self.method)
 
         # Set the limit to either the quantile or percentile of 1-discrepancy
-        if self.lim=='Q':
+        if self.lim == 'Q':
             limit = np.quantile(decision, 1.0-disc)
-        elif self.lim=='P':
+        elif self.lim == 'P':
             try:
-                limit = np.percentile(decision, (1.0-disc)*100, method='midpoint')
+                limit = np.percentile(
+                    decision, (1.0-disc)*100, method='midpoint')
             except TypeError:
-                limit = np.percentile(decision, (1.0-disc)*100, interpolation='midpoint')
+                limit = np.percentile(
+                    decision, (1.0-disc)*100, interpolation='midpoint')
 
         self.thresh_ = limit
 

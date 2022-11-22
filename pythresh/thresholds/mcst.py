@@ -86,7 +86,8 @@ class MCST(BaseThresholder):
         p_std = stats.shapiro(decision).pvalue
 
         # Create random dataset to insert and test p-values
-        rnd = stats.uniform.rvs(loc=0, scale=1, size=len(decision), random_state=self.random_state)
+        rnd = stats.uniform.rvs(loc=0, scale=1, size=len(
+            decision), random_state=self.random_state)
         rnd = normalize(rnd)
         povr = []
 
@@ -99,14 +100,14 @@ class MCST(BaseThresholder):
             arr = np.append(decision, rnd[i])
             p_check = stats.shapiro(arr).pvalue
 
-            if p_check>p_std:
+            if p_check > p_std:
 
                 p_std = p_check
                 povr.append(rnd[i])
 
         # Set the limit to the minimum found outlier
         limit = 1.1
-        if len(povr)>0:
+        if len(povr) > 0:
             limit = np.min(povr)
 
         self.thresh_ = limit

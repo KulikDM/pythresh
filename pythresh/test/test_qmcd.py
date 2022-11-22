@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from pyod.utils.data import generate_data
+from pyod.models.knn import KNN
+from pythresh.thresholds.qmcd import QMCD
 from __future__ import print_function
 
 from os.path import dirname as up
@@ -18,11 +21,6 @@ from numpy.testing import assert_raises
 path = up(up(up(__file__)))
 sys.path.append(path)
 
-from pythresh.thresholds.qmcd import QMCD
-
-from pyod.models.knn import KNN
-from pyod.utils.data import generate_data
-
 
 class TestQMCD(unittest.TestCase):
     def setUp(self):
@@ -39,7 +37,6 @@ class TestQMCD(unittest.TestCase):
         self.scores = self.clf.decision_scores_
         self.methods = ['CD', 'WD', 'MD', 'L2-star']
         self.lims = ['Q', 'P']
-    
 
     def test_prediction_labels(self):
 
@@ -49,9 +46,8 @@ class TestQMCD(unittest.TestCase):
                 self.thres = QMCD(method=method, lim=lim)
                 pred_labels = self.thres.eval(self.scores)
                 assert (self.thres.thresh_ != None)
-            
+
                 assert_equal(pred_labels.shape, self.y_train.shape)
 
                 assert (pred_labels.min() == 0)
                 assert (pred_labels.max() == 1)
-

@@ -61,8 +61,8 @@ class CLF(BaseThresholder):
         pred = self.m*decision + self.c
 
         # Determine labels
-        pred[pred>0] = 1
-        pred[pred<=0] = 0
+        pred[pred > 0] = 1
+        pred[pred <= 0] = 0
 
         self.thresh_ = None
 

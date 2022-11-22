@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from pyod.utils.data import generate_data
+from pyod.models.knn import KNN
+from pythresh.thresholds.ocsvm import OCSVM
 from __future__ import print_function
 
 from os.path import dirname as up
@@ -18,11 +21,6 @@ from numpy.testing import assert_raises
 
 path = up(up(up(__file__)))
 sys.path.append(path)
-
-from pythresh.thresholds.ocsvm import OCSVM
-
-from pyod.models.knn import KNN
-from pyod.utils.data import generate_data
 
 
 class TestOCSVM(unittest.TestCase):
@@ -44,7 +42,7 @@ class TestOCSVM(unittest.TestCase):
         self.gamma = ['auto', 0.1, 0.5, 0.9]
         self.criterion = ['aic', 'bic']
         self.nu = [0.1, 0.5, 0.9]
-        self.tol = [1e-1, 1e-3, 1e-5]                  
+        self.tol = [1e-1, 1e-3, 1e-5]
 
     def test_prediction_labels(self):
 
@@ -55,18 +53,17 @@ class TestOCSVM(unittest.TestCase):
                         for nu in self.nu:
                             for tol in self.tol:
 
-                                self.thres = OCSVM(model=model, degree=degree, 
-                                                   gamma=gamma, criterion=criterion, 
-                                                   nu=nu,tol=tol)
-                                
+                                self.thres = OCSVM(model=model, degree=degree,
+                                                   gamma=gamma, criterion=criterion,
+                                                   nu=nu, tol=tol)
+
                                 pred_labels = self.thres.eval(self.scores)
                                 assert (self.thres.thresh_ == None)
-                        
-                                assert_equal(pred_labels.shape, self.y_train.shape)
 
+                                assert_equal(pred_labels.shape,
+                                             self.y_train.shape)
 
-                                if (not np.all(pred_labels==0)) & (not np.all(pred_labels==1)):
-                
+                                if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+
                                     assert (pred_labels.min() == 0)
                                     assert (pred_labels.max() == 1)
-

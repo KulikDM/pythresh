@@ -6,6 +6,7 @@ import warnings
 import abc
 import six
 
+
 @six.add_metaclass(abc.ABCMeta)
 class BaseThresholder(object):
     """Abstract class for all outlier detection thresholding algorithms.
@@ -46,4 +47,3 @@ class BaseThresholder(object):
         """
 
         pass
-

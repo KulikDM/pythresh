@@ -5,7 +5,8 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
 
-#https://github.com/geomdata/gda-public/blob/master/timeseries/curve_geometry.pyx
+# https://github.com/geomdata/gda-public/blob/master/timeseries/curve_geometry.pyx
+
 
 class MOLL(BaseThresholder):
     r"""MOLL class for Friedrichs' mollifier thresholder.
@@ -72,7 +73,7 @@ class MOLL(BaseThresholder):
         """
 
         decision = check_array(decision, ensure_2d=False)
-        dat_range = np.linspace(0,1,len(decision))
+        dat_range = np.linspace(0, 1, len(decision))
 
         decision = normalize(decision)
 
@@ -89,43 +90,44 @@ class MOLL(BaseThresholder):
 
         delta = (time[-1]-time[0])/(N-1)
 
-        ### compute boundary space padding
-        left_pad = np.arange(time[0],time[0]-(width+delta),step=-delta)
+        # compute boundary space padding
+        left_pad = np.arange(time[0], time[0]-(width+delta), step=-delta)
         left_pad = np.flipud(left_pad)[:-1]
         left_pad_num = left_pad.shape[0]
-        right_pad = np.arange(time[-1],time[-1]+(width+delta),step=delta)[1:]
+        right_pad = np.arange(time[-1], time[-1]+(width+delta), step=delta)[1:]
         right_pad_num = right_pad.shape[0]
-        time_pad = np.concatenate((left_pad,time,right_pad))
+        time_pad = np.concatenate((left_pad, time, right_pad))
 
-        ### compute boundary score padding
-        position_pad = np.pad(position,(left_pad_num,right_pad_num),'edge')
+        # compute boundary score padding
+        position_pad = np.pad(position, (left_pad_num, right_pad_num), 'edge')
 
-        ### Define a new smaller space scale s, ds (here we a evenly spaced)
-        s, ds = np.linspace(time_pad[0],time_pad[-1],
+        # Define a new smaller space scale s, ds (here we a evenly spaced)
+        s, ds = np.linspace(time_pad[0], time_pad[-1],
                             (refinement)*time_pad.shape[0],
                             retstep=True)
         right_pad_num = (refinement)*right_pad_num
         left_pad_num = (refinement)*left_pad_num
-        position_interp = np.interp(s,time_pad,position_pad)
+        position_interp = np.interp(s, time_pad, position_pad)
 
-        ### Compute the mollifier kernel
-        norm_const,err = integrate.quad(lambda x: np.exp(1.0/(x**2-1.0)),-1.0,1.0)
+        # Compute the mollifier kernel
+        norm_const, err = integrate.quad(
+            lambda x: np.exp(1.0/(x**2-1.0)), -1.0, 1.0)
         norm_const = 1.0/norm_const
 
-        ### Compute the mollifier rho
+        # Compute the mollifier rho
         p = np.abs((s - (s[0]+s[-1])/2.0)/width)
         r = np.zeros_like(s)
-        q = p[p<1.0]
-        r[p<1.0] = np.exp(1.0/(q**2-1.0))
+        q = p[p < 1.0]
+        r[p < 1.0] = np.exp(1.0/(q**2-1.0))
         rho = (norm_const/width)*r
 
-        ### Perform convolution to make smooth reconstruction
+        # Perform convolution to make smooth reconstruction
         if s.shape[0] > 500:
-            smooth = signal.fftconvolve(ds*position_interp,rho,mode='same')
+            smooth = signal.fftconvolve(ds*position_interp, rho, mode='same')
         else:
-            smooth = np.convolve(ds*position_interp,rho,mode='same')
+            smooth = np.convolve(ds*position_interp, rho, mode='same')
 
-        ### remove padding
+        # remove padding
         s = s[left_pad_num:-right_pad_num]
         smooth = smooth[left_pad_num:-(right_pad_num)]
 

@@ -60,17 +60,18 @@ class REGR(BaseThresholder):
         decision = normalize(decision)
 
         # Create a normal distribution and normalize
-        norm = np.random.default_rng(self.random_state).normal(loc=0.0, scale=1.0, size=decision.shape)
+        norm = np.random.default_rng(self.random_state).normal(
+            loc=0.0, scale=1.0, size=decision.shape)
         norm = normalize(norm)
 
         # Set limit to the y-intercept
         try:
-            if self.method=='siegel':
+            if self.method == 'siegel':
                 res = stats.siegelslopes(norm, decision)
-            elif self.method=='theil':
+            elif self.method == 'theil':
                 res = stats.theilslopes(norm, decision)
         except MemoryError:
-            res = [0.0,1.0]
+            res = [0.0, 1.0]
 
         limit = res[1]
 

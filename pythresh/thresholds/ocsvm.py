@@ -10,6 +10,7 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
 
+
 class OCSVM(BaseThresholder):
     """OCSVM class for One-Class Support Vector Machine thresholder.
 
@@ -72,7 +73,6 @@ class OCSVM(BaseThresholder):
         self.tol = tol
         self.random_state = random_state
 
-
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
 
@@ -90,31 +90,31 @@ class OCSVM(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-
         decision = check_array(decision, ensure_2d=False)
         decision = normalize(decision)
 
         # Get auto nu calculation
-        if self.nu=='auto':
+        if self.nu == 'auto':
 
             np.seterr(divide='ignore')
             gmean = stats.gmean(decision)
             mean = np.mean(decision)
             med = np.median(decision)
 
-            self.nu = len(decision[decision<=med+abs(mean-gmean)])/len(decision)
-            if self.nu==1.0:
-                self.nu = 0.5 # use sklearn default
+            self.nu = len(decision[decision <= med +
+                          abs(mean-gmean)])/len(decision)
+            if self.nu == 1.0:
+                self.nu = 0.5  # use sklearn default
 
         # Get auto degree calculation
-        if (self.degree=='auto') & (self.model=='poly'):
+        if (self.degree == 'auto') & (self.model == 'poly'):
 
             self.degree = self._auto_crit(decision)
 
-        decision = decision.reshape(-1,1)
+        decision = decision.reshape(-1, 1)
 
         # Create a one-class svm
-        if self.model=='poly':
+        if self.model == 'poly':
             clf = OneClassSVM(gamma=self.gamma, kernel='poly',
                               degree=self.degree, nu=self.nu,
                               tol=self.tol).fit(decision)
@@ -128,15 +128,14 @@ class OCSVM(BaseThresholder):
         # Predict inliers and outliers
         res = clf.predict(decision)
 
-        res[res==-1] = 0
+        res[res == -1] = 0
 
         # Remove outliers from the left tail (precaution step)
         decision = np.squeeze(decision)
-        mask = np.where(decision<=np.mean(decision))
+        mask = np.where(decision <= np.mean(decision))
         res[mask] = 0
 
         self.thresh_ = None
-
 
         return res
 
@@ -144,14 +143,14 @@ class OCSVM(BaseThresholder):
         '''Decide polynomial degree using criterion'''
 
         # Generate kde
-        kde, dat_range = gen_kde(decision,0,1,len(decision))
+        kde, dat_range = gen_kde(decision, 0, 1, len(decision))
 
         # Set polynomial degrees to test
-        polys = [2,3,4,5,6,7,8,9,10]
+        polys = [2, 3, 4, 5, 6, 7, 8, 9, 10]
         n = len(decision)
 
-        decision = decision.reshape(-1,1)
-        kde = kde.reshape(-1,1)
+        decision = decision.reshape(-1, 1)
+        kde = kde.reshape(-1, 1)
 
         scores = []
 
@@ -162,14 +161,14 @@ class OCSVM(BaseThresholder):
             poly_fit = poly_features.fit_transform(kde)
 
             # Use regression to fit the polynomial
-            poly_reg = RidgeCV(alphas=np.logspace(-1,2,100))
+            poly_reg = RidgeCV(alphas=np.logspace(-1, 2, 100))
             poly_reg.fit(poly_fit, dat_range)
             poly_pred = poly_reg.predict(poly_fit)
 
             # Get the mse and apply the regression performance metric
             mse = mean_squared_error(dat_range, poly_pred)
 
-            if self.crit=='aic':
+            if self.crit == 'aic':
                 scores.append(n*np.log(mse) + 2*(poly+1))
             else:
                 scores.append(n*np.log(mse) + (poly+1)*np.log(n))

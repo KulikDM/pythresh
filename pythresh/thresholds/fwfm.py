@@ -58,7 +58,7 @@ class FWFM(BaseThresholder):
         decision = normalize(decision)
 
         # Generate KDE
-        val, _ = gen_kde(decision,-1,1,len(decision)*3)
+        val, _ = gen_kde(decision, -1, 1, len(decision)*3)
         val = normalize(val)
 
         # Find the greatest peak of the KDE
@@ -68,12 +68,11 @@ class FWFM(BaseThresholder):
         base_width = peak_widths(val, peaks, rel_height=0.99)[0]
 
         # Normalize and set limit
-        if len(base_width)>0:
+        if len(base_width) > 0:
             limit = base_width/len(val)
         else:
             limit = 1.1
-    
+
         self.thresh_ = limit
 
         return cut(decision, limit)
-

@@ -4,7 +4,8 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
 
-#https://github.com/scikit-image/scikit-image/blob/v0.19.2/skimage/filters/thresholding.py
+# https://github.com/scikit-image/scikit-image/blob/v0.19.2/skimage/filters/thresholding.py
+
 
 class HIST(BaseThresholder):
     """HIST class for Histogram based thresholders.
@@ -71,32 +72,34 @@ class HIST(BaseThresholder):
         decision = normalize(decision)
 
         #  Set adaptive default if bins are None
-        if self.nbins=='auto':
+        if self.nbins == 'auto':
             self.nbins = int(len(decision)**0.7)
 
         # Generate histogram
         bin_centers, counts = self._histogram(decision, self.nbins)
 
         # Threshold histogram
-        if self.method!='li':
-            threshold = self.method_funcs[str(self.method)](bin_centers, counts)
+        if self.method != 'li':
+            threshold = self.method_funcs[str(
+                self.method)](bin_centers, counts)
 
         else:
-            threshold = self.method_funcs[str(self.method)](decision, bin_centers, counts)
+            threshold = self.method_funcs[str(self.method)](
+                decision, bin_centers, counts)
 
         # Evaluate scores and create labels
-        outliers = np.where(decision>threshold)
+        outliers = np.where(decision > threshold)
         scores = np.zeros(len(decision), dtype=int)
         scores[outliers] = 1
 
         self.thresh_ = threshold
 
-        return  scores
+        return scores
 
     def _histogram(self, decision, nbins):
         """Generate histograms and get bin centers"""
 
-        counts, bin_edges = np.histogram(decision, bins=nbins, range=(0,1))
+        counts, bin_edges = np.histogram(decision, bins=nbins, range=(0, 1))
         bin_centers = (bin_edges[:-1] + bin_edges[1:])/2.
 
         return bin_centers, counts
@@ -118,13 +121,12 @@ class HIST(BaseThresholder):
 
         return maximum_idxs
 
-
     def _OTSU_thres(self, bin_centers, counts):
         """Otsu's method for histogram based thresholding"""
 
         counts = counts.astype(float)
 
-        #class probabilities for all possible thresholds
+        # class probabilities for all possible thresholds
         weight1 = np.cumsum(counts)
         weight2 = np.cumsum(counts[::-1])[::-1]
 
@@ -152,7 +154,7 @@ class HIST(BaseThresholder):
 
         # Get critical value
         crit = np.log(((P1_sq[:-1] * P2_sq[1:]) ** -1) *
-                        (P1[:-1] * (1.0 - P1[:-1])) ** 2)
+                      (P1[:-1] * (1.0 - P1[:-1])) ** 2)
 
         return bin_centers[crit.argmax()]
 
@@ -182,7 +184,7 @@ class HIST(BaseThresholder):
         # Look only at thresholds that are below the actual all_mean value
         distances = all_mean - bin_centers[:-1]
 
-        return  bin_centers[:-1][(distances >= 0) & (distances < bin_width)][0]
+        return bin_centers[:-1][(distances >= 0) & (distances < bin_width)][0]
 
     def _LI_thres(self, decision, bin_centers, counts):
         """Li's iterative Minimum Cross Entropy method for histogram
@@ -191,26 +193,25 @@ class HIST(BaseThresholder):
         counts = counts.astype(float)
 
         tolerance = np.min(np.diff(np.unique(decision)))/2
-        t_next = np.mean(decision) # initial new guess for iteration
-        t_curr = -2 * tolerance # initial old guess for iteration
-
+        t_next = np.mean(decision)  # initial new guess for iteration
+        t_curr = -2 * tolerance  # initial old guess for iteration
 
         # Iterate until the new and old thresholds difference
         # is less than the tolerance
-        while abs(t_next - t_curr)>tolerance:
+        while abs(t_next - t_curr) > tolerance:
 
             t_curr = t_next
-            outlier = bin_centers>t_curr
+            outlier = bin_centers > t_curr
             inlier = ~outlier
 
             mean_out = np.average(bin_centers[outlier],
-                                    weights=counts[outlier])
+                                  weights=counts[outlier])
 
             mean_in = np.average(bin_centers[inlier],
-                                    weights=counts[inlier])
+                                 weights=counts[inlier])
 
             t_next = ((mean_in - mean_out)
-                        / (np.log(mean_in) - np.log(mean_out)))
+                      / (np.log(mean_in) - np.log(mean_out)))
 
         return t_next
 
@@ -226,7 +227,8 @@ class HIST(BaseThresholder):
                 break
 
         # Find lowest point between the maxima
-        threshold_idx = np.argmin(smooth_hist[maximum_idxs[0]:maximum_idxs[1] + 1])
+        threshold_idx = np.argmin(
+            smooth_hist[maximum_idxs[0]:maximum_idxs[1] + 1])
 
         return bin_centers[maximum_idxs[0] + threshold_idx]
 

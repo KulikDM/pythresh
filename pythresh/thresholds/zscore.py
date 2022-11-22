@@ -67,7 +67,7 @@ class ZSCORE(BaseThresholder):
 
         # Set the limit to where the zscore is 1
         scores = np.zeros(len(decision), dtype=int)
-        mask = np.where(zscore>=1.0)
+        mask = np.where(zscore >= 1.0)
         scores[mask] = 1
 
         self.thresh_ = None

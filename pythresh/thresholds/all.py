@@ -74,7 +74,7 @@ class ALL(BaseThresholder):
 
         self.thresholders = thresholders
         self.max_contam = max_contam
-        stat = {'mean':np.mean, 'median':np.median, 'mode':stats.mode}
+        stat = {'mean': np.mean, 'median': np.median, 'mode': stats.mode}
         self.method = method
         self.method_func = stat[method]
         self.random_state = random_state
@@ -107,7 +107,8 @@ class ALL(BaseThresholder):
                                  FILTER(), WIND(random_state=self.random_state), EB(),
                                  REGR(random_state=self.random_state),
                                  BOOT(random_state=self.random_state),
-                                 MCST(random_state=self.random_state), HIST(), MOLL(),
+                                 MCST(
+                                     random_state=self.random_state), HIST(), MOLL(),
                                  CHAU(), GESD(), MTT(),
                                  OCSVM(random_state=self.random_state),
                                  CLUST(random_state=self.random_state),
@@ -123,7 +124,7 @@ class ALL(BaseThresholder):
             labels = thresholder.eval(decision)
             outlier_ratio = np.sum(labels)/counts
 
-            if outlier_ratio<self.max_contam:
+            if outlier_ratio < self.max_contam:
 
                 contam.append(labels)
                 ratio.append(outlier_ratio)
@@ -132,13 +133,13 @@ class ALL(BaseThresholder):
         ratio = np.array(ratio)
 
         # Get lower and upper confidence interval
-        low, high = stats.bootstrap(ratio.reshape(1,-1),
+        low, high = stats.bootstrap(ratio.reshape(1, -1),
                                     np.mean, paired=True,
                                     random_state=self.random_state).confidence_interval
         self.confidence_interval_ = [low, high]
 
         # Get [mean, median, or mode] of inliers
-        if self.method=='mode':
+        if self.method == 'mode':
 
             self.thresh_ = None
             lbls = self.method_func(contam, axis=0)
@@ -150,9 +151,9 @@ class ALL(BaseThresholder):
             contam = np.sum(contam, axis=1)/contam.shape[1]
             inlier_ratio = 1-self.method_func(contam)
 
-            limit=1.0
+            limit = 1.0
             idx = int(counts*inlier_ratio)
-            if idx<counts:
+            if idx < counts:
                 limit = decision[idx]
 
             self.thresh_ = limit

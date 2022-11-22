@@ -4,6 +4,7 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import normalize, cut, gen_kde
 
+
 class WIND(BaseThresholder):
     r"""WIND class for topological Winding number thresholder.
 
@@ -72,14 +73,15 @@ class WIND(BaseThresholder):
         decision = normalize(decision)
 
         # Create a normal distribution and normalize
-        size = min(len(decision),1500)
-        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=self.random_state)
+        size = min(len(decision), 1500)
+        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0,
+                              random_state=self.random_state)
         norm = normalize(norm)
 
         # Create a KDE of the labels and the normal distribution
         # Generate KDE
-        val_data, dat_range = gen_kde(decision,0,1,len(decision)*3)
-        val_norm, _ = gen_kde(norm,0,1,len(decision)*3)
+        val_data, dat_range = gen_kde(decision, 0, 1, len(decision)*3)
+        val_norm, _ = gen_kde(norm, 0, 1, len(decision)*3)
 
         # Get the rsquared value
         r2 = val_data**2 + val_norm**2
@@ -93,7 +95,8 @@ class WIND(BaseThresholder):
         deriv_norm = np.gradient(val_norm, dat_range[1]-dat_range[0])
 
         # Compute integrand
-        integrand = self._dtheta(val_data,val_norm,deriv_data,deriv_norm,r2)
+        integrand = self._dtheta(
+            val_data, val_norm, deriv_data, deriv_norm, r2)
 
         # Integrate to find winding numbers mean intersection point
         limit = integrate.simpson(integrand)/np.sum((val_data+val_norm)/2)
@@ -102,6 +105,6 @@ class WIND(BaseThresholder):
 
         return cut(decision, limit)
 
-    def _dtheta(self,x,y,dx,dy,r2):
+    def _dtheta(self, x, y, dx, dy, r2):
         """Calculate dtheta for the integrand"""
         return (x*dy - y*dx)/r2

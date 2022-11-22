@@ -75,7 +75,7 @@ class CHAU(BaseThresholder):
     def __init__(self, method='mean'):
 
         super(CHAU, self).__init__()
-        stat = {'mean':np.mean, 'median':np.median, 'gmean':stats.gmean}
+        stat = {'mean': np.mean, 'median': np.median, 'gmean': stats.gmean}
         self.method = stat[method]
 
     def eval(self, decision):
@@ -104,9 +104,9 @@ class CHAU(BaseThresholder):
         criterion = 1/abs(stats.norm.ppf(Pz))
 
         # Get area normal to distance
-        prob = erfc(np.abs(decision-self.method(decision))/decision.std()/2.0**0.5)
+        prob = erfc(np.abs(decision-self.method(decision)) /
+                    decision.std()/2.0**0.5)
 
         self.thresh_ = criterion * (1-np.min(prob))/np.max(prob)
 
         return 1-cut(prob, criterion)
-
