@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-from __future__ import print_functionfrom pyod.utils.data import generate_data
+from __future__ import print_function
+from pyod.utils.data import generate_data
 from pyod.models.knn import KNN
 from pythresh.thresholds.meta import META
 

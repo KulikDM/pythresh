@@ -5,7 +5,8 @@
 # License: BSD 2 clause
 
 from __future__ import division
-from __future__ import print_functionfrom pythresh.thresholds.dsn import DSN
+from __future__ import print_function
+from pythresh.thresholds.dsn import DSN
 from pyod.utils.example import visualize
 from pyod.utils.data import evaluate_print
 from pyod.utils.data import generate_data
