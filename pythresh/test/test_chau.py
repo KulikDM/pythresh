@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from __future__ import print_function
 from pyod.utils.data import generate_data
 from pyod.models.knn import KNN
 from pythresh.thresholds.chau import CHAU
-from __future__ import print_function
 
 from os.path import dirname as up
 import sys

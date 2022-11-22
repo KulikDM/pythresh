@@ -5,12 +5,12 @@
 # License: BSD 2 clause
 
 from __future__ import division
-from pythresh.thresholds.mcst import MCST
+from __future__ import print_functionfrom pythresh.thresholds.mcst import MCST
 from pyod.utils.example import visualize
 from pyod.utils.data import evaluate_print
 from pyod.utils.data import generate_data
 from pyod.models.knn import KNN
-from __future__ import print_function
+
 
 import os
 import sys
