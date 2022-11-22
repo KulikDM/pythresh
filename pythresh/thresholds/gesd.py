@@ -1,8 +1,9 @@
 import numpy as np
 import scipy.stats as stats
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut
+from .thresh_utility import cut, normalize
 
 # https://github.com/bhattbhavesh91/outlier-detection-grubbs-test-and-generalized-esd-test-python/blob/master/generalized-esd-test-for-outliers.ipynb
 

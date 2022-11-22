@@ -1,14 +1,16 @@
+from itertools import combinations
+
 import numpy as np
+import scipy.spatial.distance as distance
+import scipy.special as special
 import scipy.stats as stats
 from scipy import interpolate
-import scipy.special as special
 from scipy.integrate import simpson
-import scipy.spatial.distance as distance
 from sklearn.covariance import MinCovDet
-from itertools import combinations
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde, gen_cdf
+from .thresh_utility import cut, gen_cdf, gen_kde, normalize
 
 
 class DSN(BaseThresholder):

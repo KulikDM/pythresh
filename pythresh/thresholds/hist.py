@@ -1,8 +1,9 @@
 import numpy as np
 from scipy import ndimage as ndi
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde
+from .thresh_utility import cut, gen_kde, normalize
 
 # https://github.com/scikit-image/scikit-image/blob/v0.19.2/skimage/filters/thresholding.py
 

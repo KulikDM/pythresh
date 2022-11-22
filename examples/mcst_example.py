@@ -4,17 +4,16 @@
 # Author: D Kulik
 # License: BSD 2 clause
 
-from __future__ import division
-from __future__ import print_function
-from pythresh.thresholds.mcst import MCST
-from pyod.utils.example import visualize
-from pyod.utils.data import evaluate_print
-from pyod.utils.data import generate_data
-from pyod.models.knn import KNN
-
+from __future__ import division, print_function
 
 import os
 import sys
+
+from pyod.models.knn import KNN
+from pyod.utils.data import evaluate_print, generate_data
+from pyod.utils.example import visualize
+
+from pythresh.thresholds.mcst import MCST
 
 # temporary solution for relative imports in case pyod is not installed
 # if pyod is installed, no need to use the following line

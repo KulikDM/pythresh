@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
-from __future__ import division
-from __future__ import print_function
-from pyod.utils.data import generate_data
-from pyod.models.knn import KNN
-from pythresh.thresholds.boot import BOOT
+from __future__ import division, print_function
 
-from os.path import dirname as up
 import sys
-
 import unittest
+from os.path import dirname as up
+
 # noinspection PyProtectedMember
-from numpy.testing import assert_allclose
-from numpy.testing import assert_array_less
-from numpy.testing import assert_equal
-from numpy.testing import assert_raises
+from numpy.testing import (assert_allclose, assert_array_less, assert_equal,
+                           assert_raises)
+from pyod.models.knn import KNN
+from pyod.utils.data import generate_data
+
+from pythresh.thresholds.boot import BOOT
 
 # temporary solution for relative imports in case pythresh is not installed
 # if pythresh is installed, no need to use the following line

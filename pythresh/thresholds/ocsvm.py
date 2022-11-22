@@ -1,14 +1,15 @@
 import numpy as np
 import scipy.stats as stats
+from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.linear_model import RidgeCV, SGDOneClassSVM
 from sklearn.metrics import mean_squared_error
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import OneClassSVM
-from sklearn.kernel_approximation import AdditiveChi2Sampler
-from sklearn.pipeline import make_pipeline
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde
+from .thresh_utility import cut, gen_kde, normalize
 
 
 class OCSVM(BaseThresholder):

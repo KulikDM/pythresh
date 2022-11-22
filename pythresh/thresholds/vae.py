@@ -1,14 +1,15 @@
 import numpy as np
-from tqdm import tqdm
 import scipy.stats as stats
-from sklearn.utils import check_array
 import torch
-from torch import nn
 import torch.optim as opt
-from torch.nn.functional import softplus
+from sklearn.utils import check_array
+from torch import nn
 from torch.distributions import Normal, kl_divergence
+from torch.nn.functional import softplus
+from tqdm import tqdm
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde
+from .thresh_utility import cut, gen_kde, normalize
 
 
 class VAE(BaseThresholder):

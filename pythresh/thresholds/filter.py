@@ -3,8 +3,9 @@ import scipy.stats as stats
 from scipy import signal
 from scipy.ndimage import gaussian_filter
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut
+from .thresh_utility import cut, normalize
 
 
 class FILTER(BaseThresholder):

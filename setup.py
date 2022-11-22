@@ -1,10 +1,10 @@
-from setuptools import find_packages, setup
-
+import re
+import sys
+from io import open
 # read the contents of README file
 from os import path
-from io import open
-import sys
-import re
+
+from setuptools import find_packages, setup
 
 # get __version__ from version.py
 try:

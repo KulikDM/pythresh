@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
 from .thresh_utility import normalize
 

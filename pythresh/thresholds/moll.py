@@ -2,8 +2,9 @@ import numpy as np
 import scipy.signal as signal
 from scipy import integrate
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde
+from .thresh_utility import cut, gen_kde, normalize
 
 # https://github.com/geomdata/gda-public/blob/master/timeseries/curve_geometry.pyx
 

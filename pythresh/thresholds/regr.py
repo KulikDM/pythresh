@@ -1,8 +1,9 @@
 import numpy as np
 import scipy.stats as stats
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde
+from .thresh_utility import cut, gen_kde, normalize
 
 
 class REGR(BaseThresholder):

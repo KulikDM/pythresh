@@ -1,8 +1,9 @@
 import numpy as np
-from sklearn.decomposition import PCA, NMF
+from sklearn.decomposition import NMF, PCA
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_cdf
+from .thresh_utility import cut, gen_cdf, normalize
 
 
 class DECOMP(BaseThresholder):

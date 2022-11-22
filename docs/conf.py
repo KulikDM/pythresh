@@ -14,9 +14,10 @@
 #
 
 import os
-import sys, re
-from os.path import dirname, abspath
+import re
+import sys
 from io import open
+from os.path import abspath, dirname
 
 sys.path.insert(0, abspath('..'))
 pythresh_dir = dirname(dirname(abspath(__file__)))
@@ -29,7 +30,8 @@ try:
 
 except Exception as error:
     __version__ = "0.0.1"
-    sys.stderr.write("Warning: Could not open '%s' due %s\n" % (verpath, error))
+    sys.stderr.write("Warning: Could not open '%s' due %s\n" %
+                     (verpath, error))
 
 finally:
     version_file.close()

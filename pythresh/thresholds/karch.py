@@ -1,9 +1,10 @@
 import numpy as np
-from geomstats.learning.frechet_mean import FrechetMean
 from geomstats.geometry.euclidean import Euclidean
+from geomstats.learning.frechet_mean import FrechetMean
 from sklearn.utils import check_array
+
 from .base import BaseThresholder
-from .thresh_utility import normalize, cut, gen_kde
+from .thresh_utility import cut, gen_kde, normalize
 
 
 class KARCH(BaseThresholder):

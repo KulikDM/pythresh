@@ -1,33 +1,33 @@
 import numpy as np
 import scipy.stats as stats
 from sklearn.utils import check_array
-from .base import BaseThresholder
-from .thresh_utility import normalize, cut
 
-from .iqr import IQR
-from .mad import MAD
-from .fwfm import FWFM
-from .yj import YJ
-from .zscore import ZSCORE
 from .aucp import AUCP
-from .qmcd import QMCD
-from .fgd import FGD
-from .dsn import DSN
-from .clf import CLF
-from .filter import FILTER
-from .wind import WIND
-from .eb import EB
-from .regr import REGR
+from .base import BaseThresholder
 from .boot import BOOT
-from .mcst import MCST
-from .hist import HIST
-from .moll import MOLL
 from .chau import CHAU
-from .gesd import GESD
-from .mtt import MTT
-from .ocsvm import OCSVM
+from .clf import CLF
 from .clust import CLUST
 from .decomp import DECOMP
+from .dsn import DSN
+from .eb import EB
+from .fgd import FGD
+from .filter import FILTER
+from .fwfm import FWFM
+from .gesd import GESD
+from .hist import HIST
+from .iqr import IQR
+from .mad import MAD
+from .mcst import MCST
+from .moll import MOLL
+from .mtt import MTT
+from .ocsvm import OCSVM
+from .qmcd import QMCD
+from .regr import REGR
+from .thresh_utility import cut, normalize
+from .wind import WIND
+from .yj import YJ
+from .zscore import ZSCORE
 
 
 class ALL(BaseThresholder):
