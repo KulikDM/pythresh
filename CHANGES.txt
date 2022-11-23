@@ -30,3 +30,4 @@ v<0.2.7>, <11/07/2022> -- Updated trained meta-models (better thresholding accur
 v<0.2.8>, <11/08/2022> -- 'native' parameter to 'auto' (code consistency)
 v<0.2.8>, <11/19/2022> -- Stability fixes for vae, ocsvm, fwfm
 v<0.2.8>, <11/22/2022> -- Format autopep8, isort
+v<0.2.8>, <11/23/2022> -- Refactored 

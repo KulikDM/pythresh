@@ -40,7 +40,7 @@ class TestMETA(unittest.TestCase):
         for method in self.methods:
             self.thres = META(method=method)
             pred_labels = self.thres.eval(self.scores)
-            assert (self.thres.thresh_ == None)
+            assert (self.thres.thresh_ is None)
 
             assert_equal(pred_labels.shape, self.y_train.shape)
 

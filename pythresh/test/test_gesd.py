@@ -45,7 +45,7 @@ class TestGESD(unittest.TestCase):
                 self.thres = GESD(max_outliers=max_outliers, alpha=alpha)
 
                 pred_labels = self.thres.eval(self.scores)
-                assert (self.thres.thresh_ != None)
+                assert (self.thres.thresh_ is not None)
 
                 assert_equal(pred_labels.shape, self.y_train.shape)
 

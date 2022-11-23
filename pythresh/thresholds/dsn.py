@@ -92,10 +92,8 @@ class DSN(BaseThresholder):
                               random_state=self.random_state)
         self.norm = normalize(norm)
 
-        n = 1
-        if self.metric != 'LP':
-            n = 3
-
+        n = 3 if self.metric != 'LP' else 1
+        
         if self.metric in ['JS', 'BHT', 'INT', 'MMD']:
             # Create a KDE of the decision scores and the normal distribution
             # Generate KDE
@@ -280,6 +278,4 @@ class DSN(BaseThresholder):
         delta = normalize(delta)
         delta = delta.dot(delta.T)
 
-        dist = delta/np.sum(self.data_range)
-
-        return dist
+        return delta/np.sum(self.data_range)

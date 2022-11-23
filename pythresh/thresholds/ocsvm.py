@@ -175,6 +175,5 @@ class OCSVM(BaseThresholder):
                 scores.append(n*np.log(mse) + (poly+1)*np.log(n))
 
         # Set degree from smallest metric score
-        deg = polys[np.argmin(scores)]
 
-        return deg
+        return polys[np.argmin(scores)]

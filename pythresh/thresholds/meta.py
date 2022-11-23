@@ -80,11 +80,8 @@ class META(BaseThresholder):
 
         decision = normalize(decision)
 
-        if self.method == 'LIN':
-            clf = 'meta_model_LIN.pkl'
-        else:
-            clf = 'meta_model_GNB.pkl'
-
+        clf = 'meta_model_LIN.pkl' if self.method == 'LIN' else 'meta_model_GNB.pkl'
+        
         contam = []
         counts = len(decision)
         parent = up(up(__file__))

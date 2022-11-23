@@ -81,7 +81,7 @@ class YJ(BaseThresholder):
         # Use Yeo-Johnson transformation to reshape distribution
         # iterate to get average transformation
         mean_s = np.zeros(len(val))
-        for i in range(50):
+        for _ in range(50):
             scores = stats.yeojohnson(val)[0]
             mean_s += scores
         mean_s = mean_s/50

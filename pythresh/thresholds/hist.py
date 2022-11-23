@@ -108,7 +108,7 @@ class HIST(BaseThresholder):
     def _find_local_maxima_idx(self, hist):
         """Find the local maxima in histogram"""
 
-        maximum_idxs = list()
+        maximum_idxs = []
         direction = 1
 
         for i in range(hist.shape[0] - 1):
@@ -116,9 +116,8 @@ class HIST(BaseThresholder):
                 if hist[i + 1] < hist[i]:
                     direction = -1
                     maximum_idxs.append(i)
-            else:
-                if hist[i + 1] > hist[i]:
-                    direction = 1
+            elif hist[i + 1] > hist[i]:
+                direction = 1
 
         return maximum_idxs
 
@@ -221,7 +220,7 @@ class HIST(BaseThresholder):
 
         smooth_hist = counts.astype(np.float64, copy=False)
 
-        for counter in range(10000):
+        for _ in range(10000):
             smooth_hist = ndi.uniform_filter1d(smooth_hist, 3)
             maximum_idxs = self._find_local_maxima_idx(smooth_hist)
             if len(maximum_idxs) < 3:

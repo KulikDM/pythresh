@@ -120,6 +120,4 @@ class MTT(BaseThresholder):
 
         t, inf_val = mapping[strictness]
         for key, val in t.items():
-            if n <= key:
-                return val
-            return inf_val
+            return val if n <= key else inf_val

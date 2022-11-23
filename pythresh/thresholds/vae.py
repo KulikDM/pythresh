@@ -146,7 +146,7 @@ class VAE(BaseThresholder):
         scheduler = opt.lr_scheduler.ExponentialLR(optimizer,
                                                    gamma=0.95)
 
-        for epoch in (tqdm(range(self.epochs), ascii=True, desc="Training")
+        for _ in (tqdm(range(self.epochs), ascii=True, desc="Training")
                       if self.verbose else range(self.epochs)):
 
             for x in self.data:
@@ -264,9 +264,7 @@ class VAE_model(nn.Module):
 
         recon_dist = self.dist(pred['recon_mu'], pred['recon_sigma'])
         x = x.unsqueeze(0)
-        p = recon_dist.log_prob(x).exp().mean(dim=0).mean(dim=-1)
-
-        return p
+        return recon_dist.log_prob(x).exp().mean(dim=0).mean(dim=-1)
 
     def compute_kernel(self, x, y):
 
@@ -289,6 +287,4 @@ class VAE_model(nn.Module):
         y_kernel = self.compute_kernel(y, y)
         xy_kernel = self.compute_kernel(x, y)
 
-        mmd = x_kernel.mean() + y_kernel.mean() - 2*xy_kernel.mean()
-
-        return mmd
+        return x_kernel.mean() + y_kernel.mean() - 2*xy_kernel.mean()

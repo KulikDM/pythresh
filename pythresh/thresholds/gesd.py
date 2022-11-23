@@ -102,9 +102,9 @@ class GESD(BaseThresholder):
         limit = 1.1
 
         if self.max_outliers == 'auto':
-            self.max_outliers = int(len(decision)/2)
+            self.max_outliers = len(decision) // 2
 
-        for i in range(self.max_outliers):
+        for _ in range(self.max_outliers):
             Gc = self._calc_crit(len(arr), self.alpha)
             Gs, max_index = self._grubbs_stat(arr)
 
@@ -129,6 +129,4 @@ class GESD(BaseThresholder):
         t_dist = stats.t.ppf(1 - alpha / (2 * size), size - 2)
         numerator = (size - 1) * np.sqrt(np.square(t_dist))
         denominator = np.sqrt(size) * np.sqrt(size - 2 + np.square(t_dist))
-        critical_value = numerator / denominator
-
-        return critical_value
+        return numerator / denominator

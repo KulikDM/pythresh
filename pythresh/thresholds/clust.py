@@ -135,9 +135,7 @@ class CLUST(BaseThresholder):
         cl = agglomerative(data=decision, number_clusters=2,
                            link=2, ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _BIRCH_clust(self, decision):
         """ BIRCH (Balanced Iterative Reducing and Clustering using
@@ -146,18 +144,14 @@ class CLUST(BaseThresholder):
 
         cl = Birch(n_clusters=2, threshold=np.std(decision)/np.sqrt(2))
 
-        labels = self._sklearn_eval(cl, decision)
-
-        return labels
+        return self._sklearn_eval(cl, decision)
 
     def _BANG_clust(self, decision):
         """ BANG clustering algorithm for cluster analysis """
 
         cl = bang(data=decision, levels=8, ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _BGM_clust(self, decision):
         """ Bayesian Gaussian Mixture algorithm for cluster analysis """
@@ -182,21 +176,17 @@ class CLUST(BaseThresholder):
         cl = bsas(data=decision, maximum_clusters=2,
                   threshold=np.std(decision), ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _DBSCAN_clust(self, decision):
         """ DBSCAN (Density-based spatial clustering of applications with
             noise) algorithm for cluster analysis
         """
 
-        cl = dbscan(data=decision, eps=np.std(decision)/np.sqrt(2),
-                    neighbors=int(len(decision)/2), ccore=True)
+        cl = dbscan(data=decision, eps=np.std(decision) /
+                    np.sqrt(2), neighbors=len(decision) // 2, ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _EMA_clust(self, decision):
         """ Expectation-Maximization clustering algorithm for Gaussian
@@ -205,18 +195,14 @@ class CLUST(BaseThresholder):
 
         cl = ema(data=decision, amount_clusters=2)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _KMEANS_clust(self, decision):
         """ K-means algorithm for cluster analysis """
 
         cl = KMeans(n_clusters=2)
 
-        labels = self._sklearn_eval(cl, decision)
-
-        return labels
+        return self._sklearn_eval(cl, decision)
 
     def _MBSAS_clust(self, decision):
         """ MBSAS (Modified Basic Sequential Algorithmic Scheme)
@@ -226,9 +212,7 @@ class CLUST(BaseThresholder):
         cl = mbsas(data=decision, maximum_clusters=2,
                    threshold=np.std(decision), ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _MSHIFT_clust(self, decision):
         """ Mean shift algorithm for cluster analysis"""
@@ -237,8 +221,7 @@ class CLUST(BaseThresholder):
         dat = np.squeeze(decision)
         q = cityblock(dat, np.sort(dat))/np.sum(dat)
 
-        if q > 1.0:
-            q = 1.0
+        q = min(q, 1.0)
 
         # Estimate bandwidth
         try:
@@ -246,11 +229,7 @@ class CLUST(BaseThresholder):
         except ValueError:
             bw = estimate_bandwidth(decision)
 
-        if bw != 0:
-            cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
-        else:
-            cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
-
+        cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
         cl.fit(decision)
         lbls = cl.labels_
 
@@ -265,37 +244,28 @@ class CLUST(BaseThresholder):
             algorithm for cluster analysis
         """
 
-        cl = optics(sample=decision, eps=np.std(decision)/np.sqrt(2),
-                    minpts=int(len(decision)/2), amount_clusters=1,
-                    ccore=True)
+        cl = optics(sample=decision, eps=np.std(decision) / np.sqrt(2),
+                    minpts=len(decision) // 2, amount_clusters=1, ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _SOMSC_clust(self, decision):
         """ Self-organized feature map algorithm for cluster analysis """
 
         cl = somsc(data=decision, amount_clusters=2, ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
 
     def _SPEC_clust(self, decision):
         """ Clustering to a projection of the normalized Laplacian """
 
         cl = SpectralClustering(n_clusters=2)
 
-        labels = self._sklearn_eval(cl, decision)
-
-        return labels
+        return self._sklearn_eval(cl, decision)
 
     def _XMEANS_clust(self, decision):
         """ X-means algorithm for cluster analysis """
 
         cl = xmeans(data=decision, kmax=2, ccore=True)
 
-        labels = self._pyclust_eval(cl, decision)
-
-        return labels
+        return self._pyclust_eval(cl, decision)
