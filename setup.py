@@ -10,7 +10,8 @@ from setuptools import find_packages, setup
 try:
     verpath = path.join('pythresh', 'version.py')
     with open(verpath) as version_file:
-        __version__ = str(re.findall(r'\b\d+(?:\.\d+)+', version_file.read())[0])
+        __version__ = str(re.findall(
+            r'\b\d+(?:\.\d+)+', version_file.read())[0])
 except Exception as error:
     __version__ = "0.0.1"
     sys.stderr.write("Warning: Could not open '%s' due %s\n" %

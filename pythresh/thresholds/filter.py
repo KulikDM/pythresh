@@ -1,5 +1,4 @@
 import numpy as np
-import scipy.stats as stats
 from scipy import signal
 from scipy.ndimage import gaussian_filter
 from sklearn.utils import check_array

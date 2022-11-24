@@ -6,8 +6,7 @@ import unittest
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
-from numpy.testing import (assert_allclose, assert_array_less, assert_equal,
-                           assert_raises)
+from numpy.testing import assert_equal
 from pyod.models.knn import KNN
 from pyod.utils.data import generate_data
 

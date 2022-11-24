@@ -1,4 +1,3 @@
-import numpy as np
 from scipy.signal import find_peaks, peak_widths
 from sklearn.utils import check_array
 
@@ -70,7 +69,7 @@ class FWFM(BaseThresholder):
 
         # Normalize and set limit
         limit = base_width/len(val) if len(base_width) > 0 else 1.1
-        
+
         self.thresh_ = limit
 
         return cut(decision, limit)

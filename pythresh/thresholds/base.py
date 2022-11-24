@@ -1,6 +1,7 @@
 from __future__ import division, print_function
 
 import abc
+
 import six
 
 
@@ -42,5 +43,3 @@ class BaseThresholder(object):
             it should be considered as an outlier according to the
             fitted model. 0 stands for inliers and 1 for outliers.
         """
-
-        pass

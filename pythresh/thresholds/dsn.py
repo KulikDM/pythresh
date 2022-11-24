@@ -93,7 +93,7 @@ class DSN(BaseThresholder):
         self.norm = normalize(norm)
 
         n = 3 if self.metric != 'LP' else 1
-        
+
         if self.metric in ['JS', 'BHT', 'INT', 'MMD']:
             # Create a KDE of the decision scores and the normal distribution
             # Generate KDE

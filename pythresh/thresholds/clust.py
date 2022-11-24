@@ -9,13 +9,18 @@ from pyclustering.cluster.optics import optics
 from pyclustering.cluster.somsc import somsc
 from pyclustering.cluster.xmeans import xmeans
 from scipy.spatial.distance import cityblock
-from sklearn.cluster import (Birch, KMeans, MeanShift, SpectralClustering,
-                             estimate_bandwidth)
+from sklearn.cluster import (
+    Birch,
+    KMeans,
+    MeanShift,
+    SpectralClustering,
+    estimate_bandwidth
+)
 from sklearn.mixture import BayesianGaussianMixture
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, gen_kde, normalize
+from .thresh_utility import normalize
 
 
 class CLUST(BaseThresholder):

@@ -4,7 +4,7 @@ from scipy import integrate
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, gen_kde, normalize
+from .thresh_utility import cut, normalize
 
 # https://github.com/geomdata/gda-public/blob/master/timeseries/curve_geometry.pyx
 

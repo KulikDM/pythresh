@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, gen_kde, normalize
+from .thresh_utility import cut, normalize
 
 # https://github.com/vvaezian/modified_thompson_tau_test/blob/main/src/Modified_Thompson_Tau_Test/modified_thompson_tau_test.py
 

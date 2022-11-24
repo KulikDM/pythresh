@@ -9,7 +9,7 @@ from torch.nn.functional import softplus
 from tqdm import tqdm
 
 from .base import BaseThresholder
-from .thresh_utility import cut, gen_kde, normalize
+from .thresh_utility import cut, normalize
 
 
 class VAE(BaseThresholder):
@@ -147,7 +147,7 @@ class VAE(BaseThresholder):
                                                    gamma=0.95)
 
         for _ in (tqdm(range(self.epochs), ascii=True, desc="Training")
-                      if self.verbose else range(self.epochs)):
+                  if self.verbose else range(self.epochs)):
 
             for x in self.data:
 
