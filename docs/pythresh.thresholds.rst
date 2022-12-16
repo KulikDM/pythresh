@@ -62,6 +62,16 @@ pythresh.thresholds.clust module
     :show-inheritance:
     :inherited-members:
 
+pythresh.thresholds.cpd module
+------------------------------
+
+.. automodule:: pythresh.thresholds.cpd
+    :members:
+    :exclude-members:
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:
+
 pythresh.thresholds.decomp module
 ---------------------------------
 
