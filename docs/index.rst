@@ -89,6 +89,7 @@ BOOT        Bootstrapping                                                    :ci
 CHAU        Chauvenet's Criterion                                            :cite:`a-bolshev2016chau`
 CLF         Trained Linear Classifier                                        :cite:`a-aggarwal2017clf`
 CLUST       Clustering Based                                                 :cite:`a-klawonn2008clust`
+CPD         Change Point Detection                                           :cite:`a-fearnhead2016cpd`
 DECOMP      Decomposition                                                    :cite:`a-boente2002decomp`
 DSN         Distance Shift from Normal                                       :cite:`a-amagata2021dsn`
 EB          Elliptical Boundary                                              :cite:`a-friendly2013eb`

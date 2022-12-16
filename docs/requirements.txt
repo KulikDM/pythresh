@@ -7,7 +7,7 @@ numpy
 pandas
 pyclustering
 pyod
-torch
+ruptures
 scipy
 scikit-learn
 scikit-lego

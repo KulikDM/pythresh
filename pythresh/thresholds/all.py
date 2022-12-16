@@ -107,9 +107,8 @@ class ALL(BaseThresholder):
                                  FILTER(), WIND(random_state=self.random_state), EB(),
                                  REGR(random_state=self.random_state),
                                  BOOT(random_state=self.random_state),
-                                 MCST(
-                                     random_state=self.random_state), HIST(), MOLL(),
-                                 CHAU(), GESD(), MTT(),
+                                 MCST(random_state=self.random_state), HIST(),
+                                 MOLL(), CHAU(), GESD(), MTT(),
                                  OCSVM(random_state=self.random_state),
                                  CLUST(random_state=self.random_state),
                                  DECOMP(random_state=self.random_state)]

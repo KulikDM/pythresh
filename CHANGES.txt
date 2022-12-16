@@ -32,3 +32,4 @@ v<0.2.8>, <11/19/2022> -- Stability fixes for vae, ocsvm, fwfm
 v<0.2.8>, <11/22/2022> -- Format autopep8, isort
 v<0.2.8>, <11/23/2022> -- Refactored 
 v<0.2.8>, <11/24/2022> -- Removed unused imports
+v<0.2.8>, <12/18/2022> -- Added cpd thresholder

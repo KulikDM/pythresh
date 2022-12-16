@@ -38,6 +38,7 @@ Or with **pip**:
 
 **Optional Dependencies**\ :
 
+* ruptures (used in the CPD thresholder)
 * geomstats (used in the KARCH thresholder)
 * scikit-lego (used in the META thresholder)
 * joblib>=0.14.1 (used in the META thresholder)
