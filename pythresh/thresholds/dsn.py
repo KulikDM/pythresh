@@ -24,7 +24,7 @@ class DSN(BaseThresholder):
        Parameters
        ----------
 
-       metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS', 'INT', 'MMD'}, optional (default='JS')
+       metric : {'JS', 'WS', 'ENG', 'BHT', 'HLL', 'HI', 'LK', 'LP', 'MAH', 'TMT', 'RES', 'KS', 'INT', 'MMD'}, optional (default='MAH')
             Metric to use for distance computation
 
             - 'JS':  Jensen-Shannon distance
@@ -52,7 +52,7 @@ class DSN(BaseThresholder):
 
     """
 
-    def __init__(self, metric='JS', random_state=1234):
+    def __init__(self, metric='MAH', random_state=1234):
 
         super(DSN, self).__init__()
         self.metric = metric

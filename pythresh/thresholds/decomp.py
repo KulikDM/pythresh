@@ -19,7 +19,7 @@ class DECOMP(BaseThresholder):
        Parameters
        ----------
 
-       method: {'NMF', 'PCA'}, optional (default='PCA')
+       method: {'NMF', 'PCA'}, optional (default='NMF')
             Method to use for decomposition
 
             - 'NMF':  Non-Negative Matrix Factorization
@@ -35,7 +35,7 @@ class DECOMP(BaseThresholder):
 
     """
 
-    def __init__(self, method='PCA', random_state=1234):
+    def __init__(self, method='NMF', random_state=1234):
 
         self.method = method
         self.method_funcs = {'NMF': NMF(random_state=random_state),

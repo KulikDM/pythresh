@@ -132,10 +132,11 @@ class VAE(BaseThresholder):
             profile_lik += [np.sum(stats.norm.logpdf(vals[:i], loc=mu1, scale=sigma)) +
                             np.sum(stats.norm.logpdf(vals[i:], loc=mu2, scale=sigma))]
 
-        dims = round(np.log(np.argsort(profile_lik)[-1]))
-        valen = round(np.log(len(vals)**2))
-        dims = np.nan_to_num(dims, neginf=valen, posinf=valen, nan=valen)
-        return dims
+        prof = np.argsort(profile_lik)[-1] 
+        valen = len(vals)**0.7
+        prof = prof if prof > 0 else valen
+        
+        return round(np.log(prof))
 
     def _train(self):
 

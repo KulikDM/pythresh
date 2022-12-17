@@ -22,7 +22,7 @@ class META(BaseThresholder):
        Parameters
        ----------
 
-       method : {'LIN', 'GNB'}, optional (default='LIN')
+       method : {'LIN', 'GNB'}, optional (default='GNB')
            select
 
            - 'LIN': RidgeCV trained linear classifier meta-model
@@ -55,7 +55,7 @@ class META(BaseThresholder):
 
     """
 
-    def __init__(self, method='LIN'):
+    def __init__(self, method='GNB'):
 
         self.method = method
 

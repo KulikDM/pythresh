@@ -23,7 +23,7 @@ class HIST(BaseThresholder):
        nbins : int, optional (default='auto')
             Number of bins to use in the histogram, default set to int(len(scores)**0.7)
 
-       method : {'otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle'}, optional (default='otsu')
+       method : {'otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle'}, optional (default='triangle')
             Histogram filtering based method
 
             - 'otsu':     OTSU's method for filtering
@@ -41,7 +41,7 @@ class HIST(BaseThresholder):
 
     """
 
-    def __init__(self, method='otsu', nbins='auto'):
+    def __init__(self, method='triangle', nbins='auto'):
 
         super(HIST, self).__init__()
         self.nbins = nbins

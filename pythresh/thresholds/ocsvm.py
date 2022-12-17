@@ -24,7 +24,7 @@ class OCSVM(BaseThresholder):
        Parameters
        ----------
 
-       model : {'poly', 'sgd'}, optional (default='poly')
+       model : {'poly', 'sgd'}, optional (default='sgd')
            OCSVM model to apply
 
            - 'poly':  Use a polynomial kernel with a regular OCSVM
@@ -63,7 +63,7 @@ class OCSVM(BaseThresholder):
 
     """
 
-    def __init__(self, model='poly', degree='auto', gamma='auto',
+    def __init__(self, model='sgd', degree='auto', gamma='auto',
                  criterion='bic', nu='auto', tol=1e-3, random_state=1234):
 
         self.model = model

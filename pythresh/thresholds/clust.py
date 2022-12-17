@@ -34,7 +34,7 @@ class CLUST(BaseThresholder):
        Parameters
        ----------
 
-       method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='dbscan')
+       method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='spec')
             Clustering method
 
             - 'agg':    Agglomerative
@@ -63,7 +63,7 @@ class CLUST(BaseThresholder):
 
     """
 
-    def __init__(self, method='dbscan', random_state=1234):
+    def __init__(self, method='spec', random_state=1234):
 
         super(CLUST, self).__init__()
         self.method = method
