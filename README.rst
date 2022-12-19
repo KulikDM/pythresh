@@ -176,8 +176,8 @@ Implementations & Benchmarks
 **The comparison among implemented models and general implementation** is made available below
 
 Additional benchmarking has been done on all the thresholders and it was found that the 
-`FILTER` thresholder performed best while the `META` thresholder was the most robust in terms
- of datasets and outlier detection methods.
+`FILTER` thresholder performed best while the `META` thresholder was the most robust in terms 
+of datasets and outlier detection methods.
 
 ----
 

@@ -41,7 +41,7 @@ For consistency, the benchmark results below used the unit-normalized MCC, which
 
 .. math::
 
-   MMC_{norm} = \frac{MMC + 1}/{2} \mathrm{.}
+   MMC_{norm} = \frac{MMC + 1}{2} \mathrm{.}
    
 Benchmarking
 ------------
@@ -169,9 +169,9 @@ External Benchmarking
 
 An external benchmark test of all the default thresholders is available in 
 `Estimating the Contamination Factor's Distribution in Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_. 
-However it is important to note that a different evaluation metric was used (F1 deterioration) was 
-used, and also since the publishing of this article some default parameters for some thresholders 
-have been changed. Still this article provides a thorough analysis of the performance of the 
+However it is important to note that a different evaluation metric was used (F1 deterioration), 
+and also since the publishing of this article some default parameters for some thresholders 
+have been changed. Still, this article provides a thorough analysis of the performance of the 
 thresholders in ``PyThresh`` with many insightful results and detailed analysis of thresholding 
 outlier decision scores.
 
