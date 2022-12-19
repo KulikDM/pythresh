@@ -175,6 +175,12 @@ Implementations & Benchmarks
 
 **The comparison among implemented models and general implementation** is made available below
 
+Additional benchmarking has been done on all the thresholders and it was found that the 
+`FILTER` thresholder performed best while the `META` thresholder was the most robust in terms
+ of datasets and outlier detection methods.
+
+----
+
 For Jupyter Notebooks, please navigate to `notebooks <https://github.com/KulikDM/pythresh/tree/main/notebooks>`_.
 
 A quick look at all the thresholders performance can be found at **"/notebooks/Compare All Models.ipynb"**

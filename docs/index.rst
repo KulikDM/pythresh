@@ -67,6 +67,14 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms range f
 
 ----
 
+Benchmarking
+^^^^^^^^^^^^
+
+Benchmarking has been done on all the thresholders and it was found that the `FILTER` thresholder performed best 
+while the `META` thresholder was the most robust in terms of datasets and outlier detection methods.
+
+----
+
 External Feature Cases
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -134,7 +142,7 @@ The following APIs are applicable for all detector models for easy use.
 
 Key Attributes of a threshold:
 
-* :attr:`pythresh.thresholders.base.BaseDetector.thresh_`: Return the threshold value that seperates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
+* :attr:`pythresh.thresholders.base.BaseDetector.thresh_`: Return the threshold value that separates inliers from outliers. Outliers are considered all values above this threshold value. Note the threshold value has been derived from normalized scores.
 
 ----
 
@@ -147,6 +155,7 @@ Key Attributes of a threshold:
 
    install
    example
+   benchmark
 
 
 .. toctree::
