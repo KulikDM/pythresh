@@ -1,17 +1,18 @@
-API Reference
-=============
+###############
+ API Reference
+###############
 
 .. toctree::
 
-    pythresh.thresholds
+   pythresh.thresholds
 
-Module contents
----------------
+*****************
+ Module contents
+*****************
 
 .. automodule:: pythresh
-    :members:
-    :exclude-members: __version__
-    :undoc-members:
-    :show-inheritance:
-    :inherited-members:
-
+   :members:
+   :exclude-members: __version__
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
