@@ -76,14 +76,17 @@ true contamination level for the selected outlier detection method.
 However, the uncertainty for many goes beyond zero indicating that in
 some instances the thresholder performed better than true contamination
 level for a particuar dataset and outlier detection method. Along with
-the thresholders, a random contamination prediction was tested as well.
-This was done by setting :math:`MMC_{norm} = 1` and represents what may
-be expected when a random contamination level is selected without prior
-knowledge.
+the thresholders, the default contamination level set for each outlier 
+detection method (`Default`) was tested as well as randomly picking a
+contamination level between 1% - 20% (`Select`). Finally, a baseline 
+was also calculated if outliers were selected at random (`Random`).
+This was done by setting :math:`MMC_{norm} = 1`.
 
-Overall, all the thresholders performed better than selecting a random
-contamination level. The `FILTER` thresholder performed best while the
-`META` thresholder provided the smallest uncertainty about its mean.
+Overall, a significant amount of thresholders performed better than 
+selecting a random contamination level. The `FILTER` thresholder 
+performed best while the `META` thresholder provided the smallest 
+uncertainty about its mean, and the most robust (best least accurate 
+prediction) was `DSN`.
 
 .. figure:: figs/Benchmark1.png
    :alt: Benchmark defaults

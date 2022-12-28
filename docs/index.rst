@@ -81,9 +81,10 @@ complex mathematical methods that involve graph theory and topology.
  Benchmarking
 **************
 
-Benchmarking has been done on all the thresholders and it was found that
-the `FILTER` thresholder performed best while the `META` thresholder was
-the most robust in terms of datasets and outlier detection methods.
+Benchmarking  has been done on all the thresholders and it was
+found that the `FILTER` thresholder performed best while the `META` 
+thresholder provided the smallest uncertainty about its mean, and the 
+most robust (best least accurate prediction) was `DSN`.
 
 ----
 
