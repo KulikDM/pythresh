@@ -83,10 +83,10 @@ was also calculated if outliers were selected at random (`Random`).
 This was done by setting :math:`MMC_{norm} = 1`.
 
 Overall, a significant amount of thresholders performed better than 
-selecting a random contamination level. The `FILTER` thresholder 
-performed best while the `META` thresholder provided the smallest 
+selecting a random contamination level. The ``FILTER`` thresholder 
+performed best while the ``META`` thresholder provided the smallest 
 uncertainty about its mean, and the most robust (best least accurate 
-prediction) was `DSN`.
+prediction) was ``DSN``.
 
 .. figure:: figs/Benchmark1.png
    :alt: Benchmark defaults
@@ -276,6 +276,35 @@ analysis of thresholding outlier decision scores.
 
 ----
 
+******************
+ Over Prediction
+******************
+
+All thresholders have the potential to over predict the contamination 
+level of the outlier scores. This will lead to not only mis-classifying
+inliers based on the outlier detection method's capabilities but also 
+further inliers which will lead to a loss of significant data with which 
+to work with. Therefore it is important to note which thresholders have
+the highest potential to over predict.
+
+To evaluate the over predictive nature of each thresholder, the ratio 
+between the predicted and true contamination level will be used. The 
+harmonic mean of the ratios is calculated for each thresholder using 
+the same setup as the first benchmark test. For this evaluation, a 
+value of 1 indicates perfect contamination predictions, below 1 is under 
+predication, and above 1 is over prediction.``BOOT`` has the highest 
+potential to over predict while all the thresholders that sit near 0
+mean that they tend to not identify any outliers for some outlier scores. 
+It is also important to note that a thresholder's potential to over 
+predict will vary significantly based on the selected dataset and outlier 
+detection method, and therefore it is important to check the predicted 
+contamination level after thresholding.
+
+.. figure:: figs/Overpred.png
+   :alt: Over prediction
+
+----
+
 ***********************
  Effects of Randomness
 ***********************
@@ -291,7 +320,7 @@ of randomness of each thresholder's ability to evaluate labels for the
 outlier decision scores in the uncertainty.
 
 From the plot below, ``VAE`` performed the worst and was highly affected
-by the choice of the selected random state. ``DSN`` which is thresholder
+by the choice of the selected random state. ``DSN`` which is a thresholder
 that overall performed well during the benchmark tests is also sensitive
 to randomness. To alleviate the effects of randomness on for the
 thresholders, it is recommended that a combined method be used by
