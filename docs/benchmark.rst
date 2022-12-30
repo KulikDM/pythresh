@@ -280,7 +280,7 @@ analysis of thresholding outlier decision scores.
  Over Prediction
 ******************
 
-All thresholders have the potential to over predict the contamination 
+All thresholders have a tendancy to over predict the contamination 
 level of the outlier scores. This will lead to not only mis-classifying
 inliers based on the outlier detection method's capabilities but also 
 further inliers which will lead to a loss of significant data with which 
@@ -292,7 +292,7 @@ between the predicted and true contamination level will be used. The
 harmonic mean of the ratios is calculated for each thresholder using 
 the same setup as the first benchmark test. For this evaluation, a 
 value of 1 indicates perfect contamination predictions, below 1 is under 
-predication, and above 1 is over prediction.``BOOT`` has the highest 
+predication, and above 1 is over prediction. ``BOOT`` has the highest 
 potential to over predict while all the thresholders that sit near 0
 mean that they tend to not identify any outliers for some outlier scores. 
 It is also important to note that a thresholder's potential to over 
