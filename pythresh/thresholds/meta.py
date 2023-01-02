@@ -22,11 +22,12 @@ class META(BaseThresholder):
        Parameters
        ----------
 
-       method : {'LIN', 'GNB'}, optional (default='GNB')
+       method : {'LIN', 'GNB', 'GNBC'}, optional (default='GNBC')
            select
 
-           - 'LIN': RidgeCV trained linear classifier meta-model
-           - 'GNB': Gaussian Naive Bayes trained classifier meta-model
+           - 'LIN':  RidgeCV trained linear classifier meta-model on true labels
+           - 'GNB':  Gaussian Naive Bayes trained classifier meta-model on true labels
+           - 'GNBC': Gaussian Naive Bayes trained classifier meta-model on best contamination
 
        Attributes
        ----------
@@ -55,7 +56,7 @@ class META(BaseThresholder):
 
     """
 
-    def __init__(self, method='GNB'):
+    def __init__(self, method='GNBC'):
 
         self.method = method
 
@@ -80,7 +81,12 @@ class META(BaseThresholder):
 
         decision = normalize(decision)
 
-        clf = 'meta_model_LIN.pkl' if self.method == 'LIN' else 'meta_model_GNB.pkl'
+        if self.method == 'LIN':
+            clf = 'meta_model_LIN.pkl' 
+        elif self.method == 'GNB':
+            clf = 'meta_model_GNB.pkl' 
+        else:
+            clf = 'meta_model_GNBC.pkl' 
 
         contam = []
         counts = len(decision)
