@@ -32,7 +32,7 @@ class TestMETA(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.methods = ['LIN', 'GNB']
+        self.methods = ['LIN', 'GNB', 'GNBC']
 
     def test_prediction_labels(self):
 
