@@ -85,8 +85,8 @@ This was done by setting :math:`MMC_{norm} = 1`.
 Overall, a significant amount of thresholders performed better than 
 selecting a random contamination level. The ``FILTER`` thresholder 
 performed best while the ``META`` thresholder provided the smallest 
-uncertainty about its mean, and the most robust (best least accurate 
-prediction) was ``DSN``.
+uncertainty about its mean and is the most robust (best least accurate 
+prediction).
 
 .. figure:: figs/Benchmark1.png
    :alt: Benchmark defaults
@@ -226,6 +226,8 @@ dataset that with fewer examples and a greater bias.
 +---------------+---------------------------------------+
 | META2         | META(method='GNB')                    |
 +---------------+---------------------------------------+
+| META3         | META(method='GNBC')                   |
++---------------+---------------------------------------+
 | MOLL          | MOLL()                                |
 +---------------+---------------------------------------+
 | MTT           | MTT()                                 |
@@ -302,6 +304,15 @@ contamination level after thresholding.
 
 .. figure:: figs/Overpred.png
    :alt: Over prediction
+
+A second over predictive evaluation can also be done, but now with 
+regards to over predicting beyond the best contamination level for
+each outlier detection method on each dataset. As seen below, a 
+significant amount of thresholders tend to over predict beyond the
+best contamination level. 
+
+.. figure:: figs/Overpred_best.png
+   :alt: Over prediction best
 
 ----
 
