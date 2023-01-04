@@ -37,16 +37,23 @@ imbalanced dataset. This coefficient is given as,
 where :math:`TP, TN, FP, FN` represent the true positive, true negative,
 false positive, and the false negative respectively. The MMC ranges from
 -1 to 1 where 1 represents a perfect prediction, 0 an average random
-prediction, and -1 an inverse prediction. Since the thresholding method
-is heavily dependant on the outlier detection scores, and therefore the
-selected outlier detection method, simplifying calculating the MMC for
-each dataset would yield varying results that would have more dependance
-on the selected outlier method than the thresholding method. To
-correctly evaluate and eliminate the effects of the selected outlier
-detection method, the MMC deterioration will be used. This deterioration
-score is the difference between the MMC of the thresholded labels and
-the MMC for the labels produced by setting the true contamination level
-for the selected outlier detection method (e.g.
+prediction, and -1 an inverse prediction. This metric performs 
+particularly well at providing a balanced score and penalizing thresholding
+methods that tend to over predict the best contamination level (most 
+:math:`TP` and :math:`TN` and least :math:`FP` and :math:`FN`) based on the 
+selected outlier detection scores unlike the F1 score which focuses only on 
+outliers. However, if finding and removing all the outliers regardless of 
+how many inliers also get removed the F1 score is a better metric. 
+
+Since the thresholding method is heavily dependant on the outlier detection 
+scores, and therefore the selected outlier detection method, simply 
+calculating the MMC for each dataset would yield varying results that would 
+have more dependance on the selected outlier method than the thresholding 
+method. To correctly evaluate and eliminate the effects of the selected 
+outlier detection method, the MMC deterioration will be used. This 
+deterioration score is the difference between the MMC of the thresholded 
+labels and the MMC for the labels produced by setting the true contamination 
+level for the selected outlier detection method (e.g.
 KNN(contamination=true_contam)).
 
 For consistency, the benchmark results below used the unit-normalized
@@ -97,11 +104,11 @@ For a deeper look at the different user input parameters for each
 thresholder, the benchmarking was repeated for the same outlier
 detection methods as above. However, due to time constraints, only the
 ``arrhythmia, cardio, glass, ionosphere, letter, lympho, pima,
-vertebral, vowels,`` and ``wbc`` dataset was used. The table below
-indicates the legend labels seen in the plot and the thresholding method
+vertebral, vowels,`` and ``wbc`` datasets were used. The table below
+indicates the x-axis labels seen in the plot and the thresholding method
 that it corresponds to. It can be noticed that the best performing
 thresholder differs from the first plot. This is due to a smaller
-dataset that with fewer examples and a greater bias.
+dataset with fewer examples and a greater bias.
 
 +---------------+---------------------------------------+
 | Label         | Method                                |
@@ -330,10 +337,10 @@ deterioration were normalized to zero showing the extent of the effect
 of randomness of each thresholder's ability to evaluate labels for the
 outlier decision scores in the uncertainty.
 
-From the plot below, ``VAE`` performed the worst and was highly affected
+From the plot below, ``WIND`` performed the worst and was highly affected
 by the choice of the selected random state. ``DSN`` which is a thresholder
 that overall performed well during the benchmark tests is also sensitive
-to randomness. To alleviate the effects of randomness on for the
+to randomness. To alleviate the effects of randomness on the
 thresholders, it is recommended that a combined method be used by
 setting different random states (e.g. ``ALL(thresholders =
 [DSN(random_state=1234), DSN(random_state=42), DSN(random_state=9685),
