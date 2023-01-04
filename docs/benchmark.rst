@@ -11,7 +11,7 @@ difficult task. Especially with all the different methods available in
 both stages. Quantifying how well each method performs over a variety of
 datasets may help when selecting based on either accuracy or robustness
 or both. PyOD provides a highly detailed analysis on the performance of
-all the available methods, with great insight and interpetability
+all the available methods, with great insight and interpretability
 `anomaly detection benchmark paper
 <https://www.andrew.cmu.edu/user/yuezhao2/papers/22-neurips-adbench.pdf>`_.
 
@@ -289,7 +289,7 @@ analysis of thresholding outlier decision scores.
  Over Prediction
 ******************
 
-All thresholders have a tendancy to over predict the contamination 
+All thresholders have a tendency to over predict the contamination 
 level of the outlier scores. This will lead to not only mis-classifying
 inliers based on the outlier detection method's capabilities but also 
 further inliers which will lead to a loss of significant data with which 
