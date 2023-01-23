@@ -153,7 +153,7 @@ detection scores are normalized between 0 and 1.
       threshold = thres.thresh_
 
 2. Similarly, the lower and upper confidence interval of the
-contamination level for the :class:`pythresh.thresholds.all.ALL`
+contamination level for the :class:`pythresh.thresholds.comb.COMB`
 thresholder can be retrieved.
 
    .. code:: python
@@ -164,7 +164,7 @@ thresholder can be retrieved.
       clf.fit(X_train)
 
       scores = clf.decision_function(X_train)
-      thres = ALL()
+      thres = COMB()
       labels = thres.eval(scores)
 
       conf_interval = thres.confidence_interval_

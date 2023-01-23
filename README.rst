@@ -135,7 +135,7 @@ Key Attributes of threshold:
    scores.
 
 -  **confidence_interval_**: Return the lower and upper confidence
-   interval of the contamination level. Only applies to the ALL
+   interval of the contamination level. Only applies to the COMB
    thresholder
 
 ************************

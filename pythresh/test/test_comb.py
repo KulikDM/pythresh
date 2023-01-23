@@ -19,7 +19,7 @@ path = up(up(up(__file__)))
 sys.path.append(path)
 
 
-class TestALL(unittest.TestCase):
+class TestCOMB(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
         self.n_test = 100
