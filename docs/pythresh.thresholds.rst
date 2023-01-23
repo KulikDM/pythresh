@@ -69,6 +69,17 @@
    :inherited-members:
 
 ********************************
+ pythresh.thresholds.comb module
+********************************
+
+.. automodule:: pythresh.thresholds.comb
+   :members:
+   :exclude-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+********************************
  pythresh.thresholds.cpd module
 ********************************
 

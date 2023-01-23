@@ -13,7 +13,7 @@ class CPD(BaseThresholder):
        are set to any value beyond the detected change point.
        See :cite:`fearnhead2016cpd` for details
 
-       Paramaters
+       Parameters
        ----------
 
        method : {'Dynp', 'KernelCPD', 'Binseg', 'BottomUp'}, optional (default='Dynp')

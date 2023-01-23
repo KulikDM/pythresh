@@ -50,7 +50,7 @@ reduce the user's input/guess work and rather rely on statistics instead
 to threshold outlier scores. For thresholding to be applied correctly,
 the outlier detection scores must follow this rule: the higher the
 score, the higher the probability that it is an outlier in the dataset.
-All threshold functions return a binary array where inliers and outliers
+COMB threshold functions return a binary array where inliers and outliers
 are represented by a 0 and 1 respectively.
 
 PyThresh includes more than 30 thresholding algorithms. These algorithms
@@ -218,6 +218,8 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 | ZSCORE    | Z-score                                   | [#zscore1]_        | `pythresh.thresholds.zscore module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.zscore>`_            |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ALL       | All Thresholders Combined                 | None               | `pythresh.thresholds.all module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.all>`_                  |
++-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+| COMB      | Thresholder Combination                   | None               | `pythresh.thresholds.comb module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.comb>`_                |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ******************************

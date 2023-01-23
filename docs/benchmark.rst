@@ -342,7 +342,7 @@ by the choice of the selected random state. ``DSN`` which is a thresholder
 that overall performed well during the benchmark tests is also sensitive
 to randomness. To alleviate the effects of randomness on the
 thresholders, it is recommended that a combined method be used by
-setting different random states (e.g. ``ALL(thresholders =
+setting different random states (e.g. ``COMB(thresholders =
 [DSN(random_state=1234), DSN(random_state=42), DSN(random_state=9685),
 DSN(random_state=111222)])``). This should provide a more robust and
 reliable result.
