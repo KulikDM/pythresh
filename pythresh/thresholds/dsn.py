@@ -50,6 +50,32 @@ class DSN(BaseThresholder):
 
        thresh_ : threshold value that separates inliers from outliers
 
+       Examples
+       --------
+       The effects of randomness can affect the thresholder's output perfomance 
+       signicantly. Therefore, to alleviate the effects of randomness on the 
+       thresholder a combined model can be used with different random_state values.
+       E.g.
+
+       .. code:: python
+
+            # train the KNN detector
+            from pyod.models.knn import KNN
+            from pythresh.thresholds.comb import COMB
+            from pythresh.thresholds.dsn import DSN
+
+            clf = KNN()
+            clf.fit(X_train)
+
+            # get outlier scores
+            decision_scores = clf.decision_scores_  # raw outlier scores
+
+            # get outlier labels with combined model
+            thres = COMB(thresholders = [DSN(random_state=1234), 
+            DSN(random_state=42), DSN(random_state=9685), 
+            DSN(random_state=111222)])
+            labels = thres.eval(decision_scores)
+
     """
 
     def __init__(self, metric='MAH', random_state=1234):

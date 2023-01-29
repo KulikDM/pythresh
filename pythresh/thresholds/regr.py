@@ -31,6 +31,32 @@ class REGR(BaseThresholder):
 
        thresh_ : threshold value that separates inliers from outliers
 
+       Examples
+       --------
+       The effects of randomness can affect the thresholder's output perfomance 
+       signicantly. Therefore, to alleviate the effects of randomness on the 
+       thresholder a combined model can be used with different random_state values.
+       E.g.
+
+       .. code:: python
+
+            # train the KNN detector
+            from pyod.models.knn import KNN
+            from pythresh.thresholds.comb import COMB
+            from pythresh.thresholds.regr import REGR
+
+            clf = KNN()
+            clf.fit(X_train)
+
+            # get outlier scores
+            decision_scores = clf.decision_scores_  # raw outlier scores
+
+            # get outlier labels with combined model
+            thres = COMB(thresholders = [REGR(random_state=1234), 
+            REGR(random_state=42), REGR(random_state=9685), 
+            REGR(random_state=111222)])
+            labels = thres.eval(decision_scores)
+
     """
 
     def __init__(self, method='siegel', random_state=1234):

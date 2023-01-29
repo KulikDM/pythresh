@@ -73,9 +73,9 @@ class ALL(BaseThresholder):
     """
 
     def __init__(self, thresholders='all', max_contam=0.5, method='mean', random_state=1234):
-        
+
         warnings.warn('''The ALL thresholder will be depreciated by version 0.3.1.
-                      Use the COMB thresholder instead''', 
+                      Use the COMB thresholder instead''',
                       category=DeprecationWarning, stacklevel=2)
 
         self.thresholders = thresholders

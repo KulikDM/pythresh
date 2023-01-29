@@ -57,6 +57,32 @@ class MCST(BaseThresholder):
        is set to this value and the random value is stored. The minimum stored random
        value is set as the threshold as it is the minimum found outlier.
 
+       Examples
+       --------
+       The effects of randomness can affect the thresholder's output perfomance 
+       signicantly. Therefore, to alleviate the effects of randomness on the 
+       thresholder a combined model can be used with different random_state values.
+       E.g.
+
+       .. code:: python
+
+            # train the KNN detector
+            from pyod.models.knn import KNN
+            from pythresh.thresholds.comb import COMB
+            from pythresh.thresholds.mcst import MCST
+
+            clf = KNN()
+            clf.fit(X_train)
+
+            # get outlier scores
+            decision_scores = clf.decision_scores_  # raw outlier scores
+
+            # get outlier labels with combined model
+            thres = COMB(thresholders = [MCST(random_state=1234), 
+            MCST(random_state=42), MCST(random_state=9685), 
+            MCST(random_state=111222)])
+            labels = thres.eval(decision_scores)
+
     """
 
     def __init__(self, random_state=1234):

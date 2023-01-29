@@ -38,3 +38,4 @@ v<0.2.8>, <12/21/2022> -- Documentation formatting
 v<0.2.8>, <12/29/2022> -- Over prediction documentation
 v<0.2.8>, <01/02/2023> -- Added GNBC model to meta
 v<0.2.9>, <01/23/2023> -- Added comb thresholder
+v<0.2.9>, <01/29/2023> -- Added examples in docstrings for handling effects of randomness

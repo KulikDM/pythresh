@@ -82,11 +82,11 @@ class META(BaseThresholder):
         decision = normalize(decision)
 
         if self.method == 'LIN':
-            clf = 'meta_model_LIN.pkl' 
+            clf = 'meta_model_LIN.pkl'
         elif self.method == 'GNB':
-            clf = 'meta_model_GNB.pkl' 
+            clf = 'meta_model_GNB.pkl'
         else:
-            clf = 'meta_model_GNBC.pkl' 
+            clf = 'meta_model_GNBC.pkl'
 
         contam = []
         counts = len(decision)

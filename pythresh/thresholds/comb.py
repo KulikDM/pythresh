@@ -5,6 +5,7 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import cut, normalize
 
+
 class COMB(BaseThresholder):
     """COMB class for Combined thresholder.
 

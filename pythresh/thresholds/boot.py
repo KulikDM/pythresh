@@ -37,6 +37,31 @@ class BOOT(BaseThresholder):
        the decision scores. Outliers are set to any value above the mean of the
        upper and lower confidence intervals.
 
+       Examples
+       --------
+       The effects of randomness can affect the thresholder's output perfomance 
+       signicantly. Therefore, to alleviate the effects of randomness on the 
+       thresholder a combined model can be used with different random_state values.
+       E.g.
+
+       .. code:: python
+
+            # train the KNN detector
+            from pyod.models.knn import KNN
+            from pythresh.thresholds.comb import COMB
+            from pythresh.thresholds.boot import BOOT
+
+            clf = KNN()
+            clf.fit(X_train)
+
+            # get outlier scores
+            decision_scores = clf.decision_scores_  # raw outlier scores
+
+            # get outlier labels with combined model
+            thres = COMB(thresholders = [BOOT(random_state=1234), 
+            BOOT(random_state=42), BOOT(random_state=9685), 
+            BOOT(random_state=111222)])
+            labels = thres.eval(decision_scores)
 
     """
 
