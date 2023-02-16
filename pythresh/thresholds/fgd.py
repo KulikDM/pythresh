@@ -76,10 +76,9 @@ class FGD(BaseThresholder):
                 ind.append(i)
                 if count == 2:
                     break
-        try:
-            limit = (dat_range[ind[0]]+dat_range[ind[1]])/2
-        except IndexError:
-            limit = 1.1
+
+        limit = ((dat_range[ind[0]]+dat_range[ind[1]])/2 if
+                 len(ind) > 1 else 1.1)
         self.thresh_ = limit
 
         return cut(decision, limit)

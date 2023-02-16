@@ -1,3 +1,5 @@
+import inspect
+
 import numpy as np
 import scipy.stats as stats
 from sklearn.utils import check_array
@@ -92,14 +94,18 @@ class QMCD(BaseThresholder):
 
         # Set the limit to either the quantile or percentile of 1-discrepancy
         if self.lim == 'Q':
+
             limit = np.quantile(decision, 1.0-disc)
+
         elif self.lim == 'P':
-            try:
-                limit = np.percentile(
-                    decision, (1.0-disc)*100, method='midpoint')
-            except TypeError:
-                limit = np.percentile(
-                    decision, (1.0-disc)*100, interpolation='midpoint')
+
+            arg_map = {'old': 'interpolation', 'new': 'method'}
+            arg_name = (arg_map['new'] if 'method' in
+                        inspect.signature(np.percentile).parameters
+                        else arg_map['old'])
+
+            limit = np.percentile(decision, (1.0-disc) *
+                                  100, **{arg_name: 'midpoint'})
 
         self.thresh_ = limit
 

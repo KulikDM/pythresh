@@ -253,13 +253,10 @@ class CLUST(BaseThresholder):
         dat = np.squeeze(decision)
         q = cityblock(dat, np.sort(dat))/np.sum(dat)
 
-        q = min(q, 1.0)
+        q = max(0.25, min(q, 1.0))
 
         # Estimate bandwidth
-        try:
-            bw = estimate_bandwidth(decision, quantile=q)
-        except ValueError:
-            bw = estimate_bandwidth(decision)
+        bw = estimate_bandwidth(decision, quantile=q)
 
         cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
         cl.fit(decision)
