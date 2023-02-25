@@ -57,6 +57,15 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms
 range from using simple statistical analysis like the Z-score to more
 complex mathematical methods that involve graph theory and topology.
 
+***************
+ Documentation
+***************
+
+Visit `PyThresh Docs <https://pythresh.readthedocs.io/en/latest/?badge=latest>`_
+for full documentation or see below for a quickstart installation and usage example
+
+----
+
 **Outlier Detection Thresholding with 7 Lines of Code**:
 
 .. code:: python
@@ -229,7 +238,8 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 **The comparison among implemented models and general implementation**
 is made available below
 
-Additional benchmarking has been done on all the thresholders and it was
+Additional `benchmarking <https://pythresh.readthedocs.io/en/latest/benchmark.html>`_ 
+has been done on all the thresholders and it was
 found that the `FILTER` thresholder performed best while the `META` 
 thresholder provided the smallest uncertainty about its mean and is the 
 most robust (best least accurate prediction).

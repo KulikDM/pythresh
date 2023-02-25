@@ -39,3 +39,5 @@ v<0.2.8>, <12/29/2022> -- Over prediction documentation
 v<0.2.8>, <01/02/2023> -- Added GNBC model to meta
 v<0.2.9>, <01/23/2023> -- Added comb thresholder
 v<0.2.9>, <01/29/2023> -- Added examples in docstrings for handling effects of randomness
+v<0.2.9>, <02/16/2023> -- Replaced try-except statements for better coverage
+v<0.2.9>, <02/25/2023> -- Updated documentation (links, formatting) 

@@ -61,7 +61,7 @@ MCC, which is given by,
 
 .. math::
 
-   MMC_{norm} = \frac{MMC + 1}{2} \mathrm{.}
+   MMC_{\rm{norm}} = \frac{MMC + 1}{2} \mathrm{.}
 
 **************
  Benchmarking
@@ -87,7 +87,7 @@ the thresholders, the default contamination level set for each outlier
 detection method (`Default`) was tested as well as randomly picking a
 contamination level between 1% - 20% (`Select`). Finally, a baseline 
 was also calculated if outliers were selected at random (`Random`).
-This was done by setting :math:`MMC_{norm} = 1`.
+This was done by setting :math:`MMC_{\rm{norm}} = 1`.
 
 Overall, a significant amount of thresholders performed better than 
 selecting a random contamination level. The ``FILTER`` thresholder 
