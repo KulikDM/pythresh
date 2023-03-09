@@ -2,13 +2,17 @@
  Installation
 ##############
 
-It is recommended to use **pip** installation. Please make sure **the
+It is recommended to use **pip** or **conda** installation. Please make sure **the
 latest version** is installed, as PyThresh is updated frequently:
 
 .. code:: bash
 
    pip install pythresh            # normal install
    pip install --upgrade pythresh  # or update if needed
+
+.. code:: bash
+
+   conda install -c conda-forge pythresh
 
 Alternatively, you can get the version with the latest updates by
 cloning the repo and run setup.py file:

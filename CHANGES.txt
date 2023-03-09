@@ -41,3 +41,4 @@ v<0.2.9>, <01/23/2023> -- Added comb thresholder
 v<0.2.9>, <01/29/2023> -- Added examples in docstrings for handling effects of randomness
 v<0.2.9>, <02/16/2023> -- Replaced try-except statements for better coverage
 v<0.2.9>, <02/25/2023> -- Updated documentation (links, formatting) 
+v<0.2.9>, <03/09/2023> -- Added package to conda-forge and doc updates

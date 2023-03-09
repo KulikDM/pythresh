@@ -8,6 +8,10 @@
    :target: https://pypi.org/project/pythresh/
    :alt: PyPI version
 
+.. image:: https://img.shields.io/conda/vn/conda-forge/pythresh?color=brightgreen&logo=conda-forge&logoColor=white
+   :target: https://anaconda.org/conda-forge/pythresh
+   :alt: Anaconda version
+
 .. image:: https://readthedocs.org/projects/pythresh/badge/?version=latest
    :target: http://pythresh.readthedocs.io/?badge=latest
    :alt: Documentation status
@@ -88,12 +92,16 @@ for full documentation or see below for a quickstart installation and usage exam
  Installation
 **************
 
-It is recommended to use **pip** for installation:
+It is recommended to use **pip** or **conda** for installation:
 
 .. code:: bash
 
    pip install pythresh            # normal install
    pip install --upgrade pythresh  # or update if needed
+
+.. code:: bash
+
+   conda install -c conda-forge pythresh
 
 Alternatively, you can get the version with the latest updates by
 cloning the repo and run setup.py file:
