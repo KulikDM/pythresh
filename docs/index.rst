@@ -221,6 +221,13 @@ Key Attributes of a threshold:
    api_cc
    pythresh
 
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Additional Information
+
+   FAQ
+
 ----
 
 .. rubric:: References

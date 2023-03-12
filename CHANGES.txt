@@ -42,3 +42,4 @@ v<0.2.9>, <01/29/2023> -- Added examples in docstrings for handling effects of r
 v<0.2.9>, <02/16/2023> -- Replaced try-except statements for better coverage
 v<0.2.9>, <02/25/2023> -- Updated documentation (links, formatting) 
 v<0.2.9>, <03/09/2023> -- Added package to conda-forge and doc updates
+v<0.2.9>, <03/12/2023> -- Added FAQ, Pull request, and additional doc changes

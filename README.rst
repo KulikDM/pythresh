@@ -54,7 +54,7 @@ reduce the user's input/guess work and rather rely on statistics instead
 to threshold outlier scores. For thresholding to be applied correctly,
 the outlier detection scores must follow this rule: the higher the
 score, the higher the probability that it is an outlier in the dataset.
-COMB threshold functions return a binary array where inliers and outliers
+All threshold functions return a binary array where inliers and outliers
 are represented by a 0 and 1 respectively.
 
 PyThresh includes more than 30 thresholding algorithms. These algorithms
@@ -263,6 +263,37 @@ A quick look at all the thresholders performance can be found at
 .. image:: https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png
    :target: https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png
    :alt: Comparision_of_All
+
+----
+
+
+**************
+ Contributing
+**************
+
+Anyone is welcome to contribute to PyThresh:
+
+* Please share your ideas and ask questions by opening an issue.
+
+* To contribute, first check the Issue list for the "help wanted" tag and comment 
+  on the one that you are interested in. The issue will then be assigned to you.
+
+* If the bug, feature, or documentation change is novel (not in the Issue list),
+  you can either log a new issue or create a pull request for the new changes.
+
+* To start, fork the main branch and add your improvement/modification/fix.
+
+* To make sure the code has the same style and standard, please refer to qmcd.py for 
+  example.
+
+* Create a pull request to the **main branch** and follow the pull request template 
+`PR template <https://github.com/KulikDM/pythresh/blob/main/.github/PULL_REQUEST_TEMPLATE/PULL_REQUEST_TEMPLATE.md>`_
+
+* Please make sure that all code changes are accompanied with proper new/updated test 
+  functions. Automatic tests will be triggered. Before the pull request can be merged, 
+  make sure that all the tests pass.
+
+----
 
 ************
  References
