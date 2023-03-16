@@ -82,7 +82,7 @@ binary classification. However, if you wish for some reason to have
 multiclass outlier classification (e.g. inliers, uncertains, outliers),
 then perhaps clustering methods may be a good option.
 
----
+----
 
 **************
  Contributing
@@ -104,7 +104,7 @@ Anyone is welcome to contribute to PyThresh:
   example.
 
 * Create a pull request to the **main branch** and follow the pull request template 
-`PR template <https://github.com/KulikDM/pythresh/blob/main/.github/PULL_REQUEST_TEMPLATE/PULL_REQUEST_TEMPLATE.md>`_
+  `PR template <https://github.com/KulikDM/pythresh/blob/main/.github/PULL_REQUEST_TEMPLATE/PULL_REQUEST_TEMPLATE.md>`_
 
 * Please make sure that all code changes are accompanied with proper new/updated test 
   functions. Automatic tests will be triggered. Before the pull request can be merged, 
