@@ -6,7 +6,7 @@
 
 <!-- You can erase any parts of this template not applicable to your Pull Request. -->
 
-## Type of Change:
+### Type of Change:
 
 - [ ] Bug fix
 - [ ] New feature

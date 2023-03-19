@@ -71,8 +71,8 @@ class EB(BaseThresholder):
         decision = normalize(decision)
 
         # Generate random set of eccentricities to test
-        np.random.seed(1234)
-        rnd = np.random.uniform(0, 1, 5000)
+        r = np.random.RandomState(1234)
+        rnd = r.uniform(0, 1, 5000)
 
         # Create pseudo-random elliptical boundaries using each eccentricity
         # and compute the inlier/outlier labels

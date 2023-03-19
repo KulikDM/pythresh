@@ -31,15 +31,19 @@ class TestCLF(unittest.TestCase):
         self.clf = KNN()
         self.clf.fit(self.X_train)
 
+        self.methods = ['simple', 'complex']
+
         self.scores = self.clf.decision_scores_
-        self.thres = CLF()
 
     def test_prediction_labels(self):
 
-        pred_labels = self.thres.eval(self.scores)
-        assert (self.thres.thresh_ is None)
+        for method in self.methods:
 
-        assert_equal(pred_labels.shape, self.y_train.shape)
+            self.thres = CLF(method=method)
+            pred_labels = self.thres.eval(self.scores)
+            assert (self.thres.thresh_ is None)
 
-        assert (pred_labels.min() == 0)
-        assert (pred_labels.max() == 1)
+            assert_equal(pred_labels.shape, self.y_train.shape)
+
+            assert (pred_labels.min() == 0)
+            assert (pred_labels.max() == 1)
