@@ -105,7 +105,7 @@ class META(BaseThresholder):
             norm = (norm/(norm.max(axis=0, keepdims=True)
                             + np.spacing(0)))
 
-            qmcd = self._wrap_around_discrepancy(norm)
+            qmcd = self._wrap_around_discrepancy(norm.reshape(-1,1))
             
             qmcd = normalize(qmcd)
             if len(qmcd[qmcd>0.5]) > 0.5*len(qmcd):
