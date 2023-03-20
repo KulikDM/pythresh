@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, print_function
 
-import os
 import sys
 import unittest
 from os.path import dirname as up
@@ -18,9 +17,6 @@ from pythresh.thresholds.meta import META
 
 path = up(up(up(__file__)))
 sys.path.append(path)
-
-# Disable Numba implementation for the unittest
-os.environ['NUMBA_DISABLE_JIT'] = '1'
 
 
 class TestMETA(unittest.TestCase):
