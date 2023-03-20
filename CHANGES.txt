@@ -44,3 +44,4 @@ v<0.2.9>, <02/25/2023> -- Updated documentation (links, formatting)
 v<0.2.9>, <03/09/2023> -- Added package to conda-forge and doc updates
 v<0.2.9>, <03/12/2023> -- Added FAQ, Pull request, and additional doc changes
 v<0.2.9>, <03/19/2023> -- Updated clf thresholder
+v<0.2.9>, <03/20/2023> -- Added GNBM model to meta

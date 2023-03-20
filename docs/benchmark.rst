@@ -90,10 +90,11 @@ was also calculated if outliers were selected at random (`Random`).
 This was done by setting :math:`MMC_{\rm{norm}} = 1`.
 
 Overall, a significant amount of thresholders performed better than 
-selecting a random contamination level. The ``FILTER`` thresholder 
-performed best while the ``META`` thresholder provided the smallest 
+selecting a random contamination level. The ``META`` thresholder 
+performed best while the ``CLF`` thresholder provided the smallest 
 uncertainty about its mean and is the most robust (best least accurate 
-prediction).
+prediction). However, for interpretability and general performance 
+``FILTER`` is good fit.
 
 .. figure:: figs/Benchmark1.png
    :alt: Benchmark defaults
@@ -236,6 +237,8 @@ dataset with fewer examples and a greater bias.
 | META2         | META(method='GNB')                    |
 +---------------+---------------------------------------+
 | META3         | META(method='GNBC')                   |
++---------------+---------------------------------------+
+| META4         | META(method='GNBM')                   |
 +---------------+---------------------------------------+
 | MOLL          | MOLL()                                |
 +---------------+---------------------------------------+
