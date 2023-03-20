@@ -5,6 +5,8 @@ import joblib
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
+from numba import njit, prange
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
@@ -22,12 +24,13 @@ class META(BaseThresholder):
        Parameters
        ----------
 
-       method : {'LIN', 'GNB', 'GNBC'}, optional (default='GNBC')
+       method : {'LIN', 'GNB', 'GNBC', 'GNBM'}, optional (default='GNBM')
            select
 
            - 'LIN':  RidgeCV trained linear classifier meta-model on true labels
            - 'GNB':  Gaussian Naive Bayes trained classifier meta-model on true labels
            - 'GNBC': Gaussian Naive Bayes trained classifier meta-model on best contamination
+           - 'GNBM': Gaussian Naive Bayes multivariate trained classifier meta-model
 
        Attributes
        ----------
@@ -56,7 +59,7 @@ class META(BaseThresholder):
 
     """
 
-    def __init__(self, method='GNBC'):
+    def __init__(self, method='GNBM'):
 
         self.method = method
 
@@ -85,19 +88,43 @@ class META(BaseThresholder):
             clf = 'meta_model_LIN.pkl'
         elif self.method == 'GNB':
             clf = 'meta_model_GNB.pkl'
-        else:
+        elif self.method == 'GNBC':
             clf = 'meta_model_GNBC.pkl'
+        else:
+            clf = 'meta_model_GNBM.pkl'
 
         contam = []
         counts = len(decision)
         parent = up(up(__file__))
         model = joblib.load(os.path.join(parent, 'models', clf))
 
+        if self.method == 'GNBM':
+
+            scaler = MinMaxScaler()
+            norm = scaler.fit_transform(decision)
+            norm = (norm/(norm.max(axis=0, keepdims=True)
+                            + np.spacing(0)))
+
+            qmcd = self._wrap_around_discrepancy(norm)
+            
+            qmcd = normalize(qmcd)
+            if len(qmcd[qmcd>0.5]) > 0.5*len(qmcd):
+                qmcd = 1 - qmcd
+
+            kde = stats.gaussian_kde(decision)
+            pdf = normalize(kde.pdf(decision))
+
         for i in range(380):
 
             df = pd.DataFrame()
             df['scores'] = decision
             df['groups'] = i
+
+            if self.method == 'GNBM':
+
+                df['qmcd'] = qmcd
+                df['kdes'] = pdf**(1/10)
+
             labels = model.predict(df)
             outlier_ratio = np.sum(labels)/counts
 
@@ -112,3 +139,25 @@ class META(BaseThresholder):
         self.thresh_ = None
 
         return lbls
+
+    @staticmethod
+    @njit(fastmath=True, parallel=True)
+    def _wrap_around_discrepancy(data):
+
+        n = data.shape[0]
+        d = data.shape[1]
+
+        disc = np.zeros(n)
+
+        for i in prange(n):
+            dc = 0.0
+            for j in prange(n):
+                prod = 1.0
+                for k in prange(d):
+                    x_kikj = abs(data[i, k] - data[j, k])
+                    prod *= 3.0 / 2.0 - x_kikj + x_kikj ** 2
+                        
+                dc += prod
+            disc[i] = dc
+
+        return - (4.0 / 3.0) ** d + 1.0 / (n ** 2) * disc

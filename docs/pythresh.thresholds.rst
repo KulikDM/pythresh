@@ -228,7 +228,7 @@
 
 .. automodule:: pythresh.thresholds.meta
    :members:
-   :exclude-members:
+   :exclude-members: _wrap_around_discrepancy
    :undoc-members:
    :show-inheritance:
    :inherited-members:
