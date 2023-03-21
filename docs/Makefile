@@ -2,7 +2,7 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    = -D python=/usr/bin/python3.8
+SPHINXOPTS    = 
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = pythresh
 SOURCEDIR     = .
