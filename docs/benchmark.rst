@@ -94,7 +94,7 @@ selecting a random contamination level. The ``META`` thresholder
 performed best while the ``CLF`` thresholder provided the smallest 
 uncertainty about its mean and is the most robust (best least accurate 
 prediction). However, for interpretability and general performance 
-``FILTER`` is good fit.
+the ``FILTER`` thresholder is a good fit.
 
 .. figure:: figs/Benchmark1.png
    :alt: Benchmark defaults

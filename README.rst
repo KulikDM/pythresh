@@ -251,7 +251,7 @@ has been done on all the thresholders and it was
 found that the ``META`` thresholder performed best while the ``CLF`` 
 thresholder provided the smallest uncertainty about its mean and is the 
 most robust (best least accurate prediction). However, for interpretability 
-and general performance ``FILTER`` is good fit.
+and general performance the ``FILTER`` thresholder is a good fit.
 
 ----
 
