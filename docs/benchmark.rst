@@ -37,23 +37,24 @@ imbalanced dataset. This coefficient is given as,
 where :math:`TP, TN, FP, FN` represent the true positive, true negative,
 false positive, and the false negative respectively. The MMC ranges from
 -1 to 1 where 1 represents a perfect prediction, 0 an average random
-prediction, and -1 an inverse prediction. This metric performs 
-particularly well at providing a balanced score and penalizing thresholding
-methods that tend to over predict the best contamination level (most 
-:math:`TP` and :math:`TN` and least :math:`FP` and :math:`FN`) based on the 
-selected outlier detection scores unlike the F1 score which focuses only on 
-outliers. However, if finding and removing all the outliers regardless of 
-how many inliers also get removed the F1 score is a better metric. 
+prediction, and -1 an inverse prediction. This metric performs
+particularly well at providing a balanced score and penalizing
+thresholding methods that tend to over predict the best contamination
+level (most :math:`TP` and :math:`TN` and least :math:`FP` and
+:math:`FN`) based on the selected outlier detection scores unlike the F1
+score which focuses only on outliers. However, if finding and removing
+all the outliers regardless of how many inliers also get removed the F1
+score is a better metric.
 
-Since the thresholding method is heavily dependant on the outlier detection 
-scores, and therefore the selected outlier detection method, simply 
-calculating the MMC for each dataset would yield varying results that would 
-have more dependance on the selected outlier method than the thresholding 
-method. To correctly evaluate and eliminate the effects of the selected 
-outlier detection method, the MMC deterioration will be used. This 
-deterioration score is the difference between the MMC of the thresholded 
-labels and the MMC for the labels produced by setting the true contamination 
-level for the selected outlier detection method (e.g.
+Since the thresholding method is heavily dependant on the outlier
+detection scores, and therefore the selected outlier detection method,
+simply calculating the MMC for each dataset would yield varying results
+that would have more dependance on the selected outlier method than the
+thresholding method. To correctly evaluate and eliminate the effects of
+the selected outlier detection method, the MMC deterioration will be
+used. This deterioration score is the difference between the MMC of the
+thresholded labels and the MMC for the labels produced by setting the
+true contamination level for the selected outlier detection method (e.g.
 KNN(contamination=true_contam)).
 
 For consistency, the benchmark results below used the unit-normalized
@@ -83,18 +84,18 @@ true contamination level for the selected outlier detection method.
 However, the uncertainty for many goes beyond zero indicating that in
 some instances the thresholder performed better than true contamination
 level for a particuar dataset and outlier detection method. Along with
-the thresholders, the default contamination level set for each outlier 
+the thresholders, the default contamination level set for each outlier
 detection method (`Default`) was tested as well as randomly picking a
-contamination level between 1% - 20% (`Select`). Finally, a baseline 
-was also calculated if outliers were selected at random (`Random`).
-This was done by setting :math:`MMC_{\rm{norm}} = 1`.
+contamination level between 1% - 20% (`Select`). Finally, a baseline was
+also calculated if outliers were selected at random (`Random`). This was
+done by setting :math:`MMC_{\rm{norm}} = 1`.
 
-Overall, a significant amount of thresholders performed better than 
-selecting a random contamination level. The ``META`` thresholder 
-performed best while the ``CLF`` thresholder provided the smallest 
-uncertainty about its mean and is the most robust (best least accurate 
-prediction). However, for interpretability and general performance 
-the ``FILTER`` thresholder is a good fit.
+Overall, a significant amount of thresholders performed better than
+selecting a random contamination level. The ``META`` thresholder
+performed best while the ``CLF`` thresholder provided the smallest
+uncertainty about its mean and is the most robust (best least accurate
+prediction). However, for interpretability and general performance the
+``FILTER`` thresholder is a good fit.
 
 .. figure:: figs/Benchmark1.png
    :alt: Benchmark defaults
@@ -290,38 +291,38 @@ analysis of thresholding outlier decision scores.
 
 ----
 
-******************
+*****************
  Over Prediction
-******************
+*****************
 
-All thresholders have a tendency to over predict the contamination 
-level of the outlier scores. This will lead to not only mis-classifying
-inliers based on the outlier detection method's capabilities but also 
-further inliers which will lead to a loss of significant data with which 
+All thresholders have a tendency to over predict the contamination level
+of the outlier scores. This will lead to not only mis-classifying
+inliers based on the outlier detection method's capabilities but also
+further inliers which will lead to a loss of significant data with which
 to work with. Therefore it is important to note which thresholders have
 the highest potential to over predict.
 
-To evaluate the over predictive nature of each thresholder, the ratio 
-between the predicted and true contamination level will be used. The 
-harmonic mean of the ratios is calculated for each thresholder using 
-the same setup as the first benchmark test. For this evaluation, a 
-value of 1 indicates perfect contamination predictions, below 1 is under 
-predication, and above 1 is over prediction. ``BOOT`` has the highest 
+To evaluate the over predictive nature of each thresholder, the ratio
+between the predicted and true contamination level will be used. The
+harmonic mean of the ratios is calculated for each thresholder using the
+same setup as the first benchmark test. For this evaluation, a value of
+1 indicates perfect contamination predictions, below 1 is under
+predication, and above 1 is over prediction. ``BOOT`` has the highest
 potential to over predict while all the thresholders that sit near 0
-mean that they tend to not identify any outliers for some outlier scores. 
-It is also important to note that a thresholder's potential to over 
-predict will vary significantly based on the selected dataset and outlier 
-detection method, and therefore it is important to check the predicted 
-contamination level after thresholding.
+mean that they tend to not identify any outliers for some outlier
+scores. It is also important to note that a thresholder's potential to
+over predict will vary significantly based on the selected dataset and
+outlier detection method, and therefore it is important to check the
+predicted contamination level after thresholding.
 
 .. figure:: figs/Overpred.png
    :alt: Over prediction
 
-A second over predictive evaluation can also be done, but now with 
-regards to over predicting beyond the best contamination level for
-each outlier detection method on each dataset. As seen below, a 
-significant amount of thresholders tend to over predict beyond the
-best contamination level. 
+A second over predictive evaluation can also be done, but now with
+regards to over predicting beyond the best contamination level for each
+outlier detection method on each dataset. As seen below, a significant
+amount of thresholders tend to over predict beyond the best
+contamination level.
 
 .. figure:: figs/Overpred_best.png
    :alt: Over prediction best
@@ -342,11 +343,11 @@ deterioration were normalized to zero showing the extent of the effect
 of randomness of each thresholder's ability to evaluate labels for the
 outlier decision scores in the uncertainty.
 
-From the plot below, ``WIND`` performed the worst and was highly affected
-by the choice of the selected random state. ``DSN`` which is a thresholder
-that overall performed well during the benchmark tests is also sensitive
-to randomness. To alleviate the effects of randomness on the
-thresholders, it is recommended that a combined method be used by
+From the plot below, ``WIND`` performed the worst and was highly
+affected by the choice of the selected random state. ``DSN`` which is a
+thresholder that overall performed well during the benchmark tests is
+also sensitive to randomness. To alleviate the effects of randomness on
+the thresholders, it is recommended that a combined method be used by
 setting different random states (e.g. ``COMB(thresholders =
 [DSN(random_state=1234), DSN(random_state=42), DSN(random_state=9685),
 DSN(random_state=111222)])``). This should provide a more robust and

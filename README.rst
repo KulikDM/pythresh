@@ -65,8 +65,10 @@ complex mathematical methods that involve graph theory and topology.
  Documentation
 ***************
 
-Visit `PyThresh Docs <https://pythresh.readthedocs.io/en/latest/?badge=latest>`_
-for full documentation or see below for a quickstart installation and usage example
+Visit `PyThresh Docs
+<https://pythresh.readthedocs.io/en/latest/?badge=latest>`_ for full
+documentation or see below for a quickstart installation and usage
+example
 
 ----
 
@@ -246,12 +248,13 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 **The comparison among implemented models and general implementation**
 is made available below
 
-Additional `benchmarking <https://pythresh.readthedocs.io/en/latest/benchmark.html>`_ 
-has been done on all the thresholders and it was
-found that the ``META`` thresholder performed best while the ``CLF`` 
-thresholder provided the smallest uncertainty about its mean and is the 
-most robust (best least accurate prediction). However, for interpretability 
-and general performance the ``FILTER`` thresholder is a good fit.
+Additional `benchmarking
+<https://pythresh.readthedocs.io/en/latest/benchmark.html>`_ has been
+done on all the thresholders and it was found that the ``META``
+thresholder performed best while the ``CLF`` thresholder provided the
+smallest uncertainty about its mean and is the most robust (best least
+accurate prediction). However, for interpretability and general
+performance the ``FILTER`` thresholder is a good fit.
 
 ----
 
@@ -267,32 +270,35 @@ A quick look at all the thresholders performance can be found at
 
 ----
 
-
 **************
  Contributing
 **************
 
 Anyone is welcome to contribute to PyThresh:
 
-* Please share your ideas and ask questions by opening an issue.
+-  Please share your ideas and ask questions by opening an issue.
 
-* To contribute, first check the Issue list for the "help wanted" tag and comment 
-  on the one that you are interested in. The issue will then be assigned to you.
+-  To contribute, first check the Issue list for the "help wanted" tag
+   and comment on the one that you are interested in. The issue will
+   then be assigned to you.
 
-* If the bug, feature, or documentation change is novel (not in the Issue list),
-  you can either log a new issue or create a pull request for the new changes.
+-  If the bug, feature, or documentation change is novel (not in the
+   Issue list), you can either log a new issue or create a pull request
+   for the new changes.
 
-* To start, fork the main branch and add your improvement/modification/fix.
+-  To start, fork the main branch and add your
+   improvement/modification/fix.
 
-* To make sure the code has the same style and standard, please refer to qmcd.py for 
-  example.
+-  To make sure the code has the same style and standard, please refer
+   to qmcd.py for example.
 
-* Create a pull request to the **main branch** and follow the pull request template 
-  `PR template <https://github.com/KulikDM/pythresh/blob/main/.github/PULL_REQUEST_TEMPLATE.md>`_
+-  Create a pull request to the **main branch** and follow the pull
+   request template `PR template
+   <https://github.com/KulikDM/pythresh/blob/main/.github/PULL_REQUEST_TEMPLATE.md>`_
 
-* Please make sure that all code changes are accompanied with proper new/updated test 
-  functions. Automatic tests will be triggered. Before the pull request can be merged, 
-  make sure that all the tests pass.
+-  Please make sure that all code changes are accompanied with proper
+   new/updated test functions. Automatic tests will be triggered. Before
+   the pull request can be merged, make sure that all the tests pass.
 
 ----
 

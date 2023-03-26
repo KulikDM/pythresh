@@ -41,9 +41,9 @@ class CLF(BaseThresholder):
 
     def __init__(self, method='complex'):
 
-        if method=='complex':
+        if method == 'complex':
 
-            self.m1 = 7.115947536708103  
+            self.m1 = 7.115947536708103
             self.m2 = -5.934885742167458
             self.m3 = -3.416078337348704
             self.c = 2.5731351150980992
@@ -78,7 +78,7 @@ class CLF(BaseThresholder):
 
         # Calculate expected y
         if self.method == 'complex':
-            
+
             kde = gaussian_kde(decision)
             pdf = normalize(kde.pdf(decision))
             pdf = normalize(pdf**(1/10))
@@ -86,7 +86,7 @@ class CLF(BaseThresholder):
 
             pred = self.m1*decision + self.m2*log + self.m3*pdf + self.c
 
-        else:    
+        else:
             pred = self.m*decision + self.c
 
         # Determine labels

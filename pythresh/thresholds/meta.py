@@ -101,14 +101,14 @@ class META(BaseThresholder):
         if self.method == 'GNBM':
 
             scaler = MinMaxScaler()
-            norm = scaler.fit_transform(decision.reshape(-1,1))
+            norm = scaler.fit_transform(decision.reshape(-1, 1))
             norm = (norm/(norm.max(axis=0, keepdims=True)
-                            + np.spacing(0)))
+                          + np.spacing(0)))
 
             qmcd = self._wrap_around_discrepancy(norm)
-            
+
             qmcd = normalize(qmcd)
-            if len(qmcd[qmcd>0.5]) > 0.5*len(qmcd):
+            if len(qmcd[qmcd > 0.5]) > 0.5*len(qmcd):
                 qmcd = 1 - qmcd
 
             kde = stats.gaussian_kde(decision)
@@ -156,7 +156,7 @@ class META(BaseThresholder):
                 for k in prange(d):
                     x_kikj = abs(data[i, k] - data[j, k])
                     prod *= 3.0 / 2.0 - x_kikj + x_kikj ** 2
-                        
+
                 dc += prod
             disc[i] = dc
 
