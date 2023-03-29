@@ -42,7 +42,7 @@ Full example: `karch_example.py
          n_train = 200  # number of training points
          n_test = 100  # number of testing points
 
-         X_train, X_test, y_train, y_test = generate_data(
+         X_train, y_train, X_test, y_test = generate_data(
              n_train=n_train,
              n_test=n_test,
              n_features=2,
@@ -105,8 +105,8 @@ and threshold the outlier detection scores.
          visualize(
              clf_name,
              X_train,
-             X_test,
              y_train,
+             X_test,
              y_test,
              y_train_pred,
              y_test_pred,
