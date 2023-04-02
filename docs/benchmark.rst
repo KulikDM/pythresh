@@ -304,25 +304,26 @@ the highest potential to over predict.
 
 To evaluate the over predictive nature of each thresholder, the ratio
 between the predicted and true contamination level will be used. The
-harmonic mean of the ratios is calculated for each thresholder using the
+mean of the ratios minus one is calculated for each thresholder using the
 same setup as the first benchmark test. For this evaluation, a value of
-1 indicates perfect contamination predictions, below 1 is under
-predication, and above 1 is over prediction. ``BOOT`` has the highest
-potential to over predict while all the thresholders that sit near 0
-mean that they tend to not identify any outliers for some outlier
-scores. It is also important to note that a thresholder's potential to
-over predict will vary significantly based on the selected dataset and
-outlier detection method, and therefore it is important to check the
-predicted contamination level after thresholding.
+0 indicates perfect contamination predictions, below 0 is under
+prediction, and above 0 is over prediction. ``BOOT`` has the highest
+potential to over predict while most thresholders in general tend to 
+over predict. It is also important to note that a thresholder's potential 
+to over predict will vary significantly based on the selected dataset and 
+outlier detection method, and therefore it is important to check the predicted 
+contamination level after thresholding.
 
 .. figure:: figs/Overpred.png
    :alt: Over prediction
 
 A second over predictive evaluation can also be done, but now with
 regards to over predicting beyond the best contamination level for each
-outlier detection method on each dataset. As seen below, a significant
-amount of thresholders tend to over predict beyond the best
-contamination level.
+outlier detection method on each dataset based on the MMC score. As seen 
+below, a significant amount of thresholders still tend to over predict even 
+beyond the best contamination level. However, now some clear well performing 
+thresholders can be matched to the previous benchmarking, notably ``META`` and
+``FILTER``.
 
 .. figure:: figs/Overpred_best.png
    :alt: Over prediction best
