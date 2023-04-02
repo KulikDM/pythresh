@@ -82,9 +82,8 @@ class FILTER(BaseThresholder):
         decision = normalize(decision)
 
         # Get sigma variables for various applications for each filter
-        sig = self.sigma
-        if self.sigma == 'auto':
-            sig = len(decision)*np.std(decision)
+        sig = (len(decision)*np.std(decision) if self.sigma == 'auto' 
+                else self.sigma)
 
         # Filter scores
         fltr = self.method_funcs[str(self.method)](decision, sig)
@@ -102,11 +101,9 @@ class FILTER(BaseThresholder):
     def _SAV_fltr(self, decision, sig):
         """Savgol filter scores"""
 
-        if self.sigma == 'auto':
-            sig = round(0.5*sig)
+        sig = round(0.5*sig) if self.sigma == 'auto' else sig
 
-        if sig % 2 == 0:
-            sig += 1
+        sig = sig+1 if sig % 2 == 0 else sig
 
         return signal.savgol_filter(decision, window_length=round(sig),
                                     polyorder=1)
@@ -126,8 +123,7 @@ class FILTER(BaseThresholder):
 
         sig = round(sig)
 
-        if sig % 2 == 0:
-            sig += 1
+        sig = sig+1 if sig % 2 == 0 else sig
 
         return signal.medfilt(decision, kernel_size=[sig])
 
@@ -139,14 +135,13 @@ class FILTER(BaseThresholder):
     def _DET_fltr(self, decision, sig):
         """Detrend filter scores"""
 
-        return signal.detrend(decision, bp=np.linspace(0, len(decision)-1, round(sig)).astype(int))
+        return signal.detrend(decision, bp=np.linspace(0, len(decision)-1, 
+                                round(sig)).astype(int))
 
     def _RES_fltr(self, decision, sig):
         """Resampling filter scores"""
 
-        if self.sigma == 'auto':
-            return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                                   window=round(np.sqrt(sig)))
-        else:
-            return signal.resample(decision, num=round(np.sqrt(len(decision))),
+        sig = np.sqrt(sig) if self.sigma == 'auto' else sig
+        
+        return signal.resample(decision, num=round(np.sqrt(len(decision))),
                                    window=round(sig))

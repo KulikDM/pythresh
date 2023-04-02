@@ -100,8 +100,7 @@ class DECOMP(BaseThresholder):
 
         # Set limit to max value from decomposition matrix
         limit = np.max(dec)
-        if limit > 0.5:
-            limit = 1-limit
+        limit = 1-limit if limit > 0.5 else limit
 
         self.thresh_ = limit
 
