@@ -12,7 +12,7 @@
    :target: https://anaconda.org/conda-forge/pythresh
    :alt: Anaconda version
 
-.. image:: https://readthedocs.org/projects/pythresh/badge/?version=latest
+.. image:: https://img.shields.io/readthedocs/pythresh.svg?version=latest&logo=read-the-docs&logoColor=white
    :target: http://pythresh.readthedocs.io/?badge=latest
    :alt: Documentation status
 
