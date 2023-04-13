@@ -48,10 +48,10 @@ class META(BaseThresholder):
 
        The META thresholder was trained using the ``PyOD`` outlier
        detection methods ``LODA, QMCD, CD, MCD, GMM, KNN, KDE, PCA, Sampling`` and ``IForest``
-       on the AD benchmark datasets: ``ALOI, annthyroid, breastw, campaign, cardio, 
-       Cardiotocography, fault, glass, Hepatitis, Ionosphere, landsat, letter, Lymphography, 
-       magic.gamma, mammography, mnist, musk, optdigits, PageBlocks, pendigits, Pima, 
-       satellite, satimage-2, shuttle, smtp, SpamBase, speech, Stamps, thyroid, vertebral, 
+       on the AD benchmark datasets: ``ALOI, annthyroid, breastw, campaign, cardio,
+       Cardiotocography, fault, glass, Hepatitis, Ionosphere, landsat, letter, Lymphography,
+       magic.gamma, mammography, mnist, musk, optdigits, PageBlocks, pendigits, Pima,
+       satellite, satimage-2, shuttle, smtp, SpamBase, speech, Stamps, thyroid, vertebral,
        vowels, Waveform,  WBC, WDBC, Wilt, wine, WPBC, yeast`` available at
        `ADBench dataset <https://github.com/Minqi824/ADBench/tree/main/datasets/Classical>`_.
        META uses a majority vote of all the trained models to determine the

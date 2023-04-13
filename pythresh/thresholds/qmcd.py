@@ -33,7 +33,6 @@ class QMCD(BaseThresholder):
             - 'Q': Use quantile limiting
             - 'P': Use percentile limiting
 
-
        Attributes
        ----------
 
@@ -58,12 +57,11 @@ class QMCD(BaseThresholder):
        equidistributed across :math:`M`. Outliers are assumed to solely raise the discrepancy
        value. And therefore, the contamination of the dataset can be set as one minus the
        discrepancy.
-
     """
 
     def __init__(self, method='WD', lim='P'):
 
-        super(QMCD, self).__init__()
+        super().__init__()
         self.method = method
         self.lim = lim
 

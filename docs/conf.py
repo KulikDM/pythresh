@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Configuration file for the Sphinx documentation builder.
 #
@@ -16,7 +15,6 @@
 import os
 import re
 import sys
-from io import open
 from os.path import abspath, dirname
 
 sys.path.insert(0, abspath('..'))
@@ -29,7 +27,7 @@ try:
     __version__ = str(re.findall(r'\b\d+(?:\.\d+)+', version_file.read())[0])
 
 except Exception as error:
-    __version__ = "0.0.1"
+    __version__ = '0.0.1'
     sys.stderr.write("Warning: Could not open '%s' due %s\n" %
                      (verpath, error))
 
@@ -104,7 +102,7 @@ pygments_style = 'sphinx'
 #
 # html_theme = 'default'
 
-html_theme = "sphinx_rtd_theme"
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

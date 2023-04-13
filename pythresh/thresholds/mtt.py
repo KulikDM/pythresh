@@ -93,7 +93,7 @@ class MTT(BaseThresholder):
         return cut(decision, limit)
 
     def _get_T_critical_value(self, n, strictness):
-        """Get the value from the t-Student distribution for the given n"""
+        """Get the value from the t-Student distribution for the given n."""
 
         mapping = {
             1: [{1: 3.078, 2: 1.886, 3: 1.638, 4: 1.533, 5: 1.476, 6: 1.440, 7: 1.415, 8: 1.397, 9: 1.383, 10: 1.372, 11: 1.363, 12: 1.356,

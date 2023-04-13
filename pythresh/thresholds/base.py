@@ -1,14 +1,8 @@
-from __future__ import division, print_function
-
 import abc
 
-import six
 
-
-@six.add_metaclass(abc.ABCMeta)
-class BaseThresholder(object):
+class BaseThresholder(metaclass=abc.ABCMeta):
     """Abstract class for all outlier detection thresholding algorithms.
-
 
        Parameters
        ----------
@@ -17,7 +11,6 @@ class BaseThresholder(object):
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
-
     """
 
     @abc.abstractmethod

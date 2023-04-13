@@ -19,7 +19,7 @@ class CLF(BaseThresholder):
        method : {'simple', 'complex'}, optional (default='complex')
             Type of linear model
 
-            - 'simple':  Uses only the scores 
+            - 'simple':  Uses only the scores
             - 'complex': Uses the scores, log of the scores, and the scores' PDF
 
        Attributes

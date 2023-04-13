@@ -75,7 +75,7 @@ class CHAU(BaseThresholder):
 
     def __init__(self, method='mean'):
 
-        super(CHAU, self).__init__()
+        super().__init__()
         stat = {'mean': np.mean, 'median': np.median, 'gmean': stats.gmean}
         self.method = stat[method]
 

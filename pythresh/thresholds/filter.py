@@ -30,7 +30,6 @@ class FILTER(BaseThresholder):
             - 'detrend':  use a detrend based filter
             - 'resample': use a resampling based filter
 
-
        sigma : int, optional (default='auto')
             Variable specific to each filter type, default sets sigma to len(scores)*np.std(scores)
 
@@ -46,12 +45,11 @@ class FILTER(BaseThresholder):
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
-
     """
 
     def __init__(self, method='savgol', sigma='auto'):
 
-        super(FILTER, self).__init__()
+        super().__init__()
         self.method = method
         self.method_funcs = {'gaussian': self._GAU_fltr, 'savgol': self._SAV_fltr,
                              'hilbert': self._HIL_fltr, 'wiener': self._WIE_fltr,
@@ -82,8 +80,8 @@ class FILTER(BaseThresholder):
         decision = normalize(decision)
 
         # Get sigma variables for various applications for each filter
-        sig = (len(decision)*np.std(decision) if self.sigma == 'auto' 
-                else self.sigma)
+        sig = (len(decision)*np.std(decision) if self.sigma == 'auto'
+               else self.sigma)
 
         # Filter scores
         fltr = self.method_funcs[str(self.method)](decision, sig)
@@ -94,12 +92,12 @@ class FILTER(BaseThresholder):
         return cut(decision, limit)
 
     def _GAU_fltr(self, decision, sig):
-        """Gaussian filter scores"""
+        """Gaussian filter scores."""
 
         return gaussian_filter(decision, sigma=sig)
 
     def _SAV_fltr(self, decision, sig):
-        """Savgol filter scores"""
+        """Savgol filter scores."""
 
         sig = round(0.5*sig) if self.sigma == 'auto' else sig
 
@@ -109,17 +107,17 @@ class FILTER(BaseThresholder):
                                     polyorder=1)
 
     def _HIL_fltr(self, decision, sig):
-        """Hilbert filter scores"""
+        """Hilbert filter scores."""
 
         return signal.hilbert(decision, N=round(sig))
 
     def _WIE_fltr(self, decision, sig):
-        """Wiener filter scores"""
+        """Wiener filter scores."""
 
         return signal.wiener(decision, mysize=len(decision))
 
     def _MED_fltr(self, decision, sig):
-        """Medfilt filter scores"""
+        """Medfilt filter scores."""
 
         sig = round(sig)
 
@@ -128,20 +126,20 @@ class FILTER(BaseThresholder):
         return signal.medfilt(decision, kernel_size=[sig])
 
     def _DEC_fltr(self, decision, sig):
-        """Decimate filter scores"""
+        """Decimate filter scores."""
 
         return signal.decimate(decision, q=round(sig), ftype='fir')
 
     def _DET_fltr(self, decision, sig):
-        """Detrend filter scores"""
+        """Detrend filter scores."""
 
-        return signal.detrend(decision, bp=np.linspace(0, len(decision)-1, 
-                                round(sig)).astype(int))
+        return signal.detrend(decision, bp=np.linspace(0, len(decision)-1,
+                                                       round(sig)).astype(int))
 
     def _RES_fltr(self, decision, sig):
-        """Resampling filter scores"""
+        """Resampling filter scores."""
 
         sig = np.sqrt(sig) if self.sigma == 'auto' else sig
-        
+
         return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                                   window=round(sig))
+                               window=round(sig))

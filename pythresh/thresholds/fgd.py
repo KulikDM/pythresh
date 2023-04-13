@@ -30,7 +30,6 @@ class FGD(BaseThresholder):
        calculated, and the threshold is set as the middle point between the
        first and second inflection points starting from the left side of the
        data range.
-
     """
 
     def __init__(self):

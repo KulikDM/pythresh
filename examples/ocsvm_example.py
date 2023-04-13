@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-"""Example of using a one-class svm 
+"""Example of using a one-class svm.
+
    for outlier thresholding
 """
 # Author: D Kulik
 # License: BSD 2 clause
 
-from __future__ import division, print_function
 
 import os
 import sys
@@ -19,16 +18,16 @@ from pythresh.thresholds.ocsvm import OCSVM
 # temporary solution for relative imports in case pyod is not installed
 # if pyod is installed, no need to use the following line
 sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
+    os.path.abspath(os.path.join(os.path.dirname('__file__'), '..')))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     contamination = 0.1  # percentage of outliers
     n_train = 200  # number of training points
     n_test = 100  # number of testing points
 
     # Generate sample data
-    X_train, y_train, X_test, y_test = \
+    X_train, y_train, X_test, y_test =\
         generate_data(n_train=n_train,
                       n_test=n_test,
                       n_features=2,
@@ -51,9 +50,9 @@ if __name__ == "__main__":
     y_test_pred = thres.eval(y_test_scores)  # outlier labels (0 or 1)
 
     # evaluate and print the results
-    print("\nOn Training Data:")
+    print('\nOn Training Data:')
     evaluate_print(clf_name, y_train, y_train_scores)
-    print("\nOn Test Data:")
+    print('\nOn Test Data:')
     evaluate_print(clf_name, y_test, y_test_scores)
 
     # visualize the results

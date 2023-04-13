@@ -57,8 +57,8 @@ class VAE(BaseThresholder):
 
        Examples
        --------
-       The effects of randomness can affect the thresholder's output perfomance 
-       signicantly. Therefore, to alleviate the effects of randomness on the 
+       The effects of randomness can affect the thresholder's output perfomance
+       signicantly. Therefore, to alleviate the effects of randomness on the
        thresholder a combined model can be used with different random_state values.
        E.g.
 
@@ -76,8 +76,8 @@ class VAE(BaseThresholder):
             decision_scores = clf.decision_scores_  # raw outlier scores
 
             # get outlier labels with combined model
-            thres = COMB(thresholders = [VAE(random_state=1234), 
-            VAE(random_state=42), VAE(random_state=9685), 
+            thres = COMB(thresholders = [VAE(random_state=1234),
+            VAE(random_state=42), VAE(random_state=9685),
             VAE(random_state=111222)])
             labels = thres.eval(decision_scores)
 
@@ -142,7 +142,7 @@ class VAE(BaseThresholder):
         return cut(scores, limit)
 
     def _autodim(self, vals):
-        ''' Estimate the latent dimension size using the method of Zhu and Ghodsi (2006) '''
+        """Estimate the latent dimension size using the method of Zhu and Ghodsi (2006)."""
 
         vals = np.sort(vals)[::-1]
         m = len(vals)
@@ -173,7 +173,7 @@ class VAE(BaseThresholder):
         scheduler = opt.lr_scheduler.ExponentialLR(optimizer,
                                                    gamma=0.95)
 
-        for _ in (tqdm(range(self.epochs), ascii=True, desc="Training")
+        for _ in (tqdm(range(self.epochs), ascii=True, desc='Training')
                   if self.verbose else range(self.epochs)):
 
             for x in self.data:

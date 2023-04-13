@@ -40,7 +40,7 @@ class ZSCORE(BaseThresholder):
 
     def __init__(self):
 
-        super(ZSCORE, self).__init__()
+        super().__init__()
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

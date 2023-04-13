@@ -45,7 +45,7 @@ class MAD(BaseThresholder):
 
     def __init__(self):
 
-        super(MAD, self).__init__()
+        super().__init__()
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

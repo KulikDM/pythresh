@@ -1,6 +1,4 @@
-"""
-``pythresh`` is a python toolbox for outlier detection thresholding
-"""
+"""``pythresh`` is a python toolbox for outlier detection thresholding."""
 # Based on NiLearn package
 # License: simplified BSD
 

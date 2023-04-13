@@ -59,8 +59,8 @@ class MCST(BaseThresholder):
 
        Examples
        --------
-       The effects of randomness can affect the thresholder's output perfomance 
-       signicantly. Therefore, to alleviate the effects of randomness on the 
+       The effects of randomness can affect the thresholder's output perfomance
+       signicantly. Therefore, to alleviate the effects of randomness on the
        thresholder a combined model can be used with different random_state values.
        E.g.
 
@@ -78,8 +78,8 @@ class MCST(BaseThresholder):
             decision_scores = clf.decision_scores_  # raw outlier scores
 
             # get outlier labels with combined model
-            thres = COMB(thresholders = [MCST(random_state=1234), 
-            MCST(random_state=42), MCST(random_state=9685), 
+            thres = COMB(thresholders = [MCST(random_state=1234),
+            MCST(random_state=42), MCST(random_state=9685),
             MCST(random_state=111222)])
             labels = thres.eval(decision_scores)
 

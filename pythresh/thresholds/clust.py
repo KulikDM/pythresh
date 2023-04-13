@@ -63,8 +63,8 @@ class CLUST(BaseThresholder):
 
        Examples
        --------
-       The effects of randomness can affect the thresholder's output perfomance 
-       signicantly. Therefore, to alleviate the effects of randomness on the 
+       The effects of randomness can affect the thresholder's output perfomance
+       signicantly. Therefore, to alleviate the effects of randomness on the
        thresholder a combined model can be used with different random_state values.
        E.g.
 
@@ -82,17 +82,16 @@ class CLUST(BaseThresholder):
             decision_scores = clf.decision_scores_  # raw outlier scores
 
             # get outlier labels with combined model
-            thres = COMB(thresholders = [CLUST(method='bgm', random_state=1234), 
-            CLUST(method='bgm', random_state=42), 
-            CLUST(method='bgm', random_state=9685), 
+            thres = COMB(thresholders = [CLUST(method='bgm', random_state=1234),
+            CLUST(method='bgm', random_state=42),
+            CLUST(method='bgm', random_state=9685),
             CLUST(method='bgm', random_state=111222)])
             labels = thres.eval(decision_scores)
-
     """
 
     def __init__(self, method='spec', random_state=1234):
 
-        super(CLUST, self).__init__()
+        super().__init__()
         self.method = method
         self.method_funcs = {'agg': self._AGG_clust, 'birch': self._BIRCH_clust,
                              'bang': self._BANG_clust, 'bgm': self._BGM_clust,
@@ -131,7 +130,7 @@ class CLUST(BaseThresholder):
         return labels
 
     def _pyclust_eval(self, cl, decision):
-        """ Evaluate cluster labels from pyclustering methods """
+        """Evaluate cluster labels from pyclustering methods."""
 
         cl.process()
 
@@ -150,7 +149,7 @@ class CLUST(BaseThresholder):
         return labels
 
     def _sklearn_eval(self, cl, decision):
-        """ Evaluate cluster labels from sklearn methods """
+        """Evaluate cluster labels from sklearn methods."""
 
         cl.fit(decision)
         labels = cl.labels_
@@ -162,7 +161,7 @@ class CLUST(BaseThresholder):
         return labels
 
     def _AGG_clust(self, decision):
-        """ Agglomerative algorithm for cluster analysis """
+        """Agglomerative algorithm for cluster analysis."""
 
         cl = agglomerative(data=decision, number_clusters=2,
                            link=2, ccore=True)
@@ -170,7 +169,8 @@ class CLUST(BaseThresholder):
         return self._pyclust_eval(cl, decision)
 
     def _BIRCH_clust(self, decision):
-        """ BIRCH (Balanced Iterative Reducing and Clustering using
+        """BIRCH (Balanced Iterative Reducing and Clustering using.
+
             Hierarchies) algorithm for cluster analysis
         """
 
@@ -179,14 +179,14 @@ class CLUST(BaseThresholder):
         return self._sklearn_eval(cl, decision)
 
     def _BANG_clust(self, decision):
-        """ BANG clustering algorithm for cluster analysis """
+        """BANG clustering algorithm for cluster analysis."""
 
         cl = bang(data=decision, levels=8, ccore=True)
 
         return self._pyclust_eval(cl, decision)
 
     def _BGM_clust(self, decision):
-        """ Bayesian Gaussian Mixture algorithm for cluster analysis """
+        """Bayesian Gaussian Mixture algorithm for cluster analysis."""
 
         cl = BayesianGaussianMixture(n_components=2,
                                      covariance_type='tied',
@@ -201,7 +201,8 @@ class CLUST(BaseThresholder):
         return labels
 
     def _BSAS_clust(self, decision):
-        """ BSAS (Basic Sequential Algorithmic Scheme)
+        """BSAS (Basic Sequential Algorithmic Scheme).
+
             algorithm for cluster analysis
         """
 
@@ -211,7 +212,8 @@ class CLUST(BaseThresholder):
         return self._pyclust_eval(cl, decision)
 
     def _DBSCAN_clust(self, decision):
-        """ DBSCAN (Density-based spatial clustering of applications with
+        """DBSCAN (Density-based spatial clustering of applications with.
+
             noise) algorithm for cluster analysis
         """
 
@@ -221,7 +223,8 @@ class CLUST(BaseThresholder):
         return self._pyclust_eval(cl, decision)
 
     def _EMA_clust(self, decision):
-        """ Expectation-Maximization clustering algorithm for Gaussian
+        """Expectation-Maximization clustering algorithm for Gaussian.
+
             Mixture Models
         """
 
@@ -230,14 +233,15 @@ class CLUST(BaseThresholder):
         return self._pyclust_eval(cl, decision)
 
     def _KMEANS_clust(self, decision):
-        """ K-means algorithm for cluster analysis """
+        """K-means algorithm for cluster analysis."""
 
         cl = KMeans(n_clusters=2)
 
         return self._sklearn_eval(cl, decision)
 
     def _MBSAS_clust(self, decision):
-        """ MBSAS (Modified Basic Sequential Algorithmic Scheme)
+        """MBSAS (Modified Basic Sequential Algorithmic Scheme).
+
             algorithm for cluster analysis
         """
 
@@ -247,7 +251,7 @@ class CLUST(BaseThresholder):
         return self._pyclust_eval(cl, decision)
 
     def _MSHIFT_clust(self, decision):
-        """ Mean shift algorithm for cluster analysis"""
+        """Mean shift algorithm for cluster analysis."""
 
         # Get quantile value for bandwidth estimation
         dat = np.squeeze(decision)
@@ -269,7 +273,8 @@ class CLUST(BaseThresholder):
         return labels
 
     def _OPTICS_clust(self, decision):
-        """ OPTICS (Ordering Points To Identify Clustering Structure)
+        """OPTICS (Ordering Points To Identify Clustering Structure).
+
             algorithm for cluster analysis
         """
 
@@ -279,21 +284,21 @@ class CLUST(BaseThresholder):
         return self._pyclust_eval(cl, decision)
 
     def _SOMSC_clust(self, decision):
-        """ Self-organized feature map algorithm for cluster analysis """
+        """Self-organized feature map algorithm for cluster analysis."""
 
         cl = somsc(data=decision, amount_clusters=2, ccore=True)
 
         return self._pyclust_eval(cl, decision)
 
     def _SPEC_clust(self, decision):
-        """ Clustering to a projection of the normalized Laplacian """
+        """Clustering to a projection of the normalized Laplacian."""
 
         cl = SpectralClustering(n_clusters=2)
 
         return self._sklearn_eval(cl, decision)
 
     def _XMEANS_clust(self, decision):
-        """ X-means algorithm for cluster analysis """
+        """X-means algorithm for cluster analysis."""
 
         cl = xmeans(data=decision, kmax=2, ccore=True)
 

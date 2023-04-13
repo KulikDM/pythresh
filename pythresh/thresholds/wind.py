@@ -51,8 +51,8 @@ class WIND(BaseThresholder):
 
        Examples
        --------
-       The effects of randomness can affect the thresholder's output perfomance 
-       signicantly. Therefore, to alleviate the effects of randomness on the 
+       The effects of randomness can affect the thresholder's output perfomance
+       signicantly. Therefore, to alleviate the effects of randomness on the
        thresholder a combined model can be used with different random_state values.
        E.g.
 
@@ -70,15 +70,15 @@ class WIND(BaseThresholder):
             decision_scores = clf.decision_scores_  # raw outlier scores
 
             # get outlier labels with combined model
-            thres = COMB(thresholders = [WIND(random_state=1234), 
-            WIND(random_state=42), WIND(random_state=9685), 
+            thres = COMB(thresholders = [WIND(random_state=1234),
+            WIND(random_state=42), WIND(random_state=9685),
             WIND(random_state=111222)])
             labels = thres.eval(decision_scores)
 
     """
 
     def __init__(self, random_state=1234):
-        super(WIND, self).__init__()
+        super().__init__()
         self.random_state = random_state
 
     def eval(self, decision):
@@ -133,5 +133,5 @@ class WIND(BaseThresholder):
         return cut(decision, limit)
 
     def _dtheta(self, x, y, dx, dy, r2):
-        """Calculate dtheta for the integrand"""
+        """Calculate dtheta for the integrand."""
         return (x*dy - y*dx)/r2

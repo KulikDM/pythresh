@@ -308,10 +308,10 @@ mean of the ratios minus one is calculated for each thresholder using the
 same setup as the first benchmark test. For this evaluation, a value of
 0 indicates perfect contamination predictions, below 0 is under
 prediction, and above 0 is over prediction. ``BOOT`` has the highest
-potential to over predict while most thresholders in general tend to 
-over predict. It is also important to note that a thresholder's potential 
-to over predict will vary significantly based on the selected dataset and 
-outlier detection method, and therefore it is important to check the predicted 
+potential to over predict while most thresholders in general tend to
+over predict. It is also important to note that a thresholder's potential
+to over predict will vary significantly based on the selected dataset and
+outlier detection method, and therefore it is important to check the predicted
 contamination level after thresholding.
 
 .. figure:: figs/Overpred.png
@@ -319,9 +319,9 @@ contamination level after thresholding.
 
 A second over predictive evaluation can also be done, but now with
 regards to over predicting beyond the best contamination level for each
-outlier detection method on each dataset based on the MMC score. As seen 
-below, a significant amount of thresholders still tend to over predict even 
-beyond the best contamination level. However, now some clear well performing 
+outlier detection method on each dataset based on the MMC score. As seen
+below, a significant amount of thresholders still tend to over predict even
+beyond the best contamination level. However, now some clear well performing
 thresholders can be matched to the previous benchmarking, notably ``META`` and
 ``FILTER``.
 

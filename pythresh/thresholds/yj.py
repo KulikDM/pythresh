@@ -52,7 +52,7 @@ class YJ(BaseThresholder):
 
     def __init__(self):
 
-        super(YJ, self).__init__()
+        super().__init__()
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

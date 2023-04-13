@@ -62,14 +62,12 @@ class ALL(BaseThresholder):
             Random seed for the random number generators of the thresholders. Can also
             be set to None.
 
-
        Attributes
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
 
        confidence_interval_ : lower and upper confidence interval of the contamination level
-
     """
 
     def __init__(self, thresholders='all', max_contam=0.5, method='mean', random_state=1234):

@@ -1,6 +1,5 @@
 import re
 import sys
-from io import open
 # read the contents of README file
 from os import path
 
@@ -13,7 +12,7 @@ try:
         __version__ = str(re.findall(
             r'\b\d+(?:\.\d+)+', version_file.read())[0])
 except Exception as error:
-    __version__ = "0.0.1"
+    __version__ = '0.0.1'
     sys.stderr.write("Warning: Could not open '%s' due %s\n" %
                      (verpath, error))
 
@@ -44,7 +43,7 @@ setup(
     keywords=['outlier detection', 'anomaly detection', 'thresholding', 'cutoff',
               'contamintion level', 'data science', 'machine learning'],
     project_urls={
-        "Documentation": 'https://pythresh.readthedocs.io/en/latest/'},
+        'Documentation': 'https://pythresh.readthedocs.io/en/latest/'},
     packages=find_packages(exclude=['test']),
     include_package_data=True,
     install_requires=requirements,

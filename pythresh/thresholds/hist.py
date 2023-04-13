@@ -33,17 +33,15 @@ class HIST(BaseThresholder):
             - 'minimum':  Minimum between two maxima via smoothing method for filtering
             - 'triangle': Triangle algorithm method for filtering
 
-
        Attributes
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
-
     """
 
     def __init__(self, method='triangle', nbins='auto'):
 
-        super(HIST, self).__init__()
+        super().__init__()
         self.nbins = nbins
         self.method = method
         self.method_funcs = {'otsu': self._OTSU_thres, 'yen': self._YEN_thres,
@@ -98,7 +96,7 @@ class HIST(BaseThresholder):
         return scores
 
     def _histogram(self, decision, nbins):
-        """Generate histograms and get bin centers"""
+        """Generate histograms and get bin centers."""
 
         counts, bin_edges = np.histogram(decision, bins=nbins, range=(0, 1))
         bin_centers = (bin_edges[:-1] + bin_edges[1:])/2.
@@ -106,7 +104,7 @@ class HIST(BaseThresholder):
         return bin_centers, counts
 
     def _find_local_maxima_idx(self, hist):
-        """Find the local maxima in histogram"""
+        """Find the local maxima in histogram."""
 
         maximum_idxs = []
         direction = 1
@@ -122,7 +120,7 @@ class HIST(BaseThresholder):
         return maximum_idxs
 
     def _OTSU_thres(self, bin_centers, counts):
-        """Otsu's method for histogram based thresholding"""
+        """Otsu's method for histogram based thresholding."""
 
         counts = counts.astype(float)
 
@@ -142,7 +140,7 @@ class HIST(BaseThresholder):
         return bin_centers[idx]
 
     def _YEN_thres(self, bin_centers, counts):
-        """Yen's method for histogram based thresholding"""
+        """Yen's method for histogram based thresholding."""
 
         # Calculate probability mass function
         pmf = counts.astype(np.float32) / counts.sum()
@@ -159,7 +157,7 @@ class HIST(BaseThresholder):
         return bin_centers[crit.argmax()]
 
     def _ISODATA_thres(self, bin_centers, counts):
-        """ISODATA method for histogram based thresholding"""
+        """ISODATA method for histogram based thresholding."""
 
         counts = counts.astype(np.float32)
 
@@ -187,8 +185,10 @@ class HIST(BaseThresholder):
         return bin_centers[:-1][(distances >= 0) & (distances < bin_width)][0]
 
     def _LI_thres(self, decision, bin_centers, counts):
-        """Li's iterative Minimum Cross Entropy method for histogram
-        based thresholing"""
+        """Li's iterative Minimum Cross Entropy method for histogram.
+
+        based thresholing
+        """
 
         counts = counts.astype(float)
 
@@ -216,7 +216,7 @@ class HIST(BaseThresholder):
         return t_next
 
     def _Minimum_thres(self, bin_centers, counts):
-        """Minimum method for histogram based thresholding"""
+        """Minimum method for histogram based thresholding."""
 
         smooth_hist = counts.astype(np.float64, copy=False)
 
@@ -233,7 +233,7 @@ class HIST(BaseThresholder):
         return bin_centers[maximum_idxs[0] + threshold_idx]
 
     def _Triangle_thres(self, bin_centers, counts):
-        """Triangle algorithm for histogram based thresholding"""
+        """Triangle algorithm for histogram based thresholding."""
 
         nbins = len(counts)
 

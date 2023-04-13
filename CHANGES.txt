@@ -6,10 +6,10 @@ v<0.1.4>, <05/31/2022> -- Fix to README.rst image.
 v<0.1.5>, <06/04/2022> -- Added references README.rst, Fixed chau.py, changed parameter default name from None to 'native' for gesd.py and hist.py.
 v<0.1.6>, <06/09/2022> -- Replaced numpy random functions with scipy random due to random state for dsn.py, mcst.py, and wind.py
 v<0.1.7>, <06/10/2022> -- Fixed missing scipy.stats import in wind.py, description update to README.rst
-v<0.1.8>, <06/16/2022> -- Replaced gf.py with filter.py, added karch.py, updated all.py, clf.py, dsn.py, wind.py as well as README.rst and all the jupyter notebooks 
+v<0.1.8>, <06/16/2022> -- Replaced gf.py with filter.py, added karch.py, updated all.py, clf.py, dsn.py, wind.py as well as README.rst and all the jupyter notebooks
 v<0.1.9>, <06/16/2022> -- chau.py syntax error bug fix
 v<0.2.0>, <06/19/2022> -- Updated dsn.py, new cdf calc
-v<0.2.0>, <06/21/2022> -- Updated fgd.py, dsn.py fix 
+v<0.2.0>, <06/21/2022> -- Updated fgd.py, dsn.py fix
 v<0.2.1>, <06/25/2022> -- Documentation and updated docstrings
 v<0.2.2>, <06/25/2022> -- Documentation, and general bug fixes with moving all functions into classes
 v<0.2.3>, <07/02/2022> -- Updated references, documentation, and version control. General bug fixes
@@ -30,7 +30,7 @@ v<0.2.7>, <11/07/2022> -- Updated trained meta-models (better thresholding accur
 v<0.2.8>, <11/08/2022> -- 'native' parameter to 'auto' (code consistency)
 v<0.2.8>, <11/19/2022> -- Stability fixes for vae, ocsvm, fwfm
 v<0.2.8>, <11/22/2022> -- Format autopep8, isort
-v<0.2.8>, <11/23/2022> -- Refactored 
+v<0.2.8>, <11/23/2022> -- Refactored
 v<0.2.8>, <11/24/2022> -- Removed unused imports
 v<0.2.8>, <12/18/2022> -- Added cpd thresholder
 v<0.2.8>, <12/19/2022> -- Updated benchmarking documentation
@@ -40,8 +40,9 @@ v<0.2.8>, <01/02/2023> -- Added GNBC model to meta
 v<0.2.9>, <01/23/2023> -- Added comb thresholder
 v<0.2.9>, <01/29/2023> -- Added examples in docstrings for handling effects of randomness
 v<0.2.9>, <02/16/2023> -- Replaced try-except statements for better coverage
-v<0.2.9>, <02/25/2023> -- Updated documentation (links, formatting) 
+v<0.2.9>, <02/25/2023> -- Updated documentation (links, formatting)
 v<0.2.9>, <03/09/2023> -- Added package to conda-forge and doc updates
 v<0.2.9>, <03/12/2023> -- Added FAQ, Pull request, and additional doc changes
 v<0.2.9>, <03/19/2023> -- Updated clf thresholder
 v<0.2.9>, <03/20/2023> -- Added GNBM model to meta
+v<0.3.0>, <04/13/2023> -- Added pre-commit and formatted

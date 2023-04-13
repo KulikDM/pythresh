@@ -29,12 +29,11 @@ class FWFM(BaseThresholder):
        is approximated using kernel density estimation. The highest peak within the
        PDF is used to find the base width of the mixture and the threshold is set
        to the base width divided by the number of scores.
-
     """
 
     def __init__(self):
 
-        super(FWFM, self).__init__()
+        super().__init__()
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

@@ -16,4 +16,3 @@ sphinx-rtd-theme
 sphinxcontrib-bibtex
 torch
 tqdm
-

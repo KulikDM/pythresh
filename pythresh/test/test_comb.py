@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, print_function
-
 import sys
 import unittest
 from os.path import dirname as up
@@ -39,7 +36,7 @@ class TestCOMB(unittest.TestCase):
         for method in self.methods:
             self.thres = COMB(method=method)
             pred_labels = self.thres.eval(self.scores)
-            assert (self.thres.confidence_interval_ != None)
+            assert (self.thres.confidence_interval_ is not None)
 
             assert_equal(pred_labels.shape, self.y_train.shape)
 

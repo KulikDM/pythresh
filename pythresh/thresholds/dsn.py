@@ -52,8 +52,8 @@ class DSN(BaseThresholder):
 
        Examples
        --------
-       The effects of randomness can affect the thresholder's output perfomance 
-       signicantly. Therefore, to alleviate the effects of randomness on the 
+       The effects of randomness can affect the thresholder's output perfomance
+       signicantly. Therefore, to alleviate the effects of randomness on the
        thresholder a combined model can be used with different random_state values.
        E.g.
 
@@ -71,16 +71,15 @@ class DSN(BaseThresholder):
             decision_scores = clf.decision_scores_  # raw outlier scores
 
             # get outlier labels with combined model
-            thres = COMB(thresholders = [DSN(random_state=1234), 
-            DSN(random_state=42), DSN(random_state=9685), 
+            thres = COMB(thresholders = [DSN(random_state=1234),
+            DSN(random_state=42), DSN(random_state=9685),
             DSN(random_state=111222)])
             labels = thres.eval(decision_scores)
-
     """
 
     def __init__(self, metric='MAH', random_state=1234):
 
-        super(DSN, self).__init__()
+        super().__init__()
         self.metric = metric
         self.metric_funcs = {'JS': self._JS_metric, 'WS': self._WS_metric,
                              'ENG': self._ENG_metric, 'BHT': self._BHT_metric,
@@ -144,22 +143,22 @@ class DSN(BaseThresholder):
         return cut(decision, limit)
 
     def _JS_metric(self):
-        """Calculate the Jensen-Shannon distance"""
+        """Calculate the Jensen-Shannon distance."""
 
         return 1-distance.jensenshannon(self.val_data, self.val_norm)
 
     def _WS_metric(self):
-        """Calculate the Wasserstein or Earth Movers distance"""
+        """Calculate the Wasserstein or Earth Movers distance."""
 
         return stats.wasserstein_distance(self.val_data, self.val_norm)
 
     def _ENG_metric(self):
-        """Calculate the Energy distance"""
+        """Calculate the Energy distance."""
 
         return stats.energy_distance(self.val_data, self.val_norm)
 
     def _BHT_metric(self):
-        """Calculate the Bhattacharyya distance"""
+        """Calculate the Bhattacharyya distance."""
 
         bht = simpson(np.sqrt(self.val_data*self.val_norm),
                       dx=1/len(self.val_data))
@@ -167,7 +166,7 @@ class DSN(BaseThresholder):
         return np.log1p(bht)
 
     def _HLL_metric(self):
-        """Calculate the Hellinger distance"""
+        """Calculate the Hellinger distance."""
 
         val_data = self.val_data/np.sum(self.val_data)
         val_norm = self.val_norm/np.sum(self.val_norm)
@@ -176,7 +175,7 @@ class DSN(BaseThresholder):
                 / np.sqrt(2))
 
     def _HI_metric(self):
-        """Calculate the Histogram intersection distance"""
+        """Calculate the Histogram intersection distance."""
 
         val_data = self.val_data/np.sum(self.val_data)
         val_norm = self.val_norm/np.sum(self.val_norm)
@@ -184,7 +183,7 @@ class DSN(BaseThresholder):
         return 1-np.sum(np.minimum(val_data, val_norm))
 
     def _LK_metric(self):
-        """Calculate the Lukaszyk-Karmowski metric for normal distributions"""
+        """Calculate the Lukaszyk-Karmowski metric for normal distributions."""
 
         # Get expected values for both distributions
         rng = np.linspace(0, 1, len(self.val_data))
@@ -201,7 +200,7 @@ class DSN(BaseThresholder):
                 - nu_xy*special.erfc(nu_xy/(2*std)))
 
     def _LP_metric(self):
-        """Calculate the Levy-Prokhorov metric"""
+        """Calculate the Levy-Prokhorov metric."""
 
         # Get the edges for the complete graphs of the datasets
         f1 = np.array(list(combinations(self.val_data.tolist(), 2)))
@@ -211,7 +210,7 @@ class DSN(BaseThresholder):
                 distance.correlation(self.val_data, self.val_norm))
 
     def _MAH_metric(self):
-        """Calculate the Mahalanobis distance"""
+        """Calculate the Mahalanobis distance."""
 
         # fit a Minimum Covariance Determinant (MCD) robust estimator to data
         robust_cov = MinCovDet().fit(np.array([self.val_norm]).T)
@@ -222,7 +221,7 @@ class DSN(BaseThresholder):
         return 1-np.mean(dist)/np.max(dist)
 
     def _TMT_metric(self):
-        """Calculate the Tanimoto distance"""
+        """Calculate the Tanimoto distance."""
 
         val_data = self.val_data/np.sum(self.val_data)
         val_norm = self.val_norm/np.sum(self.val_norm)
@@ -234,7 +233,7 @@ class DSN(BaseThresholder):
         return (p+q-2*m)/(p+q-m)
 
     def _RES_metric(self):
-        """Calculate the studentized residual distance"""
+        """Calculate the studentized residual distance."""
 
         mean_X = np.mean(self.val_data)
         mean_Y = np.mean(self.val_norm)
@@ -261,12 +260,12 @@ class DSN(BaseThresholder):
         return np.abs(np.sum(studentized_residuals))
 
     def _KS_metric(self):
-        """Calculate the Kolmogorov-Smirnov distance"""
+        """Calculate the Kolmogorov-Smirnov distance."""
 
         return np.max(np.abs(self.val_data-self.val_norm))
 
     def _INTER_metric(self):
-        """Calculate the weighted spline interpolation distance"""
+        """Calculate the weighted spline interpolation distance."""
 
         # Get splines
         data_spl = self._interp(self.data_range, self.val_data)
@@ -284,7 +283,7 @@ class DSN(BaseThresholder):
         return np.mean(dist)-np.mean(self.norm)
 
     def _interp(self, x, y):
-        """Spline interpolation"""
+        """Spline interpolation."""
 
         # Smooth approximating B-spline coefficients
         tck, _ = interpolate.splprep([x, y], s=0)
@@ -298,7 +297,7 @@ class DSN(BaseThresholder):
         return np.array(spline)
 
     def _MMD_metric(self):
-        """Calculate the Maximum Mean Discrepancy distance using a linear kernel"""
+        """Calculate the Maximum Mean Discrepancy distance using a linear kernel."""
 
         delta = self.val_data - self.val_norm
         delta = normalize(delta)

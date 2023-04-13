@@ -63,8 +63,8 @@ class OCSVM(BaseThresholder):
 
        Examples
        --------
-       The effects of randomness can affect the thresholder's output perfomance 
-       signicantly. Therefore, to alleviate the effects of randomness on the 
+       The effects of randomness can affect the thresholder's output perfomance
+       signicantly. Therefore, to alleviate the effects of randomness on the
        thresholder a combined model can be used with different random_state values.
        E.g.
 
@@ -82,11 +82,10 @@ class OCSVM(BaseThresholder):
             decision_scores = clf.decision_scores_  # raw outlier scores
 
             # get outlier labels with combined model
-            thres = COMB(thresholders = [OCSVM(random_state=1234), 
-            OCSVM(random_state=42), OCSVM(random_state=9685), 
+            thres = COMB(thresholders = [OCSVM(random_state=1234),
+            OCSVM(random_state=42), OCSVM(random_state=9685),
             OCSVM(random_state=111222)])
             labels = thres.eval(decision_scores)
-
     """
 
     def __init__(self, model='sgd', degree='auto', gamma='auto',
@@ -167,7 +166,7 @@ class OCSVM(BaseThresholder):
         return res
 
     def _auto_crit(self, decision):
-        '''Decide polynomial degree using criterion'''
+        """Decide polynomial degree using criterion."""
 
         # Generate kde
         kde, dat_range = gen_kde(decision, 0, 1, len(decision))
