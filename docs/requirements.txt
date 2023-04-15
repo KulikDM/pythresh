@@ -8,9 +8,9 @@ pandas
 pyclustering
 pyod
 ruptures
-scipy
 scikit-learn
 scikit-lego
+scipy
 six
 sphinx-rtd-theme
 sphinxcontrib-bibtex
