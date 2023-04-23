@@ -195,8 +195,7 @@ class CLUST(BaseThresholder):
         labels = cl.predict(decision)
 
         # Flip if outliers were clustered
-        if sum(labels) > np.ceil(len(decision)/2):
-            labels = 1-labels
+        labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
 
         return labels
 

@@ -2,8 +2,9 @@
  Installation
 ##############
 
-It is recommended to use **pip** or **conda** installation. Please make sure **the
-latest version** is installed, as PyThresh is updated frequently:
+It is recommended to use **pip** or **conda** installation. Please make
+sure **the latest version** is installed, as PyThresh is updated
+frequently:
 
 .. code:: bash
 

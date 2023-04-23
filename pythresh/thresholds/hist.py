@@ -263,7 +263,6 @@ class HIST(BaseThresholder):
         length = peak_height * x1 - width * y1
         arg_level = np.argmax(length) + arg_low_level
 
-        if flip:
-            arg_level = nbins - arg_level - 1
+        arg_level = nbins - arg_level - 1 if flip else arg_level
 
         return bin_centers[arg_level]
