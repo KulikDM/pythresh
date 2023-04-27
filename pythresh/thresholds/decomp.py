@@ -1,5 +1,9 @@
 import numpy as np
 from sklearn.decomposition import NMF, PCA
+from sklearn.random_projection import (
+    GaussianRandomProjection,
+    SparseRandomProjection
+)
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
@@ -19,11 +23,13 @@ class DECOMP(BaseThresholder):
        Parameters
        ----------
 
-       method : {'NMF', 'PCA'}, optional (default='PCA')
+       method : {'NMF', 'PCA', 'GRP', 'SRP'}, optional (default='PCA')
             Method to use for decomposition
 
             - 'NMF':  Non-Negative Matrix Factorization
-            - 'PCA':  Principal component analysis
+            - 'PCA':  Principal Component Analysis
+            - 'GRP':  Gaussian Random Projection
+            - 'SRP':  Sparse Random Projection
 
        random_state : int, optional (default=1234)
             Random seed for the decomposition algorithm. Can also be set to None.
@@ -64,9 +70,11 @@ class DECOMP(BaseThresholder):
 
         self.method = method
         self.method_funcs = {'NMF': NMF(random_state=random_state),
-                             'PCA': PCA(random_state=random_state)}
-        # make available as property for consistency with other thresholders
-        self.random_state = random_state
+                             'PCA': PCA(random_state=random_state),
+                             'GRP': GaussianRandomProjection(n_components=2,
+                                                             random_state=random_state),
+                             'SRP': SparseRandomProjection(n_components=3,
+                                                           random_state=random_state)}
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.

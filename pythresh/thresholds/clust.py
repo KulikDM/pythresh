@@ -136,15 +136,13 @@ class CLUST(BaseThresholder):
 
         pred = np.squeeze(np.array(cl.get_clusters(), dtype=object))
 
-        if type(pred[0]) == list:
-            pred = np.array(pred[0])
+        pred = np.array(pred[0]) if type(pred[0]) == list else pred
 
         labels = np.ones(len(decision))
         labels[pred.astype(int)] = 0
 
         # Flip if outliers were clustered
-        if sum(labels) > np.ceil(len(decision)/2):
-            labels = 1-labels
+        labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
 
         return labels
 
@@ -155,8 +153,7 @@ class CLUST(BaseThresholder):
         labels = cl.labels_
 
         # Flip if outliers were clustered
-        if sum(labels) > np.ceil(len(decision)/2):
-            labels = 1-labels
+        labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
 
         return labels
 

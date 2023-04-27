@@ -46,3 +46,4 @@ v<0.2.9>, <03/12/2023> -- Added FAQ, Pull request, and additional doc changes
 v<0.2.9>, <03/19/2023> -- Updated clf thresholder
 v<0.2.9>, <03/20/2023> -- Added GNBM model to meta
 v<0.3.0>, <04/13/2023> -- Added pre-commit and formatted
+v<0.3.0>, <04/27/2023> -- Added grp and srp methods to decomp

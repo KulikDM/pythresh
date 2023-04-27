@@ -29,14 +29,17 @@ class TestDECOMP(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.thres = DECOMP()
+        self.methods = ['NMF', 'PCA', 'GRP', 'SRP']
 
     def test_prediction_labels(self):
 
-        pred_labels = self.thres.eval(self.scores)
-        assert (self.thres.thresh_ is not None)
+        for method in self.methods:
 
-        assert_equal(pred_labels.shape, self.y_train.shape)
+            self.thres = DECOMP(method=method)
+            pred_labels = self.thres.eval(self.scores)
+            assert (self.thres.thresh_ is not None)
 
-        assert (pred_labels.min() == 0)
-        assert (pred_labels.max() == 1)
+            assert_equal(pred_labels.shape, self.y_train.shape)
+
+            assert (pred_labels.min() == 0)
+            assert (pred_labels.max() == 1)
