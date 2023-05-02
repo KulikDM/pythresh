@@ -34,7 +34,6 @@ Or with **pip**:
 
 -  matplotlib
 -  numpy>=1.13
--  pyclustering
 -  pyod
 -  scipy>=1.3.1
 -  scikit_learn>=0.20.0
@@ -42,6 +41,7 @@ Or with **pip**:
 
 **Optional Dependencies**:
 
+-  pyclustering (used in the CLUST thresholder)
 -  ruptures (used in the CPD thresholder)
 -  geomstats (used in the KARCH thresholder)
 -  scikit-lego (used in the META thresholder)

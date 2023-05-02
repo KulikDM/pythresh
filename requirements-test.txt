@@ -1,7 +1,7 @@
 geomstats
 joblib>=0.14.1
 matplotlib
-numpy>=1.13
+numpy<=1.23.5
 pandas
 pyclustering
 pyod
