@@ -15,35 +15,36 @@ v<0.2.2>, <06/25/2022> -- Documentation, and general bug fixes with moving all f
 v<0.2.3>, <07/02/2022> -- Updated references, documentation, and version control. General bug fixes
 v<0.2.4>, <07/09/2022> -- Added ocsvm thresholder, fixed all tests and examples, updated documentation
 v<0.2.5>, <08/04/2022> -- Added clust thresholders, Python 3.10 intergration, CodeCov, and minor changes to thresholders
-v<0.2.5>, <09/03/2022> -- Added decomp thresholder, additional description notes in docstrings
-v<0.2.6>, <09/08/2022> -- Added majority vote to ALL, depreciated kmeans and shift thresholders
-v<0.2.6>, <09/11/2022> -- Add INT metric, fix sort bug for DSN
-v<0.2.6>, <09/29/2022> -- Added meta thresholder, updated requirements
-v<0.2.6>, <10/01/2022> -- Updated trained meta-models, added confidence threshold attribute
-v<0.2.7>, <10/02/2022> -- Removed kmeans and shift thresholders
-v<0.2.7>, <10/14/2022> -- Added vae thresholder
-v<0.2.7>, <10/15/2022> -- Added mmd loss and autodim to vae
-v<0.2.7>, <10/29/2022> -- Added mmd metric to DSN
-v<0.2.7>, <11/01/2022> -- Added sgd model to ocsvm
-v<0.2.7>, <11/06/2022> -- Exposed random_state variable for required thresholders
-v<0.2.7>, <11/07/2022> -- Updated trained meta-models (better thresholding accuracy)
-v<0.2.8>, <11/08/2022> -- 'native' parameter to 'auto' (code consistency)
-v<0.2.8>, <11/19/2022> -- Stability fixes for vae, ocsvm, fwfm
-v<0.2.8>, <11/22/2022> -- Format autopep8, isort
-v<0.2.8>, <11/23/2022> -- Refactored
-v<0.2.8>, <11/24/2022> -- Removed unused imports
-v<0.2.8>, <12/18/2022> -- Added cpd thresholder
-v<0.2.8>, <12/19/2022> -- Updated benchmarking documentation
-v<0.2.8>, <12/21/2022> -- Documentation formatting
-v<0.2.8>, <12/29/2022> -- Over prediction documentation
-v<0.2.8>, <01/02/2023> -- Added GNBC model to meta
-v<0.2.9>, <01/23/2023> -- Added comb thresholder
-v<0.2.9>, <01/29/2023> -- Added examples in docstrings for handling effects of randomness
-v<0.2.9>, <02/16/2023> -- Replaced try-except statements for better coverage
-v<0.2.9>, <02/25/2023> -- Updated documentation (links, formatting)
-v<0.2.9>, <03/09/2023> -- Added package to conda-forge and doc updates
-v<0.2.9>, <03/12/2023> -- Added FAQ, Pull request, and additional doc changes
-v<0.2.9>, <03/19/2023> -- Updated clf thresholder
-v<0.2.9>, <03/20/2023> -- Added GNBM model to meta
-v<0.3.0>, <04/13/2023> -- Added pre-commit and formatted
-v<0.3.0>, <04/27/2023> -- Added grp and srp methods to decomp
+v<0.2.6>, <09/03/2022> -- Added decomp thresholder, additional description notes in docstrings
+v<0.2.7>, <09/08/2022> -- Added majority vote to ALL, depreciated kmeans and shift thresholders
+v<0.2.7>, <09/11/2022> -- Add INT metric, fix sort bug for DSN
+v<0.2.7>, <09/29/2022> -- Added meta thresholder, updated requirements
+v<0.2.7>, <10/01/2022> -- Updated trained meta-models, added confidence threshold attribute
+v<0.2.8>, <10/02/2022> -- Removed kmeans and shift thresholders
+v<0.2.8>, <10/14/2022> -- Added vae thresholder
+v<0.2.8>, <10/15/2022> -- Added mmd loss and autodim to vae
+v<0.2.8>, <10/29/2022> -- Added mmd metric to DSN
+v<0.2.8>, <11/01/2022> -- Added sgd model to ocsvm
+v<0.2.8>, <11/06/2022> -- Exposed random_state variable for required thresholders
+v<0.2.8>, <11/07/2022> -- Updated trained meta-models (better thresholding accuracy)
+v<0.2.9>, <11/08/2022> -- 'native' parameter to 'auto' (code consistency)
+v<0.2.9>, <11/19/2022> -- Stability fixes for vae, ocsvm, fwfm
+v<0.2.9>, <11/22/2022> -- Format autopep8, isort
+v<0.2.9>, <11/23/2022> -- Refactored
+v<0.2.9>, <11/24/2022> -- Removed unused imports
+v<0.2.9>, <12/18/2022> -- Added cpd thresholder
+v<0.2.9>, <12/19/2022> -- Updated benchmarking documentation
+v<0.2.9>, <12/21/2022> -- Documentation formatting
+v<0.2.9>, <12/29/2022> -- Over prediction documentation
+v<0.2.9>, <01/02/2023> -- Added GNBC model to meta
+v<0.3.0>, <01/23/2023> -- Added comb thresholder
+v<0.3.0>, <01/29/2023> -- Added examples in docstrings for handling effects of randomness
+v<0.3.0>, <02/16/2023> -- Replaced try-except statements for better coverage
+v<0.3.0>, <02/25/2023> -- Updated documentation (links, formatting)
+v<0.3.0>, <03/09/2023> -- Added package to conda-forge and doc updates
+v<0.3.0>, <03/12/2023> -- Added FAQ, Pull request, and additional doc changes
+v<0.3.0>, <03/19/2023> -- Updated clf thresholder
+v<0.3.0>, <03/20/2023> -- Added GNBM model to meta
+v<0.3.1>, <04/13/2023> -- Added pre-commit and formatted
+v<0.3.1>, <04/27/2023> -- Added grp and srp methods to decomp
+v<0.3.1>, <04/27/2023> -- Python 3.11 support
