@@ -65,14 +65,17 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms
 range from using simple statistical analysis like the Z-score to more
 complex mathematical methods that involve graph theory and topology.
 
-***************
- Documentation
-***************
+************************
+ Documentation & Citing
+************************
 
 Visit `PyThresh Docs
 <https://pythresh.readthedocs.io/en/latest/?badge=latest>`_ for full
 documentation or see below for a quickstart installation and usage
-example
+example.
+
+To cite this work you can visit `PyThresh Citation
+<https://zenodo.org/badge/latestdoi/497683169>`_
 
 ----
 
