@@ -40,6 +40,10 @@
    :target: https://github.com/KulikDM/pythresh/blob/master/LICENSE
    :alt: License
 
+.. image:: https://zenodo.org/badge/497683169.svg
+   :target: https://zenodo.org/badge/latestdoi/497683169
+   :alt: Zenodo DOI
+
 ----
 
 PyThresh is a comprehensive and scalable **Python toolkit** for
@@ -235,8 +239,6 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 | YJ        | Yeo-Johnson Transformation                | [#yj1]_            | `pythresh.thresholds.yj module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.yj>`_                    |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ZSCORE    | Z-score                                   | [#zscore1]_        | `pythresh.thresholds.zscore module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.zscore>`_            |
-+-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ALL       | All Thresholders Combined                 | None               | `pythresh.thresholds.all module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.all>`_                  |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | COMB      | Thresholder Combination                   | None               | `pythresh.thresholds.comb module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.comb>`_                |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+

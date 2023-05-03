@@ -2,17 +2,6 @@
  All Models
 ############
 
-********************************
- pythresh.thresholds.all module
-********************************
-
-.. automodule:: pythresh.thresholds.all
-   :members:
-   :exclude-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
-
 *********************************
  pythresh.thresholds.aucp module
 *********************************

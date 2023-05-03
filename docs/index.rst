@@ -40,6 +40,10 @@
    :target: https://github.com/KulikDM/pythresh/blob/master/LICENSE
    :alt: License
 
+.. image:: https://zenodo.org/badge/497683169.svg
+   :target: https://zenodo.org/badge/latestdoi/497683169
+   :alt: Zenodo DOI
+
 ----
 
 PyThresh is a comprehensive and scalable **Python toolkit** for
@@ -172,8 +176,6 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 | YJ        | Yeo-Johnson Transformation                                     | :cite:`raymaekers2021yj`          |
 +-----------+----------------------------------------------------------------+-----------------------------------+
 | ZSCORE    | Z-score                                                        | :cite:`bagdonavicius2020zscore`   |
-+-----------+----------------------------------------------------------------+-----------------------------------+
-| ALL       | All Thresholders Combined                                      |                                   |
 +-----------+----------------------------------------------------------------+-----------------------------------+
 | COMB      | Thresholder Combination                                        |                                   |
 +-----------+----------------------------------------------------------------+-----------------------------------+
