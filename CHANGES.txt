@@ -50,3 +50,4 @@ v<0.3.1>, <04/27/2023> -- Added grp and srp methods to decomp
 v<0.3.1>, <05/02/2023> -- Python 3.11
 v<0.3.1>, <05/03/2023> -- Removed ALL thresholder
 v<0.3.1>, <05/03/2023> -- Created citation
+v<0.3.1>, <05/10/2023> -- Updated FAQ

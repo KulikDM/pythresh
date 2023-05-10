@@ -54,6 +54,55 @@ But even so, there are obvious limitations to this.
 
 ----
 
+***********************************************************************************************
+ How do I accurately threshold outliers from a test dataset with respect to a training dataset
+***********************************************************************************************
+
+So there are a few ways to threshold test data with respect to the
+training dataset. A good method involves the outlier likelihood scores
+of the test data being computed with regards to the training data. This
+can be done with many of the outlier methods (e.g. using the
+``decision_function`` function of a fitted PyOD model). It is important
+to note that not all outlier detection methods genuinely implement this
+functionality correctly so best to check. The threshold method can be
+independently called for both datasets with reasonable confidence that
+the new data is getting thresholded with respected to the training
+dataset simply based on the likelihood scores.
+
+However, if this is not sufficient and you would like more control over
+the thresholding you can try the above mentioned method with a few
+extra steps.
+
+-  Fit an outlier detection model to a training dataset.
+
+-  MinMax normalize the likelihood scores.
+
+-  Evaluate the normalized likelihood scores with a thresholding method.
+
+-  Get the threshold point from the normalized scores using the fitted
+   thresholder from the ``.thresh_`` attribute as done in `Examples
+   <https://pythresh.readthedocs.io/en/latest/example.html>`_
+
+-  Apply the decision function of the fitted outlier detection method to
+   the new incoming data and get the likelihood scores.
+
+-  Normalize the new likelihood scores with the fitted MinMax from the
+   training dataset.
+
+-  Threshold these new scores using the ``thresh_`` value that you
+   obtained earlier like this: ``new_labels = cut(normalized_new_scores,
+   thresh_value)`` where the function ``cut`` can be imported from
+   ``pythresh.thresholds.thresh_utility``
+
+**Note** that if the training dataset was not meant to have outliers but
+rather serve as a reference or baseline for the test data the first
+mentioned method is probably the better option. If the datasets,
+training and test, both are suspected of having outliers and the data
+drift between the two datasets it small, the second option should work
+well.
+
+----
+
 *********************************
  How can I visualize the results
 *********************************
