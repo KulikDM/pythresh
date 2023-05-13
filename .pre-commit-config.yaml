@@ -8,6 +8,7 @@ repos:
       - id: double-quote-string-fixer
       - id: requirements-txt-fixer
       - id: name-tests-test
+        always_run: true
         args: [--pytest-test-first]
       - id: mixed-line-ending
         args: [--fix=lf]
@@ -20,7 +21,7 @@ repos:
         name: Format docstrings
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
+    rev: v3.4.0
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
@@ -41,7 +42,7 @@ repos:
         name: Sort imports
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.262
+    rev: v0.0.265
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix, --fix, --line-length=180]
