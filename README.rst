@@ -85,7 +85,7 @@ To cite this work you can visit `PyThresh Citation
 
    # train the KNN detector
    from pyod.models.knn import KNN
-   from pythresh.thresholds.clust import CLUST
+   from pythresh.thresholds.filter import FILTER
 
    clf = KNN()
    clf.fit(X_train)
@@ -94,7 +94,7 @@ To cite this work you can visit `PyThresh Citation
    decision_scores = clf.decision_scores_  # raw outlier scores on the train data
 
    # get outlier labels
-   thres = CLUST()
+   thres = FILTER()
    labels = thres.eval(decision_scores)
 
 **************
@@ -134,7 +134,6 @@ Or with **pip**:
 -  pyod
 -  scipy>=1.3.1
 -  scikit_learn>=0.20.0
--  six
 
 **Optional Dependencies**:
 

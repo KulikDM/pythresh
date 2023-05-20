@@ -37,7 +37,6 @@ Or with **pip**:
 -  pyod
 -  scipy>=1.3.1
 -  scikit_learn>=0.20.0
--  six
 
 **Optional Dependencies**:
 
