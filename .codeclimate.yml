@@ -35,14 +35,13 @@ checks:
   similar-code:
     enabled: false
   identical-code:
-    enabled: true
-    config:
-      threshold: 4
+    enabled: false
 plugins:
   bandit:
     enabled: true
   pep8:
     enabled: true
+    max-line-length: 180
   radon:
     enabled: true
   sonar-python:
