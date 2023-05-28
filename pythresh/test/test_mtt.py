@@ -29,13 +29,13 @@ class TestMTT(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.strictness = [1, 2, 3, 4, 5]
+        self.alphas = [0.9, 0.95, 0.975, 0.99, 0.995]
 
     def test_prediction_labels(self):
 
-        for strictness in self.strictness:
+        for alpha in self.alphas:
 
-            self.thres = MTT(strictness=strictness)
+            self.thres = MTT(alpha=alpha)
             pred_labels = self.thres.eval(self.scores)
             assert (self.thres.thresh_ is not None)
 

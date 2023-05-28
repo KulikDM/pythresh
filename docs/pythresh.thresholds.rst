@@ -239,7 +239,7 @@
 
 .. automodule:: pythresh.thresholds.mtt
    :members:
-   :exclude-members: _get_T_critical_value
+   :exclude-members:
    :undoc-members:
    :show-inheritance:
    :inherited-members:

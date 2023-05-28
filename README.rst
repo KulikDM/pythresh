@@ -24,6 +24,10 @@
    :target: https://codecov.io/gh/KulikDM/pythresh
    :alt: Codecov
 
+.. image:: https://api.codeclimate.com/v1/badges/3e2de42b48701c731ef6/maintainability
+   :target: https://codeclimate.com/github/KulikDM/pythresh/maintainability
+   :alt: Maintainability
+
 .. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white
    :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars

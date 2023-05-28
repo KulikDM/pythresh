@@ -95,7 +95,7 @@ extra steps.
    ``pythresh.thresholds.thresh_utility``
 
 **Note** that if the training dataset was not meant to have outliers but
-rather serve as a reference or baseline for the test data the first
+rather serve as a reference or baseline for the test data, the first
 mentioned method is probably the better option. If the datasets,
 training and test, both are suspected of having outliers and the data
 drift between the two datasets it small, the second option should work
