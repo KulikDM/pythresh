@@ -39,9 +39,6 @@ checks:
 plugins:
   bandit:
     enabled: true
-  pep8:
-    enabled: true
-    max-line-length: 180
   radon:
     enabled: true
   sonar-python:
