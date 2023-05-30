@@ -94,8 +94,7 @@ class VAE(BaseThresholder):
         self.loss = loss
         self.batch_size = batch_size
         self.random_state = random_state
-        if random_state:
-            torch.manual_seed(random_state)
+        torch.manual_seed(random_state) if random_state else None
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -201,8 +200,7 @@ class VAE_model(nn.Module):
         self.dist = dist
         self.loss = loss
 
-        if random_state:
-            torch.manual_seed(random_state)
+        torch.manual_seed(random_state) if random_state else None
 
         self.prior = self.dist(0, 1)
 

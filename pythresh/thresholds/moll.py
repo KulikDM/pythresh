@@ -123,10 +123,8 @@ class MOLL(BaseThresholder):
         rho = (norm_const/width)*r
 
         # Perform convolution to make smooth reconstruction
-        if s.shape[0] > 500:
-            smooth = signal.fftconvolve(ds*position_interp, rho, mode='same')
-        else:
-            smooth = np.convolve(ds*position_interp, rho, mode='same')
+        conv_func = signal.fftconvolve if s.shape[0] > 500 else np.convolve
+        smooth = conv_func(ds*position_interp, rho, mode='same')
 
         # remove padding
         s = s[left_pad_num:-right_pad_num]
