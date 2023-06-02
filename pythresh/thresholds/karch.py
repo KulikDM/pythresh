@@ -90,16 +90,14 @@ class KARCH(BaseThresholder):
                 # find kde and score dot product and solve the
                 vals = np.dot(val_data, val_norm)
                 estimator.fit(vals)
-                kmean = np.mean(estimator.estimate_)+np.std(decision)
 
             except ValueError:
-                kmean = 1.0
+                estimator.fit(decision.reshape(1, -1))
         else:
             estimator.fit(decision.reshape(1, -1))
-            kmean = np.mean(estimator.estimate_) + np.std(decision)
 
         # Get the mean of each dimension's Karcher mean
-        limit = kmean
+        limit = np.mean(estimator.estimate_) + np.std(decision)
 
         self.thresh_ = limit
 
