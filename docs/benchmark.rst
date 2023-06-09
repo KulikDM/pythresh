@@ -35,7 +35,7 @@ imbalanced dataset. This coefficient is given as,
    MCC = \frac{TP \cdot TN - FP \cdot FN}{\sqrt{(TP + FP) \cdot (TP + FN) \cdot (TN + FP) \cdot (TN + FN)}} \mathrm{,}
 
 where :math:`TP, TN, FP, FN` represent the true positive, true negative,
-false positive, and the false negative respectively. The MMC ranges from
+false positive, and the false negative respectively. The MCC ranges from
 -1 to 1 where 1 represents a perfect prediction, 0 an average random
 prediction, and -1 an inverse prediction. This metric performs
 particularly well at providing a balanced score and penalizing
@@ -48,12 +48,12 @@ score is a better metric.
 
 Since the thresholding method is heavily dependant on the outlier
 detection scores, and therefore the selected outlier detection method,
-simply calculating the MMC for each dataset would yield varying results
+simply calculating the MCC for each dataset would yield varying results
 that would have more dependance on the selected outlier method than the
 thresholding method. To correctly evaluate and eliminate the effects of
-the selected outlier detection method, the MMC deterioration will be
-used. This deterioration score is the difference between the MMC of the
-thresholded labels and the MMC for the labels produced by setting the
+the selected outlier detection method, the MCC deterioration will be
+used. This deterioration score is the difference between the MCC of the
+thresholded labels and the MCC for the labels produced by setting the
 true contamination level for the selected outlier detection method (e.g.
 KNN(contamination=true_contam)).
 
@@ -62,7 +62,7 @@ MCC, which is given by,
 
 .. math::
 
-   MMC_{\rm{norm}} = \frac{MMC + 1}{2} \mathrm{.}
+   MCC_{\rm{norm}} = \frac{MCC + 1}{2} \mathrm{.}
 
 **************
  Benchmarking
@@ -72,14 +72,14 @@ All the thresholders using default parameters were tested on the
 ``arrhythmia, cardio, glass, ionosphere, letter, lympho, mnist, musk,
 optdigits, pendigits, pima, satellite, satimage-2, vertebral, vowels,``
 and ``wbc`` datasets using the ``PCA, MCD, KNN, IForest, GMM,`` and
-``COPOD`` outlier methods on each dataset. The MMC deterioration was
+``COPOD`` outlier methods on each dataset. The MCC deterioration was
 calculated for each instance and the mean and standard deviation of all
 the scores were calculated.
 
 To interpret the plot below, the best to worst performing thresholders
 have been plotted from left to right with their respective uncertainty.
 The closer the mean value is to zero, the closer the thresholder
-performed with regards to the MMC for the labels produced by setting the
+performed with regards to the MCC for the labels produced by setting the
 true contamination level for the selected outlier detection method.
 However, the uncertainty for many goes beyond zero indicating that in
 some instances the thresholder performed better than true contamination
@@ -88,7 +88,7 @@ the thresholders, the default contamination level set for each outlier
 detection method (`Default`) was tested as well as randomly picking a
 contamination level between 1% - 20% (`Select`). Finally, a baseline was
 also calculated if outliers were selected at random (`Random`). This was
-done by setting :math:`MMC_{\rm{norm}} = 1`.
+done by setting :math:`MCC_{\rm{norm}} = 1`.
 
 Overall, a significant amount of thresholders performed better than
 selecting a random contamination level. The ``META`` thresholder
@@ -323,7 +323,7 @@ check the predicted contamination level after thresholding.
 
 A second over predictive evaluation can also be done, but now with
 regards to over predicting beyond the best contamination level for each
-outlier detection method on each dataset based on the MMC score. As seen
+outlier detection method on each dataset based on the MCC score. As seen
 below, a significant amount of thresholders still tend to over predict
 even beyond the best contamination level. However, now some clear well
 performing thresholders can be matched to the previous benchmarking,
@@ -340,10 +340,10 @@ notably ``META`` and ``FILTER``.
 
 Some thresholders use randomness in their methods and the random seed
 can be set using the parameter ``random_state``. To investigate the
-effect of randomness on the resulting labels the MMC deterioration was
+effect of randomness on the resulting labels the MCC deterioration was
 calculated for each thresholder using the random states (1234, 42, 9685,
 and 111222). The same outlier detection methods as well as datasets from
-the first benchmarking test were applied. The means of the MMC
+the first benchmarking test were applied. The means of the MCC
 deterioration were normalized to zero showing the extent of the effect
 of randomness of each thresholder's ability to evaluate labels for the
 outlier decision scores in the uncertainty.
