@@ -25,7 +25,7 @@ class COMB(BaseThresholder):
             above the maximum contamination will not be included in the final combined
             threshold
 
-       method : {'mean', 'median', 'mode'}, optional (default='mean')
+       method : {'mean', 'median', 'mode'}, optional (default='mode')
            statistic to apply to contamination levels
 
            - 'mean':   calculate the mean combined threshold
@@ -44,7 +44,7 @@ class COMB(BaseThresholder):
        confidence_interval_ : lower and upper confidence interval of the contamination level
     """
 
-    def __init__(self, thresholders='default', max_contam=0.5, method='mean', random_state=1234):
+    def __init__(self, thresholders='default', max_contam=0.5, method='mode', random_state=1234):
 
         self.thresholders = thresholders
         self.max_contam = max_contam
@@ -72,7 +72,7 @@ class COMB(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
 
-        decision = np.sort(normalize(decision))
+        decision = normalize(decision)
 
         # Initialize thresholders
         if self.thresholders == 'default':

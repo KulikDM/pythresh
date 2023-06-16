@@ -54,3 +54,4 @@ v<0.3.2>, <05/10/2023> -- Updated FAQ
 v<0.3.2>, <05/24/2023> -- Added gitignore
 v<0.3.2>, <05/28/2023> -- Upgraded mtt t-dist
 v<0.3.2>, <05/28/2023> -- Added Code Climate integration
+v<0.3.2>, <06/16/2023> -- Fixed comb and changed to mode as default
