@@ -1,5 +1,7 @@
 import numpy as np
 import scipy.stats as stats
+from sklearn.ensemble import BaggingClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
@@ -18,19 +20,22 @@ class COMB(BaseThresholder):
        ----------
 
        thresholders : list, optional (default='default')
-            List of instantiated thresholders, e.g. [DSN(), FILTER()]
+            List of instantiated thresholders, e.g. [DSN(), FILTER()].
+            Default is [DSN(random_state=self.random_state), FILTER(),
+            OCSVM(random_state=self.random_state)]
 
        max_contam : float, optional (default=0.5)
             Maximum contamination allowed for each threshold output. Thresholded scores
             above the maximum contamination will not be included in the final combined
             threshold
 
-       method : {'mean', 'median', 'mode'}, optional (default='mode')
-           statistic to apply to contamination levels
+       method : {'mean', 'median', 'mode', 'model'}, optional (default='model')
+           evaluation method to apply to contamination levels
 
            - 'mean':   calculate the mean combined threshold
            - 'median': calculate the median combined threshold
-           - 'mode':  calculate the majority vote or mode of the thresholded labels
+           - 'mode':   calculate the majority vote or mode of the thresholded labels
+           - 'model':  use a bagged GaussianNB to solve the combined threshold
 
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
@@ -44,13 +49,14 @@ class COMB(BaseThresholder):
        confidence_interval_ : lower and upper confidence interval of the contamination level
     """
 
-    def __init__(self, thresholders='default', max_contam=0.5, method='mode', random_state=1234):
+    def __init__(self, thresholders='default', max_contam=0.5, method='model', random_state=1234):
 
         self.thresholders = thresholders
         self.max_contam = max_contam
-        stat = {'mean': np.mean, 'median': np.median, 'mode': stats.mode}
+        func = {'mean': np.mean, 'median': np.median,
+                'mode': stats.mode, 'model': BaggingClassifier}
         self.method = method
-        self.method_func = stat[method]
+        self.method_func = func[method]
         self.random_state = random_state
 
     def eval(self, decision):
@@ -107,8 +113,24 @@ class COMB(BaseThresholder):
                                     random_state=self.random_state).confidence_interval
         self.confidence_interval_ = [low, high]
 
-        # Get [mean, median, or mode] of inliers
-        if self.method == 'mode':
+        # Get [mean, median, mode, or model] of inliers
+        if self.method == 'model':
+
+            X = np.tile(decision, len(contam))
+            y = np.hstack(contam)
+
+            model = self.method_func(GaussianNB(),
+                                     n_estimators=12,
+                                     random_state=self.random_state)
+
+            model.fit(X.reshape(-1, 1), y)
+            lbls = model.predict(decision.reshape(-1, 1))
+
+            self.thresh_ = None
+
+            return lbls
+
+        elif self.method == 'mode':
 
             self.thresh_ = None
             lbls = self.method_func(contam, axis=0)
