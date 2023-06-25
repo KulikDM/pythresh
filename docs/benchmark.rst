@@ -295,6 +295,48 @@ analysis of thresholding outlier decision scores.
 
 ----
 
+*************************
+ Thresholder Combination
+*************************
+
+The ``COMB`` thresholder allows for combining the output from several
+thresholders to produce an amalgamated result. However, there are
+several methods with which to combine thresholders. Each method's
+ability to calculate a well-rounded general result from its constituents
+is important for increased accuracy and overall performance.
+
+To evaluate the performance of each method available from the ``COMB``
+thresholder the same outlier detection methods as well as datasets from
+the first benchmarking test were applied. The selected thresholders that
+were combined were ``META``, ``FILTER``, ``DSN``, ``OCSVM``, and
+``KARCH`` all using default parameters. It was found that the ``bagged``
+and ``stacked`` methods performed significantly better than any
+individual input thresholder. Also, the ``mean`` and ``median`` methods
+produced the highest variability and in general were worse than any
+individual input thresholder.
+
++---------------+---------------------------------------+
+| Label         | Method                                |
++===============+=======================================+
+| COMB1         | COMB(method='mean')                   |
++---------------+---------------------------------------+
+| COMB2         | COMB(method='median')                 |
++---------------+---------------------------------------+
+| COMB3         | COMB(method='mode')                   |
++---------------+---------------------------------------+
+| COMB4         | COMB(method='bagged')                 |
++---------------+---------------------------------------+
+| COMB5         | COMB(method='stacked')                |
++---------------+---------------------------------------+
+
+.. figure:: figs/Comb1.png
+   :alt: Combination Performance
+
+.. figure:: figs/Comb2.png
+   :alt: Combination Close Up
+
+----
+
 *****************
  Over Prediction
 *****************
@@ -302,9 +344,9 @@ analysis of thresholding outlier decision scores.
 All thresholders have a tendency to over predict the contamination level
 of the outlier scores. This will lead to not only mis-classifying
 inliers based on the outlier detection method's capabilities but also
-further inliers which will lead to a loss of significant data with which
-to work with. Therefore it is important to note which thresholders have
-the highest potential to over predict.
+additional inliers which will lead to a loss of significant data with
+which to work with. Therefore it is important to note which thresholders
+have the highest potential to over predict.
 
 To evaluate the over predictive nature of each thresholder, the ratio
 between the predicted and true contamination level will be used. The

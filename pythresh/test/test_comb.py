@@ -29,7 +29,7 @@ class TestCOMB(unittest.TestCase):
         self.clf.fit(self.X_train)
 
         self.scores = self.clf.decision_scores_
-        self.methods = ['mean', 'median', 'mode', 'model']
+        self.methods = ['mean', 'median', 'mode', 'bagged', 'stacked']
 
     def test_prediction_labels(self):
 

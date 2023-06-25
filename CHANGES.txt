@@ -57,3 +57,4 @@ v<0.3.2>, <05/28/2023> -- Added Code Climate integration
 v<0.3.2>, <06/16/2023> -- Fixed comb and changed to mode as default
 v<0.3.2>, <06/16/2023> -- Removed Python 3.7 from testing
 v<0.3.2>, <06/18/2023> -- Added model to comb and set as default
+v<0.3.2>, <06/25/2023> -- Changed model to bagged, added stacked, and set as default

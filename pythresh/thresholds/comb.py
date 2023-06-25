@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.stats as stats
-from sklearn.ensemble import BaggingClassifier
+from sklearn.ensemble import BaggingClassifier, StackingClassifier
+from sklearn.linear_model import RidgeClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.utils import check_array
 
@@ -29,13 +30,14 @@ class COMB(BaseThresholder):
             above the maximum contamination will not be included in the final combined
             threshold
 
-       method : {'mean', 'median', 'mode', 'model'}, optional (default='model')
+       method : {'mean', 'median', 'mode', 'bagged', 'stacked}, optional (default='stacked')
            evaluation method to apply to contamination levels
 
-           - 'mean':   calculate the mean combined threshold
-           - 'median': calculate the median combined threshold
-           - 'mode':   calculate the majority vote or mode of the thresholded labels
-           - 'model':  use a bagged GaussianNB to solve the combined threshold
+           - 'mean':    calculate the mean combined threshold
+           - 'median':  calculate the median combined threshold
+           - 'mode':    calculate the majority vote or mode of the thresholded labels
+           - 'bagged':  use a bagged GaussianNB to solve the combined threshold
+           - 'stacked': use a stacked Ridge, and GaussianNB classifier combined method
 
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
@@ -49,12 +51,13 @@ class COMB(BaseThresholder):
        confidence_interval_ : lower and upper confidence interval of the contamination level
     """
 
-    def __init__(self, thresholders='default', max_contam=0.5, method='model', random_state=1234):
+    def __init__(self, thresholders='default', max_contam=0.5, method='stacked', random_state=1234):
 
         self.thresholders = thresholders
         self.max_contam = max_contam
         func = {'mean': np.mean, 'median': np.median,
-                'mode': stats.mode, 'model': BaggingClassifier}
+                'mode': stats.mode, 'bagged': BaggingClassifier,
+                'stacked': StackingClassifier}
         self.method = method
         self.method_func = func[method]
         self.random_state = random_state
@@ -113,15 +116,19 @@ class COMB(BaseThresholder):
                                     random_state=self.random_state).confidence_interval
         self.confidence_interval_ = [low, high]
 
-        # Get [mean, median, mode, or model] of inliers
-        if self.method == 'model':
+        # Get [mean, median, mode, bagged, or stacked] of inliers
+        if (self.method == 'bagged') or (self.method == 'stacked'):
 
             X = np.tile(decision, len(contam))
             y = np.hstack(contam)
 
-            model = self.method_func(GaussianNB(),
-                                     n_estimators=12,
-                                     random_state=self.random_state)
+            if (self.method == 'bagged'):
+                model = self.method_func(GaussianNB(),
+                                         n_estimators=12,
+                                         random_state=self.random_state)
+            else:
+                model = self.method_func([('Ridge', RidgeClassifier()),
+                                          ('GNB', GaussianNB())])
 
             model.fit(X.reshape(-1, 1), y)
             lbls = model.predict(decision.reshape(-1, 1))
