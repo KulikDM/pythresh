@@ -63,7 +63,7 @@
 
 .. automodule:: pythresh.thresholds.comb
    :members:
-   :exclude-members:
+   :exclude-members: LaplaceGaussianNB, fit, predict, predict_proba
    :undoc-members:
    :show-inheritance:
    :inherited-members:

@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.stats as stats
+from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.ensemble import BaggingClassifier, StackingClassifier
 from sklearn.linear_model import RidgeClassifier
-from sklearn.naive_bayes import GaussianNB
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
@@ -36,8 +36,8 @@ class COMB(BaseThresholder):
            - 'mean':    calculate the mean combined threshold
            - 'median':  calculate the median combined threshold
            - 'mode':    calculate the majority vote or mode of the thresholded labels
-           - 'bagged':  use a bagged GaussianNB to solve the combined threshold
-           - 'stacked': use a stacked Ridge, and GaussianNB classifier combined method
+           - 'bagged':  use a bagged LaplaceGaussianNB to solve the combined threshold
+           - 'stacked': use a stacked Ridge, and LaplaceGaussianNB classifier combined method
 
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
@@ -123,12 +123,12 @@ class COMB(BaseThresholder):
             y = np.hstack(contam)
 
             if (self.method == 'bagged'):
-                model = self.method_func(GaussianNB(),
+                model = self.method_func(LaplaceGaussianNB(),
                                          n_estimators=12,
                                          random_state=self.random_state)
             else:
                 model = self.method_func([('Ridge', RidgeClassifier()),
-                                          ('GNB', GaussianNB())])
+                                          ('GNB', LaplaceGaussianNB())])
 
             model.fit(X.reshape(-1, 1), y)
             lbls = model.predict(decision.reshape(-1, 1))
@@ -150,7 +150,54 @@ class COMB(BaseThresholder):
             inlier_ratio = 1-self.method_func(contam)
 
             idx = int(counts*inlier_ratio)
-            limit = decision[idx] if idx < counts else 1.0
+            ordered = np.sort(decision)
+            limit = ordered[idx] if idx < counts else 1.0
             self.thresh_ = limit
 
             return cut(decision, limit)
+
+
+class LaplaceGaussianNB(BaseEstimator, ClassifierMixin):
+
+    def __init__(self):
+
+        pass
+
+    def fit(self, X, y):
+
+        X = X.squeeze()
+
+        self.models = []
+        self.priors = []
+        self.classes_ = [0, 1]
+        dist = [stats.laplace, stats.norm]
+
+        for c in self.classes_:
+
+            subset_x = X[y == c]
+
+            self.models.append(dist[c](subset_x.mean(),
+                                       subset_x.std()))
+
+            self.priors.append(len(subset_x)/len(X))
+
+        return self
+
+    def predict(self, X):
+
+        likelihoods = self.predict_proba(X)
+
+        return likelihoods.argmax(axis=1)
+
+    def predict_proba(self, X):
+
+        X = X.squeeze()
+
+        likelihoods = []
+
+        for c in self.classes_:
+
+            probs = self.priors[c] * self.models[c].pdf(X)
+            likelihoods.append(probs)
+
+        return np.vstack(likelihoods).T

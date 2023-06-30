@@ -311,9 +311,8 @@ the first benchmarking test were applied. The selected thresholders that
 were combined were ``META``, ``FILTER``, ``DSN``, ``OCSVM``, and
 ``KARCH`` all using default parameters. It was found that the ``bagged``
 and ``stacked`` methods performed significantly better than any
-individual input thresholder. Also, the ``mean`` and ``median`` methods
-produced the highest variability and in general were worse than any
-individual input thresholder.
+individual input thresholder while the ``mean``, ``median``, ``mode``
+methods produced results that were comparable to their inputs.
 
 +---------------+---------------------------------------+
 | Label         | Method                                |
