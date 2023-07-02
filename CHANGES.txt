@@ -59,3 +59,4 @@ v<0.3.2>, <06/16/2023> -- Removed Python 3.7 from testing
 v<0.3.2>, <06/18/2023> -- Added model to comb and set as default
 v<0.3.2>, <06/25/2023> -- Changed model to bagged, added stacked, and set as default
 v<0.3.2>, <06/30/2023> -- Updated benchmarks and use of LaplaceGaussianNB
+v<0.3.2>, <07/02/2023> -- Added new publish action

@@ -1,6 +1,15 @@
+prune .github
+prune docs
+prune imgs
 prune examples
 prune notebooks
 prune pythresh/test
+exclude .readthedocs.yaml
+exclude .gitignore
+exclude .codeclimate.yml
+exclude .pre-commit-config.yaml
+exclude CHANGES.txt
+exclude requirements-test.txt
 include README.rst
 include requirements.txt
 include pythresh/models/meta_model_GNB.pkl
