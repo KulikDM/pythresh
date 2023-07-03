@@ -25,17 +25,23 @@ jobs:
 
       - name: Increment version number
         run: |
-          # Read the current version from the file
+          printf "Reading the current version from the file\n"
+
           current_version=$(grep -oP "__version__ = '\K(\d+\.\d+\.\d+)" pythresh/version.py)
+
           if [[ -z $current_version ]]; then
               current_version="0.0.0"
+              printf "\nIssue fetching current version $current_version\n"
+              exit 1
           fi
 
-          # Increment the version number
+          printf "\nIncrementing the version number\n"
+
           IFS='.' read -r -a version_parts <<< "$current_version"
           patch=$(( ${version_parts[2]} + 1 ))
 
-          # Handle version part overflow
+          printf "\nHandling version part overflow\n"
+
           if (( patch > 9 )); then
               patch=0
               minor=$(( ${version_parts[1]} + 1 ))
@@ -53,97 +59,114 @@ jobs:
 
           new_version="${major}.${minor}.$patch"
 
-          # Update the file with the new version number
+          printf "\nUpdating the file with the new version number\n"
+
           sed -i "s/__version__ = '${current_version}'/__version__ = '${new_version}'/" pythresh/version.py
 
           echo "new_version=$new_version" >> $GITHUB_ENV
-          echo "New version updated from $current_version to $new_version"
 
-      #- name: Install curl
-      #  run: sudo apt-get update && sudo apt-get install -y curl
+          printf "\nNew version updated from $current_version to $new_version\n"
 
       - name: Validate new PyPi version
         run: |
+          printf "Getting lastest pypi information\n"
 
-          # Get lastest pypi information
           url="https://pypi.org/pypi/pythresh/json"
           current_pypi_version=$(curl -s "$url" | jq -r '.info.version')
 
-          # Validate version update
+          printf "\nValidating version update\n"
+
           if [ "$current_pypi_version" == "${{ env.new_version }}" ]; then
-            echo "Current PyPi version $current_pypi_version matches ${{ env.new_version }}"
+            printf "\nCurrent PyPi version $current_pypi_version matches ${{ env.new_version }}\n"
             exit 1
           fi
 
-          echo "New version validated"
+          printf "\nNew version validated\n"
 
       - name: Commit and push changes
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
-          git config --global user.name $GIT_USER
+          printf "Preparing to commit\n"
+
+          #git config --global user.name $GIT_USER
           git commit -a -m "Updated to version ${{ env.new_version }}"
+
+          printf "\nPushing the changes to the repository\n"
+
           git push origin main
 
-          echo "New version commited"
+          printf "\nNew version commited\n"
+          sleep 1m
 
       - name: Publish to PyPI
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
+          printf "Preparing to install dependancies\n"
+
           python -m pip install --upgrade pip setuptools wheel twine
           python setup.py sdist
+
+          printf "\nPackage created locally\n"
+
           twine upload dist/*
 
-          echo "New PyPi release created"
+          printf "\nNew PyPi release created\n"
+          sleep 5m
 
       - name: Validate new Conda version
         run: |
+          printf "Getting lastest pypi information\n"
 
-          # Get lastest pypi information
           url="https://pypi.org/pypi/pythresh/json"
           latest_version=$(curl -s "$url" | jq -r '.info.version')
           latest_sha256=$(curl -s "$url" | jq -r '.releases."'"$latest_version"'"[0].digests."sha256"')
 
-          # Validate version update
+          echo "Validating version update"
+
           if [ "$latest_version" != "${{ env.new_version }}" ]; then
-            echo "New Conda version $latest_version does not match new PyPi version ${{ env.new_version }}"
+            printf "\nNew Conda version $latest_version does not match new PyPi version ${{ env.new_version }}\n"
             exit 1
           fi
 
           echo "latest_version=$latest_version" >> $GITHUB_ENV
           echo "latest_sha256=$latest_sha256" >> $GITHUB_ENV
-          echo "New PyPi version validated"
+
+          printf "\nNew PyPi version validated\n"
 
       - name: Update Conda feedstock repository
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
+          echo "Preparing to clone feedstock repository\n"
 
-          git config --global user.name $GIT_USER
-
-          # Clone the feedstock repository
+          #git config --global user.name $GIT_USER
           git clone https://$GIT_USER:$GIT_TOKEN@github.com/conda-forge/pythresh-feedstock.git
 
           cd pythresh-feedstock
 
-          # Read the original meta.yaml file
+          printf "\nReading the original meta.yaml file\n"
+
           meta_yaml=$(cat recipe/meta.yaml)
 
-          # Update the version and sha256
+          printf "\nUpdating the version and sha256\n"
+
           updated_meta_yaml=$(echo "{% set name = \"pythresh\" %}" && echo "{% set version = \"${{ env.latest_version }}\" %}" && tail -n +3 meta.yaml | sed -E "s/sha256: .*$/sha256: ${{ env.latest_sha256 }}/")
 
-          # Write the updated meta.yaml file
+          printf "\nWriting the updated meta.yaml file\n"
+
           echo "$updated_meta_yaml" > recipe/meta.yaml
 
-          # Commit the changes
+          printf "\nCommitting the changes\n"
+
           git add recipe/meta.yaml
           git commit -m "Update to version ${{ env.latest_version }}"
 
-          # Push the changes to the repository
+          printf "\nPushing the changes to the repository"
           git push origin main
 
-          echo "New Conda release created"
+          printf "\nNew Conda release created\n"
