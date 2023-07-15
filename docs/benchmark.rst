@@ -16,10 +16,10 @@ all the available methods, with great insight and interpretability
 <https://www.andrew.cmu.edu/user/yuezhao2/papers/22-neurips-adbench.pdf>`_.
 
 Since the thresholding methods are dependant on both the dataset and the
-outlier detection scores, in order to quantify how well a threshold
-method works, it must be tested against multiple datasets applying
-multiple outlier detection methods to each dataset. All the benchmark
-datasets can be found at `ODDS
+outlier detection likelihood scores, in order to quantify how well a
+threshold method works, it must be tested against multiple datasets
+applying multiple outlier detection methods to each dataset. All the
+benchmark datasets can be found at `ODDS
 <http://odds.cs.stonybrook.edu/#table1>`_.
 
 ----
@@ -41,21 +41,21 @@ prediction, and -1 an inverse prediction. This metric performs
 particularly well at providing a balanced score and penalizing
 thresholding methods that tend to over predict the best contamination
 level (most :math:`TP` and :math:`TN` and least :math:`FP` and
-:math:`FN`) based on the selected outlier detection scores unlike the F1
-score which focuses only on outliers. However, if finding and removing
-all the outliers regardless of how many inliers also get removed the F1
-score is a better metric.
+:math:`FN`) based on the selected outlier detection likelihood scores
+unlike the F1 score which focuses only on outliers. However, if finding
+and removing all the outliers regardless of how many inliers also get
+removed the F1 score is a better metric.
 
 Since the thresholding method is heavily dependant on the outlier
-detection scores, and therefore the selected outlier detection method,
-simply calculating the MCC for each dataset would yield varying results
-that would have more dependance on the selected outlier method than the
-thresholding method. To correctly evaluate and eliminate the effects of
-the selected outlier detection method, the MCC deterioration will be
-used. This deterioration score is the difference between the MCC of the
-thresholded labels and the MCC for the labels produced by setting the
-true contamination level for the selected outlier detection method (e.g.
-KNN(contamination=true_contam)).
+detection likelihood scores, and therefore the selected outlier
+detection method, simply calculating the MCC for each dataset would
+yield varying results that would have more dependance on the selected
+outlier method than the thresholding method. To correctly evaluate and
+eliminate the effects of the selected outlier detection method, the MCC
+deterioration will be used. This deterioration score is the difference
+between the MCC of the thresholded labels and the MCC for the labels
+produced by setting the true contamination level for the selected
+outlier detection method (e.g. KNN(contamination=true_contam)).
 
 For consistency, the benchmark results below used the unit-normalized
 MCC, which is given by,
@@ -82,13 +82,13 @@ The closer the mean value is to zero, the closer the thresholder
 performed with regards to the MCC for the labels produced by setting the
 true contamination level for the selected outlier detection method.
 However, the uncertainty for many goes beyond zero indicating that in
-some instances the thresholder performed better than true contamination
-level for a particuar dataset and outlier detection method. Along with
-the thresholders, the default contamination level set for each outlier
-detection method (`Default`) was tested as well as randomly picking a
-contamination level between 1% - 20% (`Select`). Finally, a baseline was
-also calculated if outliers were selected at random (`Random`). This was
-done by setting :math:`MCC_{\rm{norm}} = 1`.
+some instances the thresholder performed better than setting true
+contamination level for a particular dataset and outlier detection
+method. Along with the thresholders, the default contamination level set
+for each outlier detection method (`Default`) = 10% was tested as well
+as randomly picking a contamination level between 1% - 20% (`Select`).
+Finally, a baseline was also calculated if outliers were selected at
+random (`Random`). This was done by setting :math:`MCC_{\rm{norm}} = 1`.
 
 Overall, a significant amount of thresholders performed better than
 selecting a random contamination level. The ``META`` thresholder
@@ -291,7 +291,7 @@ deterioration), and also since the publishing of this article some
 default parameters for some thresholders have been changed. Still, this
 article provides a thorough analysis of the performance of the
 thresholders in ``PyThresh`` with many insightful results and detailed
-analysis of thresholding outlier decision scores.
+analysis of thresholding outlier decision likelihood scores.
 
 ----
 
@@ -387,7 +387,7 @@ and 111222). The same outlier detection methods as well as datasets from
 the first benchmarking test were applied. The means of the MCC
 deterioration were normalized to zero showing the extent of the effect
 of randomness of each thresholder's ability to evaluate labels for the
-outlier decision scores in the uncertainty.
+outlier decision likelihood scores indicated in the uncertainty.
 
 From the plot below, ``WIND`` performed the worst and was highly
 affected by the choice of the selected random state. ``DSN`` which is a

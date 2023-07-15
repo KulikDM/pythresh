@@ -127,7 +127,7 @@ Just as outlier detection often suffers from model instability, a
 thresholding method may as well due to its unsupervised nature. Thus, it
 is recommended to combine various thresholders outputs, e.g., by
 averaging, to improve its robustness. Luckily this has already been
-written for convenience as the function "pythresh.thresholds.all"
+written for convenience as the function `pythresh.thresholds.comb.COMB`
 
 ----
 
@@ -136,8 +136,8 @@ written for convenience as the function "pythresh.thresholds.all"
 ************************
 
 1. Get the normalized threshold value that separates the inliers from
-outliers after the scores have been evaluated. Note, the outlier
-detection scores are normalized between 0 and 1.
+outliers after the likelihood scores have been evaluated. Note, the
+outlier detection likelihood scores are normalized between 0 and 1.
 
    .. code:: python
 

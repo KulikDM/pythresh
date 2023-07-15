@@ -2,7 +2,7 @@
  API CheatSheet
 ################
 
-The following APIs are applicable for all detector models for easy use.
+The following APIs are applicable for all detector models for ease of use.
 
 -  :func:`pythresh.thresholds.base.BaseThresholder.eval`: Outlier/inlier
    evaluation process for decision scores.
@@ -10,7 +10,7 @@ The following APIs are applicable for all detector models for easy use.
 Key Attributes of a fitted model:
 
 -  :attr:`pythresh.thresholds.base.BaseThresholder.thresh_`: threshold
-   value from normalize scores
+   value from scores normalize between 0 and 1
 
 See base class definition below:
 

@@ -59,8 +59,8 @@ class MCST(BaseThresholder):
 
        Examples
        --------
-       The effects of randomness can affect the thresholder's output perfomance
-       signicantly. Therefore, to alleviate the effects of randomness on the
+       The effects of randomness can affect the thresholder's output performance
+       significantly. Therefore, to alleviate the effects of randomness on the
        thresholder a combined model can be used with different random_state values.
        E.g.
 

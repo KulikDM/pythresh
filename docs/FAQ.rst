@@ -26,8 +26,9 @@ the case. Finally, the distribution of the outlier detection likelihood
 scores can be the most helpful for selecting the best thresholding
 method. Understanding the profile and complexity of of the distribution
 is an important factor (e.g. is the distribution Gaussian-like?). The
-API reference page has added notes on most methods and can be very
-helpful with matching them with the distributions of scores.
+API reference page has added notes on most thresholding methods and can
+be very helpful with matching them with the distributions of the
+likelihood scores.
 
 Remember these are unsupervised methods, and sometimes interpretability
 may be more important than the best result. Hence, the range of level in
@@ -70,8 +71,8 @@ the new data is getting thresholded with respected to the training
 dataset simply based on the likelihood scores.
 
 However, if this is not sufficient and you would like more control over
-the thresholding you can try the above mentioned method with a few
-extra steps.
+the thresholding you can try the above mentioned method with a few extra
+steps.
 
 -  Fit an outlier detection model to a training dataset.
 
@@ -98,7 +99,7 @@ extra steps.
 rather serve as a reference or baseline for the test data, the first
 mentioned method is probably the better option. If the datasets,
 training and test, both are suspected of having outliers and the data
-drift between the two datasets it small, the second option should work
+drift between the two datasets is small, the second option should work
 well.
 
 ----

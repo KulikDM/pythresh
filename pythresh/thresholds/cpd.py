@@ -33,7 +33,7 @@ class CPD(BaseThresholder):
        Attributes
        ----------
 
-       thres_ : threshold value that seperates inliers from outliers
+       thres_ : threshold value that separates inliers from outliers
 
     """
 
