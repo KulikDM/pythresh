@@ -146,6 +146,18 @@
    :inherited-members:
 
 *********************************
+ pythresh.thresholds.gamgmm module
+*********************************
+
+.. automodule:: pythresh.thresholds.gamgmm
+   :members:
+   :exclude-members: _compute_gamma_posterior, _order_components, _find_delta_tau, _check_delta_tau, _sigmoid, _derive_jointprobs, _sample_withexactprobs, _augment_space
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+*********************************
  pythresh.thresholds.gesd module
 *********************************
 
