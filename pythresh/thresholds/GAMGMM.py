@@ -12,7 +12,7 @@ from .thresh_utility import normalize
 
 
 class GAMGMM(BaseThresholder):
-    r"""gammaGMM class for gammaGMM thresholder.
+    r"""GAMGMM class for gammaGMM thresholder.
 
        Use a Bayesian method for estimating the posterior distribution
        of the contamination factor (i.e., the proportion of anomalies)
