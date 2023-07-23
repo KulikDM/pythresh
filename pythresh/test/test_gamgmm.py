@@ -26,12 +26,9 @@ sys.stdout = open(os.devnull, 'w')
 warnings.simplefilter('ignore')
 
 
-def tester(y_train, scores, verbose, n_contam, draws,
-           p0, phigh, high_gamma, K):
+def tester(y_train, scores, skip, verbose):
 
-    thres = GAMGMM(n_contaminations=n_contam, n_draws=draws,
-                   p0=p0, phigh=phigh, high_gamma=high_gamma,
-                   K=K, skip=True, verbose=verbose)
+    thres = GAMGMM(skip=skip, steps=10, verbose=verbose)
 
     pred_labels = thres.eval(scores)
     assert (thres.thresh_ is not None)
@@ -69,25 +66,15 @@ class TestGAMGMM(unittest.TestCase):
 
         self.all_scores = [scores, multiple_scores]
 
-        self.n_contaminations = [200, 1000, 10000]
-
-        self.n_draws = [10, 50, 100]
-
-        self.p0 = [0.005, 0.01, 0.05]
-
-        self.phigh = [0.005, 0.01, 0.05]
-
-        self.high_gamma = [0.15, 0.25, 0.5]
-
-        self.K = [10, 50, 100]
+        self.skip = [True, False]
 
         self.verbose = [True, False]
 
     def test_prediction_labels(self):
 
         # Create an iterable of all the loop variables
-        all_loop_variables = [[self.y_train], self.all_scores, self.verbose, self.n_contaminations,
-                              self.n_draws, self.p0, self.phigh, self.high_gamma, self.K]
+        all_loop_variables = [[self.y_train], self.all_scores,
+                              self.skip, self.verbose]
 
         # Get all combinations of loop variables
         all_combinations = list(product(*all_loop_variables))
