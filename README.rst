@@ -384,7 +384,7 @@ the threshold types available in PyThresh.
    `Sparse Auto-Regressive: Robust Estimation of AR Parameters
    <https://arxiv.org/abs/1306.3317>`_
 
-.. [#gamgmm]
+.. [#gamgmm1]
 
    `Estimating the Contamination Factor's Distribution in Unsupervised Anomaly
    Detection <https://arxiv.org/abs/2210.10487>`_

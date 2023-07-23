@@ -26,7 +26,7 @@ class GAMGMM(BaseThresholder):
        n_contaminations : int, optional (default=1000)
             number of samples to draw from the contamination posterior distribution
 
-       ndraws : int, optional (default=50)
+       n_draws : int, optional (default=50)
             number of samples simultaneously drawn from each DPGMM component
 
        p0 : float, optional (default=0.01)
@@ -80,7 +80,7 @@ class GAMGMM(BaseThresholder):
 
     def __init__(self,
                  n_contaminations=1000,
-                 ndraws=50,
+                 n_draws=50,
                  p0=0.01,
                  phigh=0.01,
                  high_gamma=0.15,
@@ -92,7 +92,7 @@ class GAMGMM(BaseThresholder):
                  verbose=False):
 
         self.n_contaminations = n_contaminations
-        self.ndraws = ndraws
+        self.n_draws = n_draws
         self.p0 = p0
         self.phigh = phigh
         self.high_gamma = high_gamma
@@ -262,7 +262,7 @@ class GAMGMM(BaseThresholder):
     def _order_components(self, means, mean_precs, covariances, dgf):
 
         K, M = np.shape(means)
-        meanstd = np.zeros(K, np.float)
+        meanstd = np.zeros(K, np.float32)
         mean_std = np.sqrt(1/mean_precs)
 
         for k in range(K):
@@ -353,7 +353,7 @@ class GAMGMM(BaseThresholder):
 
         while len(samples) < self.n_contaminations * (1-self.p0):
 
-            prob_ck = np.zeros(K, np.float)
+            prob_ck = np.zeros(K, np.float32)
             for k in range(K):
 
                 rnd = (i+1) * (k+1)
@@ -372,7 +372,7 @@ class GAMGMM(BaseThresholder):
             prob_c1ck = self._derive_jointprobs(prob_ck)
 
             for k in range(K):
-                ns = int(np.round(self.ndraws * prob_c1ck[k], 0))
+                ns = int(np.round(self.n_draws * prob_c1ck[k], 0))
                 if ns > 0:
                     samples = np.concatenate(
                         (samples, np.random.choice(w[k+1], ns, replace=False)))
