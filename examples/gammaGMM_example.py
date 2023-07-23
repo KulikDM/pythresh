@@ -6,11 +6,11 @@
 import os
 import sys
 
-from pyod.models.auto_encoder import AutoEncoder
+from pyod.models.knn import KNN
 from pyod.utils.data import evaluate_print, generate_data
 from pyod.utils.example import visualize
 
-from pythresh.thresholds.gammaGMM import gammaGMM
+from pythresh.thresholds.gamgmm import GAMGMM
 
 # temporary solution for relative imports in case pyod is not installed
 # if pyod is installed, no need to use the following line
@@ -32,19 +32,19 @@ if __name__ == '__main__':
                       random_state=42)
 
     # train Autoencoder detector
-    clf_name = 'Ae'
-    clf = AutoEncoder([2,1,1,2])
+    clf_name = 'KNN'
+    clf = KNN()
     clf.fit(X_train)
-    thres = gammaGMM(sample_n_thresholds = False)
+    thres = gammaGMM()
 
     # get the prediction labels and outlier scores of the training data
     y_train_scores = clf.decision_scores_  # raw outlier scores
     # binary labels (0: inliers, 1: outliers)
-    y_train_pred = thres.eval(y_train_scores, X_train)
+    y_train_pred = thres.eval(y_train_scores)
 
     # get the prediction on the test data
     y_test_scores = clf.decision_function(X_test)  # outlier scores
-    y_test_pred = thres.eval(y_test_scores, X_test)  # outlier labels (0 or 1)
+    y_test_pred = thres.eval(y_test_scores)  # outlier labels (0 or 1)
 
     # evaluate and print the results
     print('\nOn Training Data:')
