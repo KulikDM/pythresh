@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import warnings
 from itertools import product
 from os.path import dirname as up
 
@@ -22,6 +23,7 @@ path = up(up(up(__file__)))
 sys.path.append(path)
 
 sys.stdout = open(os.devnull, 'w')
+warnings.simplefilter('ignore')
 
 
 def tester(y_train, scores, verbose, n_contam, draws,
@@ -84,11 +86,11 @@ class TestGAMGMM(unittest.TestCase):
     def test_prediction_labels(self):
 
         # Create an iterable of all the loop variables
-        all_loop_variables = [self.all_scores, self.verbose, self.n_contaminations,
+        all_loop_variables = [[self.y_train], self.all_scores, self.verbose, self.n_contaminations,
                               self.n_draws, self.p0, self.phigh, self.high_gamma, self.K]
 
         # Get all combinations of loop variables
         all_combinations = list(product(*all_loop_variables))
 
-        Parallel(n_jobs=-1)(delayed(tester)(self.y_train, *args)
+        Parallel(n_jobs=-1)(delayed(tester)(*args)
                             for args in all_combinations)
