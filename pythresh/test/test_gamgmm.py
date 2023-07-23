@@ -2,12 +2,10 @@ import os
 import sys
 import unittest
 import warnings
-from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
 import numpy as np
-from joblib import Parallel, delayed
 from numpy.testing import assert_equal
 from pyod.models.iforest import IForest
 from pyod.models.knn import KNN
@@ -24,21 +22,6 @@ sys.path.append(path)
 
 sys.stdout = open(os.devnull, 'w')
 warnings.simplefilter('ignore')
-
-
-def tester(y_train, scores, skip, verbose):
-
-    thres = GAMGMM(skip=skip, steps=10, verbose=verbose)
-
-    pred_labels = thres.eval(scores)
-    assert (thres.thresh_ is not None)
-
-    assert_equal(pred_labels.shape, y_train.shape)
-
-    if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
-
-        assert (pred_labels.min() == 0)
-        assert (pred_labels.max() == 1)
 
 
 class TestGAMGMM(unittest.TestCase):
@@ -72,12 +55,18 @@ class TestGAMGMM(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        # Create an iterable of all the loop variables
-        all_loop_variables = [[self.y_train], self.all_scores,
-                              self.skip, self.verbose]
+        for scores in self.all_scores:
+            for skip in self.skip:
+                for verbose in self.verbose:
 
-        # Get all combinations of loop variables
-        all_combinations = list(product(*all_loop_variables))
+                    self.thres = GAMGMM(skip=skip, steps=10, verbose=verbose)
 
-        Parallel(n_jobs=-1)(delayed(tester)(*args)
-                            for args in all_combinations)
+                    pred_labels = self.thres.eval(scores)
+                    assert (self.thres.thresh_ is not None)
+
+                    assert_equal(pred_labels.shape, self.y_train.shape)
+
+                    if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+
+                        assert (pred_labels.min() == 0)
+                        assert (pred_labels.max() == 1)
