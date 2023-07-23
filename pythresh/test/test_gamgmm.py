@@ -19,7 +19,7 @@ path = up(up(up(__file__)))
 sys.path.append(path)
 
 
-class TestGamGMM(unittest.TestCase):
+class TestGAMGMM(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
         self.n_test = 100
@@ -31,7 +31,7 @@ class TestGamGMM(unittest.TestCase):
         clf = KNN()
         clf.fit(self.X_train)
 
-        scores = self.clf.decision_scores_
+        scores = clf.decision_scores_
 
         clfs = [KNN(), PCA(), IForest()]
 
