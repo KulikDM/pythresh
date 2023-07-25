@@ -387,7 +387,7 @@ the threshold types available in PyThresh.
 .. [#gamgmm1]
 
    `Estimating the Contamination Factor's Distribution in Unsupervised Anomaly
-   Detection <https://arxiv.org/abs/2210.10487>`_
+   Detection <https://proceedings.mlr.press/v202/perini23a.html>`_
 
 .. [#gesd1]
 
