@@ -54,9 +54,6 @@ class TestCLUST(unittest.TestCase):
                 assert (self.thres.thresh_ is None)
                 assert (self.thres.dscores_ is None)
 
-                assert (self.thres.dscores_.min() == 0)
-                assert (self.thres.dscores_.max() == 1)
-
                 assert_equal(pred_labels.shape, self.y_train.shape)
 
                 assert (pred_labels.min() == 0)
