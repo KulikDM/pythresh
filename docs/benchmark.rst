@@ -279,6 +279,36 @@ dataset with fewer examples and a greater bias.
 
 ----
 
+Multiple outlier detection likelihood score sets as of ``PyThresh``
+version 0.3.3 can now also be thresholded. This functionality is
+achieved by decomposing the score set using 1D TruncatedSVD
+decomposition. This allows the decomposed scores to capture a more
+robust outlier likelihood score set. To benchmark these scores a similar
+setup is followed as the first benchmark test, however, the labels were
+set using the true contamination applied to the decomposed scores as the
+right-hand component of the MCC deterioration equation.
+
+.. figure:: figs/Multi1.png
+   :alt: Benchmark multiple
+
+However, to effectively compare whether the multiple outlier detection
+likelihood score set performed better than using a single outlier
+likelihood score set they must both be benchmarked against the same
+comparison. This can be done by setting the right-hand component of the
+MCC deterioration to the true labels such that the right-hand component
+is equal to 1. Below is a dumbbell comparison plot between using single
+or multiple outlier likelihood score sets for thresholding. Above each
+comparison a performance percentage indicates how much better or worse
+multiple scores performed to using single score thresholding. From this,
+it can be shown that by using a multiple outlier likelihood score set
+it generally performs better than using a single outlier likelihood
+scores set.
+
+.. figure:: figs/Multi2.png
+   :alt: Benchmark multiple comparison
+
+----
+
 ***********************
  External Benchmarking
 ***********************
