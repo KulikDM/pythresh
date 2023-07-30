@@ -6,10 +6,9 @@ from sklearn.metrics import mean_squared_error
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import OneClassSVM
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import gen_kde, normalize
+from .thresh_utility import check_scores, gen_kde, normalize
 
 
 class OCSVM(BaseThresholder):
@@ -105,6 +104,7 @@ class OCSVM(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -116,8 +116,11 @@ class OCSVM(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
+
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         # Get auto nu calculation
         if self.nu == 'auto':

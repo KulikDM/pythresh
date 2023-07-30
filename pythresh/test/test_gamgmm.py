@@ -40,12 +40,12 @@ class TestGAMGMM(unittest.TestCase):
 
         clfs = [KNN(), PCA(), IForest()]
 
-        multiple_scores = []
-        for clf in clfs:
-            clf.fit(self.X_train)
-            multiple_scores.append(clf.decision_scores_)
+        multiple_scores = [
+            clf.fit(self.X_train).decision_scores_ for clf in clfs]
 
         multiple_scores = np.vstack(multiple_scores).T
+
+        self.all_scores = [scores, multiple_scores]
 
         self.all_scores = [scores, multiple_scores]
 
@@ -63,6 +63,10 @@ class TestGAMGMM(unittest.TestCase):
 
                     pred_labels = self.thres.eval(scores)
                     assert (self.thres.thresh_ is not None)
+                    assert (self.thres.dscores_ is not None)
+
+                    assert (self.thres.dscores_.min() == 0)
+                    assert (self.thres.dscores_.max() == 1)
 
                     assert_equal(pred_labels.shape, self.y_train.shape)
 

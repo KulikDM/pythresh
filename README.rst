@@ -102,6 +102,27 @@ To cite this work you can visit `PyThresh Citation
    thres = FILTER()
    labels = thres.eval(decision_scores)
 
+or using multiple outlier detection score sets
+
+.. code:: python
+
+   # train multiple detectors
+   from pyod.models.knn import KNN
+   from pyod.models.pca import PCA
+   from pyod.models.iforest import IForest
+   from pythresh.thresholds.filter import FILTER
+
+   clfs = [KNN(), IForest(), PCA()]
+
+   # get outlier scores for each detector
+   scores = [clf.fit(X_train).decision_scores_ for clf in clfs]
+
+   scores = np.vstack(scores).T
+
+   # get outlier labels
+   thres = FILTER()
+   labels = thres.eval(scores)
+
 **************
  Installation
 **************
@@ -155,7 +176,8 @@ Or with **pip**:
  API Cheatsheet
 ****************
 
--  **eval(score)**: evaluate outlier score.
+-  **eval(score)**: evaluate a single outlier or multiple outlier detection
+   likelihood score sets.
 
 Key Attributes of threshold:
 
@@ -167,6 +189,9 @@ Key Attributes of threshold:
 -  **confidence_interval_**: Return the lower and upper confidence
    interval of the contamination level. Only applies to the COMB
    thresholder
+
+- **dscores_**: 1D array of the TruncatedSVD decomposed decision scores
+  if multiple outlier detector score sets are passed
 
 ************************
  External Feature Cases

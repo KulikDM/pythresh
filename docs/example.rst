@@ -152,7 +152,31 @@ outlier detection likelihood scores are normalized between 0 and 1.
 
       threshold = thres.thresh_
 
-2. Similarly, the lower and upper confidence interval of the
+2. This can also be done for multiple outlier detector likelihood
+   scores sets. These scores are first decomposed to 1D using a
+   TruncatedSVD decomposition method. This decomposed score sets
+   can also be accessed as a stores variable `dscores_`
+
+   .. code:: python
+
+      # train multiple detectors
+      clf_name = "Multiple"
+      clfs = [KNN(), IForest(), PCA()]
+
+      scores = []
+      for clf in clfs:
+         clf.fit(X_train)
+         scores.append(clf.decision_function(X_train))
+
+      scores = np.vstack(scores).T
+
+      thres = OCSVM()
+      labels = thres.eval(scores)
+
+      threshold = thres.thresh_
+      dscores = thres.dscores_
+
+3. Similarly, the lower and upper confidence interval of the
 contamination level for the :class:`pythresh.thresholds.comb.COMB`
 thresholder can be retrieved.
 

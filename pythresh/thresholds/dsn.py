@@ -7,10 +7,9 @@ import scipy.stats as stats
 from scipy import interpolate
 from scipy.integrate import simpson
 from sklearn.covariance import MinCovDet
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, gen_cdf, gen_kde, normalize
+from .thresh_utility import check_scores, cut, gen_cdf, gen_kde, normalize
 
 
 class DSN(BaseThresholder):
@@ -49,6 +48,8 @@ class DSN(BaseThresholder):
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
+
+       dscores_ : 1D array of decomposed decision scores
 
        Examples
        --------
@@ -96,6 +97,7 @@ class DSN(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -107,9 +109,11 @@ class DSN(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         # Create a normal distribution and normalize
         size = min(len(decision), 1500)

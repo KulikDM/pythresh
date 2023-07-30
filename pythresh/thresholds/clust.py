@@ -20,7 +20,7 @@ from sklearn.mixture import BayesianGaussianMixture
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import normalize
+from .thresh_utility import check_scores, normalize
 
 
 class CLUST(BaseThresholder):
@@ -60,6 +60,8 @@ class CLUST(BaseThresholder):
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
+
+       dscores_ : 1D array of decomposed decision scores
 
        Examples
        --------
@@ -108,6 +110,7 @@ class CLUST(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -121,7 +124,12 @@ class CLUST(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
 
-        decision = normalize(decision).reshape(-1, 1)
+        decision = normalize(decision)
+
+        if decision.ndim == 1:
+            decision = np.atleast_2d(decision).T
+
+        self.dscores_ = None
 
         labels = self.method_funcs[str(self.method)](decision)
 
@@ -138,7 +146,7 @@ class CLUST(BaseThresholder):
 
         pred = np.array(pred[0]) if type(pred[0]) == list else pred
 
-        labels = np.ones(len(decision))
+        labels = np.ones(len(decision), dtype=int)
         labels[pred.astype(int)] = 0
 
         # Flip if outliers were clustered
@@ -150,7 +158,7 @@ class CLUST(BaseThresholder):
         """Evaluate cluster labels from sklearn methods."""
 
         cl.fit(decision)
-        labels = cl.labels_
+        labels = cl.labels_.astype(int)
 
         # Flip if outliers were clustered
         labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
@@ -250,13 +258,15 @@ class CLUST(BaseThresholder):
         """Mean shift algorithm for cluster analysis."""
 
         # Get quantile value for bandwidth estimation
-        dat = np.squeeze(decision)
+        cscores = check_scores(decision,
+                               random_state=self.random_state)
+        dat = np.squeeze(cscores)
         q = cityblock(dat, np.sort(dat))/np.sum(dat)
 
         q = max(0.25, min(q, 1.0))
 
         # Estimate bandwidth
-        bw = estimate_bandwidth(decision, quantile=q)
+        bw = estimate_bandwidth(dat.reshape(-1, 1), quantile=q)
 
         cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
         cl.fit(decision)

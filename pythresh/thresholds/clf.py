@@ -1,9 +1,8 @@
 import numpy as np
 from scipy.stats import gaussian_kde
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import normalize
+from .thresh_utility import check_scores, normalize
 
 
 class CLF(BaseThresholder):
@@ -22,10 +21,16 @@ class CLF(BaseThresholder):
             - 'simple':  Uses only the scores
             - 'complex': Uses the scores, log of the scores, and the scores' PDF
 
+       random_state : int, optional (default=1234)
+            Random seed for the random number generators of the thresholders. Can also
+            be set to None.
+
        Attributes
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
+
+       dscores_ : 1D array of decomposed decision scores
 
        Notes
        -----
@@ -39,7 +44,7 @@ class CLF(BaseThresholder):
 
     """
 
-    def __init__(self, method='complex'):
+    def __init__(self, method='complex', random_state=1234):
 
         if method == 'complex':
 
@@ -54,6 +59,7 @@ class CLF(BaseThresholder):
             self.c = -1.5357998356223497
 
         self.method = method
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -61,6 +67,7 @@ class CLF(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -72,9 +79,11 @@ class CLF(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         # Calculate expected y
         if self.method == 'complex':

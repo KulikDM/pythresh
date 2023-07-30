@@ -202,8 +202,8 @@ Thesholders.ipynb"**.
 
 The following APIs are applicable for all detector models for easy use.
 
--  :func:`pythresh.thresholders.base.BaseDetector.eval`: evaluate
-   outlier score.
+-  :func:`pythresh.thresholders.base.BaseDetector.eval`: evaluate a single
+   outlier or multiple outlier detection likelihood score sets
 
 Key Attributes of a threshold:
 
@@ -211,6 +211,14 @@ Key Attributes of a threshold:
    threshold value that separates inliers from outliers. Outliers are
    considered all values above this threshold value. Note the threshold
    value has been derived from likelihood scores normalized between 0 and 1.
+
+-  :attr:`pythresh.thresholders.base.BaseDetector.confidence_interval_`:
+   Return the lower and upper confidence interval of the contamination level.
+   Only applies to the COMB thresholder
+
+-  :attr:`pythresh.thresholders.base.BaseDetector.dscores_`: 1D array of the
+   TruncatedSVD decomposed decision scores if multiple outlier detector score
+   sets are passed
 
 ----
 

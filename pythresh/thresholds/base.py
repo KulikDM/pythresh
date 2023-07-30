@@ -11,6 +11,10 @@ class BaseThresholder(metaclass=abc.ABCMeta):
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
+
+       confidence_interval_ : lower and upper confidence interval of the contamination level
+
+       dscores_ : 1D array of decomposed decision scores
     """
 
     @abc.abstractmethod
@@ -18,6 +22,7 @@ class BaseThresholder(metaclass=abc.ABCMeta):
 
         self.thresh_ = None
         self.confidence_interval_ = None
+        self.dscores_ = None
 
     @abc.abstractmethod
     def eval(self, decision):
@@ -26,6 +31,7 @@ class BaseThresholder(metaclass=abc.ABCMeta):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 

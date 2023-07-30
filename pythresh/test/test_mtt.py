@@ -3,8 +3,11 @@ import unittest
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
+import numpy as np
 from numpy.testing import assert_equal
+from pyod.models.iforest import IForest
 from pyod.models.knn import KNN
+from pyod.models.pca import PCA
 from pyod.utils.data import generate_data
 
 from pythresh.thresholds.mtt import MTT
@@ -25,21 +28,35 @@ class TestMTT(unittest.TestCase):
             n_train=self.n_train, n_test=self.n_test,
             contamination=self.contamination, random_state=42)
 
-        self.clf = KNN()
-        self.clf.fit(self.X_train)
+        clf = KNN()
+        clf.fit(self.X_train)
 
-        self.scores = self.clf.decision_scores_
+        scores = clf.decision_scores_
+
+        clfs = [KNN(), PCA(), IForest()]
+
+        multiple_scores = [
+            clf.fit(self.X_train).decision_scores_ for clf in clfs]
+        multiple_scores = np.vstack(multiple_scores).T
+
+        self.all_scores = [scores, multiple_scores]
+
         self.alphas = [0.9, 0.95, 0.975, 0.99, 0.995]
 
     def test_prediction_labels(self):
 
-        for alpha in self.alphas:
+        for scores in self.all_scores:
+            for alpha in self.alphas:
 
-            self.thres = MTT(alpha=alpha)
-            pred_labels = self.thres.eval(self.scores)
-            assert (self.thres.thresh_ is not None)
+                self.thres = MTT(alpha=alpha)
+                pred_labels = self.thres.eval(scores)
+                assert (self.thres.thresh_ is not None)
+                assert (self.thres.dscores_ is not None)
 
-            assert_equal(pred_labels.shape, self.y_train.shape)
+                assert (self.thres.dscores_.min() == 0)
+                assert (self.thres.dscores_.max() == 1)
 
-            assert (pred_labels.min() == 0)
-            assert (pred_labels.max() == 1)
+                assert_equal(pred_labels.shape, self.y_train.shape)
+
+                assert (pred_labels.min() == 0)
+                assert (pred_labels.max() == 1)

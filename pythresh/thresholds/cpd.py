@@ -1,8 +1,7 @@
 import ruptures as rpt
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, gen_cdf, gen_kde, normalize
+from .thresh_utility import check_scores, cut, gen_cdf, gen_kde, normalize
 
 
 class CPD(BaseThresholder):
@@ -30,19 +29,26 @@ class CPD(BaseThresholder):
             - 'cdf': Use the cumulative distribution function
             - 'kde': Use the kernel density estimation
 
+       random_state : int, optional (default=1234)
+            Random seed for the random number generators of the thresholders. Can also
+            be set to None.
+
        Attributes
        ----------
 
        thres_ : threshold value that separates inliers from outliers
 
+       dscores_ : 1D array of decomposed decision scores
+
     """
 
-    def __init__(self, method='Dynp', transform='cdf'):
+    def __init__(self, method='Dynp', transform='cdf', random_state=1234):
 
         self.method = method
         self.transform = transform
         self.method_func = {'Dynp': rpt.Dynp(), 'KernelCPD': rpt.KernelCPD(kernel='rbf'),
                             'Binseg': rpt.Binseg(), 'BottomUp': rpt.BottomUp()}
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -50,6 +56,7 @@ class CPD(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -61,9 +68,11 @@ class CPD(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         # Transform data prior to fit
         if self.transform == 'cdf':

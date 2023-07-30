@@ -4,10 +4,9 @@ from sklearn.random_projection import (
     GaussianRandomProjection,
     SparseRandomProjection
 )
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, gen_cdf, normalize
+from .thresh_utility import check_scores, cut, gen_cdf, normalize
 
 
 class DECOMP(BaseThresholder):
@@ -38,6 +37,8 @@ class DECOMP(BaseThresholder):
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
+
+       dscores_ : 1D array of decomposed decision scores
 
        Examples
        --------
@@ -75,6 +76,7 @@ class DECOMP(BaseThresholder):
                                                              random_state=random_state),
                              'SRP': SparseRandomProjection(n_components=3,
                                                            random_state=random_state)}
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -82,6 +84,7 @@ class DECOMP(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -93,9 +96,11 @@ class DECOMP(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         # Generate a CDF of the decision scores
         val, dat_range = gen_cdf(decision, 0, 1, len(decision)*3)

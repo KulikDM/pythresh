@@ -2,14 +2,13 @@ import numpy as np
 import scipy.stats as stats
 import torch
 import torch.optim as opt
-from sklearn.utils import check_array
 from torch import nn
 from torch.distributions import Normal, kl_divergence
 from torch.nn.functional import softplus
 from tqdm import tqdm
 
 from .base import BaseThresholder
-from .thresh_utility import cut, normalize
+from .thresh_utility import check_scores, cut, normalize
 
 
 class VAE(BaseThresholder):
@@ -102,6 +101,7 @@ class VAE(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -113,8 +113,11 @@ class VAE(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
+
         scores = normalize(decision.copy())
+
+        self.dscores_ = scores
 
         if self.latent_dims == 'auto':
             self.latent_dims = self._autodim(scores)

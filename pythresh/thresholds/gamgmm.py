@@ -146,7 +146,7 @@ class GAMGMM(BaseThresholder):
                              the the number of outlier detection score sets''')
 
         decision = normalize(decision.squeeze())
-        self.dscores = decision.copy()
+        self.dscores_ = decision.copy()
 
         # Compute the gamma posterior and threshold
         gamma_posterior_sample = self._compute_gamma_posterior(score_space)
@@ -161,8 +161,8 @@ class GAMGMM(BaseThresholder):
     def _compute_gamma_posterior(self, decision):
 
         # Handle overflow of components versus samples.
-        if np.shape(decision)[0] < self.K:
-            self.K = np.shape(decision)[0]-1
+        self.K = decision.shape[0] - \
+            1 if np.shape(decision)[0] < self.K else self.K
 
         itv = 0
         random_start = 1234 if not self.random_state else self.random_state
@@ -400,8 +400,7 @@ class GAMGMM(BaseThresholder):
             meanx = np.mean(x)
             stdx = np.std(x)
 
-            if stdx > 0:
-                x = (x - meanx)/stdx
+            x = (x - meanx)/stdx if stdx > 0 else x
 
             norm_scores[:, i] = x
 

@@ -3,10 +3,9 @@ import scipy.stats as stats
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.ensemble import BaggingClassifier, StackingClassifier
 from sklearn.linear_model import RidgeClassifier
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, normalize
+from .thresh_utility import check_scores, cut, normalize
 
 
 class COMB(BaseThresholder):
@@ -49,6 +48,8 @@ class COMB(BaseThresholder):
        thresh_ : threshold value that separates inliers from outliers
 
        confidence_interval_ : lower and upper confidence interval of the contamination level
+
+       dscores_ : 1D array of decomposed decision scores
     """
 
     def __init__(self, thresholders='default', max_contam=0.5, method='stacked', random_state=1234):
@@ -68,6 +69,7 @@ class COMB(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -79,9 +81,11 @@ class COMB(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         # Initialize thresholders
         if self.thresholders == 'default':

@@ -3,8 +3,11 @@ import unittest
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
+import numpy as np
 from numpy.testing import assert_equal
+from pyod.models.iforest import IForest
 from pyod.models.knn import KNN
+from pyod.models.pca import PCA
 from pyod.utils.data import generate_data
 
 from pythresh.thresholds.decomp import DECOMP
@@ -25,21 +28,31 @@ class TestDECOMP(unittest.TestCase):
             n_train=self.n_train, n_test=self.n_test,
             contamination=self.contamination, random_state=42)
 
-        self.clf = KNN()
-        self.clf.fit(self.X_train)
+        clf = KNN()
+        clf.fit(self.X_train)
 
-        self.scores = self.clf.decision_scores_
+        scores = clf.decision_scores_
+
+        clfs = [KNN(), PCA(), IForest()]
+
+        multiple_scores = [
+            clf.fit(self.X_train).decision_scores_ for clf in clfs]
+        multiple_scores = np.vstack(multiple_scores).T
+
+        self.all_scores = [scores, multiple_scores]
+
         self.methods = ['NMF', 'PCA', 'GRP', 'SRP']
 
     def test_prediction_labels(self):
 
-        for method in self.methods:
+        for scores in self.all_scores:
+            for method in self.methods:
 
-            self.thres = DECOMP(method=method)
-            pred_labels = self.thres.eval(self.scores)
-            assert (self.thres.thresh_ is not None)
+                self.thres = DECOMP(method=method)
+                pred_labels = self.thres.eval(scores)
+                assert (self.thres.thresh_ is not None)
 
-            assert_equal(pred_labels.shape, self.y_train.shape)
+                assert_equal(pred_labels.shape, self.y_train.shape)
 
-            assert (pred_labels.min() == 0)
-            assert (pred_labels.max() == 1)
+                assert (pred_labels.min() == 0)
+                assert (pred_labels.max() == 1)

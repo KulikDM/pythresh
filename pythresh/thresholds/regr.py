@@ -1,9 +1,8 @@
 import numpy as np
 import scipy.stats as stats
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, normalize
+from .thresh_utility import check_scores, cut, normalize
 
 
 class REGR(BaseThresholder):
@@ -70,6 +69,7 @@ class REGR(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -81,9 +81,11 @@ class REGR(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         # Create a normal distribution and normalize
         norm = np.random.default_rng(self.random_state).normal(

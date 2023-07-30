@@ -1,10 +1,9 @@
 import numpy as np
 import scipy.signal as signal
 from scipy import integrate
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, normalize
+from .thresh_utility import check_scores, cut, normalize
 
 # https://github.com/geomdata/gda-public/blob/master/timeseries/curve_geometry.pyx
 
@@ -24,6 +23,8 @@ class MOLL(BaseThresholder):
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
+
+       dscores_ : 1D array of decomposed decision scores
 
        Notes
        -----
@@ -55,15 +56,19 @@ class MOLL(BaseThresholder):
 
     """
 
-    def __init__(self):
+    def __init__(self, random_state=1234):
 
-        pass
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
 
         Parameters
         ----------
+        decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
+                   which are the decision scores from a
+                   outlier detection.
 
         Returns
         -------
@@ -73,10 +78,13 @@ class MOLL(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
-        dat_range = np.linspace(0, 1, len(decision))
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
+
+        dat_range = np.linspace(0, 1, len(decision))
 
         # Set the inliers to be where the 1-max(smoothed scores)
         limit = 1-np.max(self._mollifier(dat_range, np.sort(decision)))

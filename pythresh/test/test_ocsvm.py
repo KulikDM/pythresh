@@ -5,7 +5,9 @@ from os.path import dirname as up
 # noinspection PyProtectedMember
 import numpy as np
 from numpy.testing import assert_equal
+from pyod.models.iforest import IForest
 from pyod.models.knn import KNN
+from pyod.models.pca import PCA
 from pyod.utils.data import generate_data
 
 from pythresh.thresholds.ocsvm import OCSVM
@@ -26,10 +28,18 @@ class TestOCSVM(unittest.TestCase):
             n_train=self.n_train, n_test=self.n_test,
             contamination=self.contamination, random_state=42)
 
-        self.clf = KNN()
-        self.clf.fit(self.X_train)
+        clf = KNN()
+        clf.fit(self.X_train)
 
-        self.scores = self.clf.decision_scores_
+        scores = clf.decision_scores_
+
+        clfs = [KNN(), PCA(), IForest()]
+
+        multiple_scores = [
+            clf.fit(self.X_train).decision_scores_ for clf in clfs]
+        multiple_scores = np.vstack(multiple_scores).T
+
+        self.all_scores = [scores, multiple_scores]
 
         self.models = ['poly', 'sgd']
         self.degree = ['auto', 2, 3, 4, 7, 10]
@@ -40,24 +50,29 @@ class TestOCSVM(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for model in self.models:
-            for degree in self.degree:
-                for gamma in self.gamma:
-                    for criterion in self.criterion:
-                        for nu in self.nu:
-                            for tol in self.tol:
+        for scores in self.all_scores:
+            for model in self.models:
+                for degree in self.degree:
+                    for gamma in self.gamma:
+                        for criterion in self.criterion:
+                            for nu in self.nu:
+                                for tol in self.tol:
 
-                                self.thres = OCSVM(model=model, degree=degree,
-                                                   gamma=gamma, criterion=criterion,
-                                                   nu=nu, tol=tol)
+                                    self.thres = OCSVM(model=model, degree=degree,
+                                                       gamma=gamma, criterion=criterion,
+                                                       nu=nu, tol=tol)
 
-                                pred_labels = self.thres.eval(self.scores)
-                                assert (self.thres.thresh_ is None)
+                                    pred_labels = self.thres.eval(scores)
+                                    assert (self.thres.thresh_ is None)
+                                    assert (self.thres.dscores_ is not None)
 
-                                assert_equal(pred_labels.shape,
-                                             self.y_train.shape)
+                                    assert (self.thres.dscores_.min() == 0)
+                                    assert (self.thres.dscores_.max() == 1)
 
-                                if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+                                    assert_equal(pred_labels.shape,
+                                                 self.y_train.shape)
 
-                                    assert (pred_labels.min() == 0)
-                                    assert (pred_labels.max() == 1)
+                                    if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+
+                                        assert (pred_labels.min() == 0)
+                                        assert (pred_labels.max() == 1)

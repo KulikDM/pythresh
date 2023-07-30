@@ -42,22 +42,22 @@ def gen_cdf(data, lower, upper, size):
 
 def check_scores(decision, random_state=None):
 
+    # Check decision scores dimensionality and pre-process
     if (np.asarray(decision).ndim == 2) & (np.atleast_2d(decision).shape[1] > 1):
 
         decision = check_array(decision, ensure_2d=True)
-        decision = decompose(decision)
+        decision = decompose(decision).squeeze()
 
     else:
 
         decision = check_array(decision, ensure_2d=False).squeeze()
-        decision = np.atleast_2d(decision).T
 
     return decision
 
 
 def decompose(data, random_state=None):
 
-    # Decompose score space to 1D for thresholding
+    # Decompose decision scores to 1D array for thresholding
     decomp = TruncatedSVD(n_components=1, random_state=random_state)
 
     data = decomp.fit_transform(normalize(data))

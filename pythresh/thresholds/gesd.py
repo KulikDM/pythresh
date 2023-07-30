@@ -1,9 +1,8 @@
 import numpy as np
 import scipy.stats as stats
-from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import cut, normalize
+from .thresh_utility import check_scores, cut, normalize
 
 # https://github.com/bhattbhavesh91/outlier-detection-grubbs-test-and-generalized-esd-test-python/blob/master/generalized-esd-test-for-outliers.ipynb
 
@@ -26,10 +25,16 @@ class GESD(BaseThresholder):
        alpha : float, optional (default=0.05)
             significance level
 
+       random_state : int, optional (default=1234)
+            Random seed for the random number generators of the thresholders. Can also
+            be set to None.
+
        Attributes
        ----------
 
        thresh_ : threshold value that separates inliers from outliers
+
+       dscores_ : 1D array of decomposed decision scores
 
        Notes
        -----
@@ -71,10 +76,11 @@ class GESD(BaseThresholder):
 
     """
 
-    def __init__(self, max_outliers='auto', alpha=0.05):
+    def __init__(self, max_outliers='auto', alpha=0.05, random_state=1234):
 
         self.max_outliers = max_outliers
         self.alpha = alpha
+        self.random_state = random_state
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -82,6 +88,7 @@ class GESD(BaseThresholder):
         Parameters
         ----------
         decision : np.array or list of shape (n_samples)
+                   or np.array of shape (n_samples, n_detectors)
                    which are the decision scores from a
                    outlier detection.
 
@@ -93,9 +100,11 @@ class GESD(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_array(decision, ensure_2d=False)
+        decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
+
+        self.dscores_ = decision
 
         arr = decision.copy()
 
