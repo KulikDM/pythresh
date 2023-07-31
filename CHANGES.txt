@@ -62,3 +62,4 @@ v<0.3.2>, <06/30/2023> -- Updated benchmarks and use of LaplaceGaussianNB
 v<0.3.2>, <07/02/2023> -- Added new publish action
 v<0.3.3>, <07/23/2023> -- Added gamgmm threshold
 v<0.3.3>, <07/30/2023> -- Updated all thresholders to accept multiple detector score sets
+v<0.3.3>, <07/30/2023> -- New benchmarking for multiple score sets
