@@ -431,3 +431,85 @@ reliable result.
 
 .. figure:: figs/Randomness.png
    :alt: Effects of Randomness
+
+----
+
+*****************
+ Time Complexity
+*****************
+
+Working with big data can mean time constraints with regards to
+thresholding. Therefore, time complexity may need to be considered when
+selecting the correct thresholder to use. This time complexity can be
+quantified by using the Big-O notation metric. This metric demonstrates
+how many seconds it takes to compute the number of outlier likelihood
+scores (n). From the benchmark table below, it can be seen that most
+thresholders have a quadratic time complexity of around ~1e-8*n^2. This
+is due to most thresholders using kernel density estimations within
+their methods. This time complexity equates about 0.01s for 1000
+datapoints, 1s for 10000 datapoints, 100s for 100000 datapoints, and
+about 2.5 hours for 1 million datapoints. If time is a factor, suggested
+thresholders with reasonable accuracy are: FILTER with 10s, OCSVM with
+0.1s, and MTT with 100s for one million datapoints.
+
++---------------+--------------------+------------------------+
+| Method        | Complexity         | Big-O Notation         |
++===============+====================+========================+
+| AUCP          | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| BOOT          | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| CHAU          | Linear             | ~1e-8*n                |
++---------------+--------------------+------------------------+
+| CLF           | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| CLUST         | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| CPD           | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| DECOMP        | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| DSN           | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| EB            | Linearithmic       | ~1-06*n*log(n)         |
++---------------+--------------------+------------------------+
+| FGD           | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| FILTER        | Quadratic          | ~1e-11*n^2             |
++---------------+--------------------+------------------------+
+| FWFM          | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| GAMGMM        | Quadratic          | ~1e-6*n^2              |
++---------------+--------------------+------------------------+
+| GESD          | Quadratic          | ~1e-9*n^2              |
++---------------+--------------------+------------------------+
+| HIST          | Linear             | ~1e-8*n                |
++---------------+--------------------+------------------------+
+| IQR           | Linear             | ~1e-8*n                |
++---------------+--------------------+------------------------+
+| KARCH         | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| MAD           | Linear             | ~1e-8*n                |
++---------------+--------------------+------------------------+
+| MCST          | Quadratic          | ~1e-7*n^2              |
++---------------+--------------------+------------------------+
+| META          | Cubic              | ~1e-12*n^3             |
++---------------+--------------------+------------------------+
+| MOLL          | Quadratic          | ~1e-10*n^2             |
++---------------+--------------------+------------------------+
+| MTT           | Quadratic          | ~1e-10*n^2             |
++---------------+--------------------+------------------------+
+| OCSVM         | Linear             | ~1e-7*n                |
++---------------+--------------------+------------------------+
+| QMCD          | Quadratic          | ~1e-9*n^2              |
++---------------+--------------------+------------------------+
+| REGR          | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| VAE           | Linear             | ~1e-3*n                |
++---------------+--------------------+------------------------+
+| WIND          | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| YJ            | Quadratic          | ~1e-8*n^2              |
++---------------+--------------------+------------------------+
+| ZSCORE        | Linear             | ~1e-8*n                |
++---------------+--------------------+------------------------+
