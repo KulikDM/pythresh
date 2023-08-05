@@ -450,7 +450,9 @@ their methods. This time complexity equates about 0.01s for 1000
 datapoints, 1s for 10000 datapoints, 100s for 100000 datapoints, and
 about 2.5 hours for 1 million datapoints. If time is a factor, suggested
 thresholders with reasonable accuracy are: FILTER with 10s, OCSVM with
-0.1s, and MTT with 100s for one million datapoints.
+0.1s, and MTT with 100s for one million datapoints. **Note** that these
+benchmarks were done using an i5 12th gen processor and results may scale
+slightly differently depending on the hardware used.
 
 +---------------+--------------------+------------------------+
 | Method        | Complexity         | Big-O Notation         |

@@ -123,7 +123,7 @@ class META(BaseThresholder):
             kde = stats.gaussian_kde(decision)
             pdf = normalize(kde.pdf(decision))
 
-        for i in range(380):
+        for i in range(len(model.groups_)):
 
             df = pd.DataFrame()
             df['scores'] = decision
