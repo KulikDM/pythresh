@@ -176,8 +176,8 @@ Or with **pip**:
  API Cheatsheet
 ****************
 
--  **eval(score)**: evaluate a single outlier or multiple outlier detection
-   likelihood score sets.
+-  **eval(score)**: evaluate a single outlier or multiple outlier
+   detection likelihood score sets.
 
 Key Attributes of threshold:
 
@@ -190,8 +190,8 @@ Key Attributes of threshold:
    interval of the contamination level. Only applies to the COMB
    thresholder
 
-- **dscores_**: 1D array of the TruncatedSVD decomposed decision scores
-  if multiple outlier detector score sets are passed
+-  **dscores_**: 1D array of the TruncatedSVD decomposed decision scores
+   if multiple outlier detector score sets are passed
 
 ************************
  External Feature Cases
@@ -206,7 +206,7 @@ Linear Regression
 <https://towardsdatascience.com/when-outliers-are-significant-weighted-linear-regression-bcdc8389ab10>`_
 
 **ArXiv**: `Estimating the Contamination Factor's Distribution in
-Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
+Unsupervised Anomaly Detection. <https://arxiv.org/abs/2210.10487>`_
 
 ***********************************
  Available Thresholding Algorithms
@@ -411,8 +411,8 @@ the threshold types available in PyThresh.
 
 .. [#gamgmm1]
 
-   `Estimating the Contamination Factor's Distribution in Unsupervised Anomaly
-   Detection <https://proceedings.mlr.press/v202/perini23a.html>`_
+   `Estimating the Contamination Factor's Distribution in Unsupervised
+   Anomaly Detection <https://proceedings.mlr.press/v202/perini23a.html>`_
 
 .. [#gesd1]
 
