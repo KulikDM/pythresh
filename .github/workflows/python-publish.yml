@@ -86,11 +86,13 @@ jobs:
       - name: Commit and push changes
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           printf "Preparing to commit\n"
 
-          #git config --global user.name $GIT_USER
+          git config --global user.name $GIT_USER
+          git config --global user.email $GIT_EMAIL
           git commit -a -m "Updated to version ${{ env.new_version }}"
 
           printf "\nPushing the changes to the repository\n"
@@ -140,11 +142,13 @@ jobs:
       - name: Update Conda feedstock repository
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           echo "Preparing to clone feedstock repository\n"
 
-          #git config --global user.name $GIT_USER
+          git config --global user.name $GIT_USER
+          git config --global user.email $GIT_EMAIL
           git clone https://$GIT_USER:$GIT_TOKEN@github.com/conda-forge/pythresh-feedstock.git
 
           cd pythresh-feedstock
