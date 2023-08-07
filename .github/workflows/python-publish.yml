@@ -159,7 +159,7 @@ jobs:
 
           printf "\nUpdating the version and sha256\n"
 
-          updated_meta_yaml=$(echo "{% set name = \"pythresh\" %}" && echo "{% set version = \"${{ env.latest_version }}\" %}" && tail -n +3 meta.yaml | sed -E "s/sha256: .*$/sha256: ${{ env.latest_sha256 }}/")
+          updated_meta_yaml=$(echo "{% set name = \"pythresh\" %}" && echo "{% set version = \"${{ env.latest_version }}\" %}" && tail -n +3 recipe/meta.yaml | sed -E "s/sha256: .*$/sha256: ${{ env.latest_sha256 }}/")
 
           printf "\nWriting the updated meta.yaml file\n"
 
