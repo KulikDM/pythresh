@@ -3,6 +3,7 @@ import scipy.stats as stats
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.ensemble import BaggingClassifier, StackingClassifier
 from sklearn.linear_model import RidgeClassifier
+from sklearn.utils import check_array
 
 from .base import BaseThresholder
 from .thresh_utility import check_scores, cut, normalize
@@ -81,6 +82,8 @@ class COMB(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
+        scores = check_array(decision, ensure_2d=False)
+
         decision = check_scores(decision, random_state=self.random_state)
 
         decision = normalize(decision)
@@ -103,7 +106,7 @@ class COMB(BaseThresholder):
 
         for thresholder in self.thresholders:
 
-            labels = thresholder.eval(decision)
+            labels = thresholder.eval(scores)
             outlier_ratio = np.sum(labels)/counts
 
             if outlier_ratio < self.max_contam:
