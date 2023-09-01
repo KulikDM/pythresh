@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection
@@ -44,26 +45,25 @@ class TestKARCH(unittest.TestCase):
 
         self.ndim = range(1, 10)
 
-        self.method = ['simple', 'complex']
+        self.methods = ['simple', 'complex']
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for method in self.method:
+        params = product(self.all_scores, self.methods, self.ndim)
 
-                for ndim in self.ndim:
+        for scores, method, ndim in params:
 
-                    self.thres = KARCH(ndim=ndim, method=method)
-                    pred_labels = self.thres.eval(scores)
-                    assert (self.thres.thresh_ is not None)
-                    assert (self.thres.dscores_ is not None)
+            self.thres = KARCH(ndim=ndim, method=method)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
+            assert (self.thres.dscores_ is not None)
 
-                    assert (self.thres.dscores_.min() == 0)
-                    assert (self.thres.dscores_.max() == 1)
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
-                    assert_equal(pred_labels.shape, self.y_train.shape)
+            assert_equal(pred_labels.shape, self.y_train.shape)
 
-                    if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+            if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
 
-                        assert (pred_labels.min() == 0)
-                        assert (pred_labels.max() == 1)
+                assert (pred_labels.min() == 0)
+                assert (pred_labels.max() == 1)

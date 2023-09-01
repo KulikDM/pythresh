@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -45,19 +46,20 @@ class TestREGR(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for method in self.methods:
+        params = product(self.all_scores, self.methods)
 
-                self.thres = REGR(method=method)
+        for scores, method in params:
 
-                pred_labels = self.thres.eval(scores)
-                assert (self.thres.thresh_ is not None)
-                assert (self.thres.dscores_ is not None)
+            self.thres = REGR(method=method)
 
-                assert (self.thres.dscores_.min() == 0)
-                assert (self.thres.dscores_.max() == 1)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
+            assert (self.thres.dscores_ is not None)
 
-                assert_equal(pred_labels.shape, self.y_train.shape)
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
-                assert (pred_labels.min() == 0)
-                assert (pred_labels.max() == 1)
+            assert_equal(pred_labels.shape, self.y_train.shape)
+
+            assert (pred_labels.min() == 0)
+            assert (pred_labels.max() == 1)

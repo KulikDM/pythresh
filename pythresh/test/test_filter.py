@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -41,23 +42,24 @@ class TestFilter(unittest.TestCase):
 
         self.all_scores = [scores, multiple_scores]
 
-        self.method = ['gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt',
-                       'decimate', 'detrend', 'resample']
+        self.methods = ['gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt',
+                        'decimate', 'detrend', 'resample']
 
         self.sigma = 'auto'
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for method in self.method:
+        params = product(self.all_scores, self.methods)
 
-                self.thres = FILTER(method=method, sigma=self.sigma)
-                pred_labels = self.thres.eval(scores)
-                assert (self.thres.thresh_ is not None)
+        for scores, method in params:
 
-                assert_equal(pred_labels.shape, self.y_train.shape)
+            self.thres = FILTER(method=method, sigma=self.sigma)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
 
-                if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+            assert_equal(pred_labels.shape, self.y_train.shape)
 
-                    assert (pred_labels.min() == 0)
-                    assert (pred_labels.max() == 1)
+            if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+
+                assert (pred_labels.min() == 0)
+                assert (pred_labels.max() == 1)

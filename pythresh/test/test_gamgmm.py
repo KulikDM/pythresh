@@ -2,6 +2,7 @@ import os
 import sys
 import unittest
 import warnings
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -55,22 +56,22 @@ class TestGAMGMM(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for skip in self.skip:
-                for verbose in self.verbose:
+        params = product(self.all_scores, self.skip, self.verbose)
 
-                    self.thres = GAMGMM(skip=skip, steps=10, verbose=verbose)
+        for scores, skip, verbose in params:
 
-                    pred_labels = self.thres.eval(scores)
-                    assert (self.thres.thresh_ is not None)
-                    assert (self.thres.dscores_ is not None)
+            self.thres = GAMGMM(skip=skip, steps=10, verbose=verbose)
 
-                    assert (self.thres.dscores_.min() == 0)
-                    assert (self.thres.dscores_.max() == 1)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
+            assert (self.thres.dscores_ is not None)
 
-                    assert_equal(pred_labels.shape, self.y_train.shape)
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
-                    if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+            assert_equal(pred_labels.shape, self.y_train.shape)
 
-                        assert (pred_labels.min() == 0)
-                        assert (pred_labels.max() == 1)
+            if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+
+                assert (pred_labels.min() == 0)
+                assert (pred_labels.max() == 1)

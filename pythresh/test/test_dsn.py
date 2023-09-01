@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -46,16 +47,17 @@ class TestDSN(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for metric in self.metrics:
+        params = product(self.all_scores, self.metrics)
 
-                self.thres = DSN(metric=metric)
-                pred_labels = self.thres.eval(scores)
-                assert (self.thres.thresh_ is not None)
+        for scores, metric in params:
 
-                assert_equal(pred_labels.shape, self.y_train.shape)
+            self.thres = DSN(metric=metric)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
 
-                if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+            assert_equal(pred_labels.shape, self.y_train.shape)
 
-                    assert (pred_labels.min() == 0)
-                    assert (pred_labels.max() == 1)
+            if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+
+                assert (pred_labels.min() == 0)
+                assert (pred_labels.max() == 1)

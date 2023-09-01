@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -50,29 +51,26 @@ class TestOCSVM(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for model in self.models:
-                for degree in self.degree:
-                    for gamma in self.gamma:
-                        for criterion in self.criterion:
-                            for nu in self.nu:
-                                for tol in self.tol:
+        params = product(self.all_scores, self.models, self.degree,
+                         self.gamma, self.criterion, self.nu, self.tol)
 
-                                    self.thres = OCSVM(model=model, degree=degree,
-                                                       gamma=gamma, criterion=criterion,
-                                                       nu=nu, tol=tol)
+        for scores, model, degree, gamma, criterion, nu, tol in params:
 
-                                    pred_labels = self.thres.eval(scores)
-                                    assert (self.thres.thresh_ is None)
-                                    assert (self.thres.dscores_ is not None)
+            self.thres = OCSVM(model=model, degree=degree,
+                               gamma=gamma, criterion=criterion,
+                               nu=nu, tol=tol)
 
-                                    assert (self.thres.dscores_.min() == 0)
-                                    assert (self.thres.dscores_.max() == 1)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is None)
+            assert (self.thres.dscores_ is not None)
 
-                                    assert_equal(pred_labels.shape,
-                                                 self.y_train.shape)
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
-                                    if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+            assert_equal(pred_labels.shape,
+                         self.y_train.shape)
 
-                                        assert (pred_labels.min() == 0)
-                                        assert (pred_labels.max() == 1)
+            if (not np.all(pred_labels == 0)) & (not np.all(pred_labels == 1)):
+
+                assert (pred_labels.min() == 0)
+                assert (pred_labels.max() == 1)

@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -48,25 +49,24 @@ class TestVAE(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for epochs in self.epochs:
-                for loss in self.loss:
-                    for latent_dims in self.latent_dims:
-                        for batch_size in self.batch_size:
+        params = product(self.all_scores, self.epochs, self.loss,
+                         self.latent_dims, self.batch_size)
 
-                            self.thres = VAE(epochs=epochs,
-                                             latent_dims=latent_dims,
-                                             batch_size=batch_size,
-                                             loss=loss)
+        for scores, epochs, loss, latent_dims, batch_size in params:
 
-                            pred_labels = self.thres.eval(scores)
-                            assert (self.thres.thresh_ is not None)
-                            assert (self.thres.dscores_ is not None)
+            self.thres = VAE(epochs=epochs,
+                             latent_dims=latent_dims,
+                             batch_size=batch_size,
+                             loss=loss)
 
-                            assert (self.thres.dscores_.min() == 0)
-                            assert (self.thres.dscores_.max() == 1)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
+            assert (self.thres.dscores_ is not None)
 
-                            assert_equal(pred_labels.shape, self.y_train.shape)
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
-                            assert (pred_labels.min() == 0)
-                            assert (pred_labels.max() == 1)
+            assert_equal(pred_labels.shape, self.y_train.shape)
+
+            assert (pred_labels.min() == 0)
+            assert (pred_labels.max() == 1)

@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -46,20 +47,20 @@ class TestGESD(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for max_outliers in self.max_outliers:
-                for alpha in self.alphas:
+        params = product(self.all_scores, self.max_outliers, self.alphas)
 
-                    self.thres = GESD(max_outliers=max_outliers, alpha=alpha)
+        for scores, max_outliers, alpha in params:
 
-                    pred_labels = self.thres.eval(scores)
-                    assert (self.thres.thresh_ is not None)
-                    assert (self.thres.dscores_ is not None)
+            self.thres = GESD(max_outliers=max_outliers, alpha=alpha)
 
-                    assert (self.thres.dscores_.min() == 0)
-                    assert (self.thres.dscores_.max() == 1)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
+            assert (self.thres.dscores_ is not None)
 
-                    assert_equal(pred_labels.shape, self.y_train.shape)
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
-                    assert (pred_labels.min() == 0)
-                    assert (pred_labels.max() == 1)
+            assert_equal(pred_labels.shape, self.y_train.shape)
+
+            assert (pred_labels.min() == 0)
+            assert (pred_labels.max() == 1)

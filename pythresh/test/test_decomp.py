@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -45,14 +46,15 @@ class TestDECOMP(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
-            for method in self.methods:
+        params = product(self.all_scores, self.methods)
 
-                self.thres = DECOMP(method=method)
-                pred_labels = self.thres.eval(scores)
-                assert (self.thres.thresh_ is not None)
+        for scores, method in params:
 
-                assert_equal(pred_labels.shape, self.y_train.shape)
+            self.thres = DECOMP(method=method)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
 
-                assert (pred_labels.min() == 0)
-                assert (pred_labels.max() == 1)
+            assert_equal(pred_labels.shape, self.y_train.shape)
+
+            assert (pred_labels.min() == 0)
+            assert (pred_labels.max() == 1)

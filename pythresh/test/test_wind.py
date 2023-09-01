@@ -46,16 +46,15 @@ class TestWIND(unittest.TestCase):
     def test_prediction_labels(self):
 
         for scores in self.all_scores:
-            for scores in self.all_scores:
 
-                pred_labels = self.thres.eval(scores)
-                assert (self.thres.thresh_ is not None)
-                assert (self.thres.dscores_ is not None)
+            pred_labels = self.thres.eval(scores)
+            assert (self.thres.thresh_ is not None)
+            assert (self.thres.dscores_ is not None)
 
-                assert (self.thres.dscores_.min() == 0)
-                assert (self.thres.dscores_.max() == 1)
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
-                assert_equal(pred_labels.shape, self.y_train.shape)
+            assert_equal(pred_labels.shape, self.y_train.shape)
 
-                assert (pred_labels.min() == 0)
-                assert (pred_labels.max() == 1)
+            assert (pred_labels.min() == 0)
+            assert (pred_labels.max() == 1)
