@@ -92,7 +92,7 @@ class KARCH(BaseThresholder):
         arg_map = {'old': {'metric': manifold.metric},
                    'new': {'space': manifold}}
 
-        arg_dict = (arg_map['new'] if 'method' in
+        arg_dict = (arg_map['new'] if 'space' in
                     inspect.signature(FrechetMean).parameters
                     else arg_map['old'])
 
