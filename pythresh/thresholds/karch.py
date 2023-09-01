@@ -1,3 +1,5 @@
+import inspect
+
 import numpy as np
 from geomstats.geometry.euclidean import Euclidean
 from geomstats.learning.frechet_mean import FrechetMean
@@ -86,7 +88,15 @@ class KARCH(BaseThresholder):
 
         # Create euclidean manifold and find Karcher mean
         manifold = Euclidean(dim=self.ndim)
-        estimator = FrechetMean(metric=manifold.metric)
+
+        arg_map = {'old': {'metric', manifold.metric},
+                   'new': {'space', manifold}}
+
+        arg_dict = (arg_map['new'] if 'method' in
+                    inspect.signature(FrechetMean).parameters
+                    else arg_map['old'])
+
+        estimator = FrechetMean(**arg_dict)
 
         if self.method == 'complex':
 
