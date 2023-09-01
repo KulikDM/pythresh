@@ -89,8 +89,8 @@ class KARCH(BaseThresholder):
         # Create euclidean manifold and find Karcher mean
         manifold = Euclidean(dim=self.ndim)
 
-        arg_map = {'old': {'metric', manifold.metric},
-                   'new': {'space', manifold}}
+        arg_map = {'old': {'metric': manifold.metric},
+                   'new': {'space': manifold}}
 
         arg_dict = (arg_map['new'] if 'method' in
                     inspect.signature(FrechetMean).parameters
