@@ -66,3 +66,4 @@ v<0.3.3>, <07/30/2023> -- New benchmarking for multiple score sets
 v<0.3.3>, <08/03/2023> -- Added time complexity to benchmark
 v<0.3.4>, <09/01/2023> -- FrechetMean hot fix for karch
 v<0.3.4>, <09/01/2023> -- Refactored test args
+v<0.3.4>, <09/05/2023> -- Added HDBSCAN to clust

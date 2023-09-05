@@ -42,8 +42,8 @@ class TestCLUST(unittest.TestCase):
 
         self.all_scores = [scores, multiple_scores]
 
-        self.methods = ['agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'kmeans',
-                        'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans']
+        self.methods = ['agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'hdbscan',
+                        'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans']
 
     def test_prediction_labels(self):
 

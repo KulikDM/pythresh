@@ -1,4 +1,5 @@
 import numpy as np
+import sklearn
 from pyclustering.cluster.agglomerative import agglomerative
 from pyclustering.cluster.bang import bang
 from pyclustering.cluster.bsas import bsas
@@ -22,6 +23,13 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import check_scores, normalize
 
+sklearn_version = str(sklearn.__version__)
+
+if sklearn_version[:3] >= '1.3':
+    from sklearn.cluster import HDBSCAN
+else:
+    from unittest.mock import Mock as HDBSCAN
+
 
 class CLUST(BaseThresholder):
     """CLUST class for clustering type thresholders.
@@ -34,7 +42,7 @@ class CLUST(BaseThresholder):
        Parameters
        ----------
 
-       method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='spec')
+       method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'hdbscan', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='spec')
             Clustering method
 
             - 'agg':    Agglomerative
@@ -44,6 +52,7 @@ class CLUST(BaseThresholder):
             - 'bsas':   Basic Sequential Algorithmic Scheme
             - 'dbscan': Density-based spatial clustering of applications with noise
             - 'ema':    Expectation-Maximization clustering algorithm for Gaussian Mixture Model
+            - 'hdbcan': Hierarchical Density-based spatial clustering of applications with noise
             - 'kmeans': K-means
             - 'mbsas':  Modified Basic Sequential Algorithmic Scheme
             - 'mshift': Mean shift
@@ -98,10 +107,11 @@ class CLUST(BaseThresholder):
         self.method_funcs = {'agg': self._AGG_clust, 'birch': self._BIRCH_clust,
                              'bang': self._BANG_clust, 'bgm': self._BGM_clust,
                              'bsas': self._BSAS_clust, 'dbscan': self._DBSCAN_clust,
-                             'ema': self._EMA_clust, 'kmeans': self._KMEANS_clust,
-                             'mbsas': self._MBSAS_clust, 'mshift': self._MSHIFT_clust,
-                             'optics': self._OPTICS_clust, 'somsc': self._SOMSC_clust,
-                             'spec': self._SPEC_clust, 'xmeans': self._XMEANS_clust}
+                             'ema': self._EMA_clust, 'hdbscan': self._HDBSCAN_clust,
+                             'kmeans': self._KMEANS_clust, 'mbsas': self._MBSAS_clust,
+                             'mshift': self._MSHIFT_clust, 'optics': self._OPTICS_clust,
+                             'somsc': self._SOMSC_clust, 'spec': self._SPEC_clust,
+                             'xmeans': self._XMEANS_clust}
         self.random_state = random_state
 
     def eval(self, decision):
@@ -144,7 +154,7 @@ class CLUST(BaseThresholder):
 
         pred = np.squeeze(np.array(cl.get_clusters(), dtype=object))
 
-        pred = np.array(pred[0]) if type(pred[0]) == list else pred
+        pred = np.array(pred[0]) if isinstance(pred[0], list) else pred
 
         labels = np.ones(len(decision), dtype=int)
         labels[pred.astype(int)] = 0
@@ -235,6 +245,16 @@ class CLUST(BaseThresholder):
         cl = ema(data=decision, amount_clusters=2)
 
         return self._pyclust_eval(cl, decision)
+
+    def _HDBSCAN_clust(self, decision):
+        """HDBSCAN (Hierarchical Density-based spatial clustering of.
+
+        applications with noise) algorithm for cluster analysis
+        """
+
+        cl = HDBSCAN(min_cluster_size=len(decision) // 2)
+
+        return self._sklearn_eval(cl, decision)
 
     def _KMEANS_clust(self, decision):
         """K-means algorithm for cluster analysis."""
