@@ -255,7 +255,7 @@ class CLUST(BaseThresholder):
         applications with noise) algorithm for cluster analysis
         """
 
-        cl = HDBSCAN(min_cluster_size=len(decision) // 2)
+        cl = HDBSCAN(cluster_selection_epsilon=np.std(decision) / np.sqrt(2))
 
         return self._sklearn_eval(cl, decision)
 
