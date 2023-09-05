@@ -170,6 +170,9 @@ class CLUST(BaseThresholder):
         cl.fit(decision)
         labels = cl.labels_.astype(int)
 
+        # Set all outlier labels to 1
+        labels[labels != 0] = 1
+
         # Flip if outliers were clustered
         labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
 
