@@ -360,7 +360,7 @@ the threshold types available in PyThresh.
 
 .. [#chau1]
 
-   `Chauvenet’s Test in the Classical Theory of Errors
+   `Chauvenet's Test in the Classical Theory of Errors
    <https://epubs.siam.org/doi/10.1137/1119078>`_
 
 .. [#clf1]
