@@ -5,6 +5,7 @@
 .. toctree::
 
    pythresh.thresholds
+   pythresh.utils
 
 *****************
  Module contents

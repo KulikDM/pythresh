@@ -12,6 +12,7 @@ exclude CHANGES.txt
 exclude requirements-test.txt
 include README.rst
 include requirements.txt
+include pythresh/utils
 include pythresh/models/meta_model_GNB.pkl
 include pythresh/models/meta_model_GNBC.pkl
 include pythresh/models/meta_model_GNBM.pkl
