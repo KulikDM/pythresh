@@ -231,7 +231,7 @@ class RANK():
 
         return sorted_scores
 
-    def _rank_sort(self, sortings, weights):
+    def _rank_sort(self, sortings, weights=None):
         """Sort weighted rankings."""
 
         # Get unique index values for ranking

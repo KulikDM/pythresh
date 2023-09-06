@@ -18,7 +18,7 @@ path = up(up(up(__file__)))
 sys.path.append(path)
 
 
-class TestAUCP(unittest.TestCase):
+class TestRANK(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
         self.n_test = 100
@@ -33,7 +33,8 @@ class TestAUCP(unittest.TestCase):
 
         self.weights = [[0.5, 0.25, 0.25],
                         [0.25, 0.5, 0.25],
-                        [0.25, 0.25, 0.5]]
+                        [0.25, 0.25, 0.5],
+                        None]
 
     def test_prediction_labels(self):
 
