@@ -227,11 +227,11 @@ class RANK():
 
             sortings.append(check.tolist())
 
-        sorted_scores = self._rank_sort(sortings)
+        sorted_scores = self._rank_sort(sortings, [1, 1, 1])
 
         return sorted_scores
 
-    def _rank_sort(self, sortings, weights=None):
+    def _rank_sort(self, sortings, weights):
         """Sort weighted rankings."""
 
         # Get unique index values for ranking
