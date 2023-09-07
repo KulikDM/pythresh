@@ -27,8 +27,8 @@ class RANK():
        weights : list of shape 3, optional (default=None)
              These weights are applied to the combined rank score. The first
              is for the cdf rankings, the second for the clust rankings, and
-             the third for the mode rankings. Default applies equal rankings
-             to all criterion.
+             the third for the mode rankings. Default applies equal weightings
+             to all meta-metrics.
 
        Attributes
        ----------
@@ -43,18 +43,18 @@ class RANK():
        -----
 
        The RANK class ranks the outlier detection methods by evaluating
-       three distinct criterion. The first criterion looks at the outlier
+       three distinct meta-metric. The first meta-metric looks at the outlier
        likelihood scores by class and measures the cumulative distribution
        separation using the Jensen-Shannon distance, the Wasserstein
        distance, and the Lukaszyk-Karmowski metric for normal distributions.
-       The second criterion looks at the relationship between the fitted
+       The second meta-metric looks at the relationship between the fitted
        features (X) and the evaluated classes (y) using the Silhouette,
-       Davies-Bouldin, and the Calinski-Harabasz scores. The third criterion
+       Davies-Bouldin, and the Calinski-Harabasz scores. The third meta-metric
        evaluates the class difference for each outlier detection method with
        respect to the mode of all the evaluated outlier detection class labels.
 
-       Each criterion is ranked separately and a final ranking is applied
-       using all three criterion to get a single ranked result of each
+       Each meta-metric is ranked separately and a final ranking is applied
+       using all three meta-metric to get a single ranked result of each
        outlier detection method
 
        Examples
@@ -71,8 +71,8 @@ class RANK():
             from pythresh.thresholds.filter import FILTER
             from pythresh.utils.ranking import RANK
 
-            # Initalize models
-            clfs = [KNN(), IForest(), PCA(), MCD(), QMCD()
+            # Initialize models
+            clfs = [KNN(), IForest(), PCA(), MCD(), QMCD()]
             thres = FILTER()
 
             # Get rankings

@@ -230,6 +230,7 @@ Key Attributes of a threshold:
    install
    example
    benchmark
+   ranking
 
 .. toctree::
    :maxdepth: 2
