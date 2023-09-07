@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -29,7 +30,7 @@ class TestRANK(unittest.TestCase):
 
         self.clfs = [KNN(), PCA(), IForest()]
 
-        self.thres = FILTER()
+        self.thres = [FILTER(), self.contamination]
 
         self.weights = [[0.5, 0.25, 0.25],
                         [0.25, 0.5, 0.25],
@@ -38,9 +39,11 @@ class TestRANK(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        for weights in self.weights:
+        params = product(self.thres, self.weights)
 
-            ranker = RANK(self.clfs, self.thres, weights=weights)
+        for thres, weights in params:
+
+            ranker = RANK(self.clfs, thres, weights=weights)
             rankings = ranker.eval(self.X_train)
 
             cdf_rank = ranker.cdf_rank_

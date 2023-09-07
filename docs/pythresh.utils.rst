@@ -12,19 +12,3 @@
     :undoc-members:
     :show-inheritance:
     :inherited-members:
-
-*****************
- Module contents
-*****************
-
-.. automodule:: pythresh.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
-
-.. rubric:: References
-
-.. bibliography::
-   :cited:
-   :labelprefix:
