@@ -62,6 +62,10 @@ class META(BaseThresholder):
        META uses a majority vote of all the trained models to determine the
        inlier/outlier labels.
 
+       Update: the latest GNBC model was further trained on the ``backdoor, celeba, census,
+       cover, donors, fraud, http, InternetAds,`` and ``skin`` datasets and additionally using
+       the ``AutoEncoder, LUNAR, OCSVM, HBOS, KPCA,`` and ``DIF`` outlier detection methods.
+
     """
 
     def __init__(self, method='GNBM', random_state=1234):

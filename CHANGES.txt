@@ -69,3 +69,4 @@ v<0.3.4>, <09/01/2023> -- Refactored test args
 v<0.3.4>, <09/05/2023> -- Added HDBSCAN to clust
 v<0.3.4>, <09/06/2023> -- Added RANK for OD ranking
 v<0.3.4>, <09/07/2023> -- Added Rankings to docs
+v<0.3.4>, <09/08/2023> -- Updated GNBC model for meta

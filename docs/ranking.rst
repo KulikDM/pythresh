@@ -143,9 +143,9 @@ Below is a simple example of how to apply the ``RANK`` method:
    ranker = RANK(clfs, thres)
    rankings = ranker.eval(X)
 
-#############
+*************
  Final Notes
-#############
+*************
 
 While the ``RANK`` method is a useful tool to assist in selecting the
 possible best outlier detection method to use with respect to the
