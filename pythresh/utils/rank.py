@@ -20,9 +20,9 @@ class RANK():
        Parameters
        ----------
 
-       od_models : list, optional (default=None)
+       od_models : list
 
-       thresh : {pythresh.threshold class, float, int}, optional (default=None)
+       thresh : {pythresh.threshold class, float, int}
 
        weights : list of shape 3, optional (default=None)
              These weights are applied to the combined rank score. The first
@@ -80,7 +80,7 @@ class RANK():
             rankings = ranker.eval(X)
     """
 
-    def __init__(self, od_models=None, thresh=None, weights=None):
+    def __init__(self, od_models, thresh, weights=None):
 
         self.od_models = od_models
         self.thresh = thresh
