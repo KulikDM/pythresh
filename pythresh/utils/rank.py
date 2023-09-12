@@ -28,7 +28,7 @@ class RANK():
              These weights are applied to the combined rank score. The first
              is for the cdf rankings, the second for the clust rankings, and
              the third for the mode rankings. Default applies equal weightings
-             to all meta-metrics.
+             to all proxy-metrics.
 
        Attributes
        ----------
@@ -43,18 +43,18 @@ class RANK():
        -----
 
        The RANK class ranks the outlier detection methods by evaluating
-       three distinct meta-metric. The first meta-metric looks at the outlier
+       three distinct proxy-metric. The first proxy-metric looks at the outlier
        likelihood scores by class and measures the cumulative distribution
        separation using the Jensen-Shannon distance, the Wasserstein
        distance, and the Lukaszyk-Karmowski metric for normal distributions.
-       The second meta-metric looks at the relationship between the fitted
+       The second proxy-metric looks at the relationship between the fitted
        features (X) and the evaluated classes (y) using the Silhouette,
-       Davies-Bouldin, and the Calinski-Harabasz scores. The third meta-metric
+       Davies-Bouldin, and the Calinski-Harabasz scores. The third proxy-metric
        evaluates the class difference for each outlier detection method with
        respect to the mode of all the evaluated outlier detection class labels.
 
-       Each meta-metric is ranked separately and a final ranking is applied
-       using all three meta-metric to get a single ranked result of each
+       Each proxy-metric is ranked separately and a final ranking is applied
+       using all three proxy-metric to get a single ranked result of each
        outlier detection method
 
        Examples

@@ -31,30 +31,30 @@ coefficient (MCC). But, since unsupervised tasks means there is lack of
 true labels, the best option is to use other robust statistical metrics
 that have a strong correlation to the above mentioned scores.
 
-To find these meta-metrics a good starting point is to know what data
+To find these proxy-metrics a good starting point is to know what data
 can be used to compute them. In the case of unsupervised outlier
 detection, there are essentially three main components: the exploratory
 variables (X), the computed outlier likelihood scores, and the
 thresholded binary labels. With these, criteria can be set to apply
-meta-metrics that can then be ranked to provide an list of best to worst
+proxy-metrics that can then be ranked to provide an list of best to worst
 performing outlier detection methods with respect to these metrics.
 
 **************
- Meta-Metrics
+ Proxy-Metrics
 **************
 
 High correlation with the MMC and F1 scores has been seen for the
-following meta-metrics. Correlation tests were done on the ``arrhythmia,
+following proxy-metrics. Correlation tests were done on the ``arrhythmia,
 cardio, glass, ionosphere, letter, lympho, mnist, musk, optdigits,
 pendigits, pima, satellite, satimage-2, vertebral, vowels,``and ``wbc``
 datasets using the ``PCA, MCD, KNN, IForest, GMM,`` and ``COPOD``
 outlier detection methods and the ``FILTER, OCSVM, DSN,`` and ``CLF``
 thresholding methods on each dataset. While high correlation was noted
 overall, there were significant low or even inverse correlation
-relationships indicating that the meta-metrics are general or
+relationships indicating that the proxy-metrics are general or
 sub-optimal indicators to the best performance.
 
-The ``RANK`` method in ``PyThresh`` uses these meta-metrics to rank the
+The ``RANK`` method in ``PyThresh`` uses these proxy-metrics to rank the
 performance of the outlier detection methods against each other with
 respect to the selected threshold or thresholding method.
 
@@ -93,8 +93,8 @@ Three clustering based metrics have been selected:
 Mode Deviation
 ==============
 
-Since the other two meta-metrics evaluate each outlier detection method
-individually, a comparator meta-metric should also be added with which
+Since the other two proxy-metrics evaluate each outlier detection method
+individually, a comparator proxy-metric should also be added with which
 to compare all outlier detection method results against some baseline.
 This baseline can be set by taking the element-wise mode between all the
 outlier detection method labels. The absolute difference between each
@@ -105,17 +105,17 @@ deviation from the mode of all outlier detection methods
  Rank OD Methods
 *****************
 
-The ranking process involves ordering the meta-metric scores with
-respect to their performance. The meta-metrics are ordered
+The ranking process involves ordering the proxy-metric scores with
+respect to their performance. The proxy-metrics are ordered
 highest-to-lowest or lowest-to-highest based on their performance
-criterion. The meta-metrics are combined as follows: the statistical
+criterion. The proxy-metrics are combined as follows: the statistical
 based distances are combined using equal weighting on their ordered
 ranks to compute a single ranked list. The same method is done to the
 clustering based metrics. Finally, an overall combined rank is computed
 using the combined statistical based ranking, the combined clustering
 based ranking, and the mode baseline deviation ranking. This final
 combined ranking can either be computed using equal weightings for each
-three meta-metric classed rankings or a weight list can be parsed based
+three proxy-metric classed rankings or a weight list can be parsed based
 on preference.
 
 *********
