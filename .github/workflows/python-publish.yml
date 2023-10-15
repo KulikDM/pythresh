@@ -64,6 +64,7 @@ jobs:
           sed -i "s/__version__ = '${current_version}'/__version__ = '${new_version}'/" pythresh/version.py
 
           echo "new_version=$new_version" >> $GITHUB_ENV
+          echo "WORK_DIR=$(pwd)" >> $GITHUB_ENV
 
           printf "\nNew version updated from $current_version to $new_version\n"
 
@@ -145,7 +146,7 @@ jobs:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
-          echo "Preparing to clone feedstock repository\n"
+          printf "Preparing to clone feedstock repository\n"
 
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
@@ -174,3 +175,35 @@ jobs:
           git push origin main
 
           printf "\nNew Conda release created\n"
+
+      - name: Create GitHub release
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          printf "Preparing to create new GitHub release\n"
+
+          cd "${{ env.WORK_DIR }}"
+
+          TAG_NAME="v${{ env.latest_version }}"
+          RELEASE_TITLE=$TAG_NAME
+
+          printf "\nCreating release notes\n"
+
+          RELEASE_NOTES="## What's Changed"$'\n'
+
+          while IFS= read -r line; do
+              RELEASE_NOTES+="* $line"$'\n'
+          done < <(grep -A 1 "v<${{ env.latest_version }}>," CHANGES.txt | grep -o -- "-- .*" | sed -e "s/^-- //")
+
+          RELEASE_NOTES=$(echo "$RELEASE_NOTES" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g')
+
+          printf "\nPosting new release\n"
+
+          JSON_DATA="{ \"tag_name\": \"$TAG_NAME\", \"name\": \"$RELEASE_TITLE\", \"body\": \"$RELEASE_NOTES\", \"draft\": false, \"prerelease\": false }"
+
+          curl -X POST "https://api.github.com/repos/KulikDM/pythresh/releases" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $GIT_TOKEN" \
+            -d "$JSON_DATA"
+
+          printf "\nNew release posted succesfully\n"
