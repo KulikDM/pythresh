@@ -9,7 +9,7 @@ from sklearn.metrics import calinski_harabasz_score
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import check_array
 
-from .rank_utility import (
+from pythresh.utils.rank_utility import (
     BREG_metric,
     Contam_score,
     GNB_score,
