@@ -167,10 +167,11 @@ Or with **pip**:
 -  ruptures (used in the CPD thresholder)
 -  geomstats (used in the KARCH thresholder)
 -  scikit-lego (used in the META thresholder)
--  joblib>=0.14.1 (used in the META thresholder)
+-  joblib>=0.14.1 (used in the META thresholder and RANK)
 -  pandas (used in the META thresholder)
 -  torch (used in the VAE thresholder)
 -  tqdm (used in the VAE thresholder)
+-  xgboost>=2.0.0 (used in the RANK)
 
 ****************
  API Cheatsheet

@@ -1,61 +1,75 @@
+import os
+from os.path import dirname as up
+
 import numpy as np
-import scipy.spatial.distance as distance
-import scipy.special as special
 import scipy.stats as stats
-from sklearn.metrics import (
-    calinski_harabasz_score,
-    davies_bouldin_score,
-    silhouette_score
-)
+import xgboost as xgb
+from pyod.utils.utility import standardizer
+from sklearn.metrics import calinski_harabasz_score
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import check_array
+
+from .rank_utility import (
+    BREG_metric,
+    Contam_score,
+    GNB_score,
+    mclain_rao_index
+)
 
 
 class RANK():
-    """RANK class for ranking outlier detection methods.
+    """RANK class for ranking outlier detection and thresholding methods.
 
-       Use the RANK class to rank outlier detection methods' capabilities
+       Use the RANK class to rank outlier detection and thresholding methods' capabilities
        to provide the best matthews correlation with respect to the
        selected threshold method
 
        Parameters
        ----------
 
-       od_models : list
+       od_models : {list of pyod.model classes}
 
-       thresh : {pythresh.threshold class, float, int}
+       thresh : {pythresh.threshold class, float, int, list of pythresh.threshold classes, list of floats, list of ints)
+
+       method : {'model', 'native'}, optional (default='model')
 
        weights : list of shape 3, optional (default=None)
              These weights are applied to the combined rank score. The first
              is for the cdf rankings, the second for the clust rankings, and
              the third for the mode rankings. Default applies equal weightings
-             to all proxy-metrics.
+             to all proxy-metrics. Only applies when method = 'native'.
 
        Attributes
        ----------
 
-       cdf_rank_ : list of shape (n_od_models) of cdf based rankings
+       cdf_rank_ : list of tuples shape (2, n_od_models) of cdf based rankings
 
-       clust_rank_ : list of shape (n_od_models) of cluster based rankings
+       clust_rank_ : list of tuples shape (2, n_od_models) of cluster based rankings
 
-       mode_rank_ : list of shape (n_od_models) of mode based rankings
+       consensus_rank_ : list of tuples shape (2, n_od_models) of consensus based rankings
 
        Notes
        -----
 
        The RANK class ranks the outlier detection methods by evaluating
-       three distinct proxy-metric. The first proxy-metric looks at the outlier
+       three distinct proxy-metrics. The first proxy-metric looks at the outlier
        likelihood scores by class and measures the cumulative distribution
-       separation using the Jensen-Shannon distance, the Wasserstein
-       distance, and the Lukaszyk-Karmowski metric for normal distributions.
-       The second proxy-metric looks at the relationship between the fitted
-       features (X) and the evaluated classes (y) using the Silhouette,
-       Davies-Bouldin, and the Calinski-Harabasz scores. The third proxy-metric
-       evaluates the class difference for each outlier detection method with
-       respect to the mode of all the evaluated outlier detection class labels.
+       separation using the the Wasserstein distance, and the Exponential Euclidean
+       Bregman distance. The second proxy-metric looks at the relationship between the
+       fitted features (X) and the evaluated classes (y) using the Calinski-Harabasz scores
+       and between the outlier likihood score and the evaluated classes using the
+       Mclain Rao Index. The third proxy-metric evaluates the class difference for each outlier
+       detection and thresholding method with respect to consensus based metrics of all the evaluated
+       outlier detection class labels. This is done using the mean contamination deviation based on
+       TruncatedSVD decomposed scores and Gaussian Naive-Bayes trained consensus score
 
        Each proxy-metric is ranked separately and a final ranking is applied
        using all three proxy-metric to get a single ranked result of each
-       outlier detection method
+       outlier detection and thresholding method using the 'native' method. The model method uses
+       a trained LambdaMART ranking model using all the proxy-metrics as input.
+
+       Please note that the data is standardized using
+       ``from pyod.utils.utility import standardizer`` during this ranking process
 
        Examples
        --------
@@ -80,16 +94,18 @@ class RANK():
             rankings = ranker.eval(X)
     """
 
-    def __init__(self, od_models, thresh, weights=None):
+    def __init__(self, od_models, thresh, method='model', weights=None):
 
-        self.od_models = od_models
-        self.thresh = thresh
+        self.od_models = od_models if isinstance(
+            od_models, list) else [od_models]
+        self.thr_models = thresh if isinstance(thresh, list) else [thresh]
+        self.method = method
 
         no_weights = [1, 1, 1]
         self.weights = weights if weights is not None else no_weights
 
     def eval(self, X):
-        """Outlier detection method ranking.
+        """Outlier detection and thresholding method ranking.
 
         Parameters
         ----------
@@ -98,68 +114,103 @@ class RANK():
 
         Returns
         -------
-        ranked_models : list of shape (n_od_models)
-            For each outlier detection model ranked from
-            best to worst in terms of performance with
-            respect to the selected threshold method
+        rankings : list of tuples shape (2, n_od_models)
+            For each combination of outlier detection model and
+            thresholder ranked from best to worst in terms of
+            performance
         """
 
         X = check_array(X, ensure_2d=True)
+        X = standardizer(X)
 
         cdf_scores = []
         clust_scores = []
+        all_scores = []
         all_labels = []
+        models = []
+        contam = []
+
+        od_names = [od.__class__.__name__ for od in self.od_models]
+        thr_names = [thr.__class__.__name__ for thr in self.thr_models]
 
         # Apply outlier detection and threshold
-        for clf in self.od_models:
+        for i, clf in enumerate(self.od_models):
+            for j, thr in enumerate(self.thr_models):
 
-            clf.fit(X)
-            scores = clf.decision_scores_
+                clf.fit(X)
+                scores = clf.decision_scores_
 
-            if not (isinstance(self.thresh, (float, int))):
+                if not (isinstance(thr, (float, int))):
 
-                labels = self.thresh.eval(scores)
+                    labels = thr.eval(scores)
 
-            else:
+                else:
 
-                threshold = np.percentile(scores, 100 * (1 - self.thresh))
+                    threshold = np.percentile(scores, 100 * (1 - thr))
 
-                labels = (scores > threshold).astype('int').ravel()
+                    labels = (scores > threshold).astype('int').ravel()
 
-            # Normalize scores between 0 and 1
-            scores = (scores - scores.min())/(scores.max() - scores.min())
+                # Normalize scores between 0 and 1
+                scores = (scores - scores.min())/(scores.max() - scores.min())
 
-            # Calculate metrics
-            cdf_scores.append(self._cdf_metric(scores, labels))
-            clust_scores.append(self._clust_metric(X, labels))
-            all_labels.append(labels)
+                # Calculate metrics
+                cdf_scores.append(self._cdf_metric(scores, labels))
+                clust_scores.append(self._clust_metric(X, scores, labels))
 
-        # Get sum of the difference from the mode
-        mode = stats.mode(all_labels,
-                          axis=0)[0].squeeze()
+                all_scores.append(scores)
+                all_labels.append(labels)
 
-        mode_diff = np.sum(np.abs(np.vstack(all_labels) - mode), axis=1)
+                contam.append(labels.sum()/len(labels))
+                models.append((od_names[i], thr_names[j]))
+
+        # Get consensus based scores
+        consensus_scores = self._consensus_metric(X, all_scores,
+                                                  all_labels, contam)
 
         # Equally rank metrics
         cdf_rank = self._equi_rank(np.vstack(cdf_scores),
-                                   [True, True, True])
+                                   [True, True])
 
         clust_rank = self._equi_rank(np.vstack(clust_scores),
-                                     [True, False, True])
+                                     [True, True])
 
-        mode_rank = self._equi_rank(mode_diff.reshape(-1, 1), [False])
+        consensus_rank = self._equi_rank(np.vstack(consensus_scores),
+                                         [False, False])
 
         # Get combined metric rank
-        comb = [cdf_rank, clust_rank, mode_rank]
+        comb = [cdf_rank, clust_rank, consensus_rank]
         combined_rank = self._rank_sort(comb, self.weights)
 
-        # Map od models to rankings
-        od_names = [od.__class__.__name__ for od in self.od_models]
-        ranked_models = [od_names[rank] for rank in combined_rank]
+        # Map models to rankings
+        ranked_models = [models[rank] for rank in combined_rank]
 
-        self.cdf_rank_ = [od_names[rank] for rank in cdf_rank]
-        self.clust_rank_ = [od_names[rank] for rank in clust_rank]
-        self.mode_rank_ = [od_names[rank] for rank in mode_rank]
+        self.cdf_rank_ = [models[rank] for rank in cdf_rank]
+        self.clust_rank_ = [models[rank] for rank in clust_rank]
+        self.consensus_rank_ = [models[rank] for rank in consensus_rank]
+
+        if self.method == 'model':
+
+            # Load trained ranking model
+            clf = 'rank_model_XGB.json'
+            parent = up(up(__file__))
+            ranker = xgb.XGBRanker()
+            ranker.load_model(os.path.join(parent, 'models', clf))
+
+            # Transform data
+            scaler = MinMaxScaler()
+
+            model_data = np.concatenate([np.vstack(consensus_scores),
+                                         np.vstack(cdf_scores),
+                                         np.vstack(clust_scores)], axis=1)
+
+            model_data = scaler.fit_transform(model_data)
+            model_data[:, -1] = np.vstack(clust_scores)[:, -1]
+
+            # Predict, rank, and map rankings
+            pred = ranker.predict(model_data)
+            pred = np.argsort(pred)
+
+            ranked_models = [models[rank] for rank in pred]
 
         return ranked_models
 
@@ -167,7 +218,7 @@ class RANK():
         """Calculate CDF based metrics."""
 
         if len(np.unique(labels)) == 1:
-            return [-1e6, -1e6, -1e6]
+            return [-1e6, -1e6]
 
         # Sanity check on highly repetitive scores
         scores1 = scores[labels == 0]
@@ -192,25 +243,29 @@ class RANK():
                          for x in dat_range])
 
         # Calculate metrics
-        lk = self._LK_metric(cdf1, cdf2)
-
         was = stats.wasserstein_distance(cdf1, cdf2)
+        breg = BREG_metric(cdf1, cdf2)
 
-        js = distance.jensenshannon(cdf1, cdf2)
+        return [was, breg]
 
-        return [lk, was, js]
-
-    def _clust_metric(self, X, labels):
+    def _clust_metric(self, X, scores, labels):
         """Calculate clustering based metrics."""
 
         if len(np.unique(labels)) == 1:
-            return [-1e6, 1e6, -1e6]
+            return [-1e6, -1e6]
 
-        sil = silhouette_score(X, labels)
-        db = davies_bouldin_score(X, labels)
         ch = calinski_harabasz_score(X, labels)
+        mr = mclain_rao_index(scores, labels)
 
-        return [sil, db, ch]
+        return [ch, mr]
+
+    def _consensus_metric(self, X, scores, labels, contam):
+        """Calculate consensus based metrics."""
+
+        gnb = GNB_score(X, labels)
+        contam = Contam_score(scores, labels, contam)
+
+        return np.vstack([gnb, contam]).T.tolist()
 
     def _equi_rank(self, data, order):
         """Get equally weighted rankings from metrics."""
@@ -249,20 +304,3 @@ class RANK():
                                key=lambda x: scores[x])
 
         return sorted_scores
-
-    def _LK_metric(self, cdf1, cdf2):
-        """Calculate the Lukaszyk-Karmowski metric for normal distributions."""
-
-        # Get expected values for both distributions
-        rng = np.linspace(0, 1, len(cdf1))
-        exp_dist1 = (rng*cdf1).sum()/cdf1.sum()
-        exp_dist2 = (rng*cdf2).sum()/cdf2.sum()
-
-        nu_xy = np.abs(exp_dist1-exp_dist2)
-
-        # STD is same for both distributions
-        std = np.std(rng)
-
-        # Get the LK distance
-        return (nu_xy + 2*std/np.sqrt(np.pi)*np.exp(-nu_xy**2/(4*std**2))
-                - nu_xy*special.erfc(nu_xy/(2*std)))
