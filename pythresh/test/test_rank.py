@@ -10,6 +10,8 @@ from pyod.models.pca import PCA
 from pyod.utils.data import generate_data
 
 from pythresh.thresholds.filter import FILTER
+from pythresh.thresholds.karch import KARCH
+from pythresh.thresholds.ocsvm import OCSVM
 from pythresh.utils.rank import RANK
 
 # temporary solution for relative imports in case pythresh is not installed
@@ -30,7 +32,10 @@ class TestRANK(unittest.TestCase):
 
         self.clfs = [KNN(), PCA(), IForest()]
 
-        self.thres = [FILTER(), self.contamination]
+        self.thres = [FILTER(), self.contamination,
+                      [FILTER(), KARCH(), OCSVM()]]
+
+        self.method = ['model', 'native']
 
         self.weights = [[0.5, 0.25, 0.25],
                         [0.25, 0.5, 0.25],
@@ -39,25 +44,31 @@ class TestRANK(unittest.TestCase):
 
     def test_prediction_labels(self):
 
-        params = product(self.thres, self.weights)
+        params = product(self.thres,
+                         self.method,
+                         self.weights)
 
-        for thres, weights in params:
+        for thres, method, weights in params:
 
-            ranker = RANK(self.clfs, thres, weights=weights)
+            ranker = RANK(self.clfs, thres, method=method, weights=weights)
             rankings = ranker.eval(self.X_train)
 
             cdf_rank = ranker.cdf_rank_
             clust_rank = ranker.clust_rank_
-            mode_rank = ranker.mode_rank_
+            consensus_rank = ranker.consensus_rank_
 
             assert (cdf_rank is not None)
             assert (clust_rank is not None)
-            assert (mode_rank is not None)
+            assert (consensus_rank is not None)
             assert (rankings is not None)
 
-            len_clf = len(self.clfs)
+            n_clfs = len(self.clfs)
+            n_thres = len(thres) if isinstance(thres, list) else 1
+            len_models = n_clfs * n_thres
 
-            assert (len(cdf_rank) == len_clf)
-            assert (len(clust_rank) == len_clf)
-            assert (len(mode_rank) == len_clf)
-            assert (len(rankings) == len_clf)
+            assert (len(cdf_rank) == len_models)
+            assert (len(clust_rank) == len_models)
+            assert (len(consensus_rank) == len_models)
+            assert (len(rankings) == len_models)
+
+            assert (len(set(rankings)) == len_models)

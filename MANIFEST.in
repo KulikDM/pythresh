@@ -17,3 +17,4 @@ include pythresh/models/meta_model_GNB.pkl
 include pythresh/models/meta_model_GNBC.pkl
 include pythresh/models/meta_model_GNBM.pkl
 include pythresh/models/meta_model_LIN.pkl
+include pythresh/models/rank_model_XGB.json
