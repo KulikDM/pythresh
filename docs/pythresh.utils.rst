@@ -12,3 +12,14 @@
     :undoc-members:
     :show-inheritance:
     :inherited-members:
+
+****************************
+ pythresh.utils.conf module
+****************************
+
+.. automodule:: pythresh.utils.conf
+    :members:
+    :exclude-members: _valid_thresh, _invalid_thresh
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:

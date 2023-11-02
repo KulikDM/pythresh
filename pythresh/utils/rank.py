@@ -29,7 +29,7 @@ class RANK():
 
        od_models : {list of pyod.model classes}
 
-       thresh : {pythresh.threshold class, float, int, list of pythresh.threshold classes, list of floats, list of ints)
+       thresh : {pythresh.threshold class, float, int, list of pythresh.threshold classes, list of floats, list of ints}
 
        method : {'model', 'native'}, optional (default='model')
 

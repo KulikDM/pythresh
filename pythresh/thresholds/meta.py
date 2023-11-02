@@ -155,7 +155,7 @@ class META(BaseThresholder):
 
     @staticmethod
     @njit(fastmath=True, parallel=True)
-    def _wrap_around_discrepancy(data):
+    def _wrap_around_discrepancy(data):  # pragma: no cover
 
         n = data.shape[0]
         d = data.shape[1]
