@@ -15,29 +15,21 @@ class CONF():
     Parameters
     ----------
 
-    od_model : {pyod.model class}
-        The outlier detection model
-
     thresh : {pythresh.threshold class}
         The thresholding method
 
     alpha : float, optional (default=0.05)
         Confidence level corresponding to the t-Student distribution map to sample
 
-    split : float, optional (default=0.5)
+    split : float, optional (default=0.25)
         The test size thresholding test
 
     n_test : int, optional (default=100)
         The number of thresholding tests to build the confidence region
 
     random_state : int, optional (default=1234)
-        Random seed for the random number generators of the thresholders. Can also
+        Random seed for the starting random number generators of the test split. Can also
         be set to None.
-
-    Attributes
-    ----------
-
-    cdf_rank_ : list of tuples shape (2, n_od_models) of cdf based rankings
 
     Notes
     -----
@@ -61,44 +53,45 @@ class CONF():
         from pythresh.utils.conf import CONF
 
         # Initialize models
-        clfs = KNN()
+        clf = KNN()
         thres = FILTER()
 
+        clf.fit(X)
+        scores = clf.decision_scores_
+        labels = thres.eval(scores)
+
         # Get indices of datapoint outside of confidence bounds
-        confidence = CONF(clfs, thres)
-        uncertains = confidence.eval(X)
+        confidence = CONF(thres)
+        uncertains = confidence.eval(scores)
     """
 
-    def __init__(self, od_model, thresh, alpha=0.05, split=0.5, n_test=100, random_state=1234):
+    def __init__(self, thresh, alpha=0.05, split=0.25, n_test=100, random_state=1234):
 
-        self.od_model = od_model
         self.thresh = thresh
         self.alpha = alpha
         self.split = split
         self.n_test = n_test
         self.random_state = random_state
 
-    def eval(self, X):
+    def eval(self, decision):
         """Outlier detection and thresholding method confidence interval bounds.
 
         Parameters
         ----------
-        X : np.array or list of input data of shape
-            (n_samples, 1) or (n_samples, n_features)
+        decision : np.array or list of shape (n_samples)
+                   which are the decision scores from a
+                   outlier detection.
 
         Returns
         -------
-        rankings : list of indices of all datapoints that lie within the
+        uncertains : list of indices of all datapoints that lie within the
             confidence-interval bounds and can be classified as "uncertain"
             datapoints
         """
 
-        X = check_array(X, ensure_2d=True)
+        scores = check_array(decision, ensure_2d=False)
 
-        # Fit model and threshold
-        self.od_model.fit(X)
-
-        scores = self.od_model.decision_scores_
+        # Eval initial threshold
         scores = ((scores - scores.min()) / (scores.max() - scores.min()))
 
         labels = self.thresh.eval(scores)
@@ -139,10 +132,20 @@ class CONF():
             boundings = np.vstack(boundings).T
             count = np.count_nonzero(~np.isnan(boundings), axis=1)
 
+            # Apply two sample t-test
             cnf = np.nansum(boundings, axis=1)/np.maximum(count, 1)
+            cnf_in = cnf[labels == 0]
+            cnf_out = cnf[labels == 1]
 
-            uncertain_indices = np.where(((labels == 1) & (cnf < 1-self.alpha) & (cnf > 0)) |
-                                         ((labels == 0) & (cnf > self.alpha) & (cnf < 1)))[0]
+            n = len(cnf) - 2
+            t_crit = stats.t.ppf(1-self.alpha, df=n)
+
+            ci = t_crit * np.sqrt(
+                (np.var(cnf_in, ddof=1) / len(cnf_in)) +
+                (np.var(cnf_out, ddof=1) / len(cnf_out)))
+
+            uncertain_indices = np.where(((labels == 1) & (cnf < cnf_out.mean()-ci)) |
+                                         ((labels == 0) & (cnf > cnf_in.mean()+ci)))[0]
 
         return uncertain_indices.tolist()
 

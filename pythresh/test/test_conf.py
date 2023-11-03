@@ -27,7 +27,10 @@ class TestCONF(unittest.TestCase):
             n_train=self.n_train, n_test=self.n_test,
             contamination=self.contamination, random_state=42)
 
-        self.clf = IForest()
+        clf = IForest()
+        clf.fit(self.X_train)
+
+        self.scores = clf.decision_scores_
 
         self.thres = [FILTER(), OCSVM()]
 
@@ -46,15 +49,15 @@ class TestCONF(unittest.TestCase):
 
         for thres, alpha, split, n_test in params:
 
-            confidence = CONF(self.clf, thres, alpha=alpha,
+            confidence = CONF(thres, alpha=alpha,
                               split=split, n_test=n_test)
-            uncertains = confidence.eval(self.X_train)
+            uncertains = confidence.eval(self.scores)
 
             assert (isinstance(uncertains, list))
-            assert (len(uncertains) <= len(self.X_train))
+            assert (len(uncertains) <= len(self.scores))
 
             if len(uncertains) > 0:
 
                 assert (min(uncertains) > 0)
-                assert (max(uncertains) < len(self.X_train))
+                assert (max(uncertains) < len(self.scores))
                 assert (len(set(uncertains)) == len(uncertains))
