@@ -231,6 +231,7 @@ Key Attributes of a threshold:
    example
    benchmark
    ranking
+   confidence
 
 .. toctree::
    :maxdepth: 2
