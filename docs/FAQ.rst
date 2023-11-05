@@ -129,10 +129,12 @@ attribute after evaluating the likelihood scores.
  Can thresholders do multiclass thresholding
 *********************************************
 
-The short answer is *no* they cannot. PyThresh thresholding involves
+The short answer is *kind of*. PyThresh thresholding involves
 only binary classification. However, if you wish for some reason to have
 multiclass outlier classification (e.g. inliers, uncertains, outliers),
-then perhaps clustering methods may be a good option.
+then the ``CONF`` utility available in ``pthresh.utils.conf`` can be used
+to return the indeces of datapoints that fall within the confidence bounds
+of uncetrainty for a selected confidence level.
 
 ----
 
