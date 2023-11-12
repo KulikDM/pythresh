@@ -278,9 +278,9 @@ Unsupervised Anomaly Detection. <https://arxiv.org/abs/2210.10487>`_
 | COMB      | Thresholder Combination                   | None               | `pythresh.thresholds.comb module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.comb>`_                |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-******************************
- Implementations & Benchmarks
-******************************
+******************************************
+ Implementations, Benchmarks, & Utilities
+******************************************
 
 **The comparison among implemented models and general implementation**
 is made available below
@@ -292,6 +292,13 @@ thresholder performed best while the ``CLF`` thresholder provided the
 smallest uncertainty about its mean and is the most robust (best least
 accurate prediction). However, for interpretability and general
 performance the ``FILTER`` thresholder is a good fit.
+
+Further utilities are available for assiting in the selection of the
+most optimal outlier detection and thresholding methods `ranking
+<https://pythresh.readthedocs.io/en/latest/ranking.html>`_ as well as
+determining the confidence with regards to the selected thresholding
+method `thresholding confidence
+<https://pythresh.readthedocs.io/en/latest/confidence.html>`_
 
 ----
 
