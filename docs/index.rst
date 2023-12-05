@@ -100,7 +100,7 @@ provided the smallest uncertainty about its mean and is the most robust
 (best least accurate prediction). However, for interpretability and
 general performance the ``FILTER`` thresholder is a good fit.
 
-Further utilities are available for assiting in the selection of the
+Further utilities are available for assisting in the selection of the
 most optimal outlier detection and thresholding methods `ranking
 <https://pythresh.readthedocs.io/en/latest/ranking.html>`_ as well as
 determining the confidence with regards to the selected thresholding

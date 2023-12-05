@@ -45,15 +45,17 @@ class TestFilter(unittest.TestCase):
         self.methods = ['gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt',
                         'decimate', 'detrend', 'resample']
 
-        self.sigma = 'auto'
+        pre_sig = len(scores)
+
+        self.sigmas = ['auto', int(pre_sig**0.6), int(pre_sig**75)]
 
     def test_prediction_labels(self):
 
-        params = product(self.all_scores, self.methods)
+        params = product(self.all_scores, self.methods, self.sigmas)
 
-        for scores, method in params:
+        for scores, method, sigma in params:
 
-            self.thres = FILTER(method=method, sigma=self.sigma)
+            self.thres = FILTER(method=method, sigma=sigma)
             pred_labels = self.thres.eval(scores)
             assert (self.thres.thresh_ is not None)
 

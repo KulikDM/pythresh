@@ -217,7 +217,8 @@ class DSN(BaseThresholder):
         """Calculate the Mahalanobis distance."""
 
         # fit a Minimum Covariance Determinant (MCD) robust estimator to data
-        robust_cov = MinCovDet().fit(np.array([self.val_norm]).T)
+        robust_cov = MinCovDet(random_state=self.random_state).fit(
+            np.array([self.val_norm]).T)
 
         # Get the Mahalanobis distance
         dist = robust_cov.mahalanobis(np.array([self.val_data]).T)
