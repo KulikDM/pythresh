@@ -47,7 +47,7 @@ class TestFilter(unittest.TestCase):
 
         pre_sig = len(scores)
 
-        self.sigmas = ['auto', int(pre_sig**0.6), int(pre_sig**75)]
+        self.sigmas = ['auto', int(pre_sig**0.6), int(pre_sig**0.75)]
 
     def test_prediction_labels(self):
 
