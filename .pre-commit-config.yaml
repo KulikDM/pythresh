@@ -35,14 +35,14 @@ repos:
         name: Format code style
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+    rev: 5.13.2
     hooks:
       - id: isort
         args: [-m=3]
         name: Sort imports
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.1.7
+    rev: v0.1.13
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix, --fix, --line-length=180]
