@@ -53,6 +53,10 @@ class TestCHAU(unittest.TestCase):
             self.thres = CHAU(method=method)
             pred_labels = self.thres.eval(scores)
             assert (self.thres.thresh_ is not None)
+            assert (self.thres.dscores_ is not None)
+
+            assert (self.thres.dscores_.min() == 0)
+            assert (self.thres.dscores_.max() == 1)
 
             assert_equal(pred_labels.shape, self.y_train.shape)
 

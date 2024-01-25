@@ -36,7 +36,7 @@ class CPD(BaseThresholder):
        Attributes
        ----------
 
-       thres_ : threshold value that separates inliers from outliers
+       thresh_ : threshold value that separates inliers from outliers
 
        dscores_ : 1D array of decomposed decision scores
 
