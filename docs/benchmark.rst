@@ -91,11 +91,11 @@ Finally, a baseline was also calculated if outliers were selected at
 random (`Random`). This was done by setting :math:`MCC_{\rm{norm}} = 1`.
 
 Overall, a significant amount of thresholders performed better than
-selecting a random contamination level. The ``META`` thresholder
+selecting a random contamination level. The ``MIXMOD`` thresholder
 performed best while the ``CLF`` thresholder provided the smallest
 uncertainty about its mean and is the most robust (best least accurate
 prediction). However, for interpretability and general performance the
-``FILTER`` thresholder is a good fit.
+``MIXMOD, FILTER,`` and ``META`` thresholders are good fits.
 
 .. figure:: figs/Benchmark1.png
    :alt: Benchmark defaults
@@ -451,8 +451,8 @@ datapoints, 1s for 10000 datapoints, 100s for 100000 datapoints, and
 about 2.5 hours for 1 million datapoints. If time is a factor, suggested
 thresholders with reasonable accuracy are: FILTER with 10s, OCSVM with
 0.1s, and MTT with 100s for one million datapoints. **Note** that these
-benchmarks were done using an i5 12th gen processor and results may scale
-slightly differently depending on the hardware used.
+benchmarks were done using an i5 12th gen processor and results may
+scale slightly differently depending on the hardware used.
 
 +---------------+--------------------+------------------------+
 | Method        | Complexity         | Big-O Notation         |

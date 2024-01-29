@@ -28,7 +28,7 @@
    :target: https://codeclimate.com/github/KulikDM/pythresh/maintainability
    :alt: Maintainability
 
-.. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white
+.. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white&style=flat
    :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars
 
@@ -95,10 +95,11 @@ complex mathematical methods that involve graph theory and topology.
 **************************
 
 Benchmarking has been done on all the thresholders and it was found
-that the ``META`` thresholder performed best while the ``CLF`` thresholder
-provided the smallest uncertainty about its mean and is the most robust
-(best least accurate prediction). However, for interpretability and
-general performance the ``FILTER`` thresholder is a good fit.
+that the ``MIXMOD`` thresholder performed best while the ``CLF``
+thresholder provided the smallest uncertainty about its mean and is
+the most robust (best least accurate prediction). However, for
+interpretability and general performance the ``MIXMOD, FILTER,`` and
+``META`` thresholders are good fits.
 
 Further utilities are available for assisting in the selection of the
 most optimal outlier detection and thresholding methods `ranking
@@ -173,6 +174,8 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 +-----------+----------------------------------------------------------------+-----------------------------------+
 | META      | Metamodel Trained Classifier                                   | :cite:`zhao2022meta`              |
 +-----------+----------------------------------------------------------------+-----------------------------------+
+| MIXMOD    | Normal & Non-Normal Mixture Models                             | :cite:`veluw2023mixmod`           |
++-----------+----------------------------------------------------------------+-----------------------------------+
 | MOLL      | Friedrichs' Mollifier                                          | :cite:`keyzer1997moll`            |
 +-----------+----------------------------------------------------------------+-----------------------------------+
 | MTT       | Modified Thompson Tau Test                                     | :cite:`rengasamy2020mtt`          |
@@ -226,6 +229,11 @@ Key Attributes of a threshold:
 -  :attr:`pythresh.thresholders.base.BaseDetector.dscores_`: 1D array of the
    TruncatedSVD decomposed decision scores if multiple outlier detector score
    sets are passed
+
+-  :attr:`pythresh.thresholders.mixmod.MIXMOD.mixture_`: fitted mixture model class
+   of the selected model used for thresholding. Only applies to MIXMOD. Attributes
+   include: components, weights, params. Functions include: fit, loglikelihood,
+   pdf, and posterior.
 
 ----
 

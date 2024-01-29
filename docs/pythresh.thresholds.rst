@@ -235,6 +235,17 @@
    :inherited-members:
 
 *********************************
+ pythresh.thresholds.mixmod module
+*********************************
+
+.. automodule:: pythresh.thresholds.mixmod
+   :members:
+   :exclude-members: MixtureModel, MLES
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+*********************************
  pythresh.thresholds.moll module
 *********************************
 

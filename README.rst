@@ -28,7 +28,7 @@
    :target: https://codeclimate.com/github/KulikDM/pythresh/maintainability
    :alt: Maintainability
 
-.. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white
+.. image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white&style=flat
    :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars
 
@@ -194,6 +194,11 @@ Key Attributes of threshold:
 -  **dscores_**: 1D array of the TruncatedSVD decomposed decision scores
    if multiple outlier detector score sets are passed
 
+-  **mixture_**: fitted mixture model class of the selected model used
+   for thresholding. Only applies to MIXMOD. Attributes include:
+   components, weights, params. Functions include: fit, loglikelihood,
+   pdf, and posterior.
+
 ************************
  External Feature Cases
 ************************
@@ -256,6 +261,8 @@ Unsupervised Anomaly Detection. <https://arxiv.org/abs/2210.10487>`_
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | META      | Meta-model Trained Classifier             | [#meta1]_          | `pythresh.thresholds.meta module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.meta>`_                |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+| MIXMOD    | Normal & Non-Normal Mixture Models        | [#mixmod1]_        | `pythresh.thresholds.mixmod module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.mixmod>`_            |
++-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | MOLL      | Friedrichs' Mollifier                     | [#moll1]_          | `pythresh.thresholds.moll module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.moll>`_                |
 |           |                                           | [#moll2]_          |                                                                                                                                                        |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -287,11 +294,12 @@ is made available below
 
 Additional `benchmarking
 <https://pythresh.readthedocs.io/en/latest/benchmark.html>`_ has been
-done on all the thresholders and it was found that the ``META``
+done on all the thresholders and it was found that the ``MIXMOD``
 thresholder performed best while the ``CLF`` thresholder provided the
 smallest uncertainty about its mean and is the most robust (best least
 accurate prediction). However, for interpretability and general
-performance the ``FILTER`` thresholder is a good fit.
+performance the ``MIXMOD, FILTER,`` and ``META`` thresholders are good
+fits.
 
 Further utilities are available for assisting in the selection of the
 most optimal outlier detection and thresholding methods `ranking
@@ -457,6 +465,11 @@ the threshold types available in PyThresh.
 
    `Automating Outlier Detection via Meta-Learning
    <https://arxiv.org/abs/2009.10606>`_
+
+.. [#mixmod1]
+
+   `Application of Mixture Models to Threshold Anomaly Scores
+   <https://studenttheses.uu.nl/bitstream/handle/20.500.12932/45591/Masterthesis%20%284%29.pdf?sequence=1&isAllowed=y>`_
 
 .. [#moll1]
 
