@@ -1,9 +1,10 @@
 geomstats
+#pyclustering
+https://github.com/KulikDM/pyclustering/archive/master.zip
 joblib>=0.14.1
 matplotlib
-numpy<=1.23.5
+numpy
 pandas
-pyclustering
 pyod
 ruptures
 scikit-learn>=0.20.0
