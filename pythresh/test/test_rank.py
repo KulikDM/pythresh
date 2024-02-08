@@ -10,7 +10,7 @@ from pyod.models.pca import PCA
 from pyod.utils.data import generate_data
 
 from pythresh.thresholds.filter import FILTER
-from pythresh.thresholds.IQR import IQR
+from pythresh.thresholds.iqr import IQR
 from pythresh.thresholds.ocsvm import OCSVM
 from pythresh.utils.rank import RANK
 
