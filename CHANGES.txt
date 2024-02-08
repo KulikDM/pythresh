@@ -76,3 +76,4 @@ v<0.3.5>, <11/05/2023> -- Added CONF docs and updated FAQ
 v<0.3.6>, <01/29/2024> -- Added mixmod thresholder
 v<0.3.6>, <01/29/2024> -- Updated benchmarks
 v<0.3.6>, <02/03/2024> -- Revised benchmark notebook
+v<0.3.7>, <02/08/2024> -- Python 3.12 support
