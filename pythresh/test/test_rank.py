@@ -10,7 +10,7 @@ from pyod.models.pca import PCA
 from pyod.utils.data import generate_data
 
 from pythresh.thresholds.filter import FILTER
-from pythresh.thresholds.karch import KARCH
+from pythresh.thresholds.mixmod import MIXMOD
 from pythresh.thresholds.ocsvm import OCSVM
 from pythresh.utils.rank import RANK
 
@@ -33,7 +33,7 @@ class TestRANK(unittest.TestCase):
         self.clfs = [KNN(), PCA(), IForest()]
 
         self.thres = [FILTER(), self.contamination,
-                      [FILTER(), KARCH(), OCSVM()]]
+                      [FILTER(), MIXMOD(), OCSVM()]]
 
         self.method = ['model', 'native']
 

@@ -11,7 +11,8 @@ from pyod.models.knn import KNN
 from pyod.models.pca import PCA
 from pyod.utils.data import generate_data
 
-from pythresh.thresholds.karch import KARCH
+if sys.version_info < (3, 12):
+    from pythresh.thresholds.karch import KARCH
 
 # temporary solution for relative imports in case pythresh is not installed
 # if pythresh is installed, no need to use the following line
@@ -20,6 +21,7 @@ path = up(up(up(__file__)))
 sys.path.append(path)
 
 
+@unittest.skipIf(sys.version_info >= (3, 12), reason='Test not compatible with Python 3.12')
 class TestKARCH(unittest.TestCase):
     def setUp(self):
         self.n_train = 200
