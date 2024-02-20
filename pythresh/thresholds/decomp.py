@@ -70,8 +70,10 @@ class DECOMP(BaseThresholder):
     def __init__(self, method='PCA', random_state=1234):
 
         self.method = method
-        self.method_funcs = {'NMF': NMF(random_state=random_state),
-                             'PCA': PCA(random_state=random_state),
+        self.method_funcs = {'NMF': NMF(n_components=1,
+                                        random_state=random_state),
+                             'PCA': PCA(n_components=1,
+                                        random_state=random_state),
                              'GRP': GaussianRandomProjection(n_components=2,
                                                              random_state=random_state),
                              'SRP': SparseRandomProjection(n_components=3,
