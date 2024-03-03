@@ -42,7 +42,7 @@ repos:
         name: Sort imports
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.2.2
+    rev: v0.3.0
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix, --fix, --line-length=180]
