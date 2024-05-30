@@ -1,8 +1,8 @@
 import inspect
 
 import numpy as np
-from geomstats.geometry.euclidean import Euclidean  # pragma: no cover
-from geomstats.learning.frechet_mean import FrechetMean  # pragma: no cover
+from geomstats.geometry.euclidean import Euclidean
+from geomstats.learning.frechet_mean import FrechetMean
 
 from .base import BaseThresholder
 from .thresh_utility import check_scores, cut, gen_kde, normalize
