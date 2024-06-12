@@ -1,4 +1,5 @@
-geomstats
+#geomstats
+https://github.com/geomstats/geomstats/archive/main.zip
 #pyclustering
 https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip
 joblib>=0.14.1
