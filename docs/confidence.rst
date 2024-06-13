@@ -79,10 +79,10 @@ is calculated as follows:
 
 -  The upper and lower confidence intervals of this distribution can be
    calculated using the confidence interval equation for a sample given
-   by :math:`CI = z \frac{\sigma}{\sqrt{n}}` where :math:`z, \sigma,
-   n` the t-distribution critical value for a selected confidence level
-   for a sample size, the standard deviation of the distribution, and
-   the number of datapoints within the sample respectively.
+   by :math:`CI = z \frac{\sigma}{\sqrt{n}}` where :math:`z, \sigma, n`
+   the t-distribution critical value for a selected confidence level for
+   a sample size, the standard deviation of the distribution, and the
+   number of datapoints within the sample respectively.
 
 -  With the lower and upper confidence intervals, outlier likelihood
    scores that fall within the threshold bound with regards to all the

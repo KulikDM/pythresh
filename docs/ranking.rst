@@ -46,8 +46,8 @@ these metrics.
  Proxy-Metrics
 ***************
 
-Different types of proxy-metrics can be used with respect to the F1
-and MCC. Below four catagories have been defined.
+Different types of proxy-metrics can be used with respect to the F1 and
+MCC. Below four catagories have been defined.
 
 Clustering Based
 ================

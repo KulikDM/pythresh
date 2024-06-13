@@ -57,9 +57,9 @@
    :show-inheritance:
    :inherited-members:
 
-********************************
+*********************************
  pythresh.thresholds.comb module
-********************************
+*********************************
 
 .. automodule:: pythresh.thresholds.comb
    :members:
@@ -145,9 +145,9 @@
    :show-inheritance:
    :inherited-members:
 
-*********************************
+***********************************
  pythresh.thresholds.gamgmm module
-*********************************
+***********************************
 
 .. automodule:: pythresh.thresholds.gamgmm
    :members:
@@ -155,7 +155,6 @@
    :undoc-members:
    :show-inheritance:
    :inherited-members:
-
 
 *********************************
  pythresh.thresholds.gesd module
@@ -234,9 +233,9 @@
    :show-inheritance:
    :inherited-members:
 
-*********************************
+***********************************
  pythresh.thresholds.mixmod module
-*********************************
+***********************************
 
 .. automodule:: pythresh.thresholds.mixmod
    :members:

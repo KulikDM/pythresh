@@ -4,51 +4,53 @@
 
 **Deployment, Stats, & License**
 
-|badge_pypi| |badge_anaconda| |badge_docs| |badge_testing| |badge_coverage| |badge_maintainability| |badge_stars| |badge_downloads| |badge_versions| |badge_licence| |badge_citation|
+|badge_pypi| |badge_anaconda| |badge_docs| |badge_testing|
+|badge_coverage| |badge_maintainability| |badge_stars| |badge_downloads|
+|badge_versions| |badge_licence| |badge_citation|
 
 .. |badge_pypi| image:: https://img.shields.io/pypi/v/pythresh.svg?color=brightgreen&logo=pypi&logoColor=white
-   :target: https://pypi.org/project/pythresh/
    :alt: PyPI version
+   :target: https://pypi.org/project/pythresh/
 
 .. |badge_anaconda| image:: https://img.shields.io/conda/vn/conda-forge/pythresh?color=brightgreen&logo=conda-forge&logoColor=white
-   :target: https://anaconda.org/conda-forge/pythresh
    :alt: Anaconda version
+   :target: https://anaconda.org/conda-forge/pythresh
 
 .. |badge_docs| image:: https://img.shields.io/readthedocs/pythresh.svg?version=latest&logo=read-the-docs&logoColor=white
-   :target: http://pythresh.readthedocs.io/?badge=latest
    :alt: Documentation status
+   :target: http://pythresh.readthedocs.io/?badge=latest
 
 .. |badge_testing| image:: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml/badge.svg
-   :target: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml
    :alt: testing
+   :target: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml
 
 .. |badge_coverage| image:: https://codecov.io/gh/KulikDM/pythresh/branch/main/graph/badge.svg?token=8ZAPXTLW9Y
-   :target: https://codecov.io/gh/KulikDM/pythresh
    :alt: Codecov
+   :target: https://codecov.io/gh/KulikDM/pythresh
 
 .. |badge_maintainability| image:: https://api.codeclimate.com/v1/badges/3e2de42b48701c731ef6/maintainability
-   :target: https://codeclimate.com/github/KulikDM/pythresh/maintainability
    :alt: Maintainability
+   :target: https://codeclimate.com/github/KulikDM/pythresh/maintainability
 
 .. |badge_stars| image:: https://img.shields.io/github/stars/KulikDM/pythresh.svg?logo=github&logoColor=white&style=flat
-   :target: https://github.com/KulikDM/pythresh/stargazers
    :alt: GitHub stars
+   :target: https://github.com/KulikDM/pythresh/stargazers
 
 .. |badge_downloads| image:: https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fstatic.pepy.tech%2Fbadge%2Fpythresh&query=%2F%2F*%5Blocal-name()%20%3D%20%27text%27%5D%5Blast()%5D&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNCAyNDsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI0IDI0IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZyBpZD0iaW5mbyIvPjxnIGlkPSJpY29ucyI%2BPGcgaWQ9InNhdmUiPjxwYXRoIGQ9Ik0xMS4yLDE2LjZjMC40LDAuNSwxLjIsMC41LDEuNiwwbDYtNi4zQzE5LjMsOS44LDE4LjgsOSwxOCw5aC00YzAsMCwwLjItNC42LDAtN2MtMC4xLTEuMS0wLjktMi0yLTJjLTEuMSwwLTEuOSwwLjktMiwyICAgIGMtMC4yLDIuMywwLDcsMCw3SDZjLTAuOCwwLTEuMywwLjgtMC44LDEuNEwxMS4yLDE2LjZ6IiBmaWxsPSIjZWJlYmViIi8%2BPHBhdGggZD0iTTE5LDE5SDVjLTEuMSwwLTIsMC45LTIsMnYwYzAsMC42LDAuNCwxLDEsMWgxNmMwLjYsMCwxLTAuNCwxLTF2MEMyMSwxOS45LDIwLjEsMTksMTksMTl6IiBmaWxsPSIjZWJlYmViIi8%2BPC9nPjwvZz48L3N2Zz4%3D&label=downloads
-   :target: https://pepy.tech/project/pythresh
    :alt: Downloads
+   :target: https://pepy.tech/project/pythresh
 
 .. |badge_versions| image:: https://img.shields.io/pypi/pyversions/pythresh.svg?logo=python&logoColor=white
-   :target: https://pypi.org/project/pythresh/
    :alt: Python versions
+   :target: https://pypi.org/project/pythresh/
 
 .. |badge_licence| image:: https://img.shields.io/github/license/KulikDM/pythresh.svg?logo=data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMyIiBpZD0iaWNvbiIgdmlld0JveD0iMCAwIDMyIDMyIiB3aWR0aD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnMgZmlsbD0iI2ViZjJlZSI+PHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6IG5vbmU7CiAgICAgIH0KICAgIDwvc3R5bGU+PC9kZWZzPjxyZWN0IGhlaWdodD0iMiIgd2lkdGg9IjEyIiB4PSI4IiB5PSI2IiBmaWxsPSIjZWJmMmVlIi8+PHJlY3QgaGVpZ2h0PSIyIiB3aWR0aD0iMTIiIHg9IjgiIHk9IjEwIiBmaWxsPSIjZWJmMmVlIi8+PHJlY3QgaGVpZ2h0PSIyIiB3aWR0aD0iNiIgeD0iOCIgeT0iMTQiIGZpbGw9IiNlYmYyZWUiLz48cmVjdCBoZWlnaHQ9IjIiIHdpZHRoPSI0IiB4PSI4IiB5PSIyNCIgZmlsbD0iI2ViZjJlZSIvPjxwYXRoIGQ9Ik0yOS43MDcsMTkuMjkzbC0zLTNhLjk5OTQuOTk5NCwwLDAsMC0xLjQxNCwwTDE2LDI1LjU4NTlWMzBoNC40MTQxbDkuMjkyOS05LjI5M0EuOTk5NC45OTk0LDAsMCwwLDI5LjcwNywxOS4yOTNaTTE5LjU4NTksMjhIMThWMjYuNDE0MWw1LTVMMjQuNTg1OSwyM1pNMjYsMjEuNTg1OSwyNC40MTQxLDIwLDI2LDE4LjQxNDEsMjcuNTg1OSwyMFoiIGZpbGw9IiNlYmYyZWUiLz48cGF0aCBkPSJNMTIsMzBINmEyLjAwMjEsMi4wMDIxLDAsMCwxLTItMlY0QTIuMDAyMSwyLjAwMjEsMCwwLDEsNiwySDIyYTIuMDAyMSwyLjAwMjEsMCwwLDEsMiwyVjE0SDIyVjRINlYyOGg2WiIgZmlsbD0iI2ViZjJlZSIvPjxyZWN0IGNsYXNzPSJjbHMtMSIgZGF0YS1uYW1lPSImbHQ7VHJhbnNwYXJlbnQgUmVjdGFuZ2xlJmd0OyIgaGVpZ2h0PSIzMiIgaWQ9Il9UcmFuc3BhcmVudF9SZWN0YW5nbGVfIiB3aWR0aD0iMzIiIGZpbGw9IiNlYmYyZWUiLz48L3N2Zz4=
-   :target: https://github.com/KulikDM/pythresh/blob/master/LICENSE
    :alt: License
+   :target: https://github.com/KulikDM/pythresh/blob/master/LICENSE
 
 .. |badge_citation| image:: https://zenodo.org/badge/497683169.svg
-   :target: https://zenodo.org/badge/latestdoi/497683169
    :alt: Zenodo DOI
+   :target: https://zenodo.org/badge/latestdoi/497683169
 
 ----
 
