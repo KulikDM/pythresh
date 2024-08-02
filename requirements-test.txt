@@ -4,7 +4,7 @@ https://github.com/geomstats/geomstats/archive/main.zip
 https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip
 joblib>=0.14.1
 matplotlib
-numpy
+numpy<=1.26.4
 pandas
 pyod
 ruptures
