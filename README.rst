@@ -169,7 +169,6 @@ Or with **pip**:
 
 -  pyclustering (used in the CLUST thresholder)
 -  ruptures (used in the CPD thresholder)
--  geomstats (used in the KARCH thresholder)
 -  scikit-lego (used in the META thresholder)
 -  joblib>=0.14.1 (used in the META thresholder and RANK)
 -  pandas (used in the META thresholder)

@@ -1,8 +1,4 @@
-import inspect
-
 import numpy as np
-from geomstats.geometry.euclidean import Euclidean
-from geomstats.learning.frechet_mean import FrechetMean
 
 from .base import BaseThresholder
 from .thresh_utility import check_scores, cut, gen_kde, normalize
@@ -86,18 +82,6 @@ class KARCH(BaseThresholder):
 
         self.dscores_ = decision
 
-        # Create euclidean manifold and find Karcher mean
-        manifold = Euclidean(dim=self.ndim)
-
-        arg_map = {'old': {'metric': manifold.metric},
-                   'new': {'space': manifold}}
-
-        arg_dict = (arg_map['new'] if 'space' in
-                    inspect.signature(FrechetMean).parameters
-                    else arg_map['old'])
-
-        estimator = FrechetMean(**arg_dict)
-
         if self.method == 'complex':
 
             # Create kde of scores
@@ -108,16 +92,30 @@ class KARCH(BaseThresholder):
             try:
                 # find kde and score dot product and solve the
                 vals = np.dot(val_data, val_norm)
-                estimator.fit(vals)
+                fmean = self._frechet_mean(vals)
 
             except ValueError:
-                estimator.fit(decision.reshape(1, -1))
+                fmean = self._frechet_mean(decision.reshape(1, -1))
         else:
-            estimator.fit(decision.reshape(1, -1))
+            fmean = self._frechet_mean(decision.reshape(1, -1))
 
         # Get the mean of each dimension's Karcher mean
-        limit = np.mean(estimator.estimate_) + np.std(decision)
+        limit = np.mean(fmean) + np.std(decision)
 
         self.thresh_ = limit
 
         return cut(decision, limit)
+
+    # Adapted from https://github.com/geomstats/geomstats/blob/main/geomstats/learning/frechet_mean.py
+    def _frechet_mean(self, points, weights=None):
+        """Compute the Frechet mean in a Euclidean space."""
+        if weights is None:
+            n_points = np.shape(points)[0]
+            weights = np.ones(n_points)
+
+        sum_weights = np.sum(weights)
+
+        weighted_points = np.einsum('n,n...->n...', weights, points)
+
+        mean = np.sum(weighted_points, axis=0) / sum_weights
+        return mean

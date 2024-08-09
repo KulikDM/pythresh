@@ -1,6 +1,5 @@
 
 docutils
-geomstats
 joblib
 matplotlib
 numpy
