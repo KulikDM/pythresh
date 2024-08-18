@@ -13,7 +13,7 @@ datasets may help when selecting based on either accuracy or robustness
 or both. PyOD provides a highly detailed analysis on the performance of
 all the available methods, with great insight and interpretability
 `anomaly detection benchmark paper
-<https://www.andrew.cmu.edu/user/yuezhao2/papers/22-neurips-adbench.pdf>`_.
+<https://proceedings.neurips.cc/paper_files/paper/2022/hash/cf93972b116ca5268827d575f2cc226b-Abstract-Datasets_and_Benchmarks.html>`_.
 
 Since the thresholding methods are dependant on both the dataset and the
 outlier detection likelihood scores, in order to quantify how well a

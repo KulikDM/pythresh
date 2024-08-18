@@ -48,7 +48,7 @@ class TestZSCORE(unittest.TestCase):
         for scores in self.all_scores:
 
             pred_labels = self.thres.eval(scores)
-            assert (self.thres.thresh_ is None)
+            assert (self.thres.thresh_ is not None)
             assert (self.thres.dscores_ is not None)
 
             assert (self.thres.dscores_.min() == 0)

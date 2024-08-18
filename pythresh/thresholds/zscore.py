@@ -72,13 +72,13 @@ class ZSCORE(BaseThresholder):
         self.dscores_ = decision
 
         # Get the zscore of the decision scores
-        zscore = np.abs(stats.zscore(decision))
+        zscore = stats.zscore(decision)
 
         # Set the limit to where the zscore is 1
-        scores = np.zeros(len(decision), dtype=int)
+        labels = np.zeros(len(decision), dtype=int)
         mask = np.where(zscore >= 1.0)
-        scores[mask] = 1
+        labels[mask] = 1
 
-        self.thresh_ = None
+        self.thresh_ = np.min(labels[labels == 1])
 
-        return scores
+        return labels
