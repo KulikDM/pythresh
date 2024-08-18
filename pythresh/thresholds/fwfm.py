@@ -75,7 +75,7 @@ class FWFM(BaseThresholder):
         base_width = peak_widths(val, peaks, rel_height=0.99)[0]
 
         # Normalize and set limit
-        limit = base_width/len(val) if len(base_width) > 0 else 1.1
+        limit = base_width[0]/len(val) if len(base_width) > 0 else 1.1
 
         self.thresh_ = limit
 
