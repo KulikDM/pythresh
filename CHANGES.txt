@@ -77,3 +77,10 @@ v<0.3.6>, <01/29/2024> -- Added mixmod thresholder
 v<0.3.6>, <01/29/2024> -- Updated benchmarks
 v<0.3.6>, <02/03/2024> -- Revised benchmark notebook
 v<0.3.7>, <02/08/2024> -- Python 3.12 support
+v<0.3.7>, <08/07/2024> -- Added PDF to Readthedocs
+v<0.3.7>, <08/09/2024> -- Removed Geomstats dependancy from KARCH
+v<0.3.7>, <08/18/2024> -- Fixed Zscore implementation
+v<0.3.7>, <08/18/2024> -- Added faster KDE and CDF generation using upsampling
+v<0.3.7>, <08/18/2024> -- Added fast KDE and CDF test case
+v<0.3.7>, <08/18/2024> -- Fixed muli-peak error in FWFM
+v<0.3.7>, <08/18/2024> -- Updated time complexity benchmarks
