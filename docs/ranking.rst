@@ -370,7 +370,7 @@ Below is a simple example of how to apply the ``RANK`` method:
    from pyod.models.mcd import MCD
    from pyod.models.qmcd import QMCD
    from pythresh.thresholds.filter import FILTER
-   from pythresh.utils.ranking import RANK
+   from pythresh.utils.rank import RANK
 
    # Initialize models
    clfs = [KNN(), IForest(), PCA(), MCD(), QMCD()]
