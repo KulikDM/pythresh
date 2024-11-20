@@ -15,7 +15,9 @@ class ZSCORE(BaseThresholder):
 
        Parameters
        ----------
-
+       factor : int, optional (default=1)
+            The factor to multiply the zscore by to set the threshold.
+            The default is 1.
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
             be set to None.
@@ -43,8 +45,9 @@ class ZSCORE(BaseThresholder):
 
     """
 
-    def __init__(self, random_state=1234):
+    def __init__(self, factor=1, random_state=1234):
 
+        self.factor = factor
         self.random_state = random_state
 
     def eval(self, decision):
@@ -74,9 +77,9 @@ class ZSCORE(BaseThresholder):
         # Get the zscore of the decision scores
         zscore = stats.zscore(decision)
 
-        # Set the limit to where the zscore is 1
+        # Set the limit to where the zscore is greater than the factor
         labels = np.zeros(len(decision), dtype=int)
-        mask = np.where(zscore >= 1.0)
+        mask = np.where(zscore >= self.factor)
         labels[mask] = 1
 
         self.thresh_ = np.min(labels[labels == 1])
