@@ -84,3 +84,4 @@ v<0.3.7>, <08/18/2024> -- Added faster KDE and CDF generation using upsampling
 v<0.3.7>, <08/18/2024> -- Added fast KDE and CDF test case
 v<0.3.7>, <08/18/2024> -- Fixed muli-peak error in FWFM
 v<0.3.7>, <08/18/2024> -- Updated time complexity benchmarks
+v<0.3.8>, <11/21/2024> -- Added factor arg to MAD and ZSCORE, contribution by @MalikAly
