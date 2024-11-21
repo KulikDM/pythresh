@@ -17,6 +17,9 @@ class MAD(BaseThresholder):
        Parameters
        ----------
 
+       factor : int, optional (default=1)
+            The factor to multiply the MAD by to set the threshold.
+            The default is 1.
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
             be set to None.
@@ -48,8 +51,9 @@ class MAD(BaseThresholder):
 
     """
 
-    def __init__(self, random_state=1234):
+    def __init__(self, factor=1, random_state=1234):
 
+        self.factor = factor
         self.random_state = random_state
 
     def eval(self, decision):
@@ -78,8 +82,8 @@ class MAD(BaseThresholder):
 
         # Set limit
         mean = np.mean(decision)
-        limit = mean + \
-            stats.median_abs_deviation(decision, scale=np.std(decision))
+        mad = stats.median_abs_deviation(decision, scale=np.std(decision))
+        limit = mean + self.factor * mad
 
         self.thresh_ = limit
 

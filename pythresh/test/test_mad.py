@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -41,11 +42,15 @@ class TestMAD(unittest.TestCase):
 
         self.all_scores = [scores, multiple_scores]
 
-        self.thres = MAD()
+        self.factors = [0.5, 1, 2]
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
+        params = product(self.all_scores, self.factors)
+
+        for scores, factor in params:
+
+            self.thres = MAD(factor=factor)
 
             pred_labels = self.thres.eval(scores)
             assert (self.thres.thresh_ is not None)
