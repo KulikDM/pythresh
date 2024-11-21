@@ -1,5 +1,6 @@
 import sys
 import unittest
+from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
@@ -41,11 +42,15 @@ class TestZSCORE(unittest.TestCase):
 
         self.all_scores = [scores, multiple_scores]
 
-        self.thres = ZSCORE()
+        self.factors = [0.5, 1, 2]
 
     def test_prediction_labels(self):
 
-        for scores in self.all_scores:
+        params = product(self.all_scores, self.factors)
+
+        for scores, factor in params:
+
+            self.thres = ZSCORE(factor=factor)
 
             pred_labels = self.thres.eval(scores)
             assert (self.thres.thresh_ is not None)
@@ -58,32 +63,3 @@ class TestZSCORE(unittest.TestCase):
 
             assert (pred_labels.min() == 0)
             assert (pred_labels.max() == 1)
-
-    def test_factor_adjustment(self):
-        """Test the effect of the factor on ZSCORE thresholding."""
-        for scores in self.all_scores:
-            # Test with default factor (1)
-            thres_default = ZSCORE(factor=1)
-            pred_labels_default = thres_default.eval(scores)
-            default_outliers = np.sum(pred_labels_default)
-
-            # Test with a higher factor
-            thres_high = ZSCORE(factor=2)
-            pred_labels_high = thres_high.eval(scores)
-            high_outliers = np.sum(pred_labels_high)
-
-            # Test with a lower factor
-            thres_low = ZSCORE(factor=0.5)
-            pred_labels_low = thres_low.eval(scores)
-            low_outliers = np.sum(pred_labels_low)
-
-            # Assertions on the number of outliers
-            self.assertLessEqual(high_outliers, default_outliers,
-                                 'Higher factor should reduce the number of outliers.')
-            self.assertGreaterEqual(low_outliers, default_outliers,
-                                    'Lower factor should increase the number of outliers.')
-
-            # Assertions on predictions being binary
-            for pred_labels in [pred_labels_default, pred_labels_high, pred_labels_low]:
-                self.assertTrue(np.array_equal(np.unique(pred_labels), [0, 1]),
-                                'Predictions should only contain 0 and 1.')

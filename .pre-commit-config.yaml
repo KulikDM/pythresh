@@ -21,7 +21,7 @@ repos:
         name: Format docstrings
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.18.0
+    rev: v3.19.0
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
@@ -42,8 +42,9 @@ repos:
         name: Sort imports
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.7.0
+    rev: v0.7.2
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix, --fix, --line-length=180]
+        exclude: "\\.ipynb$"
         name: Lint code
