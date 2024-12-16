@@ -32,7 +32,6 @@ Or with **pip**:
 
 **Required Dependencies**:
 
--  matplotlib
 -  numpy>=1.13
 -  pyod
 -  scipy>=1.3.1

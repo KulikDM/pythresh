@@ -1,7 +1,6 @@
 
 docutils
 joblib
-matplotlib
 numpy
 pandas
 pyclustering
