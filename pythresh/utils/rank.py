@@ -226,10 +226,13 @@ class RANK():
             scores1 = scores1 + np.linspace(1e-30, 2e-30, len(scores1))
 
         scores2 = scores[labels == 1]
+        if len(scores2) < 2:
+            return [-1e6, -1e6]
+
         if np.all(scores2 == scores2[0]):
             scores2 = scores2 - np.linspace(1e-30, 2e-30, len(scores2))
 
-        # Generate KDEs of scores for both classed
+        # Generate KDEs of scores for both classes
         kde1 = stats.gaussian_kde(scores1)
         kde2 = stats.gaussian_kde(scores2)
 

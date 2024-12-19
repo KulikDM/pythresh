@@ -86,3 +86,4 @@ v<0.3.7>, <08/18/2024> -- Fixed muli-peak error in FWFM
 v<0.3.7>, <08/18/2024> -- Updated time complexity benchmarks
 v<0.3.8>, <11/21/2024> -- Added factor arg to MAD and ZSCORE, contribution by @MalikAly
 v<0.3.8>, <12/15/2024> -- Removed matplotlib as core dependency
+v<0.3.9>, <12/19/2024> -- Fixed low contamination issue in RANK
