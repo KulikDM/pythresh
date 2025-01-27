@@ -2,7 +2,7 @@ import numpy as np
 import scipy.stats as stats
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, normalize
+from .thresh_utility import cut
 
 # https://github.com/vvaezian/modified_thompson_tau_test/blob/main/src/Modified_Thompson_Tau_Test/modified_thompson_tau_test.py
 
@@ -18,7 +18,7 @@ class MTT(BaseThresholder):
        Parameters
        ----------
 
-       alpha : float, optional (default=0.99)
+       alpha : float, optional (default=0.01)
             Confidence level corresponding to the t-Student distribution map to sample
 
        random_state : int, optional (default=1234)
@@ -49,10 +49,12 @@ class MTT(BaseThresholder):
 
     """
 
-    def __init__(self, alpha=0.99, random_state=1234):
+    def __init__(self, alpha=0.01, random_state=1234):
 
-        self.alpha = alpha
+        super().__init__()
+        self.alpha = alpha if alpha <= 0.5 else 1 - alpha
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -72,11 +74,7 @@ class MTT(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         arr = np.sort(decision.copy())
 
@@ -86,7 +84,7 @@ class MTT(BaseThresholder):
 
             # Calculate the rejection threshold
             n = len(arr)
-            t = stats.t.ppf(self.alpha, df=n-2)
+            t = stats.t.ppf(1-self.alpha, df=n-2)
             thres = (t * (n - 1))/(np.sqrt(n) * np.sqrt(n - 2 + t**2))
             delta = np.abs(arr[-1] - arr.mean())/arr.std()
 

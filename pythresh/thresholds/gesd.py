@@ -2,7 +2,7 @@ import numpy as np
 import scipy.stats as stats
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, normalize
+from .thresh_utility import cut
 
 # https://github.com/bhattbhavesh91/outlier-detection-grubbs-test-and-generalized-esd-test-python/blob/master/generalized-esd-test-for-outliers.ipynb
 
@@ -78,9 +78,11 @@ class GESD(BaseThresholder):
 
     def __init__(self, max_outliers='auto', alpha=0.05, random_state=1234):
 
+        super().__init__()
         self.max_outliers = max_outliers
         self.alpha = alpha
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -100,11 +102,7 @@ class GESD(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         arr = decision.copy()
 

@@ -2,7 +2,6 @@ import numpy as np
 from scipy import ndimage as ndi
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, normalize
 
 # https://github.com/scikit-image/scikit-image/blob/v0.19.2/skimage/filters/thresholding.py
 
@@ -54,6 +53,7 @@ class HIST(BaseThresholder):
                              'minimum': self._Minimum_thres,
                              'triangle': self._Triangle_thres}
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -73,11 +73,7 @@ class HIST(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         #  Set adaptive default if bins are None
         if self.nbins == 'auto':

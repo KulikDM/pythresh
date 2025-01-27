@@ -9,6 +9,7 @@ ruptures
 scikit-learn
 scikit-lego
 scipy
+sphinx-datatables
 sphinx-rtd-theme
 sphinxcontrib-bibtex
 torch

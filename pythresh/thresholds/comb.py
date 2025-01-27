@@ -6,7 +6,7 @@ from sklearn.linear_model import RidgeClassifier
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, normalize
+from .thresh_utility import cut
 
 
 class COMB(BaseThresholder):
@@ -55,6 +55,7 @@ class COMB(BaseThresholder):
 
     def __init__(self, thresholders='default', max_contam=0.5, method='stacked', random_state=1234):
 
+        super().__init__()
         self.thresholders = thresholders
         self.max_contam = max_contam
         func = {'mean': np.mean, 'median': np.median,
@@ -63,6 +64,9 @@ class COMB(BaseThresholder):
         self.method = method
         self.method_func = func[method]
         self.random_state = random_state
+        np.random.seed(random_state)
+
+        self._attrs = ['_clf']
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -82,13 +86,12 @@ class COMB(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
+        if self._is_fitted is None:
+            self._set_attributes(self._attrs, None)
+
         scores = check_array(decision, ensure_2d=False)
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Initialize thresholders
         if self.thresholders == 'default':
@@ -106,7 +109,8 @@ class COMB(BaseThresholder):
 
         for thresholder in self.thresholders:
 
-            labels = thresholder.eval(scores)
+            thresholder.fit(scores)
+            labels = thresholder.predict(scores)
             outlier_ratio = np.sum(labels)/counts
 
             if outlier_ratio < self.max_contam:
@@ -137,8 +141,11 @@ class COMB(BaseThresholder):
                 model = self.method_func([('Ridge', RidgeClassifier()),
                                           ('GNB', LaplaceGaussianNB())])
 
-            model.fit(X.reshape(-1, 1), y)
-            lbls = model.predict(decision.reshape(-1, 1))
+            if self._clf is None:
+                model.fit(X.reshape(-1, 1), y)
+                self._clf = model
+
+            lbls = self._clf.predict(decision.reshape(-1, 1))
 
             self.thresh_ = None
 
@@ -146,6 +153,7 @@ class COMB(BaseThresholder):
 
         elif self.method == 'mode':
 
+            self._clf = True
             self.thresh_ = None
             lbls = self.method_func(contam, axis=0)
 
@@ -153,15 +161,19 @@ class COMB(BaseThresholder):
 
         else:
 
-            contam = np.sum(contam, axis=1)/contam.shape[1]
-            inlier_ratio = 1-self.method_func(contam)
+            if self.thresh_ is None:
 
-            idx = int(counts*inlier_ratio)
-            ordered = np.sort(decision)
-            limit = ordered[idx] if idx < counts else 1.0
-            self.thresh_ = limit
+                contam = np.sum(contam, axis=1)/contam.shape[1]
+                inlier_ratio = 1-self.method_func(contam)
 
-            return cut(decision, limit)
+                idx = int(counts*inlier_ratio)
+                ordered = np.sort(decision)
+                limit = ordered[idx] if idx < counts else 1.0
+                self.thresh_ = limit
+
+                self._clf = True
+
+            return cut(decision, self.thresh_)
 
 
 class LaplaceGaussianNB(BaseEstimator, ClassifierMixin):

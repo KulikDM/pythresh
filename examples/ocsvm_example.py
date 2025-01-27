@@ -42,12 +42,22 @@ if __name__ == '__main__':
 
     # get the prediction labels and outlier scores of the training data
     y_train_scores = clf.decision_scores_  # raw outlier scores
+
+    # (Legacy method)
+    # y_train_pred = thres.eval(y_train_scores)
+
     # binary labels (0: inliers, 1: outliers)
-    y_train_pred = thres.eval(y_train_scores)
+    thres.fit(y_train_scores)
+    y_train_pred = thres.labels_
+    # or
+    y_train_pred = thres.predict(y_train_scores)
 
     # get the prediction on the test data
     y_test_scores = clf.decision_function(X_test)  # outlier scores
-    y_test_pred = thres.eval(y_test_scores)  # outlier labels (0 or 1)
+
+    # (Legacy method)
+    # y_test_pred = thres.eval(y_test_scores)  # outlier labels (0 or 1)
+    y_test_pred = thres.predict(y_test_scores)
 
     # evaluate and print the results
     print('\nOn Training Data:')

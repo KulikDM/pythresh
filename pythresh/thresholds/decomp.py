@@ -6,7 +6,7 @@ from sklearn.random_projection import (
 )
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, gen_cdf, normalize
+from .thresh_utility import cut, gen_cdf, normalize
 
 
 class DECOMP(BaseThresholder):
@@ -69,6 +69,7 @@ class DECOMP(BaseThresholder):
 
     def __init__(self, method='PCA', random_state=1234):
 
+        super().__init__()
         self.method = method
         self.method_funcs = {'NMF': NMF(n_components=1,
                                         random_state=random_state),
@@ -79,6 +80,7 @@ class DECOMP(BaseThresholder):
                              'SRP': SparseRandomProjection(n_components=3,
                                                            random_state=random_state)}
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -98,11 +100,7 @@ class DECOMP(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Generate a CDF of the decision scores
         val, dat_range = gen_cdf(decision, 0, 1, len(decision)*3)

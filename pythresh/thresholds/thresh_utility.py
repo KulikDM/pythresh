@@ -6,10 +6,24 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.utils import check_array
 
 
-def normalize(data):
+def get_min_max(data):
 
-    return ((data - data.min(axis=0)) /
-            (data.max(axis=0) - data.min(axis=0)))
+    min_val = np.min(data, axis=0)
+    max_val = np.max(data, axis=0)
+
+    return min_val, max_val
+
+
+def normalize(data, min_val=None, max_val=None):
+
+    if min_val is None or max_val is None:
+        min_val, max_val = get_min_max(data)
+
+    # Adjust test data to be 0 or greater to avoid method failures
+    normed = (data - min_val) / (max_val - min_val)
+    normed[normed < 0] = 0
+
+    return normed
 
 
 def cut(decision, limit):
@@ -66,26 +80,28 @@ def gen_cdf(data, lower, upper, size):
     return cdf, dat_eval
 
 
-def check_scores(decision, random_state=1234):
+def check_scores(decision, decomp=None, min_val=None, max_val=None, random_state=1234):
 
     # Check decision scores dimensionality and pre-process
     if (np.asarray(decision).ndim == 2) & (np.atleast_2d(decision).shape[1] > 1):
 
         decision = check_array(decision, ensure_2d=True)
-        decision = decompose(decision, random_state).squeeze()
+        decision = normalize(decision, min_val, max_val)
+        decision, decomp = decompose(decision, decomp, random_state)
 
     else:
+        decision = check_array(decision, ensure_2d=False)
 
-        decision = check_array(decision, ensure_2d=False).squeeze()
-
-    return decision
+    return decision.squeeze(), decomp
 
 
-def decompose(data, random_state=1234):
+def decompose(data, decomp=None, random_state=1234):
 
     # Decompose decision scores to 1D array for thresholding
-    decomp = TruncatedSVD(n_components=1, random_state=random_state)
+    if decomp is None:
+        decomp = TruncatedSVD(n_components=1, random_state=random_state)
+        data = decomp.fit_transform(data)
+    else:
+        data = decomp.transform(data)
 
-    data = decomp.fit_transform(normalize(data))
-
-    return data
+    return data, decomp

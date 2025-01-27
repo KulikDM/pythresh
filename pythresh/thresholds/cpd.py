@@ -1,7 +1,8 @@
+import numpy as np
 import ruptures as rpt
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, gen_cdf, gen_kde, normalize
+from .thresh_utility import cut, gen_cdf, gen_kde
 
 
 class CPD(BaseThresholder):
@@ -44,11 +45,13 @@ class CPD(BaseThresholder):
 
     def __init__(self, method='Dynp', transform='cdf', random_state=1234):
 
+        super().__init__()
         self.method = method
         self.transform = transform
         self.method_func = {'Dynp': rpt.Dynp(), 'KernelCPD': rpt.KernelCPD(kernel='rbf'),
                             'Binseg': rpt.Binseg(), 'BottomUp': rpt.BottomUp()}
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -68,11 +71,7 @@ class CPD(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Transform data prior to fit
         if self.transform == 'cdf':

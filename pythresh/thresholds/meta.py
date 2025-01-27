@@ -9,7 +9,6 @@ from numba import njit, prange
 from sklearn.preprocessing import MinMaxScaler
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, normalize
 
 
 class META(BaseThresholder):
@@ -70,8 +69,13 @@ class META(BaseThresholder):
 
     def __init__(self, method='GNBM', random_state=1234):
 
+        super().__init__()
         self.method = method
         self.random_state = random_state
+        np.random.seed(random_state)
+
+        self._attrs = ['_kde', '_scaler', '_knorm', '_pnorm',
+                       '_qnorm', '_is_flipped']
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -91,11 +95,10 @@ class META(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
+        if self._is_fitted is None:
+            self._set_attributes(self._attrs, None)
 
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         if self.method == 'LIN':
             clf = 'meta_model_LIN.pkl'
@@ -113,19 +116,36 @@ class META(BaseThresholder):
 
         if self.method == 'GNBM':
 
-            scaler = MinMaxScaler()
-            norm = scaler.fit_transform(decision.reshape(-1, 1))
-            norm = (norm/(norm.max(axis=0, keepdims=True)
-                          + np.spacing(0)))
+            if self._scaler is None:
+                scaler = MinMaxScaler()
+                scaler.fit(decision.reshape(-1, 1))
+                self._scaler = scaler
+                self._norm = scaler.transform(decision.reshape(-1, 1))
 
-            qmcd = self._wrap_around_discrepancy(norm)
+            norm = self._scaler.transform(decision.reshape(-1, 1))
 
-            qmcd = normalize(qmcd)
-            if len(qmcd[qmcd > 0.5]) > 0.5*len(qmcd):
-                qmcd = 1 - qmcd
+            qmcd = self._wrap_around_discrepancy(self._norm, norm)
 
-            kde = stats.gaussian_kde(decision)
-            pdf = normalize(kde.pdf(decision))
+            qmcd = self._set_norm(qmcd, '_qnorm')
+
+            # Get criterion for inverting scores
+            if self._is_flipped is None:
+                skew = stats.skew(qmcd)
+                kurt = stats.kurtosis(qmcd)
+
+                # Invert score order based on criterion
+                if (skew < 0) or ((skew >= 0) & (kurt < 0)):
+                    self._is_flipped = True
+
+            if self._is_flipped:
+                qmcd = qmcd.max() + qmcd.min() - qmcd
+
+            if self._kde is None:
+                kde = stats.gaussian_kde(decision)
+                self._kde = kde
+
+            pdf = self._kde.pdf(decision)
+            pdf = self._set_norm(pdf, '_knorm')
 
         for i in range(len(model.groups_)):
 
@@ -155,19 +175,21 @@ class META(BaseThresholder):
 
     @staticmethod
     @njit(fastmath=True, parallel=True)
-    def _wrap_around_discrepancy(data):  # pragma: no cover
+    def _wrap_around_discrepancy(data, check):
+        """Wrap-around Quasi-Monte Carlo discrepancy method."""
 
         n = data.shape[0]
         d = data.shape[1]
+        p = check.shape[0]
 
-        disc = np.zeros(n)
+        disc = np.zeros(p)
 
-        for i in prange(n):
+        for i in prange(p):
             dc = 0.0
             for j in prange(n):
                 prod = 1.0
                 for k in prange(d):
-                    x_kikj = abs(data[i, k] - data[j, k])
+                    x_kikj = abs(check[i, k] - data[j, k])
                     prod *= 3.0 / 2.0 - x_kikj + x_kikj ** 2
 
                 dc += prod

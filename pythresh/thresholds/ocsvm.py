@@ -8,7 +8,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import OneClassSVM
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, gen_kde, normalize
+from .thresh_utility import gen_kde
 
 
 class OCSVM(BaseThresholder):
@@ -90,6 +90,7 @@ class OCSVM(BaseThresholder):
     def __init__(self, model='sgd', degree='auto', gamma='auto',
                  criterion='bic', nu='auto', tol=1e-3, random_state=1234):
 
+        super().__init__()
         self.model = model
         self.degree = degree
         self.gamma = gamma
@@ -97,6 +98,8 @@ class OCSVM(BaseThresholder):
         self.nu = nu
         self.tol = tol
         self.random_state = random_state
+        np.random.seed(random_state)
+        self._attrs = ['_clf', '_mean']
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -116,11 +119,10 @@ class OCSVM(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
+        if self._is_fitted is None:
+            self._set_attributes(self._attrs, None)
 
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Get auto nu calculation
         if self.nu == 'auto':
@@ -143,24 +145,28 @@ class OCSVM(BaseThresholder):
         decision = decision.reshape(-1, 1)
 
         # Create a one-class svm
-        if self.model == 'poly':
+        if (self.model == 'poly') & (self._clf is None):
             clf = OneClassSVM(gamma=self.gamma, kernel='poly',
                               degree=self.degree, nu=self.nu,
-                              tol=self.tol).fit(decision)
-        else:
+                              tol=self.tol)
+            clf.fit(decision)
+            self._clf = clf
+        elif self._clf is None:
             transform = AdditiveChi2Sampler()
             sgd = SGDOneClassSVM(nu=self.nu,
                                  random_state=self.random_state)
             clf = make_pipeline(transform, sgd)
             clf.fit(decision)
+            self._clf = clf
 
         # Predict inliers and outliers
-        res = clf.predict(decision)
+        res = self._clf.predict(decision)
 
         res[res == -1] = 0
 
         # Remove outliers from the left tail (precaution step)
         decision = np.squeeze(decision)
+        self._mean = np.mean(decision) if self._mean is None else self._mean
         mask = np.where(decision <= np.mean(decision))
         res[mask] = 0
 

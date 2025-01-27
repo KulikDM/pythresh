@@ -3,7 +3,7 @@ import scipy.signal as signal
 from scipy import integrate
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, normalize
+from .thresh_utility import cut
 
 # https://github.com/geomdata/gda-public/blob/master/timeseries/curve_geometry.pyx
 
@@ -58,7 +58,9 @@ class MOLL(BaseThresholder):
 
     def __init__(self, random_state=1234):
 
+        super().__init__()
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -78,11 +80,7 @@ class MOLL(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         dat_range = np.linspace(0, 1, len(decision))
 

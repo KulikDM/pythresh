@@ -6,7 +6,7 @@ import scipy.stats as stats
 from scipy.special import digamma
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, normalize
+from .thresh_utility import cut
 
 
 class MIXMOD(BaseThresholder):
@@ -63,6 +63,7 @@ class MIXMOD(BaseThresholder):
 
     def __init__(self, method='mean', tol=1e-5, max_iter=250, random_state=1234):
 
+        super().__init__()
         dists = [stats.expon, stats.fisk, stats.gamma, stats.laplace, stats.t,
                  stats.lognorm, stats.norm, stats.uniform, stats.pareto]
 
@@ -72,6 +73,7 @@ class MIXMOD(BaseThresholder):
         self.tol = tol
         self.max_iter = max_iter
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -91,11 +93,7 @@ class MIXMOD(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         mix_scores = decision + 1
 

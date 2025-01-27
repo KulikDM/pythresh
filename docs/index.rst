@@ -85,12 +85,14 @@ complex mathematical methods that involve graph theory and topology.
    clf = KNN()
    clf.fit(X_train)
 
-   # get outlier scores
-   decision_scores = clf.decision_scores_  # raw outlier scores on the train data
+   # get outlier likelihood scores
+   decision_scores = clf.decision_scores_
 
    # get outlier labels
    thres = CLUST()
-   labels = thres.eval(decision_scores)
+   thres.fit(decision_scores)
+
+   labels = thres.labels_ # or thres.predict(decision_scores)
 
 ----
 
@@ -201,11 +203,22 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 | COMB      | Thresholder Combination                                        |                                   |
 +-----------+----------------------------------------------------------------+-----------------------------------+
 
-**The comparison among of implemented models** is made available below
-(`Figure
-<https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png>`_\).
-For Jupyter Notebooks, please navigate to **"/notebooks/Compare All
-Thesholders.ipynb"**.
+**Tutorial Notebooks**
+
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| Notebook                                                                                                          | Description                                                                                         |
++===================================================================================================================+=====================================================================================================+
+| `Introduction <https://github.com/KulikDM/pythresh/tree/main/notebooks/00_Introduction.ipynb>`_                   | Basic intro into outlier thresholding                                                               |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Advanced Thresholding <https://github.com/KulikDM/pythresh/tree/main/notebooks/01_Advanced.ipynb>`_              | Additional thresholding options for more advanced use                                               |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Threshold Confidence <https://github.com/KulikDM/pythresh/tree/main/notebooks/02_Confidence.ipynb>`_             | Calculating the confidence levels around the threshold point                                        |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Outlier Ranking <https://github.com/KulikDM/pythresh/tree/main/notebooks/03_Ranking.ipynb>`_                     | Assisting in selecting the best performing outlier and thresholding method combo using ranking      |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+
+
+**The comparison among of implemented models** is made available below:
 
 .. figure:: figs/All.png
    :alt: Comparison of selected models
@@ -217,7 +230,15 @@ Thesholders.ipynb"**.
 The following APIs are applicable for all detector models for easy use.
 
 -  :func:`pythresh.thresholders.base.BaseDetector.eval`: evaluate a single
-   outlier or multiple outlier detection likelihood score sets
+   outlier or multiple outlier detection likelihood score set (Legacy method).
+
+-  :func:`pythresh.thresholders.base.BaseDetector.fit`: fit a
+   thresholder for a single outlier or multiple outlier detection
+   likelihood score set.
+
+-  :func:`pythresh.thresholders.base.BaseDetector.predict`: predict the
+   binary labels using the fitted thresholder on a single outlier or
+   multiple outlier detection likelihood score set.
 
 Key Attributes of a threshold:
 
@@ -225,6 +246,9 @@ Key Attributes of a threshold:
    threshold value that separates inliers from outliers. Outliers are
    considered all values above this threshold value. Note the threshold
    value has been derived from likelihood scores normalized between 0 and 1.
+
+-  :attr:`pythresh.thresholds.base.BaseThresholder.labels_`: Return a binary
+   array of labels for the fitted thresholder on the fitted dataset.
 
 -  :attr:`pythresh.thresholders.base.BaseDetector.confidence_interval_`:
    Return the lower and upper confidence interval of the contamination level.

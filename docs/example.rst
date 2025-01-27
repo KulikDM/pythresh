@@ -63,16 +63,20 @@ and threshold the outlier detection scores.
 
       # get the prediction labels and outlier scores of the training data
       y_train_scores = clf.decision_scores_  # raw outlier scores
-      y_train_pred = thres.eval(y_train_scores)  # binary labels (0: inliers, 1: outliers)
+
+      # (Legacy method)
+      #y_train_pred = thres.eval(y_train_scores)
+
+      thres.fit(y_train_scores)
+      y_train_pred = thres.labels_  # binary labels (0: inliers, 1: outliers)
 
       # get the prediction on the test data
       y_test_scores = clf.decision_function(X_test)  # outlier scores
-      y_test_pred = thres.eval(y_test_scores)  # outlier labels (0 or 1)
 
-      # it is possible to get the prediction confidence as well
-      y_test_pred, y_test_pred_confidence = clf.predict(
-          X_test, return_confidence=True
-      )  # outlier labels (0 or 1) and confidence in the range of [0,1]
+      # (Legacy method)
+      #y_test_pred = thres.eval(y_test_scores)
+      y_test_pred = thres.predict(y_test_scores)
+
 
 4. Evaluate the prediction using ROC and Precision @ Rank n
    :func:`pyod.utils.data.evaluate_print`.
@@ -148,7 +152,9 @@ outlier detection likelihood scores are normalized between 0 and 1.
 
       scores = clf.decision_function(X_train)
       thres = OCSVM()
-      labels = thres.eval(scores)
+      thres.fit(scores)
+
+      labels = thres.labels_
 
       threshold = thres.thresh_
 
@@ -171,7 +177,9 @@ outlier detection likelihood scores are normalized between 0 and 1.
       scores = np.vstack(scores).T
 
       thres = OCSVM()
-      labels = thres.eval(scores)
+      thres.fit(scores)
+
+      labels = thres.labels_
 
       threshold = thres.thresh_
       dscores = thres.dscores_
@@ -189,13 +197,25 @@ thresholder can be retrieved.
 
       scores = clf.decision_function(X_train)
       thres = COMB()
-      labels = thres.eval(scores)
+      thres.fit(scores)
+
+      labels = thres.labels_
 
       conf_interval = thres.confidence_interval_
 
-For Jupyter Notebooks, please navigate to `notebooks
-<https://github.com/KulikDM/pythresh/tree/main/notebooks>`_ for
-additional use case references
+**Tutorial Notebooks**
+
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| Notebook                                                                                                          | Description                                                                                         |
++===================================================================================================================+=====================================================================================================+
+| `Introduction <https://github.com/KulikDM/pythresh/tree/main/notebooks/00_Introduction.ipynb>`_                   | Basic intro into outlier thresholding                                                               |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Advanced Thresholding <https://github.com/KulikDM/pythresh/tree/main/notebooks/01_Advanced.ipynb>`_              | Additional thresholding options for more advanced use                                               |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Threshold Confidence <https://github.com/KulikDM/pythresh/tree/main/notebooks/02_Confidence.ipynb>`_             | Calculating the confidence levels around the threshold point                                        |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Outlier Ranking <https://github.com/KulikDM/pythresh/tree/main/notebooks/03_Ranking.ipynb>`_                     | Assisting in selecting the best performing outlier and thresholding method combo using ranking      |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
 
 .. rubric:: References
 

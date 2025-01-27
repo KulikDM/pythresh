@@ -18,10 +18,11 @@ from sklearn.cluster import (
     estimate_bandwidth
 )
 from sklearn.mixture import BayesianGaussianMixture
+from sklearn.naive_bayes import GaussianNB
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, normalize
+from .thresh_utility import check_scores
 
 sklearn_version = str(sklearn.__version__)
 
@@ -113,6 +114,8 @@ class CLUST(BaseThresholder):
                              'somsc': self._SOMSC_clust, 'spec': self._SPEC_clust,
                              'xmeans': self._XMEANS_clust}
         self.random_state = random_state
+        np.random.seed(random_state)
+        self._attrs = ['_clf']
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -132,9 +135,13 @@ class CLUST(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
+        if self._is_fitted is None:
+            self._set_attributes(self._attrs, None)
+
         decision = check_array(decision, ensure_2d=False)
 
-        decision = normalize(decision)
+        self._set_norm(decision, '_prenorm', return_norm=False)
+        decision = self._set_norm(decision, '_postnorm')
 
         if decision.ndim == 1:
             decision = np.atleast_2d(decision).T
@@ -144,37 +151,55 @@ class CLUST(BaseThresholder):
         labels = self.method_funcs[str(self.method)](decision)
 
         self.thresh_ = None
+        self._decomp = True
 
         return labels
 
     def _pyclust_eval(self, cl, decision):
         """Evaluate cluster labels from pyclustering methods."""
 
-        cl.process()
+        if self._clf is None:
+            cl.process()
 
-        pred = np.squeeze(np.array(cl.get_clusters(), dtype=object))
+            pred = np.squeeze(np.array(cl.get_clusters(), dtype=object))
 
-        pred = np.array(pred[0]) if isinstance(pred[0], list) else pred
+            pred = np.array(pred[0]) if isinstance(pred[0], list) else pred
 
-        labels = np.ones(len(decision), dtype=int)
-        labels[pred.astype(int)] = 0
+            labels = np.ones(len(decision), dtype=int)
+            labels[pred.astype(int)] = 0
 
-        # Flip if outliers were clustered
-        labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
+            # Flip if outliers were clustered
+            labels = 1 - \
+                labels if sum(labels) > np.ceil(len(decision)/2) else labels
+
+            self._clf = GaussianNB()
+            self._clf.fit(decision, labels)
+
+        else:
+            labels = self._sklearn_eval(cl, decision)
 
         return labels
 
     def _sklearn_eval(self, cl, decision):
         """Evaluate cluster labels from sklearn methods."""
 
-        cl.fit(decision)
-        labels = cl.labels_.astype(int)
+        if self._clf is None:
+            cl.fit(decision)
+            labels = cl.labels_.astype(int)
+            self._clf = cl if self.method != 'spec' else None
+        else:
+            labels = self._clf.predict(decision).astype(int)
 
         # Set all outlier labels to 1
         labels[labels != 0] = 1
 
         # Flip if outliers were clustered
         labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
+
+        # Cater for spec
+        if self._clf is None:
+            self._clf = GaussianNB()
+            self._clf.fit(decision, labels)
 
         return labels
 
@@ -206,9 +231,13 @@ class CLUST(BaseThresholder):
     def _BGM_clust(self, decision):
         """Bayesian Gaussian Mixture algorithm for cluster analysis."""
 
-        cl = BayesianGaussianMixture(n_components=2,
-                                     covariance_type='tied',
-                                     random_state=self.random_state).fit(decision)
+        if self._clf is None:
+            cl = BayesianGaussianMixture(n_components=2,
+                                         covariance_type='tied',
+                                         random_state=self.random_state).fit(decision)
+            self._clf = cl
+        else:
+            cl = self._clf
 
         labels = cl.predict(decision)
 
@@ -280,20 +309,25 @@ class CLUST(BaseThresholder):
     def _MSHIFT_clust(self, decision):
         """Mean shift algorithm for cluster analysis."""
 
-        # Get quantile value for bandwidth estimation
-        cscores = check_scores(decision,
-                               random_state=self.random_state)
-        dat = np.squeeze(cscores)
-        q = cityblock(dat, np.sort(dat))/np.sum(dat)
+        if self._clf is None:
+            # Get quantile value for bandwidth estimation
+            cscores, _ = check_scores(decision, None, None, None,
+                                      random_state=self.random_state)
 
-        q = max(0.25, min(q, 1.0))
+            dat = np.squeeze(cscores)
+            q = cityblock(dat, np.sort(dat))/np.sum(dat)
 
-        # Estimate bandwidth
-        bw = estimate_bandwidth(dat.reshape(-1, 1), quantile=q)
+            q = max(0.25, min(q, 1.0))
 
-        cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
-        cl.fit(decision)
-        lbls = cl.labels_
+            # Estimate bandwidth
+            bw = estimate_bandwidth(dat.reshape(-1, 1), quantile=q)
+
+            cl = MeanShift(bandwidth=bw, cluster_all=True, max_iter=500)
+            cl.fit(decision)
+            lbls = cl.labels_
+            self._clf = cl
+        else:
+            lbls = self._clf.predict(decision)
 
         mode = np.bincount(lbls).argmax()
         labels = np.ones(len(lbls))

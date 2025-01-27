@@ -142,7 +142,8 @@ class RANK():
 
                 if not (isinstance(thr, (float, int))):
 
-                    labels = thr.eval(scores)
+                    thr.fit(scores)
+                    labels = thr.labels_
 
                 else:
 
