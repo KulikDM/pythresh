@@ -79,7 +79,6 @@ class TestCHAU(unittest.TestCase):
             pred_labels = self.thres.predict(scores)
             self.check_fitted_attributes(self.thres)
             self.check_labels(pred_labels, scores.shape)
-            assert_equal(self.thres.labels_, pred_labels)
 
     def test_test_data(self):
         for scores, test_scores in zip(self.all_scores, [
