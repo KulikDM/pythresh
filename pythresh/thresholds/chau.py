@@ -114,6 +114,7 @@ class CHAU(BaseThresholder):
         prob = erfc(np.abs(decision-self.method(decision)) /
                     decision.std()/2.0**0.5)
 
-        self.thresh_ = criterion * (1-np.min(prob))/np.max(prob)
+        labels = 1-cut(prob, criterion)
+        self.thresh_ = np.min(labels[labels == 1])
 
-        return 1-cut(prob, criterion)
+        return labels

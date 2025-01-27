@@ -186,7 +186,7 @@ class CLUST(BaseThresholder):
         if self._clf is None:
             cl.fit(decision)
             labels = cl.labels_.astype(int)
-            self._clf = cl if self.method != 'spec' else None
+            self._clf = cl if self.method in ['spec', 'hdbscan'] else None
         else:
             labels = self._clf.predict(decision).astype(int)
 

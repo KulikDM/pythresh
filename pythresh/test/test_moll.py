@@ -70,7 +70,7 @@ class TestMOLL(unittest.TestCase):
     def test_predict(self):
         for scores in self.all_scores:
             self.thres.fit(scores)
-            pred_labels = self.thres.predict(self.scores)
+            pred_labels = self.thres.predict(scores)
             self.check_fitted_attributes(self.thres)
             self.check_labels(pred_labels, scores.shape)
             assert_equal(self.thres.labels_, pred_labels)
