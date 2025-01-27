@@ -2,4 +2,4 @@
 # Based on NiLearn package
 # License: simplified BSD
 
-__version__ = '0.9.9'  # pragma: no cover
+__version__ = '1.0.0'  # pragma: no cover
