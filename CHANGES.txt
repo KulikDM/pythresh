@@ -86,4 +86,13 @@ v<0.3.7>, <08/18/2024> -- Fixed muli-peak error in FWFM
 v<0.3.7>, <08/18/2024> -- Updated time complexity benchmarks
 v<0.3.8>, <11/21/2024> -- Added factor arg to MAD and ZSCORE, contribution by @MalikAly
 v<0.3.8>, <12/15/2024> -- Removed matplotlib as core dependency
-v<0.3.9>, <12/19/2024> -- Fixed low contamination issue in RANK
+v<1.0.0>, <12/19/2024> -- Fixed low contamination issue in RANK
+v<1.0.0>, <01/27/2024> -- Added numpy random seed to all thresholders
+v<1.0.0>, <01/27/2024> -- Added `fit` and `predict` methods to all thresholders
+v<1.0.0>, <01/27/2024> -- Aligned MTT alpha arg with standard value
+v<1.0.0>, <01/27/2024> -- Aligned all thresholders to be sklearn compatible
+v<1.0.0>, <01/27/2024> -- Added new example notebooks
+v<1.0.0>, <01/27/2024> -- Updated all thresholder tests
+v<1.0.0>, <01/27/2024> -- Updated all thresholder examples
+v<1.0.0>, <01/27/2024> -- Updated docs with shift to V1
+v<1.0.0>, <01/27/2024> -- Updated docs with datatables

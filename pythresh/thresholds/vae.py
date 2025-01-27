@@ -8,7 +8,7 @@ from torch.nn.functional import softplus
 from tqdm import tqdm
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, normalize
+from .thresh_utility import cut
 
 
 class VAE(BaseThresholder):
@@ -85,6 +85,7 @@ class VAE(BaseThresholder):
     def __init__(self, verbose=False, device='cpu', latent_dims='auto',
                  random_state=1234, epochs=100, batch_size=64, loss='kl'):
 
+        super().__init__()
         self.verbose = verbose
         self.device = device
         self.latent_dims = latent_dims
@@ -93,6 +94,7 @@ class VAE(BaseThresholder):
         self.loss = loss
         self.batch_size = batch_size
         self.random_state = random_state
+        np.random.seed(random_state)
         torch.manual_seed(random_state) if random_state else None
 
     def eval(self, decision):
@@ -113,16 +115,13 @@ class VAE(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        scores = normalize(decision.copy())
-
-        self.dscores_ = scores
+        decision = self._data_setup(decision)
+        scores = decision.copy()
 
         if self.latent_dims == 'auto':
             self.latent_dims = self._autodim(scores)
 
-        decision = normalize(decision).astype(np.float32).reshape(-1, 1)
+        decision = decision.astype(np.float32).reshape(-1, 1)
 
         self.model = VAE_model(1, self.latent_dims,
                                self.random_state, self.dist,

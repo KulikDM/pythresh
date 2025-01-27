@@ -9,7 +9,7 @@ from scipy.integrate import simpson
 from sklearn.covariance import MinCovDet
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, gen_cdf, gen_kde, normalize
+from .thresh_utility import cut, gen_cdf, gen_kde, normalize
 
 
 class DSN(BaseThresholder):
@@ -90,6 +90,7 @@ class DSN(BaseThresholder):
                              'RES': self._RES_metric, 'KS': self._KS_metric,
                              'INT': self._INTER_metric, 'MMD': self._MMD_metric}
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -109,11 +110,7 @@ class DSN(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Create a normal distribution and normalize
         size = min(len(decision), 1500)

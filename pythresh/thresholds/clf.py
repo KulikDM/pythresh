@@ -2,7 +2,6 @@ import numpy as np
 from scipy.stats import gaussian_kde
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, normalize
 
 
 class CLF(BaseThresholder):
@@ -46,6 +45,8 @@ class CLF(BaseThresholder):
 
     def __init__(self, method='complex', random_state=1234):
 
+        super().__init__()
+
         if method == 'complex':
 
             self.m1 = 7.115947536708103
@@ -60,6 +61,9 @@ class CLF(BaseThresholder):
 
         self.method = method
         self.random_state = random_state
+        np.random.seed(random_state)
+
+        self._attrs = ['_kde', '_knorm', '_pnorm', '_lnorm']
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -79,19 +83,26 @@ class CLF(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
+        if self._is_fitted is None:
+            self._set_attributes(self._attrs, None)
 
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Calculate expected y
         if self.method == 'complex':
 
-            kde = gaussian_kde(decision)
-            pdf = normalize(kde.pdf(decision))
-            pdf = normalize(pdf**(1/10))
-            log = normalize(np.log(decision + 1))
+            if self._kde is None:
+                kde = gaussian_kde(decision)
+                self._kde = kde
+
+            pdf = self._kde.pdf(decision)
+            pdf = self._set_norm(pdf, '_knorm')
+
+            pdf = pdf**(1/10)
+            pdf = self._set_norm(pdf, '_pnorm')
+
+            log = np.log(decision + 1)
+            log = self._set_norm(log, '_lnorm')
 
             pred = self.m1*decision + self.m2*log + self.m3*pdf + self.c
 

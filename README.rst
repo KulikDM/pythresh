@@ -1,6 +1,6 @@
-##################################################
- Python Outlier Detection Thresholding (PyThresh)
-##################################################
+#####################################################
+ Python Outlier Detection Thresholding (PyThresh) V1
+#####################################################
 
 **Deployment, Stats, & License**
 
@@ -74,6 +74,43 @@ PyThresh includes more than 30 thresholding algorithms. These algorithms
 range from using simple statistical analysis like the Z-score to more
 complex mathematical methods that involve graph theory and topology.
 
+***************************
+ What's New in PyThresh V1
+***************************
+
+The transition of PyThresh to V1 sees many new features!
+
+**Sklearn Compatibility**:
+
+-  The `fit` and `predict` methods have been introduced, enhancing
+   alignment with Sklearn compatibility.
+-  These methods allow a thresholder to be fitted on training data and
+   evaluated on unseen data using the `predict` method.
+-  Previously,this functionality was cumbersome to implement using the
+   `eval` method.
+-  Full backward compatibility with the `eval` method has been
+   maintained.
+-  Checks ensure that results remain consistent between `<V1` and `V1`.
+-  The `BaseEstimator` has been integrated into the `BaseThresholder`.
+-  This addition provides enhanced Sklearn compatibility to all
+   thresholders and better integration with existing Sklearn pipelines.
+
+**Reproducibility Enhancements**:
+
+-  All thresholders now include a random seed to ensure better
+   reproducibility.
+-  Previously, some components in the thresholders differed due to
+   randomness.
+
+**Improved Testing and Examples**:
+
+-  Much more robust tests have been added to ensure the functionality
+   and reliability of the code.
+-  These tests enhance confidence in the correctness of the
+   implementation and prevent regressions.
+-  All examples have been updated and new jupyter notebooks have been
+   added to introduce all the capabilities of PyThresh
+
 ************************
  Documentation & Citing
 ************************
@@ -88,23 +125,25 @@ To cite this work you can visit `PyThresh Citation
 
 ----
 
-**Outlier Detection Thresholding with 7 Lines of Code**:
+**Outlier Detection Thresholding with 8 Lines of Code**:
 
 .. code:: python
 
    # train the KNN detector
    from pyod.models.knn import KNN
-   from pythresh.thresholds.filter import FILTER
+   from pythresh.thresholds.karch import KARCH
 
    clf = KNN()
    clf.fit(X_train)
 
-   # get outlier scores
-   decision_scores = clf.decision_scores_  # raw outlier scores on the train data
+   # get outlier likelihood scores
+   decision_scores = clf.decision_scores_
 
    # get outlier labels
-   thres = FILTER()
-   labels = thres.eval(decision_scores)
+   thres = KARCH()
+   thres.fit(decision_scores)
+
+   labels = thres.labels_ # or thres.predict(decision_scores)
 
 or using multiple outlier detection score sets
 
@@ -114,18 +153,20 @@ or using multiple outlier detection score sets
    from pyod.models.knn import KNN
    from pyod.models.pca import PCA
    from pyod.models.iforest import IForest
-   from pythresh.thresholds.filter import FILTER
+   from pythresh.thresholds.karch import KARCH
 
    clfs = [KNN(), IForest(), PCA()]
 
-   # get outlier scores for each detector
+   # get outlier likelihood scores for each detector
    scores = [clf.fit(X_train).decision_scores_ for clf in clfs]
 
    scores = np.vstack(scores).T
 
    # get outlier labels
-   thres = FILTER()
-   labels = thres.eval(scores)
+   thres = KARCH()
+   thres.fit(decision_scores)
+
+   labels = thres.labels_ # or thres.predict(decision_scores)
 
 **************
  Installation
@@ -180,7 +221,14 @@ Or with **pip**:
 ****************
 
 -  **eval(score)**: evaluate a single outlier or multiple outlier
-   detection likelihood score sets.
+   detection likelihood score set (Legacy method).
+
+-  **fit(score)**: fit a thresholder for a single outlier or multiple
+   outlier detection likelihood score set.
+
+-  **predict(score)**: predict the binary labels using the fitted
+   thresholder on a single outlier or multiple outlier detection
+   likelihood score set
 
 Key Attributes of threshold:
 
@@ -189,12 +237,15 @@ Key Attributes of threshold:
    value. Note the threshold value has been derived from likelihood
    scores normalized between 0 and 1.
 
+-  **labels_**: A binary array of labels for the fitted thresholder on
+   the fitted dataset.
+
 -  **confidence_interval_**: Return the lower and upper confidence
    interval of the contamination level. Only applies to the COMB
-   thresholder
+   thresholder.
 
 -  **dscores_**: 1D array of the TruncatedSVD decomposed decision scores
-   if multiple outlier detector score sets are passed
+   if multiple outlier detector score sets are passed.
 
 -  **mixture_**: fitted mixture model class of the selected model used
    for thresholding. Only applies to MIXMOD. Attributes include:
@@ -312,11 +363,23 @@ method `thresholding confidence
 
 ----
 
-For Jupyter Notebooks, please navigate to `notebooks
-<https://github.com/KulikDM/pythresh/tree/main/notebooks>`_.
+**Tutorial Notebooks**
+
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| Notebook                                                                                                          | Description                                                                                         |
++===================================================================================================================+=====================================================================================================+
+| `Introduction <https://github.com/KulikDM/pythresh/tree/main/notebooks/00_Introduction.ipynb>`_                   | Basic intro into outlier thresholding                                                               |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Advanced Thresholding <https://github.com/KulikDM/pythresh/tree/main/notebooks/01_Advanced.ipynb>`_              | Additional thresholding options for more advanced use                                               |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Threshold Confidence <https://github.com/KulikDM/pythresh/tree/main/notebooks/02_Confidence.ipynb>`_             | Calculating the confidence levels around the threshold point                                        |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
+| `Outlier Ranking <https://github.com/KulikDM/pythresh/tree/main/notebooks/03_Ranking.ipynb>`_                     | Assisting in selecting the best performing outlier and thresholding method combo using ranking      |
++-------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+
 
 A quick look at all the thresholders performance can be found at
-**"/notebooks/Compare All Models.ipynb"**
+`Compare Thresholders
+<https://github.com/KulikDM/pythresh/blob/main/notebooks/Compare%20All%20Thresholders.ipynb>`_
 
 .. image:: https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png
    :target: https://raw.githubusercontent.com/KulikDM/pythresh/main/imgs/All.png

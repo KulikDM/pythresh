@@ -94,7 +94,8 @@ class CONF():
         # Eval initial threshold
         scores = ((scores - scores.min()) / (scores.max() - scores.min()))
 
-        labels = self.thresh.eval(scores)
+        self.thresh.fit(scores)
+        labels = self.thresh.labels_
 
         # Initialize setup for tests
         boundings = []
@@ -158,7 +159,7 @@ class CONF():
                                               stratify=labels,
                                               random_state=self.random_state)
 
-        _ = self.thresh.eval(sco_split)
+        self.thresh.fit(sco_split)
 
         return self.thresh.thresh_
 
@@ -173,7 +174,8 @@ class CONF():
                                                       stratify=labels,
                                                       random_state=self.random_state)
 
-        lbls = self.thresh.eval(sco_split)
+        self.thresh.fit(sco_split)
+        lbls = self.thresh.labels_
 
         info[ind] = lbls
 

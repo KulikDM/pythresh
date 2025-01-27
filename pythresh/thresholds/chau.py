@@ -3,7 +3,7 @@ import scipy.stats as stats
 from scipy.special import erfc
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, normalize
+from .thresh_utility import cut
 
 
 class CHAU(BaseThresholder):
@@ -84,6 +84,7 @@ class CHAU(BaseThresholder):
         stat = {'mean': np.mean, 'median': np.median, 'gmean': stats.gmean}
         self.method = stat[method]
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -103,11 +104,7 @@ class CHAU(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Calculate Chauvenet's criterion for one tail
         Pz = 1/(4*len(decision))

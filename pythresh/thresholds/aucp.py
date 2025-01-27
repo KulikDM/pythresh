@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import auc
 
 from .base import BaseThresholder
-from .thresh_utility import check_scores, cut, gen_kde, normalize
+from .thresh_utility import cut, gen_kde, normalize
 
 
 class AUCP(BaseThresholder):
@@ -56,7 +56,9 @@ class AUCP(BaseThresholder):
 
     def __init__(self, random_state=1234):
 
+        super().__init__()
         self.random_state = random_state
+        np.random.seed(random_state)
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -76,11 +78,7 @@ class AUCP(BaseThresholder):
             fitted model. 0 stands for inliers and 1 for outliers.
         """
 
-        decision = check_scores(decision, random_state=self.random_state)
-
-        decision = normalize(decision)
-
-        self.dscores_ = decision
+        decision = self._data_setup(decision)
 
         # Generate KDE
         val, dat_range = gen_kde(decision, 0, 1, len(decision)*2)

@@ -3,12 +3,10 @@ import warnings
 import numpy as np
 from scipy.optimize import least_squares
 from scipy.stats import beta, dirichlet, multivariate_normal, wishart
-from sklearn.decomposition import TruncatedSVD
 from sklearn.mixture import BayesianGaussianMixture
 from sklearn.utils import check_array
 
 from .base import BaseThresholder
-from .thresh_utility import normalize
 
 
 class GAMGMM(BaseThresholder):
@@ -91,6 +89,7 @@ class GAMGMM(BaseThresholder):
                  random_state=1234,
                  verbose=False):
 
+        super().__init__()
         self.n_contaminations = n_contaminations
         self.n_draws = n_draws
         self.p0 = p0
@@ -101,6 +100,7 @@ class GAMGMM(BaseThresholder):
         self.skip = skip
         self.steps = steps
         self.random_state = random_state
+        np.random.seed(random_state)
         self.verbose = verbose
 
     def eval(self, decision):
@@ -126,12 +126,6 @@ class GAMGMM(BaseThresholder):
             decision = check_array(decision, ensure_2d=True)
             score_space = self._augment_space(decision)
 
-            # Decompose decision scores to 1D for thresholding
-            decomp = TruncatedSVD(n_components=1,
-                                  random_state=self.random_state)
-
-            decision = decomp.fit_transform(normalize(decision))
-
         else:
 
             decision = check_array(decision, ensure_2d=False).squeeze()
@@ -145,8 +139,7 @@ class GAMGMM(BaseThresholder):
                              lead to a suboptimal or no solution. Please consider increasing
                              the the number of outlier detection score sets''')
 
-        decision = normalize(decision.squeeze())
-        self.dscores_ = decision.copy()
+        decision = self._data_setup(decision.squeeze())
 
         # Compute the gamma posterior and threshold
         gamma_posterior_sample = self._compute_gamma_posterior(score_space)
@@ -155,7 +148,7 @@ class GAMGMM(BaseThresholder):
 
         self.thresh_ = np.percentile(decision, 100 * (1 - gamma_mean))
 
-        labels = (decision > self.thresh_).astype('int').ravel()
+        labels = (decision >= self.thresh_).astype('int').ravel()
         return labels
 
     def _compute_gamma_posterior(self, decision):

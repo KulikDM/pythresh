@@ -111,8 +111,8 @@ jobs:
         run: |
           printf "Preparing to install dependancies\n"
 
-          python -m pip install --upgrade pip setuptools wheel twine
-          python setup.py sdist
+          python -m pip install --upgrade pip setuptools wheel twine build
+          python -m build
 
           printf "\nPackage created locally\n"
 

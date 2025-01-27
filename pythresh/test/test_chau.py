@@ -4,6 +4,7 @@ from itertools import product
 from os.path import dirname as up
 
 # noinspection PyProtectedMember
+import joblib
 import numpy as np
 from numpy.testing import assert_equal
 from pyod.models.iforest import IForest
@@ -21,44 +22,80 @@ sys.path.append(path)
 
 
 class TestCHAU(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.n_train = 200
+        cls.n_test = 100
+        cls.contamination = 0.1
+        cls.X_train, cls.X_test, cls.y_train, cls.y_test = generate_data(
+            n_train=cls.n_train, n_test=cls.n_test,
+            contamination=cls.contamination, random_state=42)
+
+        cls.clfs = [KNN(), PCA(), IForest()]
+        cls.single_score = cls.clfs[0].fit(cls.X_train).decision_scores_
+        cls.multiple_scores = np.vstack([
+            clf.fit(cls.X_train).decision_scores_ for clf in cls.clfs
+        ]).T
+        cls.all_scores = [cls.single_score, cls.multiple_scores]
+
+        cls.methods = ['mean', 'median', 'gmean']
+
+        cls.params = list(product(cls.all_scores, cls.methods))
+
     def setUp(self):
-        self.n_train = 200
-        self.n_test = 100
-        self.contamination = 0.1
-        self.X_train, self.X_test, self.y_train, self.y_test = generate_data(
-            n_train=self.n_train, n_test=self.n_test,
-            contamination=self.contamination, random_state=42)
+        self.thres = CHAU()
 
-        clf = KNN()
-        clf.fit(self.X_train)
+    def check_labels(self, labels, scores_shape):
+        self.assertEqual(labels.shape, scores_shape[:1])
+        self.assertIn(labels.min(), [0, 1])
+        self.assertIn(labels.max(), [0, 1])
 
-        scores = clf.decision_scores_
+    def check_fitted_attributes(self, thres):
+        self.assertTrue(thres.__sklearn_is_fitted__())
+        self.assertIsNotNone(thres.labels_)
+        self.assertIsNotNone(thres.thresh_)
 
-        clfs = [KNN(), PCA(), IForest()]
+    def test_eval(self):
+        for scores, method in self.params:
+            thres = CHAU(method=method)
+            pred_labels = thres.eval(scores)
 
-        multiple_scores = [
-            clf.fit(self.X_train).decision_scores_ for clf in clfs]
-        multiple_scores = np.vstack(multiple_scores).T
+            self.assertIsNotNone(thres.thresh_)
+            self.assertIsNotNone(thres.dscores_)
+            self.assertGreaterEqual(thres.dscores_.min(), 0)
+            self.assertLessEqual(thres.dscores_.max(), 1)
+            self.check_labels(pred_labels, scores.shape)
 
-        self.all_scores = [scores, multiple_scores]
+    def test_fit(self):
+        for scores in self.all_scores:
+            self.thres.fit(scores)
+            self.check_fitted_attributes(self.thres)
+            self.check_labels(self.thres.labels_, scores.shape)
 
-        self.methods = ['mean', 'median', 'gmean']
+    def test_predict(self):
+        for scores in self.all_scores:
+            self.thres.fit(scores)
+            pred_labels = self.thres.predict(scores)
+            self.check_fitted_attributes(self.thres)
+            self.check_labels(pred_labels, scores.shape)
 
-    def test_prediction_labels(self):
+    def test_test_data(self):
+        for scores, test_scores in zip(self.all_scores, [
+            self.clfs[0].fit(self.X_train).decision_function(self.X_test),
+            np.vstack([clf.fit(self.X_train).decision_function(self.X_test)
+                      for clf in self.clfs]).T
+        ]):
+            self.thres.fit(scores)
+            pred_labels = self.thres.predict(test_scores)
+            self.check_fitted_attributes(self.thres)
+            self.check_labels(pred_labels, test_scores.shape)
 
-        params = product(self.all_scores, self.methods)
+    def test_save_and_load(self):
+        for scores in self.all_scores:
+            self.thres.fit(scores)
+            joblib.dump(self.thres, 'model.pkl')
+            loaded_thres = joblib.load('model.pkl')
 
-        for scores, method in params:
-
-            self.thres = CHAU(method=method)
-            pred_labels = self.thres.eval(scores)
-            assert (self.thres.thresh_ is not None)
-            assert (self.thres.dscores_ is not None)
-
-            assert (self.thres.dscores_.min() == 0)
-            assert (self.thres.dscores_.max() == 1)
-
-            assert_equal(pred_labels.shape, self.y_train.shape)
-
-            assert (pred_labels.min() == 0)
-            assert (pred_labels.max() == 1)
+            assert_equal(self.thres.predict(scores),
+                         loaded_thres.predict(scores))
