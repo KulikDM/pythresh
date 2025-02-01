@@ -20,8 +20,8 @@ class CHAU(BaseThresholder):
        method : {'mean', 'median', 'gmean'}, optional (default='mean')
             Calculate the area normal to distance using a scaler
 
-            - 'mean':  Construct a scaler with the the mean of the scores
-            - 'median: Construct a scaler with the the median of the scores
+            - 'mean':  Construct a scaler with the mean of the scores
+            - 'median: Construct a scaler with the median of the scores
             - 'gmean': Construct a scaler with the geometric mean of the scores
 
        random_state : int, optional (default=1234)

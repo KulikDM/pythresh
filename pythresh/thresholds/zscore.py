@@ -14,9 +14,11 @@ class ZSCORE(BaseThresholder):
 
        Parameters
        ----------
+
        factor : int, optional (default=1)
             The factor to multiply the zscore by to set the threshold.
             The default is 1.
+
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
             be set to None.

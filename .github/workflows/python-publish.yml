@@ -127,7 +127,7 @@ jobs:
 
           url="https://pypi.org/pypi/pythresh/json"
           latest_version=$(curl -s "$url" | jq -r '.info.version')
-          latest_sha256=$(curl -s "$url" | jq -r '.releases."'"$latest_version"'"[0].digests."sha256"')
+          latest_sha256=$(curl -s "$url" | jq -r '.releases."'"$latest_version"'"[1].digests."sha256"')
 
           echo "Validating version update"
 

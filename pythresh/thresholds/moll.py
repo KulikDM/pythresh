@@ -19,6 +19,9 @@ class MOLL(BaseThresholder):
        Parameters
        ----------
 
+       random_state : int, optional (default=1234)
+            Random seed for the uniform distribution. Can also be set to None.
+
        Attributes
        ----------
 
