@@ -19,9 +19,13 @@ def normalize(data, min_val=None, max_val=None):
     if min_val is None or max_val is None:
         min_val, max_val = get_min_max(data)
 
-    # Adjust test data to be 0 or greater to avoid method failures
     normed = (data - min_val) / (max_val - min_val)
+
+    # Ensure normalization is within [0, 1].
+    if np.isscalar(normed):
+        normed = np.array([normed])
     normed[normed < 0] = 0
+    normed[normed > 1] = 1
 
     return normed
 
