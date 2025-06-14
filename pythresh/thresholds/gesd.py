@@ -106,7 +106,8 @@ class GESD(BaseThresholder):
 
         arr = decision.copy()
 
-        limit = 1.1
+        eps = np.finfo(decision.dtype).eps
+        limit = 1.0 + eps
 
         if self.max_outliers == 'auto':
             self.max_outliers = len(decision) // 2

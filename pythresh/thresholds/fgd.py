@@ -82,8 +82,11 @@ class FGD(BaseThresholder):
                 if count == 2:
                     break
 
+        eps = np.finfo(decision.dtype).eps
+
         limit = ((dat_range[ind[0]]+dat_range[ind[1]])/2 if
-                 len(ind) > 1 else 1.1)
+                 len(ind) > 1 else 1.0 + eps)
+
         self.thresh_ = limit
 
         return cut(decision, limit)

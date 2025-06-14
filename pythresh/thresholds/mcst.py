@@ -135,7 +135,9 @@ class MCST(BaseThresholder):
                 p_std = p_check
                 povr.append(rnd[i])
 
-        limit = np.min(povr) if povr else 1.1
+        eps = np.finfo(decision.dtype).eps
+        limit = np.min(povr) if povr else 1.0 + eps
+
         self.thresh_ = limit
 
         return cut(decision, limit)

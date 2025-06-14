@@ -74,7 +74,8 @@ class FWFM(BaseThresholder):
         base_width = peak_widths(val, peaks, rel_height=0.99)[0]
 
         # Normalize and set limit
-        limit = base_width[0]/len(val) if len(base_width) > 0 else 1.1
+        eps = np.finfo(decision.dtype).eps
+        limit = base_width[0]/len(val) if len(base_width) > 0 else 1.0 + eps
 
         self.thresh_ = limit
 

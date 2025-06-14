@@ -78,7 +78,8 @@ class MTT(BaseThresholder):
 
         arr = np.sort(decision.copy())
 
-        limit = 1.1
+        eps = np.finfo(decision.dtype).eps
+        limit = 1.0 + eps
 
         while True:
 

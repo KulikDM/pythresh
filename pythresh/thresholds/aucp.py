@@ -93,7 +93,9 @@ class AUCP(BaseThresholder):
 
         # Apply the limit to where the area is less than that limit percentage
         # of the total area under the curve
-        limit = 1
+        eps = np.finfo(decision.dtype).eps
+        limit = 1.0 + eps
+
         for i in range(len(dat_range)):
 
             splt_area = auc(dat_range[i:], val[i:])
