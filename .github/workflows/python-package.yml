@@ -22,6 +22,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
@@ -39,8 +41,34 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -vs --doctest-modules --cov-fail-under=90 --cov-branch --cov=pythresh --cov-report term-missing --pyargs pythresh --continue-on-collection-errors
-    - name: Codecov
+        pytest -vs \
+          --doctest-modules \
+          --cov-fail-under=90 \
+          --cov-branch \
+          --cov=pythresh \
+          --cov-report term-missing \
+          --cov-report xml \
+          --pyargs pythresh \
+          --continue-on-collection-errors
+
+    - name: Upload coverage to Codecov (partial)
       uses: codecov/codecov-action@v5
+      with:
+        files: ./coverage.xml
+        flags: ${{ matrix.os }}-${{ matrix.python-version }}
+        fail_ci_if_error: true
+        verbose: true
+        partial: true
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  finalize:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Finalize Codecov uploads
+        uses: codecov/codecov-action@v5
+        with:
+          finalize: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
