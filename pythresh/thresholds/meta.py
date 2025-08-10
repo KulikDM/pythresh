@@ -146,6 +146,7 @@ class META(BaseThresholder):
 
             pdf = self._kde.pdf(decision)
             pdf = self._set_norm(pdf, '_knorm')
+            pdf[pdf < 0] = 0
 
         for i in range(len(model.groups_)):
 

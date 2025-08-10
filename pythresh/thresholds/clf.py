@@ -97,12 +97,14 @@ class CLF(BaseThresholder):
 
             pdf = self._kde.pdf(decision)
             pdf = self._set_norm(pdf, '_knorm')
+            pdf[pdf < 0] = 0
 
             pdf = pdf**(1/10)
             pdf = self._set_norm(pdf, '_pnorm')
 
             log = np.log(decision + 1)
             log = self._set_norm(log, '_lnorm')
+            log[log < 0] = 0
 
             pred = self.m1*decision + self.m2*log + self.m3*pdf + self.c
 

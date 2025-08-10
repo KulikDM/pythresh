@@ -160,7 +160,9 @@ class OCSVM(BaseThresholder):
             self._clf = clf
 
         # Predict inliers and outliers
-        res = self._clf.predict(decision)
+        evaluate = decision.copy()
+        evaluate[evaluate < 0] = 0
+        res = self._clf.predict(evaluate)
 
         res[res == -1] = 0
 
