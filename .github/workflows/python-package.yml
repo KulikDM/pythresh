@@ -63,7 +63,7 @@ jobs:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   finalize:
-    needs: tests
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Finalize Codecov uploads
