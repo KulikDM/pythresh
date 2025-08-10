@@ -31,7 +31,7 @@ class TestMCST(unittest.TestCase):
             n_train=cls.n_train, n_test=cls.n_test,
             contamination=cls.contamination, random_state=42)
 
-        cls.clfs = [KNN(), PCA(), IForest()]
+        cls.clfs = [KNN(), PCA(random_state=1234), IForest(random_state=1234)]
         cls.single_score = cls.clfs[0].fit(cls.X_train).decision_scores_
         cls.multiple_scores = np.vstack([
             clf.fit(cls.X_train).decision_scores_ for clf in cls.clfs

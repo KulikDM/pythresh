@@ -30,7 +30,7 @@ class TestRANK(unittest.TestCase):
             n_train=self.n_train, n_test=self.n_test,
             contamination=self.contamination, random_state=42)
 
-        self.clfs = [KNN(), PCA(), IForest()]
+        self.clfs = [KNN(), PCA(random_state=1234), IForest(random_state=1234)]
 
         self.thres = [FILTER(), self.contamination,
                       [FILTER(), IQR(), OCSVM()]]

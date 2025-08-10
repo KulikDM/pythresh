@@ -36,7 +36,7 @@ class TestFastKDE(unittest.TestCase):
 
         scores = clf.decision_scores_
 
-        clfs = [KNN(), PCA(), IForest()]
+        clfs = [KNN(), PCA(random_state=1234), IForest(random_state=1234)]
 
         multiple_scores = [
             clf.fit(self.X_train).decision_scores_ for clf in clfs]

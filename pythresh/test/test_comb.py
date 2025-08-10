@@ -32,7 +32,7 @@ class TestCOMB(unittest.TestCase):
             n_train=cls.n_train, n_test=cls.n_test,
             contamination=cls.contamination, random_state=42)
 
-        cls.clfs = [KNN(), PCA(), IForest()]
+        cls.clfs = [KNN(), PCA(random_state=1234), IForest(random_state=1234)]
         cls.single_score = cls.clfs[0].fit(cls.X_train).decision_scores_
         cls.multiple_scores = np.vstack([
             clf.fit(cls.X_train).decision_scores_ for clf in cls.clfs
@@ -85,14 +85,20 @@ class TestCOMB(unittest.TestCase):
             assert_equal(thres.labels_, pred_labels)
 
     def test_test_data(self):
-        for scores, test_scores in zip(self.all_scores, [
+        all_test_scores = [
             self.clfs[0].fit(self.X_train).decision_function(self.X_test),
             np.vstack([clf.fit(self.X_train).decision_function(self.X_test)
                       for clf in self.clfs]).T
-        ]):
-            self.thres.fit(scores)
-            pred_labels = self.thres.predict(test_scores)
-            self.check_fitted_attributes(self.thres)
+        ]
+
+        for scores, method, max_contam in self.params:
+            test_scores = all_test_scores[0] if scores.ndim == 1 else all_test_scores[1]
+
+            thres = COMB(method=method, max_contam=max_contam)
+            thres.fit(scores)
+            pred_labels = thres.predict(test_scores)
+
+            self.check_fitted_attributes(thres)
             self.check_labels(pred_labels, test_scores.shape)
 
     def test_save_and_load(self):
