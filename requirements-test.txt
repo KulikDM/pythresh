@@ -1,5 +1,5 @@
 #ruptures
-https://github.com/deepcharles/ruptures/archive/master.zip
+git+https://github.com/deepcharles/ruptures.git
 #pyclustering
 https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip
 joblib>=0.14.1
