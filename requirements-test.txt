@@ -1,10 +1,11 @@
+#ruptures
+https://github.com/deepcharles/ruptures/archive/master.zip
 #pyclustering
 https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip
 joblib>=0.14.1
 numpy
 pandas
 pyod
-ruptures
 scikit-learn>=0.20.0
 scikit-lego
 scipy>=1.3.1
