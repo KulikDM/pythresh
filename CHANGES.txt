@@ -99,3 +99,5 @@ v<1.0.0>, <01/27/2025> -- Updated docs with datatables
 v<1.0.1>, <06/14/2025> -- Updated max thresholder limit
 v<1.0.1>, <08/10/2025> -- Fixed test scores min max range
 v<1.0.1>, <08/10/2025> -- Updated tests with random state and better test scores coverage
+v<1.0.2>, <10/10/2025> -- Removed Python 3.9 from testing
+v<1.0.2>, <10/10/2025> -- Python 3.13 support
