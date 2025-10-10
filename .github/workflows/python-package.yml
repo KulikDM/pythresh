@@ -31,7 +31,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools setuptools-scm
-        python -m pip install flake8 pytest-cov mypy typed-ast cython
+        python -m pip install flake8 pytest-cov mypy cython
         python -m pip install -r requirements-test.txt --use-pep517
     - name: Lint with flake8
       run: |
