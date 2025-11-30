@@ -118,6 +118,10 @@ class COMB(BaseThresholder):
                 contam.append(labels)
                 ratio.append(outlier_ratio)
 
+        if not contam:
+            raise ValueError(
+                f"No thresholders had a contamination level below {self.max_contam}. Try increasing max_contam value.")
+
         contam = np.array(contam)
         ratio = np.array(ratio)
 
