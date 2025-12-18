@@ -32,10 +32,10 @@ Or with **pip**:
 
 **Required Dependencies**:
 
--  numpy>=1.13
+-  numpy>=1.19
 -  pyod
--  scipy>=1.3.1
--  scikit_learn>=0.20.0
+-  scipy>=1.5.1
+-  scikit_learn>=0.22.0
 
 **Optional Dependencies**:
 
