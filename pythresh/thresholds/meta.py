@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as stats
 from numba import njit, prange
+from sklearn.linear_model import RidgeClassifierCV
 from sklearn.preprocessing import MinMaxScaler
 
 from .base import BaseThresholder
@@ -113,6 +114,15 @@ class META(BaseThresholder):
         counts = len(decision)
         parent = up(up(__file__))
         model = joblib.load(os.path.join(parent, 'models', clf))
+
+        def _patch_ridge(est):
+            if isinstance(est, RidgeClassifierCV) and not hasattr(est, 'classes_'):
+                est.classes_ = np.array([0, 1])
+
+        for e in getattr(model, 'estimators_', {}).values():
+            _patch_ridge(e)
+
+        _patch_ridge(getattr(model, 'estimator', None))
 
         if self.method == 'GNBM':
 

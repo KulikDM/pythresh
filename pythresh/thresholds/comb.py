@@ -192,7 +192,7 @@ class LaplaceGaussianNB(BaseEstimator, ClassifierMixin):
 
         self.models = []
         self.priors = []
-        self.classes_ = [0, 1]
+        self.classes_ = np.array([0, 1])
         dist = [stats.laplace, stats.norm]
 
         for c in self.classes_:
