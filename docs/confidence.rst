@@ -187,12 +187,12 @@ Below are two scatter plots of the results from the example code above.
 However, in the second plot the use of a classification type thresholder
 ``CLF`` has been employed.
 
-.. figure:: figs/Conf1.png
+.. thumbnail:: figs/Conf1.png
    :alt: Scatter plot of the above example 1
 
    Figure 1: Scatter plot of the ``CONF`` evaluated results using ``IQR``.
 
-.. figure:: figs/Conf2.png
+.. thumbnail:: figs/Conf2.png
    :alt: Scatter plot of the above example 2
 
    Figure 2: Scatter plot of the ``CONF`` evaluated results using ``CLF``.

@@ -12,6 +12,7 @@ scipy
 sphinx-datatables
 sphinx-rtd-theme
 sphinxcontrib-bibtex
+sphinxcontrib-images
 torch
 tqdm
 xgboost

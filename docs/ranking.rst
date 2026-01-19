@@ -196,22 +196,22 @@ In order to get a better understanding on how these six proxy-metrics
 performed overall, joyplots below demonstrate the distributions of their
 Pearson's correlation with respect to the MCC scores for each statistic.
 
-.. figure:: figs/Rank1.png
+.. thumbnail:: figs/Rank1.png
    :alt: Total Average Pearson's score
 
    Figure 1: Total average Pearson's score of selected proxy metrics.
 
-.. figure:: figs/Rank2.png
+.. thumbnail:: figs/Rank2.png
    :alt: Mean Pearson's score Across Datasets
 
    Figure 2: Mean Pearson's score across datasets for selected proxy metrics.
 
-.. figure:: figs/Rank3.png
+.. thumbnail:: figs/Rank3.png
    :alt: Median Pearson's score Across Datasets
 
    Figure 3: Median Pearson's score across datasets for selected proxy metrics.
 
-.. figure:: figs/Rank4.png
+.. thumbnail:: figs/Rank4.png
    :alt: Standard Deviation Pearson's score Across Datasets
 
    Figure 4: Standard deviation Pearson's score across datasets for selected proxy metrics.
@@ -253,12 +253,12 @@ RankDCG results to.
 The joyplots below indicate the performance between the methods with
 respect aggregation across each dataset.
 
-.. figure:: figs/Rank5.png
+.. thumbnail:: figs/Rank5.png
    :alt: RankDCG scores for each test
 
    Figure 5: RankDCG scores for each tested combination.
 
-.. figure:: figs/Rank6.png
+.. thumbnail:: figs/Rank6.png
    :alt: Mean RankDCG scores per dataset
 
    Figure 6: Mean RankDCG scores for each tested combination agregated per dataset.
@@ -270,7 +270,7 @@ not overfitted and is able to generalize, the datasets ``mammography,
 skin``, and ``smtp`` were tested as the model had not been trained on
 them.
 
-.. figure:: figs/Rank7.png
+.. thumbnail:: figs/Rank7.png
    :alt: Mean RankDCG scores per test dataset
 
    Figure 7: Mean RankDCG scores for each tested combination aggregated per test dataset.

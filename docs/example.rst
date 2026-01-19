@@ -118,7 +118,7 @@ and threshold the outlier detection scores.
              save_figure=False,
          )
 
-.. figure:: figs/KNN_KARCH.png
+.. thumbnail:: figs/KNN_KARCH.png
    :alt: karch demo
 
 ----

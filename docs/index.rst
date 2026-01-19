@@ -220,7 +220,7 @@ Unsupervised Anomaly Detection <https://arxiv.org/abs/2210.10487>`_
 
 **The comparison among of implemented models** is made available below:
 
-.. figure:: figs/All.png
+.. thumbnail:: figs/All.png
    :alt: Comparison of selected models
 
 ############################

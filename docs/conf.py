@@ -64,6 +64,7 @@ extensions = [
     'sphinxcontrib.bibtex',
     'sphinx.ext.napoleon',
     'sphinx_rtd_theme',
+    'sphinxcontrib.images',
     'sphinxcontrib.jquery',
     'sphinx_datatables'
 ]

@@ -97,7 +97,7 @@ uncertainty about its mean and is the most robust (best least accurate
 prediction). However, for interpretability and general performance the
 ``MIXMOD, FILTER,`` and ``META`` thresholders are good fits.
 
-.. figure:: figs/Benchmark1.png
+.. thumbnail:: figs/Benchmark1.png
    :alt: Benchmark defaults
 
 ----
@@ -117,7 +117,7 @@ dataset with fewer examples and a greater bias.
     :file: tables/Benchmark2.csv
     :class: sphinx-datatable
 
-.. figure:: figs/Benchmark2.png
+.. thumbnail:: figs/Benchmark2.png
    :alt: Benchmark all
 
 ----
@@ -131,7 +131,7 @@ similar setup is followed as the first benchmark test, however, the
 labels were set using the true contamination applied to the decomposed
 scores as the right-hand component of the MCC deterioration equation.
 
-.. figure:: figs/Multi1.png
+.. thumbnail:: figs/Multi1.png
    :alt: Benchmark multiple
 
 However, to effectively compare whether the multiple outlier detection
@@ -147,7 +147,7 @@ From this, it can be shown that by using a multiple outlier likelihood
 score set it generally performs better than using a single outlier
 likelihood scores set.
 
-.. figure:: figs/Multi2.png
+.. thumbnail:: figs/Multi2.png
    :alt: Benchmark multiple comparison
 
 ----
@@ -201,10 +201,10 @@ methods produced results that were comparable to their inputs.
 | COMB5         | COMB(method='stacked')                |
 +---------------+---------------------------------------+
 
-.. figure:: figs/Comb1.png
+.. thumbnail:: figs/Comb1.png
    :alt: Combination Performance
 
-.. figure:: figs/Comb2.png
+.. thumbnail:: figs/Comb2.png
    :alt: Combination Close Up
 
 ----
@@ -232,7 +232,7 @@ potential to over predict will vary significantly based on the selected
 dataset and outlier detection method, and therefore it is important to
 check the predicted contamination level after thresholding.
 
-.. figure:: figs/Overpred.png
+.. thumbnail:: figs/Overpred.png
    :alt: Over prediction
 
 A second over predictive evaluation can also be done, but now with
@@ -243,7 +243,7 @@ even beyond the best contamination level. However, now some clear well
 performing thresholders can be matched to the previous benchmarking,
 notably ``META`` and ``FILTER``.
 
-.. figure:: figs/Overpred_best.png
+.. thumbnail:: figs/Overpred_best.png
    :alt: Over prediction best
 
 ----
@@ -272,7 +272,7 @@ setting different random states (e.g. ``COMB(thresholders =
 DSN(random_state=111222)])``). This should provide a more robust and
 reliable result.
 
-.. figure:: figs/Randomness.png
+.. thumbnail:: figs/Randomness.png
    :alt: Effects of Randomness
 
 ----
