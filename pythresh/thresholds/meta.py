@@ -5,11 +5,14 @@ import joblib
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
+import sklearn
 from numba import njit, prange
 from sklearn.linear_model import RidgeClassifierCV
 from sklearn.preprocessing import MinMaxScaler
 
 from .base import BaseThresholder
+
+_NEEDS_CLASSES = tuple(map(int, sklearn.__version__.split('.')[:2])) >= (1, 8)
 
 
 class META(BaseThresholder):
@@ -115,14 +118,11 @@ class META(BaseThresholder):
         parent = up(up(__file__))
         model = joblib.load(os.path.join(parent, 'models', clf))
 
-        def _patch_ridge(est):
-            if isinstance(est, RidgeClassifierCV) and not hasattr(est, 'classes_'):
-                est.classes_ = np.array([0, 1])
-
+        # Sklearn 1.8.0 API patch
         for e in getattr(model, 'estimators_', {}).values():
-            _patch_ridge(e)
+            self._patch_ridge(e)
 
-        _patch_ridge(getattr(model, 'estimator', None))
+        self._patch_ridge(getattr(model, 'estimator', None))
 
         if self.method == 'GNBM':
 
@@ -183,6 +183,12 @@ class META(BaseThresholder):
         self.thresh_ = None
 
         return lbls
+
+    @staticmethod
+    def _patch_ridge(est):
+        """RidgeClassifierCV classes_ attribute patch."""
+        if _NEEDS_CLASSES and isinstance(est, RidgeClassifierCV) and not hasattr(est, 'classes_'):
+            est.classes_ = np.array([0, 1])
 
     @staticmethod
     @njit(fastmath=True, parallel=True)
