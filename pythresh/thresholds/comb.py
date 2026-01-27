@@ -74,7 +74,7 @@ class COMB(BaseThresholder):
         self.random_state = random_state
         np.random.seed(random_state)
 
-        self._attrs = ['_clf']
+        self._attrs = ['_clf', '_active_thresholders']
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -96,6 +96,7 @@ class COMB(BaseThresholder):
 
         if self._is_fitted is None:
             self._set_attributes(self._attrs, None)
+            self._active_thresholders = []
 
         scores = check_array(decision, ensure_2d=False)
 
@@ -115,13 +116,20 @@ class COMB(BaseThresholder):
         ratio = []
         counts = len(decision)
 
-        for thresholder in self.thresholders:
+        thresh_to_use = self._active_thresholders if self._active_thresholders else self.thresholders
 
-            thresholder.fit(scores)
+        for thresholder in thresh_to_use:
+
+            if self._is_fitted is not True:
+                thresholder.fit(scores)
+
             labels = thresholder.predict(scores)
             outlier_ratio = np.sum(labels)/counts
 
-            if outlier_ratio < self.max_contam:
+            if not self._is_fitted and outlier_ratio < self.max_contam:
+                self._active_thresholders.append(thresholder)
+
+            if self._is_fitted or outlier_ratio < self.max_contam:
 
                 contam.append(labels)
                 ratio.append(outlier_ratio)
@@ -131,6 +139,7 @@ class COMB(BaseThresholder):
             q = 100*(1-self.max_contam)
             limit = np.percentile(decision, q)
             self.thresh_ = limit
+            self.confidence_interval_ = [limit, limit]
 
             return cut(decision, limit)
 
@@ -138,10 +147,11 @@ class COMB(BaseThresholder):
         ratio = np.array(ratio)
 
         # Get lower and upper confidence interval
-        low, high = stats.bootstrap(ratio.reshape(1, -1),
-                                    np.mean, paired=True,
-                                    random_state=self.random_state).confidence_interval
-        self.confidence_interval_ = [low, high]
+        if self._is_fitted is not True:
+            low, high = stats.bootstrap(ratio.reshape(1, -1),
+                                        np.mean, paired=True,
+                                        random_state=self.random_state).confidence_interval
+            self.confidence_interval_ = [low, high]
 
         # Get [mean, median, mode, bagged, or stacked] of inliers
         if (self.method == 'bagged') or (self.method == 'stacked'):

@@ -102,4 +102,6 @@ v<1.0.1>, <08/10/2025> -- Updated tests with random state and better test scores
 v<1.0.2>, <10/10/2025> -- Removed Python 3.9 from testing
 v<1.0.2>, <10/10/2025> -- Python 3.13 support
 v<1.0.2>, <11/30/2025> -- Fixed COMB max_contam empty list issue
-V<1.0.3>, <01/19/2026> -- Updated docs with thumbnails
+v<1.0.3>, <01/19/2026> -- Updated docs with thumbnails
+v<1.0.3>, <01/27/2026> -- Added fallback verbosity action arg (when threshold not found)
+v<1.0.3>, <01/27/2026> -- Fixed refitting thresholders during predict in COMB
