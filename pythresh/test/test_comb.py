@@ -40,10 +40,11 @@ class TestCOMB(unittest.TestCase):
         cls.all_scores = [cls.single_score, cls.multiple_scores]
 
         cls.methods = ['mean', 'median', 'mode', 'bagged', 'stacked']
-        cls.max_contams = [0.25, 1/3, 0.5, 2/3]
+        cls.max_contams = [0.25, 0.5, 2/3, 0.01]
+        cls.fallbacks = ['ignore', 'warn']
 
         cls.params = list(
-            product(cls.all_scores, cls.methods, cls.max_contams))
+            product(cls.all_scores, cls.methods, cls.max_contams, cls.fallbacks))
 
     def setUp(self):
         self.thres = COMB()
@@ -58,8 +59,9 @@ class TestCOMB(unittest.TestCase):
         self.assertIsNotNone(thres.labels_)
 
     def test_eval(self):
-        for scores, method, max_contam in self.params:
-            thres = COMB(method=method, max_contam=max_contam)
+        for scores, method, max_contam, fallback in self.params:
+            thres = COMB(method=method, max_contam=max_contam,
+                         fallback=fallback)
             pred_labels = thres.eval(scores)
 
             self.assertIsNotNone(thres.dscores_)
@@ -69,15 +71,17 @@ class TestCOMB(unittest.TestCase):
             self.check_labels(pred_labels, scores.shape)
 
     def test_fit(self):
-        for scores, method, max_contam in self.params:
-            thres = COMB(method=method, max_contam=max_contam)
+        for scores, method, max_contam, fallback in self.params:
+            thres = COMB(method=method, max_contam=max_contam,
+                         fallback=fallback)
             thres.fit(scores)
             self.check_fitted_attributes(thres)
             self.check_labels(thres.labels_, scores.shape)
 
     def test_predict(self):
-        for scores, method, max_contam in self.params:
-            thres = COMB(method=method, max_contam=max_contam)
+        for scores, method, max_contam, fallback in self.params:
+            thres = COMB(method=method, max_contam=max_contam,
+                         fallback=fallback)
             thres.fit(scores)
             pred_labels = thres.predict(scores)
             self.check_fitted_attributes(thres)
@@ -91,10 +95,11 @@ class TestCOMB(unittest.TestCase):
                       for clf in self.clfs]).T
         ]
 
-        for scores, method, max_contam in self.params:
+        for scores, method, max_contam, fallback in self.params:
             test_scores = all_test_scores[0] if scores.ndim == 1 else all_test_scores[1]
 
-            thres = COMB(method=method, max_contam=max_contam)
+            thres = COMB(method=method, max_contam=max_contam,
+                         fallback=fallback)
             thres.fit(scores)
             pred_labels = thres.predict(test_scores)
 

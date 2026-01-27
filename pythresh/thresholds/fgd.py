@@ -16,6 +16,14 @@ class FGD(BaseThresholder):
        Parameters
        ----------
 
+       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+            The action to take for thresholders when their criterion are
+            not met. In these cases when set to 'ignore' on eval and fit
+            all train data is set to inliers and the threshold is set to
+            max of the train scores + eps. Passing 'warn' will do the same as
+            'ignore' but also produce a warning. If 'raise', the thresholder
+            raises a ValueError.
+
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
             be set to None.
@@ -37,9 +45,9 @@ class FGD(BaseThresholder):
        data range.
     """
 
-    def __init__(self, random_state=1234):
+    def __init__(self, fallback='warn', random_state=1234):
 
-        super().__init__()
+        super().__init__(fallback=fallback)
         self.random_state = random_state
         np.random.seed(random_state)
 
@@ -86,6 +94,8 @@ class FGD(BaseThresholder):
 
         limit = ((dat_range[ind[0]]+dat_range[ind[1]])/2 if
                  len(ind) > 1 else 1.0 + eps)
+
+        self._check_threshold(limit)
 
         self.thresh_ = limit
 

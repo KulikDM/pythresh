@@ -46,7 +46,7 @@ See base class definition below:
 
 .. automodule:: pythresh.thresholds.base
    :members:
-   :exclude-members: _data_setup, _set_norm, _set_attributes
+   :exclude-members: _data_setup, _set_norm, _set_attributes, _check_threshold
    :undoc-members:
    :show-inheritance:
    :inherited-members:

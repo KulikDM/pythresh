@@ -21,6 +21,14 @@ class MTT(BaseThresholder):
        alpha : float, optional (default=0.01)
             Confidence level corresponding to the t-Student distribution map to sample
 
+       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+            The action to take for thresholders when their criterion are
+            not met. In these cases when set to 'ignore' on eval and fit
+            all train data is set to inliers and the threshold is set to
+            max of the train scores + eps. Passing 'warn' will do the same as
+            'ignore' but also produce a warning. If 'raise', the thresholder
+            raises a ValueError.
+
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
             be set to None.
@@ -49,9 +57,9 @@ class MTT(BaseThresholder):
 
     """
 
-    def __init__(self, alpha=0.01, random_state=1234):
+    def __init__(self, alpha=0.01, fallback='warn', random_state=1234):
 
-        super().__init__()
+        super().__init__(fallback=fallback)
         self.alpha = alpha if alpha <= 0.5 else 1 - alpha
         self.random_state = random_state
         np.random.seed(random_state)
@@ -95,6 +103,8 @@ class MTT(BaseThresholder):
 
             else:
                 break
+
+        self._check_threshold(limit)
 
         self.thresh_ = limit
 

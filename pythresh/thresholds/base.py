@@ -1,4 +1,5 @@
 import abc
+import warnings
 
 from sklearn.base import BaseEstimator
 from sklearn.utils.validation import check_is_fitted
@@ -11,6 +12,14 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
 
        Parameters
        ----------
+
+       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+            The action to take for thresholders when their criterion are
+            not met. In these cases when set to 'ignore' on eval and fit
+            all train data is set to inliers and the threshold is set to
+            max of the train scores + eps. Passing 'warn' will do the same as
+            'ignore' but also produce a warning. If 'raise', the thresholder
+            raises a ValueError.
 
        Attributes
        ----------
@@ -25,7 +34,9 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
-    def __init__(self):
+    def __init__(self, fallback='warn'):
+
+        self.fallback = fallback
 
         self.thresh_ = None
         self.confidence_interval_ = None
@@ -146,3 +157,31 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
         else:
             for attr in attrs:
                 setattr(self, attr, values)
+
+    def _check_threshold(self,  threshold, max_contam=None):
+        """Check if the threshold is valid and act according to fallback.
+
+            Parameters
+            ----------
+            threshold : float
+                    Calculated threshold point of the scores.
+
+            max_contam : float, (default=None)
+                    Percentile value from the scores for the allowed max contamination.
+                    Default sets this to 0 (no max limit).
+        """
+
+        max_contam = max_contam if max_contam is not None else 0
+
+        if threshold > 1 or threshold < max_contam:
+            msg = f"Computed threshold {threshold} is outside the range of {max_contam} and 1."
+            if self.fallback == 'ignore':
+                pass
+            elif self.fallback == 'warn':
+                limit = 1 if max_contam == 0 else max_contam
+                msg += f'\nDefaulting to threshold limit {limit}'
+                warnings.warn(msg, UserWarning)
+            elif self.fallback == 'raise':
+                raise ValueError(msg)
+            else:
+                raise ValueError(f"Unknown fallback value: {self.fallback}")

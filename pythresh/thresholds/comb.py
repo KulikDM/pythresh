@@ -39,6 +39,14 @@ class COMB(BaseThresholder):
            - 'bagged':  use a bagged LaplaceGaussianNB to solve the combined threshold
            - 'stacked': use a stacked Ridge, and LaplaceGaussianNB classifier combined method
 
+       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+            The action to take for thresholders when their criterion are
+            not met. In these cases when set to 'ignore' on eval and fit
+            all train data is set to inliers and the threshold is set to
+            max of the train scores + eps. Passing 'warn' will do the same as
+            'ignore' but also produce a warning. If 'raise', the thresholder
+            raises a ValueError.
+
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
             be set to None.
@@ -53,9 +61,9 @@ class COMB(BaseThresholder):
        dscores_ : 1D array of decomposed decision scores
     """
 
-    def __init__(self, thresholders='default', max_contam=0.5, method='stacked', random_state=1234):
+    def __init__(self, thresholders='default', max_contam=0.5, method='stacked', fallback='warn', random_state=1234):
 
-        super().__init__()
+        super().__init__(fallback=fallback)
         self.thresholders = thresholders
         self.max_contam = max_contam
         func = {'mean': np.mean, 'median': np.median,
@@ -119,8 +127,12 @@ class COMB(BaseThresholder):
                 ratio.append(outlier_ratio)
 
         if not contam:
-            raise ValueError(
-                f"No thresholders had a contamination level below {self.max_contam}. Try increasing max_contam value.")
+            self._check_threshold(0.0, self.max_contam)
+            q = 100*(1-self.max_contam)
+            limit = np.percentile(decision, q)
+            self.thresh_ = limit
+
+            return cut(decision, limit)
 
         contam = np.array(contam)
         ratio = np.array(ratio)
