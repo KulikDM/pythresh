@@ -22,6 +22,14 @@ class REGR(BaseThresholder):
             - 'siegel': implements a method for robust linear regression using repeated medians
             - 'theil':  implements a method for robust linear regression using paired values
 
+       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+            The action to take for thresholders when their criterion are
+            not met. In these cases when set to 'ignore' on eval and fit
+            all train data is set to inliers and the threshold is set to
+            max of the train scores + eps. Passing 'warn' will do the same as
+            'ignore' but also produce a warning. If 'raise', the thresholder
+            raises a ValueError.
+
        random_state : int, optional (default=1234)
             random seed for the normal distribution. Can also be set to None
 
@@ -57,9 +65,9 @@ class REGR(BaseThresholder):
             labels = thres.eval(decision_scores)
     """
 
-    def __init__(self, method='siegel', random_state=1234):
+    def __init__(self, method='siegel', fallback='warn', random_state=1234):
 
-        super().__init__()
+        super().__init__(fallback=fallback)
         self.method = method
         self.random_state = random_state
         np.random.seed(random_state)
@@ -95,7 +103,8 @@ class REGR(BaseThresholder):
             elif self.method == 'theil':
                 res = stats.theilslopes(norm, decision)
         except MemoryError:
-            res = [0.0, 1.0]
+            eps = np.finfo(decision.dtype).eps
+            res = [0.0, 1.0 + eps]
 
         limit = res[1]
 
