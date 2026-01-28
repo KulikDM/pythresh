@@ -58,7 +58,7 @@ class TestDUMMY(unittest.TestCase):
 
     def test_eval(self):
         for scores, contam in self.params:
-            thres = DUMMY(comtam=contam)
+            thres = DUMMY(contam=contam)
             pred_labels = thres.eval(scores)
 
             self.assertIsNotNone(thres.thresh_)
