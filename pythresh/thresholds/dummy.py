@@ -45,7 +45,7 @@ class DUMMY(BaseThresholder):
 
         super().__init__(fallback=fallback)
 
-        self.contam = contam if not None else 0
+        self.contam = 0 if contam is None else contam
         self.random_state = random_state
         np.random.seed(random_state)
 
