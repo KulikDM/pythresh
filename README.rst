@@ -109,7 +109,7 @@ The transition of PyThresh to V1 sees many new features!
 -  These tests enhance confidence in the correctness of the
    implementation and prevent regressions.
 -  All examples have been updated and new jupyter notebooks have been
-   added to introduce all the capabilities of PyThresh
+   added to introduce all the capabilities of PyThresh.
 
 ************************
  Documentation & Citing
@@ -336,6 +336,8 @@ Unsupervised Anomaly Detection. <https://arxiv.org/abs/2210.10487>`_
 | ZSCORE    | Z-score                                   | [#zscore1]_        | `pythresh.thresholds.zscore module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.zscore>`_            |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | COMB      | Thresholder Combination                   | None               | `pythresh.thresholds.comb module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.comb>`_                |
++-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+| DUMMY     | Dummy Percentile Thresholder              | None               | `pythresh.thresholds.dummy module <https://pythresh.readthedocs.io/en/latest/pythresh.thresholds.html#module-pythresh.thresholds.dummy>`_              |
 +-----------+-------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ******************************************

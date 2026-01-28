@@ -101,6 +101,17 @@
    :show-inheritance:
    :inherited-members:
 
+***********************************
+ pythresh.thresholds.dummy module
+***********************************
+
+.. automodule:: pythresh.thresholds.dummy
+   :members:
+   :exclude-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
 *******************************
  pythresh.thresholds.eb module
 *******************************
