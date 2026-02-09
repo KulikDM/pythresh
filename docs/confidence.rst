@@ -172,8 +172,8 @@ Below is a simple example of how to apply the ``CONF`` method for the
    decomp = PCA(n_components=2, random_state=1234)
    X = decomp.fit_transform(X)
 
-   uncertain = X[unc_idx]
-   ouliers = X[labels==1]
+   uncertains = X[unc_idx]
+   outliers = X[labels==1]
    inliers = X[labels==0]
 
    fig = plt.figure(figsize=(18, 12))
