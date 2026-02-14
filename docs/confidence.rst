@@ -139,6 +139,7 @@ Below is a simple example of how to apply the ``CONF`` method for the
 
    import os
 
+   import matplotlib.pyplot as plt
    import numpy as np
    from pyod.models.iforest import IForest
    from pyod.utils.utility import standardizer
