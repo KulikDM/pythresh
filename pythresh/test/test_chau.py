@@ -39,7 +39,7 @@ class TestCHAU(unittest.TestCase):
         ]).T
         cls.all_scores = [cls.single_score, cls.multiple_scores]
 
-        cls.methods = ['mean', 'median', 'gmean']
+        cls.methods = ['classic', 'effective']
 
         cls.params = list(product(cls.all_scores, cls.methods))
 

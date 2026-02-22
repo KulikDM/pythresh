@@ -30,7 +30,7 @@
 
 .. automodule:: pythresh.thresholds.chau
    :members:
-   :exclude-members:
+   :exclude-members: _effective_sample_size_entropy
    :undoc-members:
    :show-inheritance:
    :inherited-members:

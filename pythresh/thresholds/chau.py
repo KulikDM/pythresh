@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.stats as stats
-from scipy.special import erfc
+from sklearn.preprocessing import StandardScaler
 
 from .base import BaseThresholder
 from .thresh_utility import cut
@@ -17,12 +17,11 @@ class CHAU(BaseThresholder):
        Parameters
        ----------
 
-       method : {'mean', 'median', 'gmean'}, optional (default='mean')
-            Calculate the area normal to distance using a scaler
+       method : {'classic', 'effective'}, optional (default='effective')
+            Determines how the threshold is computed:
 
-            - 'mean':  Construct a scaler with the mean of the scores
-            - 'median: Construct a scaler with the median of the scores
-            - 'gmean': Construct a scaler with the geometric mean of the scores
+            - 'classic': Uses the classical Chauvenet's criterion based on all samples.
+            - 'effective': Uses an entropy-based effective sample size to adjust the threshold.
 
        random_state : int, optional (default=1234)
             Random seed for the random number generators of the thresholders. Can also
@@ -37,52 +36,57 @@ class CHAU(BaseThresholder):
 
        Notes
        -----
-
-       The Chauvenet's criterion for a one tail of a distribution is defined
-       as follows:
-
-       .. math::
-
-           D_{\mathrm{max}}>Z \mathrm{,}
-
-       where :math:`D_{\mathrm{max}}` is the bounds of the probability band
-       around the mean given by,
+       The classical Chauvenet's criterion identifies outliers in a dataset
+       by computing a threshold based on the z-score of each observation:
 
        .. math::
 
-           D_{\mathrm{max}} = \lvert norm.ppf(Pz) \rvert \mathrm{,}
+           Z = \frac{x - \bar{x}}{\sigma} \mathrm{,}
 
-       where this bounds is equal to the inverse of a cumulative distribution function
-       for a probability of one of the tails of the normal distribution, and :math:`P_z`
-       is therefore defined as,
-
-       .. math::
-
-           P_z = \frac{1}{4n} \mathrm{,}
-
-       with :math:`n` being the number of samples in the decision scores. Finally the z-score
-       can be calculated as follows:
+       where :math:`\bar{x}` is the mean and :math:`\sigma` the standard deviation
+       of the dataset. An observation is considered an outlier if the probability
+       of obtaining a value at least as extreme is less than
 
        .. math::
 
-           Z = \frac{x-\bar{x}}{\sigma} \mathrm{,}
+           P_z = \frac{1}{2N} \mathrm{,}
 
-       with :math:`\bar{x}` as the mean and :math:`\sigma` the standard deviation
-       of the decision scores.
+       with :math:`N` being the total number of samples. The corresponding z-score
+       threshold is then given by the inverse survival function of the standard
+       normal distribution:
 
-       CHAU employs variants of the classical Chauvenet's criterion as the mean can be
-       replaced with the geometric mean or the median.
+       .. math::
 
-       Any z-score greater than the Chauvenet's criterion is considered an outlier.
+           Z_\mathrm{crit} = \mathrm{norm.isf}(P_z)
 
+       Any observation with :math:`|Z| > Z_\mathrm{crit}` is flagged as an outlier.
+
+       In the 'effective' method, the classical threshold is adjusted by an
+       entropy-based effective sample size. This accounts for situations where
+       the dataset may contain correlated or redundant samples, reducing the
+       effective number of independent observations. The effective sample size
+       :math:`N_\mathrm{eff}` is estimated as
+
+       .. math::
+
+           N_\mathrm{eff} = \min(N, \exp(H)) \mathrm{,}
+
+       where :math:`H` is the entropy of the histogram of standardized scores.
+       The threshold probability is then
+
+       .. math::
+
+           P_z = \frac{1}{2 N_\mathrm{eff}}
+
+       which typically results in a more conservative threshold that adapts to
+       the actual variability and redundancy in the data.
 
     """
 
-    def __init__(self, method='mean', random_state=1234):
+    def __init__(self, method='effective', random_state=1234):
 
         super().__init__()
-        stat = {'mean': np.mean, 'median': np.median, 'gmean': stats.gmean}
-        self.method = stat[method]
+        self.method = method
         self.random_state = random_state
         np.random.seed(random_state)
 
@@ -106,14 +110,46 @@ class CHAU(BaseThresholder):
 
         decision = self._data_setup(decision)
 
-        # Calculate Chauvenet's criterion for one tail
-        Pz = 1/(4*len(decision))
-        criterion = 1/abs(stats.norm.ppf(Pz))
+        scaler = StandardScaler()
+        z = scaler.fit_transform(decision.reshape(-1, 1))
 
-        # Get area normal to distance
-        prob = erfc(np.abs(decision-self.method(decision)) /
-                    decision.std()/2.0**0.5)
+        if self.method == 'classic':
+            N = len(z)
+        elif self.method == 'effective':
+            N = self._effective_sample_size_entropy(z)
 
-        self.thresh_ = criterion * (1-np.min(prob))/np.max(prob)
+        Pz = 1 / (2 * N)
+        zcrit = stats.norm.isf(Pz)
+        zcrit = scaler.inverse_transform(np.array([[zcrit]]))[0, 0]
 
-        return 1-cut(prob, criterion)
+        self.thresh_ = zcrit
+
+        return cut(decision, zcrit)
+
+    def _effective_sample_size_entropy(self, x):
+        """
+        Entropy-based effective sample size.
+
+        Parameters
+        ----------
+        x : np.ndarray
+            1D array of outlier likelihood scores
+
+        Returns
+        -------
+        Neff : float
+            Entropy-based effective sample size
+        """
+        x = np.asarray(x)
+        N = len(x)
+
+        hist, _ = np.histogram(x, bins='auto', density=False)
+        hist = hist.astype(float)
+
+        p = hist / hist.sum()
+        p = p[p > 0]  # avoid log(0)
+
+        H = -np.sum(p * np.log(p))
+        Neff = np.exp(H)
+
+        return min(N, Neff)
