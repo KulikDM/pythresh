@@ -1,6 +1,6 @@
 """Example of using the area under the curve percentage.
 
-   for outlier thresholding
+for outlier thresholding
 """
 # Author: D Kulik
 # License: BSD 2 clause

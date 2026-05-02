@@ -7,36 +7,34 @@ from .thresh_utility import cut
 class DUMMY(BaseThresholder):
     r"""DUMMY class for dummy thresholder.
 
-       Use the DUMMY thresholder to threshold based on a given contamination
-       level. This is useful for benchmarking.
+    Use the DUMMY thresholder to threshold based on a given contamination
+    level. This is useful for benchmarking.
 
-       Parameters
-       ----------
-
+    Parameters
+    ----------
        contam : float in (0., 1.0) or None, optional (default=None)
-            The amount of contamination of the data set, i.e.
-            the proportion of outliers in the data set. Used when fitting to
-            define the threshold on the decision function. Default None sets
-            no outliers to exist in the training data.
+         The amount of contamination of the data set, i.e.
+         the proportion of outliers in the data set. Used when fitting to
+         define the threshold on the decision function. Default None sets
+         no outliers to exist in the training data.
 
-       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
-            The action to take for thresholders when their criterion are
-            not met. In these cases when set to 'ignore' on eval and fit
-            all train data is set to inliers and the threshold is set to
-            max of the train scores + eps. Passing 'warn' will do the same as
-            'ignore' but also produce a warning. If 'raise', the thresholder
-            raises a ValueError.
+    fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+         The action to take for thresholders when their criterion are
+         not met. In these cases when set to 'ignore' on eval and fit
+         all train data is set to inliers and the threshold is set to
+         max of the train scores + eps. Passing 'warn' will do the same as
+         'ignore' but also produce a warning. If 'raise', the thresholder
+         raises a ValueError.
 
-       random_state : int, optional (default=1234)
-            Random seed for the random number generators of the thresholders. Can also
-            be set to None.
+    random_state : int, optional (default=1234)
+         Random seed for the random number generators of the thresholders. Can also
+         be set to None.
 
-       Attributes
-       ----------
-
+    Attributes
+    ----------
        thresh_ : threshold value that separates inliers from outliers
 
-       dscores_ : 1D array of decomposed decision scores
+    dscores_ : 1D array of decomposed decision scores
 
 
     """
@@ -66,7 +64,6 @@ class DUMMY(BaseThresholder):
             it should be considered as an outlier according to the
             fitted model. 0 stands for inliers and 1 for outliers.
         """
-
         decision = self._data_setup(decision)
 
         eps = np.finfo(decision.dtype).eps

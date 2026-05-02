@@ -10,27 +10,25 @@ from .thresh_utility import check_scores, cut, get_min_max, normalize
 class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
     """Abstract class for all outlier detection thresholding algorithms.
 
-       Parameters
-       ----------
-
+    Parameters
+    ----------
        fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
-            The action to take for thresholders when their criterion are
-            not met. In these cases when set to 'ignore' on eval and fit
-            all train data is set to inliers and the threshold is set to
-            max of the train scores + eps. Passing 'warn' will do the same as
-            'ignore' but also produce a warning. If 'raise', the thresholder
-            raises a ValueError.
+         The action to take for thresholders when their criterion are
+         not met. In these cases when set to 'ignore' on eval and fit
+         all train data is set to inliers and the threshold is set to
+         max of the train scores + eps. Passing 'warn' will do the same as
+         'ignore' but also produce a warning. If 'raise', the thresholder
+         raises a ValueError.
 
-       Attributes
-       ----------
-
+    Attributes
+    ----------
        thresh_ : threshold value that separates inliers from outliers
 
-       labels_ : binary array of labels for the fitted thresholder
+    labels_ : binary array of labels for the fitted thresholder
 
-       confidence_interval_ : lower and upper confidence interval of the contamination level
+    confidence_interval_ : lower and upper confidence interval of the contamination level
 
-       dscores_ : 1D array of decomposed decision scores
+    dscores_ : 1D array of decomposed decision scores
     """
 
     @abc.abstractmethod
@@ -76,7 +74,6 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
                    which are the decision scores from a
                    outlier detection.
         """
-
         self._set_attributes(self._base_attrs, None)
 
         self.labels_ = self.eval(X)
@@ -101,7 +98,6 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
             it should be considered as an outlier according to the
             fitted model. 0 stands for inliers and 1 for outliers.
         """
-
         check_is_fitted(self)
 
         if self.thresh_ is None:
@@ -161,16 +157,15 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
     def _check_threshold(self,  threshold, max_contam=None):
         """Check if the threshold is valid and act according to fallback.
 
-            Parameters
-            ----------
-            threshold : float
-                    Calculated threshold point of the scores.
+        Parameters
+        ----------
+        threshold : float
+                Calculated threshold point of the scores.
 
-            max_contam : float, (default=None)
-                    Percentile value from the scores for the allowed max contamination.
-                    Default sets this to 0 (no max limit).
+        max_contam : float, (default=None)
+                Percentile value from the scores for the allowed max contamination.
+                Default sets this to 0 (no max limit).
         """
-
         max_contam = max_contam if max_contam is not None else 0
 
         if threshold > 1 or threshold < max_contam:

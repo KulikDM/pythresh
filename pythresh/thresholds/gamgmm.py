@@ -12,67 +12,64 @@ from .base import BaseThresholder
 class GAMGMM(BaseThresholder):
     r"""GAMGMM class for gammaGMM thresholder.
 
-       Use a Bayesian method for estimating the posterior distribution
-       of the contamination factor (i.e., the proportion of anomalies)
-       for a given unlabeled dataset. The threshold is set such
-       that the proportion of predicted anomalies equals the
-       contamination factor. See :cite:`perini2023gamgmm` for details.
+    Use a Bayesian method for estimating the posterior distribution
+    of the contamination factor (i.e., the proportion of anomalies)
+    for a given unlabeled dataset. The threshold is set such
+    that the proportion of predicted anomalies equals the
+    contamination factor. See :cite:`perini2023gamgmm` for details.
 
-       Parameters
-       ----------
-
+    Parameters
+    ----------
        n_contaminations : int, optional (default=1000)
-            number of samples to draw from the contamination posterior distribution
+         number of samples to draw from the contamination posterior distribution
 
-       n_draws : int, optional (default=50)
-            number of samples simultaneously drawn from each DPGMM component
+    n_draws : int, optional (default=50)
+         number of samples simultaneously drawn from each DPGMM component
 
-       p0 : float, optional (default=0.01)
-            probability that no anomalies are in the data
+    p0 : float, optional (default=0.01)
+         probability that no anomalies are in the data
 
-       phigh : float, optional (default=0.01)
-            probability that there are more than high_gamma anomalies
+    phigh : float, optional (default=0.01)
+         probability that there are more than high_gamma anomalies
 
-       high_gamma : float, optional (default=0.15)
-            sensibly high number of anomalies that has low probability to occur
+    high_gamma : float, optional (default=0.15)
+         sensibly high number of anomalies that has low probability to occur
 
-       gamma_lim : float, optional (default=0.5)
-            Upper gamma/proportion of anomalies limit
+    gamma_lim : float, optional (default=0.5)
+         Upper gamma/proportion of anomalies limit
 
-       K : int, optional (default=100)
-            number of components for DPGMM used to approximate the Dirichlet Process
+    K : int, optional (default=100)
+         number of components for DPGMM used to approximate the Dirichlet Process
 
-       skip : bool, optional (default=False)
-            skip optimal hyperparameter test (this may return a sub-optimal solution)
+    skip : bool, optional (default=False)
+         skip optimal hyperparameter test (this may return a sub-optimal solution)
 
-       steps : int, optional (default=100)
-            number of iterations to test for optimal hyperparameters
+    steps : int, optional (default=100)
+         number of iterations to test for optimal hyperparameters
 
-       random_state : int, optional (default=1234)
-            Random seed for the random number generators of the thresholders. Can also
-            be set to None.
+    random_state : int, optional (default=1234)
+         Random seed for the random number generators of the thresholders. Can also
+         be set to None.
 
-       verbose : bool, optional (default=False)
-            20 iterations step printout of the DPGMM process
+    verbose : bool, optional (default=False)
+         20 iterations step printout of the DPGMM process
 
-       Attributes
-       ----------
-
+    Attributes
+    ----------
        thresh_ : threshold value that separates inliers from outliers
 
-       dscores_ : 1D array of decomposed decision scores
+    dscores_ : 1D array of decomposed decision scores
 
-       Notes
-       -----
-
+    Notes
+    -----
        This implementation deviates from that in :cite:`perini2023gamgmm` only
-       in the post-processing page. These deviations include: if a single outlier
-       detector likelihood score set is passed a dummy score set of zeros will be
-       added such that GAMGMM method can function correctly, if multiple outlier
-       detector likelihood score sets are passed a TruncatedSVD 1D decomposed will
-       be thresholded but not used to determine the gamma contamination. However,
-       if you wish to follow the original implementation please go to
-       `GammaGMM <https://github.com/Lorenzo-Perini/GammaGMM>`_
+    in the post-processing page. These deviations include: if a single outlier
+    detector likelihood score set is passed a dummy score set of zeros will be
+    added such that GAMGMM method can function correctly, if multiple outlier
+    detector likelihood score sets are passed a TruncatedSVD 1D decomposed will
+    be thresholded but not used to determine the gamma contamination. However,
+    if you wish to follow the original implementation please go to
+    `GammaGMM <https://github.com/Lorenzo-Perini/GammaGMM>`_
 
     """
 
@@ -120,7 +117,6 @@ class GAMGMM(BaseThresholder):
             it should be considered as an outlier according to the
             fitted model. 0 stands for inliers and 1 for outliers.
         """
-
         if (np.asarray(decision).ndim == 2) & (np.atleast_2d(decision).shape[1] > 1):
 
             decision = check_array(decision, ensure_2d=True)
@@ -302,7 +298,6 @@ class GAMGMM(BaseThresholder):
 
         Return the p_0 and p_high estimated using the given delta and tau
         """
-
         prob_ck = self._sigmoid(delta, tau, meanstd)
         p0Est = 1 - prob_ck[0]
 
@@ -320,12 +315,10 @@ class GAMGMM(BaseThresholder):
 
     def _sigmoid(self, delta, tau, x):
         """Transforms scores into probabilities using a sigmoid function."""
-
         return 1/(1+np.exp(tau+delta*x))
 
     def _derive_jointprobs(self, prob_ck):
         """Obtain the joint probabilities given the conditional probabilities."""
-
         cumprobs = np.cumprod(prob_ck)
         negprobs = np.roll(1-prob_ck, -1)
         negprobs[-1] = 1
@@ -336,7 +329,6 @@ class GAMGMM(BaseThresholder):
 
     def _sample_withexactprobs(self, means, mean_precs, covariances, dgf, delta, tau, w):
         """This function computes the joint probabilities and use them to get a sample from gamma's posterior."""
-
         K = np.shape(means)[0]
         mean_std = np.sqrt(1/mean_precs)
         samples = np.array([])
@@ -382,7 +374,6 @@ class GAMGMM(BaseThresholder):
 
     def _augment_space(self, decision):
         """Map outlier likelihood scores into the positive axis, take the log and z normalize the final values."""
-
         norm_scores = np.zeros_like(decision)
 
         for i, scores in enumerate(decision.T):

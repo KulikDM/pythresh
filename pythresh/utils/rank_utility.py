@@ -5,7 +5,6 @@ from sklearn.naive_bayes import GaussianNB
 
 def BREG_metric(x1, x2):
     """Calculate the Exponential Euclidean Bregman distance."""
-
     gradient_x = np.exp(x1) - 1
     gradient_y = np.exp(x2) - 1
 
@@ -16,7 +15,6 @@ def BREG_metric(x1, x2):
 
 def mclain_rao_index(data, labels):
     """Calculate the Mclain Rao index."""
-
     unique_labels = np.unique(labels)
     centroids = []
 
@@ -44,7 +42,6 @@ def mclain_rao_index(data, labels):
 
 def GNB_score(data, labels):
     """Calculate the Gaussian Naive-Bayes trained consensus score."""
-
     # Setup data for training
     X = np.tile(data, (len(labels), 1))
     y = np.hstack(labels)
@@ -63,7 +60,6 @@ def GNB_score(data, labels):
 
 def Contam_score(data, labels, contam):
     """Calculate the mean contamination deviation based on TruncatedSVD decomposed scores."""
-
     # Fit model and transform data
     decomp = TruncatedSVD(n_components=1, random_state=1234)
     dat = decomp.fit_transform(np.vstack(data).T).squeeze()

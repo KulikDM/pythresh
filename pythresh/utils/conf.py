@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import check_array
 
 
-class CONF():
+class CONF:
     """CONF class for calculating the confidence of thresholding.
 
     Use the CONF class for evaluating the confidence of thresholding methods
@@ -14,7 +14,6 @@ class CONF():
 
     Parameters
     ----------
-
     thresh : {pythresh.threshold class}
         The thresholding method
 
@@ -33,7 +32,6 @@ class CONF():
 
     Notes
     -----
-
     The `CONF` class is designed for evaluating the confidence of thresholding methods within
     the context of outlier detection. It assesses the confidence of thresholding, a critical step
     in the outlier detection process. By sampling and testing different thresholds evaluated by the
@@ -88,7 +86,6 @@ class CONF():
             confidence-interval bounds and can be classified as "uncertain"
             datapoints
         """
-
         scores = check_array(decision, ensure_2d=False)
 
         # Eval initial threshold
@@ -152,7 +149,6 @@ class CONF():
 
     def _valid_thresh(self, scores, labels):
         """Thresholding test for non-classification type thresholders."""
-
         # Split data and threshold
         _, sco_split, _, _ = train_test_split(scores, labels,
                                               test_size=self.split,
@@ -165,7 +161,6 @@ class CONF():
 
     def _invalid_thresh(self, scores, labels, index):
         """Thresholding test for classification type thresholders."""
-
         # Split data and threshold
         info = np.zeros(len(scores)) * np.nan
 
