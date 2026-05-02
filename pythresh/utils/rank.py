@@ -1,5 +1,4 @@
-import os
-from os.path import dirname as up
+from importlib.resources import files
 
 import numpy as np
 import scipy.stats as stats
@@ -9,89 +8,81 @@ from sklearn.metrics import calinski_harabasz_score
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import check_array
 
-from pythresh.utils.rank_utility import (
-    BREG_metric,
-    Contam_score,
-    GNB_score,
-    mclain_rao_index
-)
+from pythresh.utils.rank_utility import BREG_metric, Contam_score, GNB_score, mclain_rao_index
 
 
-class RANK():
+class RANK:
     """RANK class for ranking outlier detection and thresholding methods.
 
-       Use the RANK class to rank outlier detection and thresholding methods' capabilities
-       to provide the best matthews correlation with respect to the
-       selected threshold method
+    Use the RANK class to rank outlier detection and thresholding methods' capabilities
+    to provide the best matthews correlation with respect to the
+    selected threshold method
 
-       Parameters
-       ----------
-
+    Parameters
+    ----------
        od_models : {list of pyod.model classes}
 
-       thresh : {pythresh.threshold class, float, int, list of pythresh.threshold classes, list of floats, list of ints}
+    thresh : {pythresh.threshold class, float, int, list of pythresh.threshold classes, list of floats, list of ints}
 
-       method : {'model', 'native'}, optional (default='model')
+    method : {'model', 'native'}, optional (default='model')
 
-       weights : list of shape 3, optional (default=None)
-             These weights are applied to the combined rank score. The first
-             is for the cdf rankings, the second for the clust rankings, and
-             the third for the mode rankings. Default applies equal weightings
-             to all proxy-metrics. Only applies when method = 'native'.
+    weights : list of shape 3, optional (default=None)
+          These weights are applied to the combined rank score. The first
+          is for the cdf rankings, the second for the clust rankings, and
+          the third for the mode rankings. Default applies equal weightings
+          to all proxy-metrics. Only applies when method = 'native'.
 
-       Attributes
-       ----------
-
+    Attributes
+    ----------
        cdf_rank_ : list of tuples shape (2, n_od_models) of cdf based rankings
 
-       clust_rank_ : list of tuples shape (2, n_od_models) of cluster based rankings
+    clust_rank_ : list of tuples shape (2, n_od_models) of cluster based rankings
 
-       consensus_rank_ : list of tuples shape (2, n_od_models) of consensus based rankings
+    consensus_rank_ : list of tuples shape (2, n_od_models) of consensus based rankings
 
-       Notes
-       -----
-
+    Notes
+    -----
        The RANK class ranks the outlier detection methods by evaluating
-       three distinct proxy-metrics. The first proxy-metric looks at the outlier
-       likelihood scores by class and measures the cumulative distribution
-       separation using the the Wasserstein distance, and the Exponential Euclidean
-       Bregman distance. The second proxy-metric looks at the relationship between the
-       fitted features (X) and the evaluated classes (y) using the Calinski-Harabasz scores
-       and between the outlier likihood score and the evaluated classes using the
-       Mclain Rao Index. The third proxy-metric evaluates the class difference for each outlier
-       detection and thresholding method with respect to consensus based metrics of all the evaluated
-       outlier detection class labels. This is done using the mean contamination deviation based on
-       TruncatedSVD decomposed scores and Gaussian Naive-Bayes trained consensus score
+    three distinct proxy-metrics. The first proxy-metric looks at the outlier
+    likelihood scores by class and measures the cumulative distribution
+    separation using the the Wasserstein distance, and the Exponential Euclidean
+    Bregman distance. The second proxy-metric looks at the relationship between the
+    fitted features (X) and the evaluated classes (y) using the Calinski-Harabasz scores
+    and between the outlier likihood score and the evaluated classes using the
+    Mclain Rao Index. The third proxy-metric evaluates the class difference for each outlier
+    detection and thresholding method with respect to consensus based metrics of all the evaluated
+    outlier detection class labels. This is done using the mean contamination deviation based on
+    TruncatedSVD decomposed scores and Gaussian Naive-Bayes trained consensus score
 
-       Each proxy-metric is ranked separately and a final ranking is applied
-       using all three proxy-metric to get a single ranked result of each
-       outlier detection and thresholding method using the 'native' method. The model method uses
-       a trained LambdaMART ranking model using all the proxy-metrics as input.
+    Each proxy-metric is ranked separately and a final ranking is applied
+    using all three proxy-metric to get a single ranked result of each
+    outlier detection and thresholding method using the 'native' method. The model method uses
+    a trained LambdaMART ranking model using all the proxy-metrics as input.
 
-       Please note that the data is standardized using
-       ``from pyod.utils.utility import standardizer`` during this ranking process
+    Please note that the data is standardized using
+    ``from pyod.utils.utility import standardizer`` during this ranking process
 
-       Examples
-       --------
+    Examples
+    --------
 
-       .. code:: python
+    .. code:: python
 
-            # Import libraries
-            from pyod.models.knn import KNN
-            from pyod.models.iforest import IForest
-            from pyod.models.pca import PCA
-            from pyod.models.mcd import MCD
-            from pyod.models.qmcd import QMCD
-            from pythresh.thresholds.filter import FILTER
-            from pythresh.utils.ranking import RANK
+         # Import libraries
+         from pyod.models.knn import KNN
+         from pyod.models.iforest import IForest
+         from pyod.models.pca import PCA
+         from pyod.models.mcd import MCD
+         from pyod.models.qmcd import QMCD
+         from pythresh.thresholds.filter import FILTER
+         from pythresh.utils.ranking import RANK
 
-            # Initialize models
-            clfs = [KNN(), IForest(), PCA(), MCD(), QMCD()]
-            thres = FILTER()
+         # Initialize models
+         clfs = [KNN(), IForest(), PCA(), MCD(), QMCD()]
+         thres = FILTER()
 
-            # Get rankings
-            ranker = RANK(clfs, thres)
-            rankings = ranker.eval(X)
+         # Get rankings
+         ranker = RANK(clfs, thres)
+         rankings = ranker.eval(X)
     """
 
     def __init__(self, od_models, thresh, method='model', weights=None):
@@ -119,7 +110,6 @@ class RANK():
             thresholder ranked from best to worst in terms of
             performance
         """
-
         X = check_array(X, ensure_2d=True)
         X = standardizer(X)
 
@@ -193,9 +183,9 @@ class RANK():
 
             # Load trained ranking model
             clf = 'rank_model_XGB.json'
-            parent = up(up(__file__))
+            model_path = files('pythresh.models').joinpath(clf)
             ranker = xgb.XGBRanker()
-            ranker.load_model(os.path.join(parent, 'models', clf))
+            ranker.load_model(model_path)
 
             # Transform data
             scaler = MinMaxScaler()
@@ -217,7 +207,6 @@ class RANK():
 
     def _cdf_metric(self, scores, labels):
         """Calculate CDF based metrics."""
-
         if len(np.unique(labels)) == 1:
             return [-1e6, -1e6]
 
@@ -254,7 +243,6 @@ class RANK():
 
     def _clust_metric(self, X, scores, labels):
         """Calculate clustering based metrics."""
-
         if len(np.unique(labels)) == 1:
             return [-1e6, -1e6]
 
@@ -265,7 +253,6 @@ class RANK():
 
     def _consensus_metric(self, X, scores, labels, contam):
         """Calculate consensus based metrics."""
-
         gnb = GNB_score(X, labels)
         contam = Contam_score(scores, labels, contam)
 
@@ -273,7 +260,6 @@ class RANK():
 
     def _equi_rank(self, data, order):
         """Get equally weighted rankings from metrics."""
-
         # Get indexes of best to worst for data
         sortings = []
 
@@ -292,10 +278,9 @@ class RANK():
 
     def _rank_sort(self, sortings, weights):
         """Sort weighted rankings."""
-
         # Get unique index values for ranking
         unique_values = {value for ls in sortings for value in ls}
-        scores = {value: 0 for value in unique_values}
+        scores = dict.fromkeys(unique_values, 0)
 
         # Get equally weighted rank
         for value in unique_values:
