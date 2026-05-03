@@ -16,7 +16,7 @@ class CHAU(BaseThresholder):
 
     Parameters
     ----------
-       method : {'classic', 'effective'}, optional (default='effective')
+    method : {'classic', 'effective'}, optional (default='effective')
          Determines how the threshold is computed:
 
          - 'classic': Uses the classical Chauvenet's criterion based on all samples.
@@ -28,7 +28,7 @@ class CHAU(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 

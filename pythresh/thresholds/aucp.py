@@ -16,7 +16,7 @@ class AUCP(BaseThresholder):
 
     Parameters
     ----------
-       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+    fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
          The action to take for thresholders when their criterion are
          not met. In these cases when set to 'ignore' on eval and fit
          all train data is set to inliers and the threshold is set to
@@ -30,13 +30,13 @@ class AUCP(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The area under the curve (AUC) is defined as follows:
+    The area under the curve (AUC) is defined as follows:
 
     .. math::
 

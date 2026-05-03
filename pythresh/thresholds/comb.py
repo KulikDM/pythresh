@@ -19,7 +19,7 @@ class COMB(BaseThresholder):
 
     Parameters
     ----------
-       thresholders : list, optional (default='default')
+    thresholders : list, optional (default='default')
          List of instantiated thresholders, e.g. [DSN(), FILTER()].
          Default is [DSN(random_state=self.random_state), FILTER(),
          OCSVM(random_state=self.random_state)]
@@ -52,7 +52,7 @@ class COMB(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     confidence_interval_ : lower and upper confidence interval of the contamination level
 

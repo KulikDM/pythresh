@@ -17,7 +17,7 @@ class MTT(BaseThresholder):
 
     Parameters
     ----------
-       alpha : float, optional (default=0.01)
+    alpha : float, optional (default=0.01)
          Confidence level corresponding to the t-Student distribution map to sample
 
     fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
@@ -34,13 +34,13 @@ class MTT(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The Modified Thompson Tau test is a modified univariate t-test that eliminates outliers
+    The Modified Thompson Tau test is a modified univariate t-test that eliminates outliers
     that are more than a number of standard deviations away from the mean. This method is
     done iteratively with the Tau critical value being recalculated after each outlier removal
     until the dataset no longer has data points that fall outside of the criterion. The Tau

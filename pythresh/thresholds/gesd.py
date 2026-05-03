@@ -17,7 +17,7 @@ class GESD(BaseThresholder):
 
     Parameters
     ----------
-       max_outliers : int, optional (default='auto')
+    max_outliers : int, optional (default='auto')
          maximum number of outliers that the dataset may have. Default sets
          max_outliers to be half the size of the dataset
 
@@ -38,13 +38,13 @@ class GESD(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The generalized extreme studentized deviate is defined for the
+    The generalized extreme studentized deviate is defined for the
     hypothesis:
 
     H0: There are no outliers in the decision scores

@@ -13,7 +13,7 @@ class CLF(BaseThresholder):
 
     Parameters
     ----------
-       method : {'simple', 'complex'}, optional (default='complex')
+    method : {'simple', 'complex'}, optional (default='complex')
          Type of linear model
 
          - 'simple':  Uses only the scores
@@ -25,13 +25,13 @@ class CLF(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The classifier was trained using a linear stochastic gradient decent method.
+    The classifier was trained using a linear stochastic gradient decent method.
     A warm start was assigned to the classifier was partially fit with the decision
     scores and true labels from multiple outlier detection methods available in `PyOD`.
     The :code:`generate_data` function from `PyOD` was used to create the outlier data,

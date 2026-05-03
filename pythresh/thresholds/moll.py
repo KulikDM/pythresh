@@ -18,18 +18,18 @@ class MOLL(BaseThresholder):
 
     Parameters
     ----------
-       random_state : int, optional (default=1234)
+    random_state : int, optional (default=1234)
          Random seed for the uniform distribution. Can also be set to None.
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       Friedrichs' mollifier is a smoothing function that is applied to create sequences
+    Friedrichs' mollifier is a smoothing function that is applied to create sequences
     of smooth functions. These functions can be used to approximate generalized functions
     that may be non-smooth. The decision scores are assumed to be a part of a generalized
     function with a non-smooth nature in terms of the interval space between the scores

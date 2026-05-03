@@ -38,7 +38,7 @@ class CLUST(BaseThresholder):
 
     Parameters
     ----------
-       method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'hdbscan', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='spec')
+    method : {'agg', 'birch', 'bang', 'bgm', 'bsas', 'dbscan', 'ema', 'hdbscan', 'kmeans', 'mbsas', 'mshift', 'optics', 'somsc', 'spec', 'xmeans'}, optional (default='spec')
          Clustering method
 
          - 'agg':    Agglomerative
@@ -63,7 +63,7 @@ class CLUST(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 

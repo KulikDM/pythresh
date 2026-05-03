@@ -15,7 +15,7 @@ class FGD(BaseThresholder):
 
     Parameters
     ----------
-       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+    fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
          The action to take for thresholders when their criterion are
          not met. In these cases when set to 'ignore' on eval and fit
          all train data is set to inliers and the threshold is set to
@@ -29,13 +29,13 @@ class FGD(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       A probability distribution of the decision scores is generated using
+    A probability distribution of the decision scores is generated using
     kernel density estimation. The first derivative of the pdf is
     calculated, and the threshold is set as the middle point between the
     first and second inflection points starting from the left side of the

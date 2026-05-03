@@ -18,7 +18,7 @@ class DECOMP(BaseThresholder):
 
     Parameters
     ----------
-       method : {'NMF', 'PCA', 'GRP', 'SRP'}, optional (default='PCA')
+    method : {'NMF', 'PCA', 'GRP', 'SRP'}, optional (default='PCA')
          Method to use for decomposition
 
          - 'NMF':  Non-Negative Matrix Factorization
@@ -31,7 +31,7 @@ class DECOMP(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 

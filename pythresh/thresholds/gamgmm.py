@@ -20,7 +20,7 @@ class GAMGMM(BaseThresholder):
 
     Parameters
     ----------
-       n_contaminations : int, optional (default=1000)
+    n_contaminations : int, optional (default=1000)
          number of samples to draw from the contamination posterior distribution
 
     n_draws : int, optional (default=50)
@@ -56,13 +56,13 @@ class GAMGMM(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       This implementation deviates from that in :cite:`perini2023gamgmm` only
+    This implementation deviates from that in :cite:`perini2023gamgmm` only
     in the post-processing page. These deviations include: if a single outlier
     detector likelihood score set is passed a dummy score set of zeros will be
     added such that GAMGMM method can function correctly, if multiple outlier

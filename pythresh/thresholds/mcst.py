@@ -18,7 +18,7 @@ class MCST(BaseThresholder):
 
     Parameters
     ----------
-       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+    fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
          The action to take for thresholders when their criterion are
          not met. In these cases when set to 'ignore' on eval and fit
          all train data is set to inliers and the threshold is set to
@@ -31,13 +31,13 @@ class MCST(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The Shapiro-Wilk test is a frequentist statistical test for normality.
+    The Shapiro-Wilk test is a frequentist statistical test for normality.
     It is used to test the null-hypothesis that the decision scores came
     from a normal distribution. This test statistic is defined as:
 

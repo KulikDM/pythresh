@@ -16,18 +16,18 @@ class WIND(BaseThresholder):
 
     Parameters
     ----------
-       random_state : int, optional (default=1234)
+    random_state : int, optional (default=1234)
          Random seed for the normal distribution. Can also be set to None.
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The topological winding number or the degree of a continuous mapping. It is an
+    The topological winding number or the degree of a continuous mapping. It is an
     integer sum of the number of completed/closed counterclockwise rotations in a plane
     around a point. And is given by,
 

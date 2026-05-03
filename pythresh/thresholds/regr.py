@@ -15,7 +15,7 @@ class REGR(BaseThresholder):
 
     Parameters
     ----------
-       method : {'siegel', 'theil'}, optional (default='siegel')
+    method : {'siegel', 'theil'}, optional (default='siegel')
          Regression based method to calculate the y-intercept
 
          - 'siegel': implements a method for robust linear regression using repeated medians
@@ -34,7 +34,7 @@ class REGR(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     Examples
     --------

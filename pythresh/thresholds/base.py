@@ -12,7 +12,7 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
 
     Parameters
     ----------
-       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+    fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
          The action to take for thresholders when their criterion are
          not met. In these cases when set to 'ignore' on eval and fit
          all train data is set to inliers and the threshold is set to
@@ -22,7 +22,7 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     labels_ : binary array of labels for the fitted thresholder
 

@@ -17,7 +17,7 @@ class QMCD(BaseThresholder):
 
     Parameters
     ----------
-       method : {'CD', 'WD', 'MD', 'L2-star'}, optional (default='WD')
+    method : {'CD', 'WD', 'MD', 'L2-star'}, optional (default='WD')
          Type of discrepancy
 
          - 'CD':      Centered Discrepancy
@@ -37,13 +37,13 @@ class QMCD(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       For the QMCD method it is assumed that the decision scores are pseudo-random
+    For the QMCD method it is assumed that the decision scores are pseudo-random
     values within a distribution :math:`M`. "Quasi-random" sequences, which are
     numbers that are better equidistributed for :math:`M` than pseudo-random numbers
     are used to calculate the decision scores discrepancy value.

@@ -24,7 +24,7 @@ class META(BaseThresholder):
 
     Parameters
     ----------
-       method : {'LIN', 'GNB', 'GNBC', 'GNBM'}, optional (default='GNBM')
+    method : {'LIN', 'GNB', 'GNBC', 'GNBM'}, optional (default='GNBM')
         select
 
         - 'LIN':  RidgeCV trained linear classifier meta-model on true labels
@@ -38,13 +38,13 @@ class META(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       Meta-modelling is the creation of a model of models. If a dataset
+    Meta-modelling is the creation of a model of models. If a dataset
     that contains only the explanatory variables (X), yet no response
     variable (y), it can still be predicted by using a meta-model. This
     is done by modelling datasets with known response variables that

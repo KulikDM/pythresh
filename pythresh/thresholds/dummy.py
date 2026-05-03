@@ -12,7 +12,7 @@ class DUMMY(BaseThresholder):
 
     Parameters
     ----------
-       contam : float in (0., 1.0) or None, optional (default=None)
+    contam : float in (0., 1.0) or None, optional (default=None)
          The amount of contamination of the data set, i.e.
          the proportion of outliers in the data set. Used when fitting to
          define the threshold on the decision function. Default None sets
@@ -32,7 +32,7 @@ class DUMMY(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 

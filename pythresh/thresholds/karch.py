@@ -15,7 +15,7 @@ class KARCH(BaseThresholder):
 
     Parameters
     ----------
-       ndim : int, optional (default=2)
+    ndim : int, optional (default=2)
          Number of dimensions to construct the Euclidean manifold
 
     method : {'simple', 'complex'}, optional (default='complex')
@@ -30,13 +30,13 @@ class KARCH(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The non-weighted Karcher mean which is also the Riemannian center of
+    The non-weighted Karcher mean which is also the Riemannian center of
     mass or the Riemannian geometric mean is defined to be a minimizer of:
 
     .. math::

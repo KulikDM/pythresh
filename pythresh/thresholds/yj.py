@@ -16,19 +16,19 @@ class YJ(BaseThresholder):
 
     Parameters
     ----------
-       random_state : int, optional (default=1234)
+    random_state : int, optional (default=1234)
          Random seed for the random number generators of the thresholders. Can also
          be set to None.
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The Yeo-Johnson transformation is a power transform which is a
+    The Yeo-Johnson transformation is a power transform which is a
     set of power functions that apply a monotonic transformation to
     the dataset. For the decision scores this make their distribution
     more normal-like. The transformation is given by:

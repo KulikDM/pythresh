@@ -22,7 +22,7 @@ class VAE(BaseThresholder):
 
     Parameters
     ----------
-       verbose : bool, optional (default=False)
+    verbose : bool, optional (default=False)
          display training progress
 
     device : str, optional (default='cpu')
@@ -50,7 +50,7 @@ class VAE(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     Examples
     --------

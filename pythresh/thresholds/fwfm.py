@@ -15,7 +15,7 @@ class FWFM(BaseThresholder):
 
     Parameters
     ----------
-       fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
+    fallback : str ('ignore', 'warn', 'raise'), optional (default='warn')
          The action to take for thresholders when their criterion are
          not met. In these cases when set to 'ignore' on eval and fit
          all train data is set to inliers and the threshold is set to
@@ -29,13 +29,13 @@ class FWFM(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The outlier detection scores are assumed to be a mixture of Gaussian
+    The outlier detection scores are assumed to be a mixture of Gaussian
     distributions. The probability density function of this Gaussian mixture
     is approximated using kernel density estimation. The highest peak within the
     PDF is used to find the base width of the mixture and the threshold is set

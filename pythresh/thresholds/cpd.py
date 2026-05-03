@@ -15,7 +15,7 @@ class CPD(BaseThresholder):
 
     Parameters
     ----------
-       method : {'Dynp', 'KernelCPD', 'Binseg', 'BottomUp'}, optional (default='Dynp')
+    method : {'Dynp', 'KernelCPD', 'Binseg', 'BottomUp'}, optional (default='Dynp')
          Method for change point detection
 
          - 'Dynp':      Dynamic programming (optimal minimum sum of errors per partition)
@@ -35,7 +35,7 @@ class CPD(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 

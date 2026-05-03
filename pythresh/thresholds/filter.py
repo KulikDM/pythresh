@@ -16,7 +16,7 @@ class FILTER(BaseThresholder):
 
     Parameters
     ----------
-       method : {'gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt', 'decimate','detrend', 'resample'}, optional (default='savgol')
+    method : {'gaussian', 'savgol', 'hilbert', 'wiener', 'medfilt', 'decimate','detrend', 'resample'}, optional (default='savgol')
          Method to filter the scores
 
          - 'gaussian': use a gaussian based filter
@@ -45,7 +45,7 @@ class FILTER(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
     """

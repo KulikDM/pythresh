@@ -16,7 +16,7 @@ class MAD(BaseThresholder):
 
     Parameters
     ----------
-       factor : int, optional (default=1)
+    factor : int, optional (default=1)
          The factor to multiply the MAD by to set the threshold.
          The default is 1.
 
@@ -26,13 +26,13 @@ class MAD(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The median absolute deviation is defined as:
+    The median absolute deviation is defined as:
 
     .. math::
 

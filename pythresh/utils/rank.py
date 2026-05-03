@@ -20,7 +20,7 @@ class RANK:
 
     Parameters
     ----------
-       od_models : {list of pyod.model classes}
+    od_models : {list of pyod.model classes}
 
     thresh : {pythresh.threshold class, float, int, list of pythresh.threshold classes, list of floats, list of ints}
 
@@ -34,7 +34,7 @@ class RANK:
 
     Attributes
     ----------
-       cdf_rank_ : list of tuples shape (2, n_od_models) of cdf based rankings
+    cdf_rank_ : list of tuples shape (2, n_od_models) of cdf based rankings
 
     clust_rank_ : list of tuples shape (2, n_od_models) of cluster based rankings
 
@@ -42,7 +42,7 @@ class RANK:
 
     Notes
     -----
-       The RANK class ranks the outlier detection methods by evaluating
+    The RANK class ranks the outlier detection methods by evaluating
     three distinct proxy-metrics. The first proxy-metric looks at the outlier
     likelihood scores by class and measures the cumulative distribution
     separation using the the Wasserstein distance, and the Exponential Euclidean

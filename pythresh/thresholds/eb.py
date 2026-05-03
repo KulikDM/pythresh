@@ -14,19 +14,19 @@ class EB(BaseThresholder):
 
     Parameters
     ----------
-       random_state : int, optional (default=1234)
+    random_state : int, optional (default=1234)
          Random seed for the random number generators of the thresholders. Can also
          be set to None.
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       Pseudo-random eccentricities are used to generate elliptical boundaries
+    Pseudo-random eccentricities are used to generate elliptical boundaries
     and threshold the decision scores. This is done by using the farthest
     point on the perimeter of an ellipse from its center and is defined as:
 

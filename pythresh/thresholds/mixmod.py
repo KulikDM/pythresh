@@ -20,7 +20,7 @@ class MIXMOD(BaseThresholder):
 
     Parameters
     ----------
-       method : str, optional (default='mean')
+    method : str, optional (default='mean')
          Method to evaluate selecting the best fit mixture model. Default
          'mean' sets this as the closest mixture models to the mean of the posterior
          probability threshold for equal posteriors of a two distribution mixture model
@@ -39,7 +39,7 @@ class MIXMOD(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
@@ -47,7 +47,7 @@ class MIXMOD(BaseThresholder):
 
     Notes
     -----
-       The Normal & Non-Normal Mixture Models thresholder is constructed by searching
+    The Normal & Non-Normal Mixture Models thresholder is constructed by searching
     all possible two component combinations of the following distributions (normal,
     lognormal, uniform, student's t, pareto, laplace, gamma, fisk, and exponential).
     Each two component combination mixture is is fit to the data using

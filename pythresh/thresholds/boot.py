@@ -20,13 +20,13 @@ class BOOT(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The two sided bias-corrected and accelerated bootstrap confidence interval
+    The two sided bias-corrected and accelerated bootstrap confidence interval
     is calculated with a confidence level of 0.95. The statistic calculating
     the confidence interval is the standard deviation of the decision
     scores, with the statistic treating corresponding elements of the

@@ -14,7 +14,7 @@ class ZSCORE(BaseThresholder):
 
     Parameters
     ----------
-       factor : int, optional (default=1)
+    factor : int, optional (default=1)
          The factor to multiply the zscore by to set the threshold.
          The default is 1.
 
@@ -24,13 +24,13 @@ class ZSCORE(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The z-score can be calculated as follows:
+    The z-score can be calculated as follows:
 
     .. math::
 

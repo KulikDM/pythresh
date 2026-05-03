@@ -17,7 +17,7 @@ class HIST(BaseThresholder):
 
     Parameters
     ----------
-       nbins : int, optional (default='auto')
+    nbins : int, optional (default='auto')
          Number of bins to use in the histogram, default set to int(len(scores)**0.7)
 
     method : {'otsu', 'yen', 'isodata', 'li', 'minimum', 'triangle'}, optional (default='triangle')
@@ -36,7 +36,7 @@ class HIST(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
     """

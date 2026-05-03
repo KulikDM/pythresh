@@ -17,19 +17,19 @@ class IQR(BaseThresholder):
 
     Parameters
     ----------
-       random_state : int, optional (default=1234)
+    random_state : int, optional (default=1234)
          Random seed for the random number generators of the thresholders. Can also
          be set to None.
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     dscores_ : 1D array of decomposed decision scores
 
     Notes
     -----
-       The inter-quartile region is given as:
+    The inter-quartile region is given as:
 
     .. math::
 

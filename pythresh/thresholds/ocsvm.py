@@ -22,7 +22,7 @@ class OCSVM(BaseThresholder):
 
     Parameters
     ----------
-       model : {'poly', 'sgd'}, optional (default='sgd')
+    model : {'poly', 'sgd'}, optional (default='sgd')
         OCSVM model to apply
 
         - 'poly':  Use a polynomial kernel with a regular OCSVM
@@ -56,7 +56,7 @@ class OCSVM(BaseThresholder):
 
     Attributes
     ----------
-       thresh_ : threshold value that separates inliers from outliers
+    thresh_ : threshold value that separates inliers from outliers
 
     Examples
     --------
