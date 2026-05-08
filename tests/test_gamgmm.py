@@ -35,6 +35,7 @@ param_grid = list(product(skip, verbose, score_cases))
 # Fixtures
 # -----------------------
 
+
 @pytest.fixture(scope="module")
 def data():
     return generate_train_test_data()
@@ -50,6 +51,7 @@ def scores(data):
 # Eval
 # -----------------------
 
+
 @pytest.mark.filterwarnings("ignore")
 @pytest.mark.parametrize("skip,verbose,score_case", param_grid)
 def test_eval(scores, skip, verbose, score_case):
@@ -57,11 +59,7 @@ def test_eval(scores, skip, verbose, score_case):
     s = scores[idx]
 
     with contextlib.redirect_stdout(open(os.devnull, "w")):
-        thres = GAMGMM(
-            skip=skip,
-            steps=10,
-            verbose=verbose
-        )
+        thres = GAMGMM(skip=skip, steps=10, verbose=verbose)
         labels = thres.eval(s)
 
     assert thres.thresh_ is not None
@@ -72,6 +70,7 @@ def test_eval(scores, skip, verbose, score_case):
 # -----------------------
 # Fit
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_fit(scores, score_case):
@@ -91,6 +90,7 @@ def test_fit(scores, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_predict(scores, score_case):
@@ -112,6 +112,7 @@ def test_predict(scores, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_test_data(data, scores, score_case):
@@ -138,6 +139,7 @@ def test_test_data(data, scores, score_case):
 # -----------------------
 # Save / Load
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):

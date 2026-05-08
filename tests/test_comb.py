@@ -35,6 +35,7 @@ param_grid = list(product(methods, max_contams, score_cases))
 # Fixtures
 # -----------------------
 
+
 @pytest.fixture(scope="module")
 def data():
     return generate_train_test_data()
@@ -49,6 +50,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("method,max_contam,score_case", param_grid)
 def test_eval(scores, method, max_contam, score_case):
@@ -68,6 +70,7 @@ def test_eval(scores, method, max_contam, score_case):
 # -----------------------
 # Fit
 # -----------------------
+
 
 @pytest.mark.parametrize("method,max_contam,score_case", param_grid)
 def test_fit(scores, method, max_contam, score_case):
@@ -89,6 +92,7 @@ def test_fit(scores, method, max_contam, score_case):
 # Predict
 # -----------------------
 
+
 @pytest.mark.parametrize("method,max_contam,score_case", param_grid)
 def test_predict(scores, method, max_contam, score_case):
     _, idx = score_case
@@ -109,6 +113,7 @@ def test_predict(scores, method, max_contam, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("method,max_contam,score_case", param_grid)
 def test_test_data(data, scores, method, max_contam, score_case):
@@ -137,6 +142,7 @@ def test_test_data(data, scores, method, max_contam, score_case):
 # Save / Load
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):
     _, idx = score_case
@@ -152,18 +158,17 @@ def test_save_and_load(tmp_path, scores, score_case):
 
     assert_equal(thres.predict(s), loaded.predict(s))
 
+
 # -----------------------
 # Test Fallbacks
 # -----------------------
+
 
 @pytest.mark.parametrize("fallback", fallbacks)
 def test_fit_threshold_fallback_behavior(scores, fallback):
     s = scores[0]
 
-    thres = COMB(
-        max_contam=0.01,
-        fallback=fallback
-    )
+    thres = COMB(max_contam=0.01, fallback=fallback)
 
     trigger_data = s
 

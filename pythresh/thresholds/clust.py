@@ -95,26 +95,33 @@ class CLUST(BaseThresholder):
          labels = thres.eval(decision_scores)
     """
 
-    def __init__(self, method='spec', random_state=1234):
+    def __init__(self, method="spec", random_state=1234):
 
         super().__init__()
         self.method = method
         if method == "hdbscan" and HDBSCAN is None:
-            raise ImportError(
-                "method='hdbscan' requires scikit-learn >= 1.3"
-            )
+            raise ImportError("method='hdbscan' requires scikit-learn >= 1.3")
 
-        self.method_funcs = {'agg': self._AGG_clust, 'birch': self._BIRCH_clust,
-                             'bang': self._BANG_clust, 'bgm': self._BGM_clust,
-                             'bsas': self._BSAS_clust, 'dbscan': self._DBSCAN_clust,
-                             'ema': self._EMA_clust, 'hdbscan': self._HDBSCAN_clust,
-                             'kmeans': self._KMEANS_clust, 'mbsas': self._MBSAS_clust,
-                             'mshift': self._MSHIFT_clust, 'optics': self._OPTICS_clust,
-                             'somsc': self._SOMSC_clust, 'spec': self._SPEC_clust,
-                             'xmeans': self._XMEANS_clust}
+        self.method_funcs = {
+            "agg": self._AGG_clust,
+            "birch": self._BIRCH_clust,
+            "bang": self._BANG_clust,
+            "bgm": self._BGM_clust,
+            "bsas": self._BSAS_clust,
+            "dbscan": self._DBSCAN_clust,
+            "ema": self._EMA_clust,
+            "hdbscan": self._HDBSCAN_clust,
+            "kmeans": self._KMEANS_clust,
+            "mbsas": self._MBSAS_clust,
+            "mshift": self._MSHIFT_clust,
+            "optics": self._OPTICS_clust,
+            "somsc": self._SOMSC_clust,
+            "spec": self._SPEC_clust,
+            "xmeans": self._XMEANS_clust,
+        }
         self.random_state = random_state
         np.random.seed(random_state)
-        self._attrs = ['_clf']
+        self._attrs = ["_clf"]
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -138,8 +145,8 @@ class CLUST(BaseThresholder):
 
         decision = check_array(decision, ensure_2d=False)
 
-        self._set_norm(decision, '_prenorm', return_norm=False)
-        decision = self._set_norm(decision, '_postnorm')
+        self._set_norm(decision, "_prenorm", return_norm=False)
+        decision = self._set_norm(decision, "_postnorm")
 
         if decision.ndim == 1:
             decision = np.atleast_2d(decision).T
@@ -166,8 +173,7 @@ class CLUST(BaseThresholder):
             labels[pred.astype(int)] = 0
 
             # Flip if outliers were clustered
-            labels = 1 - \
-                labels if sum(labels) > np.ceil(len(decision)/2) else labels
+            labels = 1 - labels if sum(labels) > np.ceil(len(decision) / 2) else labels
 
             self._clf = GaussianNB()
             self._clf.fit(decision, labels)
@@ -182,7 +188,7 @@ class CLUST(BaseThresholder):
         if self._clf is None:
             cl.fit(decision)
             labels = cl.labels_.astype(int)
-            self._clf = cl if self.method not in ['spec', 'hdbscan'] else None
+            self._clf = cl if self.method not in ["spec", "hdbscan"] else None
         else:
             labels = self._clf.predict(decision).astype(int)
 
@@ -190,7 +196,7 @@ class CLUST(BaseThresholder):
         labels[labels != 0] = 1
 
         # Flip if outliers were clustered
-        labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
+        labels = 1 - labels if sum(labels) > np.ceil(len(decision) / 2) else labels
 
         # Cater for spec
         if self._clf is None:
@@ -201,8 +207,7 @@ class CLUST(BaseThresholder):
 
     def _AGG_clust(self, decision):
         """Agglomerative algorithm for cluster analysis."""
-        cl = agglomerative(data=decision, number_clusters=2,
-                           link=2, ccore=True)
+        cl = agglomerative(data=decision, number_clusters=2, link=2, ccore=True)
 
         return self._pyclust_eval(cl, decision)
 
@@ -211,7 +216,7 @@ class CLUST(BaseThresholder):
 
         Hierarchies) algorithm for cluster analysis
         """
-        cl = Birch(n_clusters=2, threshold=np.std(decision)/np.sqrt(2))
+        cl = Birch(n_clusters=2, threshold=np.std(decision) / np.sqrt(2))
 
         return self._sklearn_eval(cl, decision)
 
@@ -224,9 +229,7 @@ class CLUST(BaseThresholder):
     def _BGM_clust(self, decision):
         """Bayesian Gaussian Mixture algorithm for cluster analysis."""
         if self._clf is None:
-            cl = BayesianGaussianMixture(n_components=2,
-                                         covariance_type='tied',
-                                         random_state=self.random_state).fit(decision)
+            cl = BayesianGaussianMixture(n_components=2, covariance_type="tied", random_state=self.random_state).fit(decision)
             self._clf = cl
         else:
             cl = self._clf
@@ -234,7 +237,7 @@ class CLUST(BaseThresholder):
         labels = cl.predict(decision)
 
         # Flip if outliers were clustered
-        labels = 1-labels if sum(labels) > np.ceil(len(decision)/2) else labels
+        labels = 1 - labels if sum(labels) > np.ceil(len(decision) / 2) else labels
 
         return labels
 
@@ -243,8 +246,7 @@ class CLUST(BaseThresholder):
 
         algorithm for cluster analysis
         """
-        cl = bsas(data=decision, maximum_clusters=2,
-                  threshold=np.std(decision), ccore=True)
+        cl = bsas(data=decision, maximum_clusters=2, threshold=np.std(decision), ccore=True)
 
         return self._pyclust_eval(cl, decision)
 
@@ -253,8 +255,7 @@ class CLUST(BaseThresholder):
 
         noise) algorithm for cluster analysis
         """
-        cl = dbscan(data=decision, eps=np.std(decision) /
-                    np.sqrt(2), neighbors=len(decision) // 2, ccore=True)
+        cl = dbscan(data=decision, eps=np.std(decision) / np.sqrt(2), neighbors=len(decision) // 2, ccore=True)
 
         return self._pyclust_eval(cl, decision)
 
@@ -287,8 +288,7 @@ class CLUST(BaseThresholder):
 
         algorithm for cluster analysis
         """
-        cl = mbsas(data=decision, maximum_clusters=2,
-                   threshold=np.std(decision), ccore=True)
+        cl = mbsas(data=decision, maximum_clusters=2, threshold=np.std(decision), ccore=True)
 
         return self._pyclust_eval(cl, decision)
 
@@ -296,11 +296,10 @@ class CLUST(BaseThresholder):
         """Mean shift algorithm for cluster analysis."""
         if self._clf is None:
             # Get quantile value for bandwidth estimation
-            cscores, _ = check_scores(decision, None, None, None,
-                                      random_state=self.random_state)
+            cscores, _ = check_scores(decision, None, None, None, random_state=self.random_state)
 
             dat = np.squeeze(cscores)
-            q = cityblock(dat, np.sort(dat))/np.sum(dat)
+            q = cityblock(dat, np.sort(dat)) / np.sum(dat)
 
             q = max(0.25, min(q, 1.0))
 
@@ -325,8 +324,7 @@ class CLUST(BaseThresholder):
 
         algorithm for cluster analysis
         """
-        cl = optics(sample=decision, eps=np.std(decision) / np.sqrt(2),
-                    minpts=len(decision) // 2, amount_clusters=1, ccore=True)
+        cl = optics(sample=decision, eps=np.std(decision) / np.sqrt(2), minpts=len(decision) // 2, amount_clusters=1, ccore=True)
 
         return self._pyclust_eval(cl, decision)
 

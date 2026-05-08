@@ -85,8 +85,7 @@ class OCSVM(BaseThresholder):
          labels = thres.eval(decision_scores)
     """
 
-    def __init__(self, model='sgd', degree='auto', gamma='auto',
-                 criterion='bic', nu='auto', tol=1e-3, random_state=1234):
+    def __init__(self, model="sgd", degree="auto", gamma="auto", criterion="bic", nu="auto", tol=1e-3, random_state=1234):
 
         super().__init__()
         self.model = model
@@ -97,7 +96,7 @@ class OCSVM(BaseThresholder):
         self.tol = tol
         self.random_state = random_state
         np.random.seed(random_state)
-        self._attrs = ['_clf', '_mean']
+        self._attrs = ["_clf", "_mean"]
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -122,36 +121,30 @@ class OCSVM(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Get auto nu calculation
-        if self.nu == 'auto':
-
-            np.seterr(divide='ignore')
+        if self.nu == "auto":
+            np.seterr(divide="ignore")
             gmean = stats.gmean(decision)
             mean = np.mean(decision)
             med = np.median(decision)
 
-            self.nu = len(decision[decision <= med +
-                          abs(mean-gmean)])/len(decision)
+            self.nu = len(decision[decision <= med + abs(mean - gmean)]) / len(decision)
 
         self.nu = 0.5 if self.nu == 1.0 else self.nu
 
         # Get auto degree calculation
-        if (self.degree == 'auto') & (self.model == 'poly'):
-
+        if (self.degree == "auto") & (self.model == "poly"):
             self.degree = self._auto_crit(decision)
 
         decision = decision.reshape(-1, 1)
 
         # Create a one-class svm
-        if (self.model == 'poly') & (self._clf is None):
-            clf = OneClassSVM(gamma=self.gamma, kernel='poly',
-                              degree=self.degree, nu=self.nu,
-                              tol=self.tol)
+        if (self.model == "poly") & (self._clf is None):
+            clf = OneClassSVM(gamma=self.gamma, kernel="poly", degree=self.degree, nu=self.nu, tol=self.tol)
             clf.fit(decision)
             self._clf = clf
         elif self._clf is None:
             transform = AdditiveChi2Sampler()
-            sgd = SGDOneClassSVM(nu=self.nu,
-                                 random_state=self.random_state)
+            sgd = SGDOneClassSVM(nu=self.nu, random_state=self.random_state)
             clf = make_pipeline(transform, sgd)
             clf.fit(decision)
             self._clf = clf
@@ -188,7 +181,6 @@ class OCSVM(BaseThresholder):
         scores = []
 
         for poly in polys:
-
             # Calculate the polynomial features for the kde
             poly_features = PolynomialFeatures(degree=poly, include_bias=True)
             poly_fit = poly_features.fit_transform(kde)
@@ -201,10 +193,10 @@ class OCSVM(BaseThresholder):
             # Get the mse and apply the regression performance metric
             mse = mean_squared_error(dat_range, poly_pred)
 
-            if self.crit == 'aic':
-                scores.append(n*np.log(mse) + 2*(poly+1))
+            if self.crit == "aic":
+                scores.append(n * np.log(mse) + 2 * (poly + 1))
             else:
-                scores.append(n*np.log(mse) + (poly+1)*np.log(n))
+                scores.append(n * np.log(mse) + (poly + 1) * np.log(n))
 
         # Set degree from smallest metric score
 

@@ -19,7 +19,7 @@ from pythresh.thresholds.meta import META
 # Param grid
 # -----------------------
 
-methods = ['LIN', 'GNB', 'GNBC', 'GNBM']
+methods = ["LIN", "GNB", "GNBC", "GNBM"]
 score_cases = [
     ("single", 0),
     ("multi", 1),
@@ -31,6 +31,7 @@ param_grid = list(product(methods, score_cases))
 # -----------------------
 # Fixtures
 # -----------------------
+
 
 @pytest.fixture(scope="module")
 def data():
@@ -46,6 +47,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_eval(scores, method, score_case):
@@ -64,6 +66,7 @@ def test_eval(scores, method, score_case):
 # Fit
 # -----------------------
 
+
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_fit(scores, method, score_case):
     _, idx = score_case
@@ -79,6 +82,7 @@ def test_fit(scores, method, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_predict(scores, method, score_case):
@@ -96,6 +100,7 @@ def test_predict(scores, method, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_test_data(data, scores, method, score_case):
@@ -119,6 +124,7 @@ def test_test_data(data, scores, method, score_case):
 # -----------------------
 # Save / Load
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):

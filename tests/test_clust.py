@@ -20,11 +20,7 @@ from pythresh.thresholds.clust import CLUST
 # Param grid
 # -----------------------
 
-methods = [
-    "agg", "birch", "bang", "bgm", "bsas", "dbscan", "ema",
-    "hdbscan", "kmeans", "mbsas", "mshift", "optics",
-    "somsc", "spec", "xmeans"
-]
+methods = ["agg", "birch", "bang", "bgm", "bsas", "dbscan", "ema", "hdbscan", "kmeans", "mbsas", "mshift", "optics", "somsc", "spec", "xmeans"]
 
 score_cases = [
     ("single", 0),
@@ -37,6 +33,7 @@ param_grid = list(product(methods, score_cases))
 # -----------------------
 # Fixtures
 # -----------------------
+
 
 @pytest.fixture(scope="module")
 def data():
@@ -52,6 +49,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_eval(scores, method, score_case):
@@ -70,6 +68,7 @@ def test_eval(scores, method, score_case):
 # Fit
 # -----------------------
 
+
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_fit(scores, method, score_case):
     _, idx = score_case
@@ -85,6 +84,7 @@ def test_fit(scores, method, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_predict(scores, method, score_case):
@@ -106,6 +106,7 @@ def test_predict(scores, method, score_case):
 # -----------------------
 # Train/Test generalization
 # -----------------------
+
 
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_test_data(data, scores, method, score_case):
@@ -130,6 +131,7 @@ def test_test_data(data, scores, method, score_case):
 # Save / Load
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):
     _, idx = score_case
@@ -145,9 +147,11 @@ def test_save_and_load(tmp_path, scores, score_case):
 
     assert_equal(thres.predict(s), loaded.predict(s))
 
+
 # -----------------------
 # HDBScan Missing Import
 # -----------------------
+
 
 def test_hdbscan_missing_raises(monkeypatch):
 

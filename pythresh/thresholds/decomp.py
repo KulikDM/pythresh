@@ -62,18 +62,16 @@ class DECOMP(BaseThresholder):
          labels = thres.eval(decision_scores)
     """
 
-    def __init__(self, method='PCA', random_state=1234):
+    def __init__(self, method="PCA", random_state=1234):
 
         super().__init__()
         self.method = method
-        self.method_funcs = {'NMF': NMF(n_components=1,
-                                        random_state=random_state),
-                             'PCA': PCA(n_components=1,
-                                        random_state=random_state),
-                             'GRP': GaussianRandomProjection(n_components=2,
-                                                             random_state=random_state),
-                             'SRP': SparseRandomProjection(n_components=3,
-                                                           random_state=random_state)}
+        self.method_funcs = {
+            "NMF": NMF(n_components=1, random_state=random_state),
+            "PCA": PCA(n_components=1, random_state=random_state),
+            "GRP": GaussianRandomProjection(n_components=2, random_state=random_state),
+            "SRP": SparseRandomProjection(n_components=3, random_state=random_state),
+        }
         self.random_state = random_state
         np.random.seed(random_state)
 
@@ -97,16 +95,15 @@ class DECOMP(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Generate a CDF of the decision scores
-        val, _ = gen_cdf(decision, 0, 1, len(decision)*3)
+        val, _ = gen_cdf(decision, 0, 1, len(decision) * 3)
         val = normalize(val)
 
         # Apply decomposition
-        dec = self.method_funcs[str(self.method)].fit_transform(
-            val.reshape(-1, 1))
+        dec = self.method_funcs[str(self.method)].fit_transform(val.reshape(-1, 1))
 
         # Set limit to max value from decomposition matrix
         limit = np.max(dec)
-        limit = 1-limit if limit > 0.5 else limit
+        limit = 1 - limit if limit > 0.5 else limit
 
         self.thresh_ = limit
 

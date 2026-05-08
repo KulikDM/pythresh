@@ -34,6 +34,7 @@ param_grid = list(product(methods, ndims, score_cases))
 # Fixtures
 # -----------------------
 
+
 @pytest.fixture(scope="module")
 def data():
     return generate_train_test_data()
@@ -48,6 +49,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("method,ndim,score_case", param_grid)
 def test_eval(scores, method, ndim, score_case):
@@ -66,6 +68,7 @@ def test_eval(scores, method, ndim, score_case):
 # Fit
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_fit(scores, score_case):
     _, idx = score_case
@@ -81,6 +84,7 @@ def test_fit(scores, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_predict(scores, score_case):
@@ -99,6 +103,7 @@ def test_predict(scores, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_test_data(data, scores, score_case):
@@ -123,6 +128,7 @@ def test_test_data(data, scores, score_case):
 # Save / Load
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):
     _, idx = score_case
@@ -138,9 +144,11 @@ def test_save_and_load(tmp_path, scores, score_case):
 
     assert_equal(thres.predict(s), loaded.predict(s))
 
+
 # -----------------------
 # Memory Error
 # -----------------------
+
 
 def test_eval_memory_error_fallback(monkeypatch):
     def boom(*args, **kwargs):
@@ -148,12 +156,12 @@ def test_eval_memory_error_fallback(monkeypatch):
 
     scores = np.random.rand(1000)
 
-    th_simple = KARCH(method='simple')
+    th_simple = KARCH(method="simple")
     labels_simple = th_simple.eval(scores)
 
     monkeypatch.setattr(np, "dot", boom)
 
-    th_complex = KARCH(method='complex')
+    th_complex = KARCH(method="complex")
     labels = th_complex.eval(scores)
 
     assert labels.shape == scores.shape

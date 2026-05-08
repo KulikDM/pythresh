@@ -81,9 +81,9 @@ class EB(BaseThresholder):
         counts = []  # Get number of inliers
         for i in range(5000):
             e = rnd[i]
-            a = 1/(1+e)
-            lb = cut(decision, a*(1-e))
-            counts.append(len(decision)-np.sum(lb))
+            a = 1 / (1 + e)
+            lb = cut(decision, a * (1 - e))
+            counts.append(len(decision) - np.sum(lb))
 
         # Calculate the median count of expected inliers
         med = np.round(np.median(counts))
@@ -94,12 +94,12 @@ class EB(BaseThresholder):
         close = 0
         for i in range(5000):
             e = ec[i]
-            a = 1/(1+e)
-            lb = cut(decision, a*(1-e))
-            count = len(decision)-np.sum(lb)
-            if abs(med-count) < abs(med-close):
+            a = 1 / (1 + e)
+            lb = cut(decision, a * (1 - e))
+            count = len(decision) - np.sum(lb)
+            if abs(med - count) < abs(med - close):
                 close = count
-                limit = a*(1-e)
+                limit = a * (1 - e)
 
         self.thresh_ = limit
 

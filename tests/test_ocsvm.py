@@ -19,10 +19,10 @@ from pythresh.thresholds.ocsvm import OCSVM
 # Param grid
 # -----------------------
 
-models = ['poly', 'sgd']
-degrees = ['auto', 2, 4, 8]
-gammas = ['auto', 0.1, 0.5, 0.9]
-criterions = ['aic', 'bic']
+models = ["poly", "sgd"]
+degrees = ["auto", 2, 4, 8]
+gammas = ["auto", 0.1, 0.5, 0.9]
+criterions = ["aic", "bic"]
 nus = [0.1, 0.5, 0.9]
 tols = [1e-1, 1e-3, 1e-5]
 score_cases = [
@@ -36,6 +36,7 @@ param_grid = list(product(models, degrees, gammas, nus, tols, score_cases))
 # -----------------------
 # Fixtures
 # -----------------------
+
 
 @pytest.fixture(scope="module")
 def data():
@@ -51,6 +52,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("model,degree,gamma,nu,tol,score_case", param_grid)
 def test_eval(scores, model, degree, gamma, nu, tol, score_case):
@@ -75,6 +77,7 @@ def test_eval(scores, model, degree, gamma, nu, tol, score_case):
 # Fit
 # -----------------------
 
+
 @pytest.mark.parametrize("model,degree,gamma,nu,tol,score_case", param_grid)
 def test_fit(scores, model, degree, gamma, nu, tol, score_case):
     _, idx = score_case
@@ -96,6 +99,7 @@ def test_fit(scores, model, degree, gamma, nu, tol, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("model,degree,gamma,nu,tol,score_case", param_grid)
 def test_predict(scores, model, degree, gamma, nu, tol, score_case):
@@ -119,6 +123,7 @@ def test_predict(scores, model, degree, gamma, nu, tol, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("model,degree,gamma,nu,tol,score_case", param_grid)
 def test_test_data(data, scores, model, degree, gamma, nu, tol, score_case):
@@ -148,6 +153,7 @@ def test_test_data(data, scores, model, degree, gamma, nu, tol, score_case):
 # -----------------------
 # Save / Load
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):

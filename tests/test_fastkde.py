@@ -16,7 +16,7 @@ from pythresh.thresholds.dsn import DSN
 # -----------------------
 
 
-metrics = ['JS', 'MAH']
+metrics = ["JS", "MAH"]
 score_cases = [
     ("single", 0),
     ("multi", 1),
@@ -28,6 +28,7 @@ param_grid = list(product(metrics, score_cases))
 # -----------------------
 # Fixtures
 # -----------------------
+
 
 @pytest.fixture(scope="module")
 def data():
@@ -44,6 +45,7 @@ def scores(data):
 # Eval
 # -----------------------
 
+
 @pytest.mark.parametrize("metric,score_case", param_grid)
 def test_prediction_labels(scores, metric, score_case):
     _, idx = score_case
@@ -56,7 +58,6 @@ def test_prediction_labels(scores, metric, score_case):
     assert thres.thresh_ is not None
     check_scores_normalized(dscores)
     check_labels(pred_labels, s.shape)
-
 
     if not (np.all(pred_labels == 0) or np.all(pred_labels == 1)):
         assert pred_labels.min() == 0

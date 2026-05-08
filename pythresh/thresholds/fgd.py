@@ -42,7 +42,7 @@ class FGD(BaseThresholder):
     data range.
     """
 
-    def __init__(self, fallback='warn', random_state=1234):
+    def __init__(self, fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.random_state = random_state
@@ -68,19 +68,18 @@ class FGD(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Generate KDE
-        val, dat_range = gen_kde(decision, 0, 1, len(decision)*3)
+        val, dat_range = gen_kde(decision, 0, 1, len(decision) * 3)
 
         # Calculate the first derivative of the KDE with respect
         # to the data range
-        deriv = np.gradient(val, dat_range[1]-dat_range[0])
+        deriv = np.gradient(val, dat_range[1] - dat_range[0])
 
         count = 0
         ind = []
 
         # Find the first two inflection points
-        for i in range(len(deriv)-1):
-
-            if (deriv[i] > 0) & (deriv[i+1] <= 0):
+        for i in range(len(deriv) - 1):
+            if (deriv[i] > 0) & (deriv[i + 1] <= 0):
                 count += 1
                 ind.append(i)
                 if count == 2:
@@ -88,8 +87,7 @@ class FGD(BaseThresholder):
 
         eps = np.finfo(decision.dtype).eps
 
-        limit = ((dat_range[ind[0]]+dat_range[ind[1]])/2 if
-                 len(ind) > 1 else 1.0 + eps)
+        limit = (dat_range[ind[0]] + dat_range[ind[1]]) / 2 if len(ind) > 1 else 1.0 + eps
 
         self._check_threshold(limit)
 

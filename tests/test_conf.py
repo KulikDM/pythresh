@@ -27,9 +27,11 @@ param_grid = list(product(threshes, alphas, splits, n_tests))
 # Fixtures
 # -----------------------
 
+
 @pytest.fixture(scope="module")
 def data():
     return generate_train_test_data()
+
 
 @pytest.fixture(scope="module")
 def scores(data):
@@ -41,23 +43,18 @@ def scores(data):
 # Prediction Labels
 # -----------------------
 
+
 @pytest.mark.parametrize("thres,alpha,split,n_test", param_grid)
 def test_prediction_labels(scores, thres, alpha, split, n_test):
     s = scores[0]
 
-    confidence = CONF(
-        thresh=thres,
-        alpha=alpha,
-        split=split,
-        n_test=n_test
-    )
+    confidence = CONF(thresh=thres, alpha=alpha, split=split, n_test=n_test)
     uncertains = confidence.eval(s)
 
-    assert (isinstance(uncertains, list))
-    assert (len(uncertains) <= len(s))
+    assert isinstance(uncertains, list)
+    assert len(uncertains) <= len(s)
 
     if len(uncertains) > 0:
-
-        assert (min(uncertains) > 0)
-        assert (max(uncertains) < len(s))
-        assert (len(set(uncertains)) == len(uncertains))
+        assert min(uncertains) > 0
+        assert max(uncertains) < len(s)
+        assert len(set(uncertains)) == len(uncertains)

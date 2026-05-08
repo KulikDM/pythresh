@@ -19,8 +19,7 @@ from pythresh.thresholds.dsn import DSN
 # Param grid
 # -----------------------
 
-metrics = ["JS", "WS", "ENG", "BHT", "HLL", "HI", "LK",
-           "LP", "MAH", "TMT", "RES", "KS", "INT", "MMD"]
+metrics = ["JS", "WS", "ENG", "BHT", "HLL", "HI", "LK", "LP", "MAH", "TMT", "RES", "KS", "INT", "MMD"]
 score_cases = [
     ("single", 0),
     ("multi", 1),
@@ -32,6 +31,7 @@ param_grid = list(product(metrics, score_cases))
 # -----------------------
 # Fixtures
 # -----------------------
+
 
 @pytest.fixture(scope="module")
 def data():
@@ -47,6 +47,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("metric,score_case", param_grid)
 def test_eval(scores, metric, score_case):
@@ -65,6 +66,7 @@ def test_eval(scores, metric, score_case):
 # Fit
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_fit(scores, score_case):
     _, idx = score_case
@@ -80,6 +82,7 @@ def test_fit(scores, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_predict(scores, score_case):
@@ -98,6 +101,7 @@ def test_predict(scores, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_test_data(data, scores, score_case):
@@ -121,6 +125,7 @@ def test_test_data(data, scores, score_case):
 # -----------------------
 # Save / Load
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):

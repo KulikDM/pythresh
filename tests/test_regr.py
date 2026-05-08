@@ -33,6 +33,7 @@ param_grid = list(product(methods, score_cases))
 # Fixtures
 # -----------------------
 
+
 @pytest.fixture(scope="module")
 def data():
     return generate_train_test_data()
@@ -47,6 +48,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("method,score_case", param_grid)
 def test_eval(scores, method, score_case):
@@ -65,6 +67,7 @@ def test_eval(scores, method, score_case):
 # Fit
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_fit(scores, score_case):
     _, idx = score_case
@@ -80,6 +83,7 @@ def test_fit(scores, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_predict(scores, score_case):
@@ -98,6 +102,7 @@ def test_predict(scores, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_test_data(data, scores, score_case):
@@ -122,6 +127,7 @@ def test_test_data(data, scores, score_case):
 # Save / Load
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):
     _, idx = score_case
@@ -137,9 +143,11 @@ def test_save_and_load(tmp_path, scores, score_case):
 
     assert_equal(thres.predict(s), loaded.predict(s))
 
+
 # -----------------------
 # Memory Fallback
 # -----------------------
+
 
 @pytest.mark.parametrize("method", ["siegel", "theil"])
 def test_eval_memory_error_fallback(method):

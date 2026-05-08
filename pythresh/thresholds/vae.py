@@ -80,8 +80,7 @@ class VAE(BaseThresholder):
 
     """
 
-    def __init__(self, verbose=False, device='cpu', latent_dims='auto',
-                 random_state=1234, epochs=100, batch_size=64, loss='kl'):
+    def __init__(self, verbose=False, device="cpu", latent_dims="auto", random_state=1234, epochs=100, batch_size=64, loss="kl"):
 
         super().__init__()
         self.verbose = verbose
@@ -115,26 +114,20 @@ class VAE(BaseThresholder):
         decision = self._data_setup(decision)
         scores = decision.copy()
 
-        if self.latent_dims == 'auto':
+        if self.latent_dims == "auto":
             self.latent_dims = self._autodim(scores)
 
         decision = decision.astype(np.float32).reshape(-1, 1)
 
-        self.model = VAE_model(1, self.latent_dims,
-                               self.random_state, self.dist,
-                               self.loss).to(self.device)
+        self.model = VAE_model(1, self.latent_dims, self.random_state, self.dist, self.loss).to(self.device)
 
-        self.data = torch.utils.data.DataLoader(
-            torch.from_numpy(decision),
-            batch_size=self.batch_size,
-            shuffle=True)
+        self.data = torch.utils.data.DataLoader(torch.from_numpy(decision), batch_size=self.batch_size, shuffle=True)
 
         self._train()
         with torch.no_grad():
-            z = self.model.reconstructed_probability(torch.from_numpy(decision).to(
-                self.device)).to('cpu').detach().numpy()
+            z = self.model.reconstructed_probability(torch.from_numpy(decision).to(self.device)).to("cpu").detach().numpy()
 
-        limit = np.max(z)-np.min(z)
+        limit = np.max(z) - np.min(z)
         self.thresh_ = limit
 
         return cut(scores, limit)
@@ -146,35 +139,26 @@ class VAE(BaseThresholder):
         profile_lik = []
 
         for i in range(1, m):
-
             mu1 = np.mean(vals[:i])
             mu2 = np.mean(vals[i:])
-            sigma = np.sqrt((np.sum((vals[:i] - mu1) ** 2) +
-                             np.sum((vals[i:] - mu2) ** 2)) / (m-2))
+            sigma = np.sqrt((np.sum((vals[:i] - mu1) ** 2) + np.sum((vals[i:] - mu2) ** 2)) / (m - 2))
 
-            profile_lik += [np.sum(stats.norm.logpdf(vals[:i], loc=mu1, scale=sigma)) +
-                            np.sum(stats.norm.logpdf(vals[i:], loc=mu2, scale=sigma))]
+            profile_lik += [np.sum(stats.norm.logpdf(vals[:i], loc=mu1, scale=sigma)) + np.sum(stats.norm.logpdf(vals[i:], loc=mu2, scale=sigma))]
 
         prof = np.argsort(profile_lik)[-1]
-        valen = len(vals)**0.7
+        valen = len(vals) ** 0.7
         prof = prof if prof > 0 else valen
 
         return round(np.log(prof))
 
     def _train(self):
 
-        optimizer = torch.optim.Adam(self.model.parameters(),
-                                     weight_decay=1e-4,
-                                     lr=1e-2)
+        optimizer = torch.optim.Adam(self.model.parameters(), weight_decay=1e-4, lr=1e-2)
 
-        scheduler = opt.lr_scheduler.ExponentialLR(optimizer,
-                                                   gamma=0.95)
+        scheduler = opt.lr_scheduler.ExponentialLR(optimizer, gamma=0.95)
 
-        for _ in (tqdm(range(self.epochs), ascii=True, desc='Training')
-                  if self.verbose else range(self.epochs)):
-
+        for _ in tqdm(range(self.epochs), ascii=True, desc="Training") if self.verbose else range(self.epochs):
             for x in self.data:
-
                 x = x.to(self.device)
                 optimizer.zero_grad()
                 _ = self.model.forward(x)
@@ -185,9 +169,7 @@ class VAE(BaseThresholder):
 
 
 class VAE_model(nn.Module):
-
-    def __init__(self, input_size, latent_size,
-                 random_state, dist, loss, L=16):
+    def __init__(self, input_size, latent_size, random_state, dist, loss, L=16):
 
         super().__init__()
         self.L = L
@@ -204,23 +186,11 @@ class VAE_model(nn.Module):
 
     def data_encoder(self, input_size, latent_size):
 
-        return nn.Sequential(
-            nn.Linear(input_size, 128),
-            nn.LeakyReLU(),
-            nn.Linear(128, 64),
-            nn.LeakyReLU(),
-            nn.Linear(64, latent_size * 2)
-        )
+        return nn.Sequential(nn.Linear(input_size, 128), nn.LeakyReLU(), nn.Linear(128, 64), nn.LeakyReLU(), nn.Linear(64, latent_size * 2))
 
     def data_decoder(self, latent_size, output_size):
 
-        return nn.Sequential(
-            nn.Linear(latent_size, 64),
-            nn.LeakyReLU(),
-            nn.Linear(64, 128),
-            nn.LeakyReLU(),
-            nn.Linear(128, output_size * 2)
-        )
+        return nn.Sequential(nn.Linear(latent_size, 64), nn.LeakyReLU(), nn.Linear(64, 128), nn.LeakyReLU(), nn.Linear(128, output_size * 2))
 
     def forward(self, x):
 
@@ -228,26 +198,22 @@ class VAE_model(nn.Module):
         x = x.unsqueeze(0)
 
         # average over sample dimension
-        log_lik = self.dist(pred_result['recon_mu'],
-                            pred_result['recon_sigma']).log_prob(x).mean(
-            dim=0)
+        log_lik = self.dist(pred_result["recon_mu"], pred_result["recon_sigma"]).log_prob(x).mean(dim=0)
         log_lik = log_lik.mean(dim=0).sum()
 
         # calculate the kl divergence and the forward loss
-        if self.loss == 'kl':
-            kl = kl_divergence(pred_result['latent_dist'],
-                               self.prior).mean(dim=0).sum()
+        if self.loss == "kl":
+            kl = kl_divergence(pred_result["latent_dist"], self.prior).mean(dim=0).sum()
             loss = kl - log_lik
 
             return dict(loss=loss, kl=kl, recon_loss=log_lik, **pred_result)
 
         # calculate the mmd and the forward loss
         else:
-
             x = x.squeeze()
             batch_size = len(x)
 
-            z = pred_result['latent_dist'].rsample([self.L])
+            z = pred_result["latent_dist"].rsample([self.L])
             z = z.view(self.L * batch_size, self.latent_size)
 
             x = self.prior.rsample([self.L * batch_size * self.latent_size])
@@ -276,16 +242,14 @@ class VAE_model(nn.Module):
         recon_sigma = softplus(recon_sigma)
         recon_sigma = recon_sigma.view(self.L, *x.shape)
 
-        return dict(latent_dist=dist, latent_mu=latent_mu,
-                    latent_sigma=latent_sigma, recon_mu=recon_mu,
-                    recon_sigma=recon_sigma, z=z)
+        return dict(latent_dist=dist, latent_mu=latent_mu, latent_sigma=latent_sigma, recon_mu=recon_mu, recon_sigma=recon_sigma, z=z)
 
     def reconstructed_probability(self, x):
 
         with torch.no_grad():
             pred = self.predict(x)
 
-        recon_dist = self.dist(pred['recon_mu'], pred['recon_sigma'])
+        recon_dist = self.dist(pred["recon_mu"], pred["recon_sigma"])
         x = x.unsqueeze(0)
         return recon_dist.log_prob(x).exp().mean(dim=0).mean(dim=-1)
 
@@ -300,7 +264,7 @@ class VAE_model(nn.Module):
         tx = x.expand(x_size, y_size, dim)
         ty = y.expand(x_size, y_size, dim)
 
-        kernel_input = (tx - ty).pow(2).mean(2)/float(dim)
+        kernel_input = (tx - ty).pow(2).mean(2) / float(dim)
 
         return torch.exp(-kernel_input)
 
@@ -310,4 +274,4 @@ class VAE_model(nn.Module):
         y_kernel = self.compute_kernel(y, y)
         xy_kernel = self.compute_kernel(x, y)
 
-        return x_kernel.mean() + y_kernel.mean() - 2*xy_kernel.mean()
+        return x_kernel.mean() + y_kernel.mean() - 2 * xy_kernel.mean()

@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 from .base import BaseThresholder
 
-_NEEDS_CLASSES = tuple(map(int, sklearn.__version__.split('.')[:2])) >= (1, 8)
+_NEEDS_CLASSES = tuple(map(int, sklearn.__version__.split(".")[:2])) >= (1, 8)
 
 
 class META(BaseThresholder):
@@ -67,15 +67,14 @@ class META(BaseThresholder):
 
     """
 
-    def __init__(self, method='GNBM', random_state=1234):
+    def __init__(self, method="GNBM", random_state=1234):
 
         super().__init__()
         self.method = method
         self.random_state = random_state
         np.random.seed(random_state)
 
-        self._attrs = ['_kde', '_scaler', '_knorm', '_pnorm',
-                       '_qnorm', '_is_flipped']
+        self._attrs = ["_kde", "_scaler", "_knorm", "_pnorm", "_qnorm", "_is_flipped"]
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -99,28 +98,27 @@ class META(BaseThresholder):
 
         decision = self._data_setup(decision)
 
-        if self.method == 'LIN':
-            clf = 'meta_model_LIN.pkl'
-        elif self.method == 'GNB':
-            clf = 'meta_model_GNB.pkl'
-        elif self.method == 'GNBC':
-            clf = 'meta_model_GNBC.pkl'
+        if self.method == "LIN":
+            clf = "meta_model_LIN.pkl"
+        elif self.method == "GNB":
+            clf = "meta_model_GNB.pkl"
+        elif self.method == "GNBC":
+            clf = "meta_model_GNBC.pkl"
         else:
-            clf = 'meta_model_GNBM.pkl'
+            clf = "meta_model_GNBM.pkl"
 
         contam = []
         counts = len(decision)
-        model_path = files('pythresh.models').joinpath(clf)
+        model_path = files("pythresh.models").joinpath(clf)
         model = joblib.load(model_path)
 
         # Sklearn 1.8.0 API patch
-        for e in getattr(model, 'estimators_', {}).values():
+        for e in getattr(model, "estimators_", {}).values():
             self._patch_ridge(e)
 
-        self._patch_ridge(getattr(model, 'estimator', None))
+        self._patch_ridge(getattr(model, "estimator", None))
 
-        if self.method == 'GNBM':
-
+        if self.method == "GNBM":
             if self._scaler is None:
                 scaler = MinMaxScaler()
                 scaler.fit(decision.reshape(-1, 1))
@@ -131,7 +129,7 @@ class META(BaseThresholder):
 
             qmcd = self._wrap_around_discrepancy(self._norm, norm)
 
-            qmcd = self._set_norm(qmcd, '_qnorm')
+            qmcd = self._set_norm(qmcd, "_qnorm")
 
             # Get criterion for inverting scores
             if self._is_flipped is None:
@@ -150,25 +148,22 @@ class META(BaseThresholder):
                 self._kde = kde
 
             pdf = self._kde.pdf(decision)
-            pdf = self._set_norm(pdf, '_knorm')
+            pdf = self._set_norm(pdf, "_knorm")
             pdf[pdf < 0] = 0
 
         for i in range(len(model.groups_)):
-
             df = pd.DataFrame()
-            df['scores'] = decision
-            df['groups'] = i
+            df["scores"] = decision
+            df["groups"] = i
 
-            if self.method == 'GNBM':
-
-                df['qmcd'] = qmcd
-                df['kdes'] = pdf**(1/10)
+            if self.method == "GNBM":
+                df["qmcd"] = qmcd
+                df["kdes"] = pdf ** (1 / 10)
 
             labels = model.predict(df)
-            outlier_ratio = np.sum(labels)/counts
+            outlier_ratio = np.sum(labels) / counts
 
             if (outlier_ratio < 0.5) & (outlier_ratio > 0):
-
                 contam.append(labels)
 
         contam = np.array(contam)
@@ -182,7 +177,7 @@ class META(BaseThresholder):
     @staticmethod
     def _patch_ridge(est):
         """RidgeClassifierCV classes_ attribute patch."""
-        if _NEEDS_CLASSES and isinstance(est, RidgeClassifierCV) and not hasattr(est, 'classes_'):
+        if _NEEDS_CLASSES and isinstance(est, RidgeClassifierCV) and not hasattr(est, "classes_"):
             est.classes_ = np.array([0, 1])
 
     @staticmethod
@@ -201,9 +196,9 @@ class META(BaseThresholder):
                 prod = 1.0
                 for k in prange(d):
                     x_kikj = abs(check[i, k] - data[j, k])
-                    prod *= 3.0 / 2.0 - x_kikj + x_kikj ** 2
+                    prod *= 3.0 / 2.0 - x_kikj + x_kikj**2
 
                 dc += prod
             disc[i] = dc
 
-        return - (4.0 / 3.0) ** d + 1.0 / (n ** 2) * disc
+        return -((4.0 / 3.0) ** d) + 1.0 / (n**2) * disc

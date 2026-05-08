@@ -17,13 +17,9 @@ from pythresh.utils.rank import RANK
 # Param grid
 # -----------------------
 
-threshes = [FILTER(), 0.1,
-            [FILTER(), IQR(), OCSVM()]]
-methods = ['model', 'native']
-weights = [[0.5, 0.25, 0.25],
-           [0.25, 0.5, 0.25],
-           [0.25, 0.25, 0.5],
-           None]
+threshes = [FILTER(), 0.1, [FILTER(), IQR(), OCSVM()]]
+methods = ["model", "native"]
+weights = [[0.5, 0.25, 0.25], [0.25, 0.5, 0.25], [0.25, 0.25, 0.5], None]
 
 param_grid = list(product(threshes, methods, weights))
 
@@ -36,6 +32,7 @@ param_grid = list(product(threshes, methods, weights))
 @pytest.fixture(scope="module")
 def data():
     return generate_train_test_data()
+
 
 @pytest.fixture(scope="module")
 def clfs():
@@ -50,6 +47,7 @@ def clfs():
 # Prediction Labels
 # -----------------------
 
+
 @pytest.mark.parametrize("thres,method,weights", param_grid)
 def test_prediction_labels(data, clfs, thres, method, weights):
     X_train, _, _, _ = data
@@ -61,18 +59,18 @@ def test_prediction_labels(data, clfs, thres, method, weights):
     clust_rank = ranker.clust_rank_
     consensus_rank = ranker.consensus_rank_
 
-    assert (cdf_rank is not None)
-    assert (clust_rank is not None)
-    assert (consensus_rank is not None)
-    assert (rankings is not None)
+    assert cdf_rank is not None
+    assert clust_rank is not None
+    assert consensus_rank is not None
+    assert rankings is not None
 
     n_clfs = len(clfs)
     n_thres = len(thres) if isinstance(thres, list) else 1
     len_models = n_clfs * n_thres
 
-    assert (len(cdf_rank) == len_models)
-    assert (len(clust_rank) == len_models)
-    assert (len(consensus_rank) == len_models)
-    assert (len(rankings) == len_models)
+    assert len(cdf_rank) == len_models
+    assert len(clust_rank) == len_models
+    assert len(consensus_rank) == len_models
+    assert len(rankings) == len_models
 
-    assert (len(set(rankings)) == len_models)
+    assert len(set(rankings)) == len_models

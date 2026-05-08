@@ -31,7 +31,7 @@ def pytest_runtest_logreport(report):
         sys.stdout.write("-" * len(file_name) + "\n")
         _printed_files.add(file_name)
 
-    name = f"{file_name.replace('.py','')}:{func_name}"
+    name = f"{file_name.replace('.py', '')}:{func_name}"
 
     # Print function header once
     if not _progress[name]["printed"]:

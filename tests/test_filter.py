@@ -19,8 +19,7 @@ from pythresh.thresholds.filter import FILTER
 # Param grid
 # -----------------------
 
-methods = ["gaussian", "savgol", "hilbert", "wiener",
-           "medfilt", "decimate", "detrend", "resample"]
+methods = ["gaussian", "savgol", "hilbert", "wiener", "medfilt", "decimate", "detrend", "resample"]
 
 sigmas = ["auto", int(200**0.6), int(200**0.75)]
 score_cases = [
@@ -34,6 +33,7 @@ param_grid = list(product(methods, sigmas, score_cases))
 # -----------------------
 # Fixtures
 # -----------------------
+
 
 @pytest.fixture(scope="module")
 def data():
@@ -49,6 +49,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("method,sigma,score_case", param_grid)
 def test_eval(scores, method, sigma, score_case):
@@ -70,6 +71,7 @@ def test_eval(scores, method, sigma, score_case):
 # Fit
 # -----------------------
 
+
 @pytest.mark.parametrize("score_case", score_cases)
 def test_fit(scores, score_case):
     _, idx = score_case
@@ -85,6 +87,7 @@ def test_fit(scores, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_predict(scores, score_case):
@@ -103,6 +106,7 @@ def test_predict(scores, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_test_data(data, scores, score_case):
@@ -126,6 +130,7 @@ def test_test_data(data, scores, score_case):
 # -----------------------
 # Save / Load
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):

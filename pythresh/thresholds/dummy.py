@@ -39,7 +39,7 @@ class DUMMY(BaseThresholder):
 
     """
 
-    def __init__(self, contam=None, fallback='warn', random_state=1234):
+    def __init__(self, contam=None, fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
 
@@ -67,7 +67,7 @@ class DUMMY(BaseThresholder):
         decision = self._data_setup(decision)
 
         eps = np.finfo(decision.dtype).eps
-        perc = (1 - self.contam)*100
+        perc = (1 - self.contam) * 100
         limit = np.percentile(decision, perc) + eps
 
         self._check_threshold(limit)

@@ -89,7 +89,7 @@ class CONF:
         scores = check_array(decision, ensure_2d=False)
 
         # Eval initial threshold
-        scores = ((scores - scores.min()) / (scores.max() - scores.min()))
+        scores = (scores - scores.min()) / (scores.max() - scores.min())
 
         self.thresh.fit(scores)
         labels = self.thresh.labels_
@@ -100,60 +100,47 @@ class CONF:
         index = np.arange(len(scores))
 
         for _ in range(self.n_test):
-
             if bound:
-
                 thr_test = self._valid_thresh(scores, labels)
 
             else:
-
                 thr_test = self._invalid_thresh(scores, labels, index)
 
             boundings.append(thr_test)
 
-            self.random_state = self.random_state + \
-                1 if self.random_state else self.random_state
+            self.random_state = self.random_state + 1 if self.random_state else self.random_state
 
         # Compute the confidence interval and identify uncertain data points
         if bound:
-
             n = len(boundings) - 1
-            t_crit = stats.t.ppf(1-self.alpha, df=n)
+            t_crit = stats.t.ppf(1 - self.alpha, df=n)
 
-            ci = t_crit * np.std(boundings)/(np.sqrt(n))
+            ci = t_crit * np.std(boundings) / (np.sqrt(n))
 
-            uncertain_indices = np.where(
-                (scores >= bound-ci) & (scores <= bound+ci))[0]
+            uncertain_indices = np.where((scores >= bound - ci) & (scores <= bound + ci))[0]
 
         else:
-
             boundings = np.vstack(boundings).T
             count = np.count_nonzero(~np.isnan(boundings), axis=1)
 
             # Apply two sample t-test
-            cnf = np.nansum(boundings, axis=1)/np.maximum(count, 1)
+            cnf = np.nansum(boundings, axis=1) / np.maximum(count, 1)
             cnf_in = cnf[labels == 0]
             cnf_out = cnf[labels == 1]
 
             n = len(cnf) - 2
-            t_crit = stats.t.ppf(1-self.alpha, df=n)
+            t_crit = stats.t.ppf(1 - self.alpha, df=n)
 
-            ci = t_crit * np.sqrt(
-                (np.var(cnf_in, ddof=1) / len(cnf_in)) +
-                (np.var(cnf_out, ddof=1) / len(cnf_out)))
+            ci = t_crit * np.sqrt((np.var(cnf_in, ddof=1) / len(cnf_in)) + (np.var(cnf_out, ddof=1) / len(cnf_out)))
 
-            uncertain_indices = np.where(((labels == 1) & (cnf < cnf_out.mean()-ci)) |
-                                         ((labels == 0) & (cnf > cnf_in.mean()+ci)))[0]
+            uncertain_indices = np.where(((labels == 1) & (cnf < cnf_out.mean() - ci)) | ((labels == 0) & (cnf > cnf_in.mean() + ci)))[0]
 
         return uncertain_indices.tolist()
 
     def _valid_thresh(self, scores, labels):
         """Thresholding test for non-classification type thresholders."""
         # Split data and threshold
-        _, sco_split, _, _ = train_test_split(scores, labels,
-                                              test_size=self.split,
-                                              stratify=labels,
-                                              random_state=self.random_state)
+        _, sco_split, _, _ = train_test_split(scores, labels, test_size=self.split, stratify=labels, random_state=self.random_state)
 
         self.thresh.fit(sco_split)
 
@@ -164,10 +151,7 @@ class CONF:
         # Split data and threshold
         info = np.zeros(len(scores)) * np.nan
 
-        _, sco_split, _, _, _, ind = train_test_split(scores, labels, index,
-                                                      test_size=self.split,
-                                                      stratify=labels,
-                                                      random_state=self.random_state)
+        _, sco_split, _, _, _, ind = train_test_split(scores, labels, index, test_size=self.split, stratify=labels, random_state=self.random_state)
 
         self.thresh.fit(sco_split)
         lbls = self.thresh.labels_

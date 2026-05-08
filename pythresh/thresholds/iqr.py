@@ -69,20 +69,18 @@ class IQR(BaseThresholder):
         """
         decision = self._data_setup(decision)
 
-        arg_map = {'old': 'interpolation', 'new': 'method'}
-        arg_name = (arg_map['new'] if 'method' in
-                    inspect.signature(np.percentile).parameters
-                    else arg_map['old'])
+        arg_map = {"old": "interpolation", "new": "method"}
+        arg_name = arg_map["new"] if "method" in inspect.signature(np.percentile).parameters else arg_map["old"]
 
         # First quartile (Q1)
-        P1 = np.percentile(decision, 25, **{arg_name: 'midpoint'})
+        P1 = np.percentile(decision, 25, **{arg_name: "midpoint"})
 
         # Third quartile (Q3)
-        P3 = np.percentile(decision, 75, **{arg_name: 'midpoint'})
+        P3 = np.percentile(decision, 75, **{arg_name: "midpoint"})
 
         # Calculate IQR and generate limit
-        iqr = abs(P3-P1)
-        limit = P3 + 1.5*iqr
+        iqr = abs(P3 - P1)
+        limit = P3 + 1.5 * iqr
 
         self.thresh_ = limit
 

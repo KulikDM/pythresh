@@ -9,6 +9,7 @@ from pyod.utils.data import generate_data
 # Data / Scores
 # -----------------------
 
+
 def generate_train_test_data(
     n_train=200,
     n_test=100,
@@ -36,9 +37,7 @@ def build_scores(X_train):
 
     single_score = clfs[0].fit(X_train).decision_scores_
 
-    multiple_scores = np.vstack([
-        clf.fit(X_train).decision_scores_ for clf in clfs
-    ]).T
+    multiple_scores = np.vstack([clf.fit(X_train).decision_scores_ for clf in clfs]).T
 
     return [single_score, multiple_scores]
 
@@ -48,10 +47,7 @@ def build_test_scores(X_train, X_test):
 
     single = clfs[0].fit(X_train).decision_function(X_test)
 
-    multi = np.vstack([
-        clf.fit(X_train).decision_function(X_test)
-        for clf in clfs
-    ]).T
+    multi = np.vstack([clf.fit(X_train).decision_function(X_test) for clf in clfs]).T
 
     return [single, multi]
 
@@ -59,6 +55,7 @@ def build_test_scores(X_train, X_test):
 # -----------------------
 # Assertions
 # -----------------------
+
 
 def check_labels(labels, scores_shape):
     assert labels.shape == scores_shape[:1]

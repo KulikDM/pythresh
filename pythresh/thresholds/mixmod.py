@@ -58,11 +58,10 @@ class MIXMOD(BaseThresholder):
 
     """
 
-    def __init__(self, method='mean', tol=1e-5, max_iter=250, random_state=1234):
+    def __init__(self, method="mean", tol=1e-5, max_iter=250, random_state=1234):
 
         super().__init__()
-        dists = [stats.expon, stats.fisk, stats.gamma, stats.laplace, stats.t,
-                 stats.lognorm, stats.norm, stats.uniform, stats.pareto]
+        dists = [stats.expon, stats.fisk, stats.gamma, stats.laplace, stats.t, stats.lognorm, stats.norm, stats.uniform, stats.pareto]
 
         self.combs = list(combinations(dists, 2))
 
@@ -94,10 +93,10 @@ class MIXMOD(BaseThresholder):
         mix_scores = decision + 1
 
         # Create a KDE of the decision scores
-        points = max(len(decision)*3, 1000)
+        points = max(len(decision) * 3, 1000)
         x = np.linspace(1, 2, points)
 
-        if self.method == 'ks':
+        if self.method == "ks":
             kde = stats.gaussian_kde(mix_scores, bw_method=0.1)
 
         mixtures = []
@@ -106,7 +105,6 @@ class MIXMOD(BaseThresholder):
 
         # Fit all possible combinations of dists to the scores
         for comb in self.combs:
-
             mix = MixtureModel([comb[0], comb[1]], self.tol, self.max_iter)
             try:
                 mix.fit(mix_scores)
@@ -123,7 +121,7 @@ class MIXMOD(BaseThresholder):
                 continue
 
             # Evaluate the fit
-            if self.method == 'ks':
+            if self.method == "ks":
                 stat, _ = stats.ks_2samp(kde(x), mix.pdf(x))
             else:
                 stat = x[crossings[-1]]
@@ -133,7 +131,7 @@ class MIXMOD(BaseThresholder):
             crossing.append(crossings[-1])
 
         # Use the highest fit score
-        if self.method == 'ks':
+        if self.method == "ks":
             max_stat = np.argmax(scores)
         else:
             diff = np.mean(scores) - np.array(scores)
@@ -148,6 +146,7 @@ class MIXMOD(BaseThresholder):
         self.mixture_ = mixture
 
         return cut(mix_scores, limit)
+
 
 # This portion of code is derived from the GitHub repository marcsingleton/mixmod
 # which is licensed under the MIT License. Copyright (c) 2022 Marc Singleton
@@ -175,30 +174,24 @@ class MixtureModel:
 
         # Get closed-form estimator for initial estimation
         for component, param in zip(self.components, self.params):
-
             cfe = MLES().cfes[component.name]
             param_init = {**cfe(data), **param}
             params_opt.append(param_init)
 
-        ll0 = self._get_loglikelihood(data, self.components,
-                                      params_opt, weights_opt)
+        ll0 = self._get_loglikelihood(data, self.components, params_opt, weights_opt)
 
         # Apply Expectation-Maximization
         for numiter in range(1, self.max_iter + 1):
-
-            expts = self._get_posterior(
-                data, self.components, params_opt, weights_opt)
+            expts = self._get_posterior(data, self.components, params_opt, weights_opt)
             weights_opt = expts.sum(axis=1) / expts.sum()
 
             for component, param_opt, expt in zip(self.components, params_opt, expts):
-
                 # Get MLE function and update parameters
                 mle = MLES().mles[component.name]
                 opt = mle(data, expt=expt, initial=param_opt)
                 param_opt.update(opt)
 
-            ll = self._get_loglikelihood(
-                data, self.components, params_opt, weights_opt)
+            ll = self._get_loglikelihood(data, self.components, params_opt, weights_opt)
 
             # Test numerical exception then convergence
             if np.isnan(ll) or np.isinf(ll):
@@ -222,7 +215,7 @@ class MixtureModel:
         """Return array of posterior probabilities of data for each component of mixture model."""
         return self._get_posterior(data, self.components, self.params, self.weights)
 
-    def pdf(self, x, component='sum'):
+    def pdf(self, x, component="sum"):
         """Return pdf evaluated at x."""
         ps = self._get_pdfstack(x, self.components, self.params, self.weights)
         return ps.sum(axis=0)
@@ -245,8 +238,7 @@ class MixtureModel:
     def _get_pdfstack(self, data, components, params, weights):
         """Return array of pdfs evaluated at data for each component of mixture model."""
         model_params = zip(components, params, weights)
-        ps = [weight * component.pdf(data, **param)
-              for component, param, weight in model_params]
+        ps = [weight * component.pdf(data, **param) for component, param, weight in model_params]
 
         return np.stack(ps, axis=0)
 
@@ -276,7 +268,7 @@ class MLES:
         def fisk_shape(c):
             # Compute summands
             r = data / scale
-            s = 1 / c + np.log(r) - 2 * np.log(r) * r ** c / (1 + r ** c)
+            s = 1 / c + np.log(r) - 2 * np.log(r) * r**c / (1 + r**c)
 
             return (expt * s).sum()
 
@@ -303,11 +295,11 @@ class MLES:
         # Moments
         logdata = np.log(data)
         m1 = (logdata * expt).sum() / expt.sum()
-        m2 = (logdata ** 2 * expt).sum() / expt.sum()
+        m2 = (logdata**2 * expt).sum() / expt.sum()
 
         # Estimators
-        ests['c'] = np.pi / np.sqrt(3 * (m2 - m1 ** 2))
-        ests['scale'] = np.exp(m1)
+        ests["c"] = np.pi / np.sqrt(3 * (m2 - m1**2))
+        ests["scale"] = np.exp(m1)
 
         return ests
 
@@ -318,11 +310,11 @@ class MLES:
 
         # Moments
         m1 = (data * expt).sum() / expt.sum()
-        m2 = (data ** 2 * expt).sum() / expt.sum()
+        m2 = (data**2 * expt).sum() / expt.sum()
 
         # Estimators
-        ests['a'] = m1 ** 2 / (m2 - m1 ** 2)
-        ests['scale'] = (m2 - m1 ** 2) / m1
+        ests["a"] = m1**2 / (m2 - m1**2)
+        ests["scale"] = (m2 - m1**2) / m1
 
         return ests
 
@@ -335,7 +327,7 @@ class MLES:
         e = expt.sum()
         ed = (expt * data).sum()
         scale = ed / e
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         return ests
 
@@ -347,13 +339,13 @@ class MLES:
 
         # Scale parameter estimation
         fisk_scale = MLES.create_fisk_scale(data, expt)
-        scale = opt.newton(fisk_scale, initial['scale'])
-        ests['scale'] = scale
+        scale = opt.newton(fisk_scale, initial["scale"])
+        ests["scale"] = scale
 
         # Shape parameter estimation
         fisk_shape = MLES.create_fisk_shape(data, expt, scale)
-        c = opt.newton(fisk_shape, initial['c'])
-        ests['c'] = c
+        c = opt.newton(fisk_shape, initial["c"])
+        ests["c"] = c
 
         return ests
 
@@ -366,19 +358,19 @@ class MLES:
         # Shape parameter estimation
         gamma_shape = MLES.create_gamma_shape(data, expt)
         try:
-            a = opt.newton(gamma_shape, initial['a'])
+            a = opt.newton(gamma_shape, initial["a"])
         except ValueError:
-            lower = initial['a'] / 2
-            upper = initial['a'] * 2
+            lower = initial["a"] / 2
+            upper = initial["a"] * 2
             while np.sign(gamma_shape(lower)) == np.sign(gamma_shape(upper)):
                 lower /= 2
                 upper *= 2
             a = opt.brentq(gamma_shape, lower, upper)
-        ests['a'] = a
+        ests["a"] = a
 
         # Scale parameter estimation
         scale = (expt * data).sum() / (a * expt.sum())
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         return ests
 
@@ -399,13 +391,13 @@ class MLES:
             m = (e_cum[idx] - e_cum[idx - 1]) / (data[idx] - data[idx - 1])
             b = e_cum[idx] - m * data[idx]
             loc = (cm - b) / m
-        ests['loc'] = loc
+        ests["loc"] = loc
 
         # Scale parameter estimation
         e = expt.sum()
         d_abserr = abs(data - loc)
         scale = (expt * d_abserr).sum() / e
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         return ests
 
@@ -418,13 +410,13 @@ class MLES:
         e = expt.sum()
         elogd = (expt * np.log(data)).sum()
         scale = np.exp(elogd / e)
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         # Shape parameter estimation
         e = expt.sum()
         logd_sqerr = (np.log(data) - np.log(scale)) ** 2
         s = np.sqrt((expt * logd_sqerr).sum() / e)
-        ests['s'] = s
+        ests["s"] = s
 
         return ests
 
@@ -437,13 +429,13 @@ class MLES:
         e = expt.sum()
         ed = (expt * data).sum()
         loc = ed / e
-        ests['loc'] = loc
+        ests["loc"] = loc
 
         # Scale parameter estimation
         e = expt.sum()
         d_sqerr = (data - loc) ** 2
         scale = np.sqrt((expt * d_sqerr).sum() / e)
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         return ests
 
@@ -454,13 +446,13 @@ class MLES:
 
         # Scale parameter estimation
         scale = min(data)
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         # Shape parameter estimation
         e = expt.sum()
         elogd = (expt * np.log(data)).sum()
         b = e / (elogd - e * np.log(scale))
-        ests['b'] = b
+        ests["b"] = b
 
         return ests
 
@@ -470,11 +462,11 @@ class MLES:
 
         # Location parameter estimation
         loc = min(data)
-        ests['loc'] = loc
+        ests["loc"] = loc
 
         # Scale parameter estimation
         scale = max(data) - loc
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         return ests
 
@@ -487,32 +479,32 @@ class MLES:
         e = expt.sum()
         ed = (expt * data).sum()
         loc = ed / e
-        ests['loc'] = loc
+        ests["loc"] = loc
 
         # Scale parameter estimation
         e = expt.sum()
         w_data = data - loc
         scale = np.sqrt((expt * w_data**2).sum() / e)
-        ests['scale'] = scale
+        ests["scale"] = scale
 
         # Effective degrees of freedom estimation
         w_sum_squares = (expt**2).sum()
         w_sum = expt.sum()
         df = w_sum**2 / w_sum_squares
-        ests['df'] = df
+        ests["df"] = df
 
         return ests
 
-    mles = {'expon': mle_expon,
-            'fisk': mle_fisk,
-            'gamma': mle_gamma,
-            'laplace': mle_laplace,
-            'lognorm': mle_lognorm,
-            'norm': mle_norm,
-            'pareto': mle_pareto,
-            'uniform': mle_uniform,
-            't': mle_t}
+    mles = {
+        "expon": mle_expon,
+        "fisk": mle_fisk,
+        "gamma": mle_gamma,
+        "laplace": mle_laplace,
+        "lognorm": mle_lognorm,
+        "norm": mle_norm,
+        "pareto": mle_pareto,
+        "uniform": mle_uniform,
+        "t": mle_t,
+    }
 
-    cfes = {**mles,
-            'fisk': mm_fisk,
-            'gamma': mm_gamma}
+    cfes = {**mles, "fisk": mm_fisk, "gamma": mm_gamma}

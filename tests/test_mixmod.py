@@ -19,7 +19,7 @@ from pythresh.thresholds.mixmod import MIXMOD
 # Param grid
 # -----------------------
 
-methods = ['mean', 'ks']
+methods = ["mean", "ks"]
 tols = [1e-3, 1e-5, 1e-8, 1e-12]
 max_iters = [50, 100, 250, 500]
 score_cases = [
@@ -33,6 +33,7 @@ param_grid = list(product(methods, tols, max_iters, score_cases))
 # -----------------------
 # Fixtures
 # -----------------------
+
 
 @pytest.fixture(scope="module")
 def data():
@@ -48,6 +49,7 @@ def scores(data):
 # -----------------------
 # Eval
 # -----------------------
+
 
 @pytest.mark.parametrize("method,tol,max_iter,score_case", param_grid)
 def test_eval(scores, method, tol, max_iter, score_case):
@@ -67,22 +69,17 @@ def test_eval(scores, method, tol, max_iter, score_case):
 
     nscores = thres.dscores_ + 1
 
-    assert (callable(thres.mixture_.loglikelihood) and
-        (_ := thres.mixture_.loglikelihood(nscores))
-        is not None)
+    assert callable(thres.mixture_.loglikelihood) and (_ := thres.mixture_.loglikelihood(nscores)) is not None
 
-    assert (callable(thres.mixture_.pdf) and
-        (_ := thres.mixture_.pdf(nscores))
-        is not None)
+    assert callable(thres.mixture_.pdf) and (_ := thres.mixture_.pdf(nscores)) is not None
 
-    assert (callable(thres.mixture_.posterior) and
-        (_ := thres.mixture_.posterior(nscores))
-        is not None)
+    assert callable(thres.mixture_.posterior) and (_ := thres.mixture_.posterior(nscores)) is not None
 
 
 # -----------------------
 # Fit
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_fit(scores, score_case):
@@ -99,6 +96,7 @@ def test_fit(scores, score_case):
 # -----------------------
 # Predict
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_predict(scores, score_case):
@@ -117,6 +115,7 @@ def test_predict(scores, score_case):
 # -----------------------
 # Train/Test
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_test_data(data, scores, score_case):
@@ -140,6 +139,7 @@ def test_test_data(data, scores, score_case):
 # -----------------------
 # Save / Load
 # -----------------------
+
 
 @pytest.mark.parametrize("score_case", score_cases)
 def test_save_and_load(tmp_path, scores, score_case):

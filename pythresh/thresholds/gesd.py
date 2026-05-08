@@ -81,7 +81,7 @@ class GESD(BaseThresholder):
 
     """
 
-    def __init__(self, max_outliers='auto', alpha=0.05, fallback='warn', random_state=1234):
+    def __init__(self, max_outliers="auto", alpha=0.05, fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.max_outliers = max_outliers
@@ -113,7 +113,7 @@ class GESD(BaseThresholder):
         eps = np.finfo(decision.dtype).eps
         limit = 1.0 + eps
 
-        if self.max_outliers == 'auto':
+        if self.max_outliers == "auto":
             self.max_outliers = len(decision) // 2
 
         for _ in range(self.max_outliers):

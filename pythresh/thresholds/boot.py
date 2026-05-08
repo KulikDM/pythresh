@@ -89,13 +89,8 @@ class BOOT(BaseThresholder):
         """
         decision = self._data_setup(decision)
 
-        limit1, limit2 = stats.bootstrap(
-            decision.reshape(1, -1),
-            np.std,
-            paired=True,
-            random_state=self.random_state
-        ).confidence_interval
+        limit1, limit2 = stats.bootstrap(decision.reshape(1, -1), np.std, paired=True, random_state=self.random_state).confidence_interval
 
-        self.thresh_ = (limit1+limit2)/2
+        self.thresh_ = (limit1 + limit2) / 2
 
-        return cut(decision, (limit1+limit2)/2)
+        return cut(decision, (limit1 + limit2) / 2)

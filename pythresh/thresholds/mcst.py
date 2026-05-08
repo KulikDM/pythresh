@@ -91,7 +91,7 @@ class MCST(BaseThresholder):
 
     """
 
-    def __init__(self, fallback='warn', random_state=1234):
+    def __init__(self, fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.random_state = random_state
@@ -120,8 +120,7 @@ class MCST(BaseThresholder):
         p_std = stats.shapiro(decision).pvalue
 
         # Create random dataset to insert and test p-values
-        rnd = stats.uniform.rvs(loc=0, scale=1, size=len(
-            decision), random_state=self.random_state)
+        rnd = stats.uniform.rvs(loc=0, scale=1, size=len(decision), random_state=self.random_state)
         rnd = normalize(rnd)
         povr = []
 
@@ -130,12 +129,10 @@ class MCST(BaseThresholder):
         # distribution has a lower or higher p-value
         # If higher record these potential outlier values
         for i in range(len(rnd)):
-
             arr = np.append(decision, rnd[i])
             p_check = stats.shapiro(arr).pvalue
 
             if p_check > p_std:
-
                 p_std = p_check
                 povr.append(rnd[i])
 

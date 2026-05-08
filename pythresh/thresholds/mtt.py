@@ -54,7 +54,7 @@ class MTT(BaseThresholder):
 
     """
 
-    def __init__(self, alpha=0.01, fallback='warn', random_state=1234):
+    def __init__(self, alpha=0.01, fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.alpha = alpha if alpha <= 0.5 else 1 - alpha
@@ -86,16 +86,15 @@ class MTT(BaseThresholder):
         limit = 1.0 + eps
 
         while True:
-
             # Calculate the rejection threshold
             n = len(arr)
-            t = stats.t.ppf(1-self.alpha, df=n-2)
-            thres = (t * (n - 1))/(np.sqrt(n) * np.sqrt(n - 2 + t**2))
-            delta = np.abs(arr[-1] - arr.mean())/arr.std()
+            t = stats.t.ppf(1 - self.alpha, df=n - 2)
+            thres = (t * (n - 1)) / (np.sqrt(n) * np.sqrt(n - 2 + t**2))
+            delta = np.abs(arr[-1] - arr.mean()) / arr.std()
 
             if delta > thres:
                 limit = arr[-1]
-                arr = np.delete(arr, n-1)
+                arr = np.delete(arr, n - 1)
 
             else:
                 break

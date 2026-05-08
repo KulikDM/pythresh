@@ -102,32 +102,30 @@ class WIND(BaseThresholder):
 
         # Create a normal distribution and normalize
         size = min(len(decision), 1500)
-        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0,
-                              random_state=self.random_state)
+        norm = stats.norm.rvs(size=size, loc=0.0, scale=1.0, random_state=self.random_state)
         norm = normalize(norm)
 
         # Create a KDE of the labels and the normal distribution
         # Generate KDE
-        val_data, dat_range = gen_kde(decision, 0, 1, len(decision)*3)
-        val_norm, _ = gen_kde(norm, 0, 1, len(decision)*3)
+        val_data, dat_range = gen_kde(decision, 0, 1, len(decision) * 3)
+        val_norm, _ = gen_kde(norm, 0, 1, len(decision) * 3)
 
         # Get the rsquared value
         r2 = val_data**2 + val_norm**2
 
-        val_data = val_data/np.max(val_data)
-        val_norm = val_norm/np.max(val_norm)
+        val_data = val_data / np.max(val_data)
+        val_norm = val_norm / np.max(val_norm)
 
         # Find the first derivatives of the decision and norm kdes
         # with respect to the decision scores
-        deriv_data = np.gradient(val_data, dat_range[1]-dat_range[0])
-        deriv_norm = np.gradient(val_norm, dat_range[1]-dat_range[0])
+        deriv_data = np.gradient(val_data, dat_range[1] - dat_range[0])
+        deriv_norm = np.gradient(val_norm, dat_range[1] - dat_range[0])
 
         # Compute integrand
-        integrand = self._dtheta(
-            val_data, val_norm, deriv_data, deriv_norm, r2)
+        integrand = self._dtheta(val_data, val_norm, deriv_data, deriv_norm, r2)
 
         # Integrate to find winding numbers mean intersection point
-        limit = integrate.simpson(integrand)/np.sum((val_data+val_norm)/2)
+        limit = integrate.simpson(integrand) / np.sum((val_data + val_norm) / 2)
 
         self.thresh_ = limit
 
@@ -135,4 +133,4 @@ class WIND(BaseThresholder):
 
     def _dtheta(self, x, y, dx, dy, r2):
         """Calculate dtheta for the integrand."""
-        return (x*dy - y*dx)/r2
+        return (x * dy - y * dx) / r2

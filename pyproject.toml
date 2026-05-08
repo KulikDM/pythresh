@@ -207,6 +207,7 @@ ignore = [
     "B007",                 # ignore unused loop variable warnings
     "C408",                 # ignore unnecessary dict() call
     "RUF012",               # ignore mutable default value
+    "RUF018",               # ignore assignment expressions in assert
 ]
 
 [tool.ruff.lint.pydocstyle]
