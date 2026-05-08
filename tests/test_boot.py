@@ -119,14 +119,14 @@ def test_test_data(data, scores, score_case):
 
 
 @pytest.mark.parametrize("score_case", score_cases)
-def test_save_and_load(tmp_pathres, scores, score_case):
+def test_save_and_load(tmp_path, scores, score_case):
     _, idx = score_case
     s = scores[idx]
 
     thres = BOOT()
     thres.fit(s)
 
-    file = tmp_pathres / "model.pkl"
+    file = tmp_path / "model.pkl"
     joblib.dump(thres, file)
 
     loaded = joblib.load(file)

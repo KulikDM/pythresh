@@ -1,2 +1,2 @@
 # Force consistent line endings everywhere
-* text=auto eol=lfs
+* text=auto eol=lf
