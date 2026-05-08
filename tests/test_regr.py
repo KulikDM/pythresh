@@ -1,6 +1,8 @@
+import sys
 from itertools import product
 
 import joblib
+import numpy as np
 import pytest
 from numpy.testing import assert_equal
 from utils import (
@@ -12,6 +14,9 @@ from utils import (
     check_scores_normalized,
     generate_train_test_data,
 )
+
+if sys.platform == "darwin":
+    pytest.skip("REGR tests disabled on macOS", allow_module_level=True)
 
 from pythresh.thresholds.regr import REGR
 
@@ -141,3 +146,31 @@ def test_save_and_load(tmp_path, scores, score_case):
     loaded = joblib.load(file)
 
     assert_equal(thres.predict(s), loaded.predict(s))
+
+
+# -----------------------
+# Memory Fallback
+# -----------------------
+
+
+@pytest.mark.skipif(sys.platform == "darwin", reason="Skip on macOS")
+def test_eval_memory_error_fallback(monkeypatch):
+    import scipy.stats as stats
+
+    def boom(*args, **kwargs):
+        raise MemoryError()
+
+    monkeypatch.setattr(stats, "siegelslopes", boom, raising=True)
+
+    assert stats.siegelslopes is boom
+
+    scores = np.random.rand(1000).astype(float)
+
+    thres = REGR(method="siegel")
+    labels = thres.eval(scores)
+
+    eps = np.finfo(scores.dtype).eps
+
+    assert thres.thresh_ == 1.0 + eps
+    assert labels.shape == scores.shape
+    assert_equal(labels, 0)
