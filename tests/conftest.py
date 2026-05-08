@@ -2,6 +2,12 @@ import os
 import sys
 from collections import defaultdict
 
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
 _progress = defaultdict(lambda: {"printed": False})
 _printed_files = set()
 
