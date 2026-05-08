@@ -42,7 +42,7 @@ jobs:
       run: ruff format --check .
     - name: Test with pytest
       run: |
-        pytest -vs --doctest-modules --cov-fail-under=90 --cov-branch --cov=pythresh --cov-report=term-missing --cov-report=xml --continue-on-collection-errors
+        pytest -q -r f --doctest-modules --cov-fail-under=90 --cov-branch --cov=pythresh --cov-report=term-missing --cov-report=xml --continue-on-collection-errors
     - name: Upload coverage to Codecov (partial)
       uses: codecov/codecov-action@v5
       with:

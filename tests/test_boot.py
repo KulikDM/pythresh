@@ -66,7 +66,7 @@ def test_fit(scores, score_case):
     thres = BOOT()
     thres.fit(s)
 
-    check_fitted_attributes(thres, expect_thresresh=True)
+    check_fitted_attributes(thres, expect_thresh=True)
     check_labels(thres.labels_, s.shape)
 
 

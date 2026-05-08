@@ -181,6 +181,7 @@ exclude = ["*.ipynb"]
 
 # Enable auto-fixing
 fix = true
+respect-gitignore = true
 
 [tool.ruff.lint]
 select = [
@@ -226,20 +227,23 @@ quote-style = "double"     # matches double-quote-string-fixer
 indent-style = "space"
 line-ending = "lf"         # matches mixed-line-ending
 
+skip-magic-trailing-comma = false
+
 # --------------------------------------------------------------------------------------------------
 # Pytest
 # --------------------------------------------------------------------------------------------------
 [tool.pytest.ini_options]
-addopts = """
--vs
---doctest-modules
---cov=pythresh
---cov-branch
---cov-report=term-missing
---cov-report=xml
---cov-fail-under=90
---continue-on-collection-errors
-"""
+addopts = [
+    "-q",
+    "-r f",
+    "--doctest-modules",
+    "--cov=pythresh",
+    "--cov-branch",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+    "--cov-fail-under=90",
+    "--continue-on-collection-errors"
+]
 testpaths = ["tests"]
 
 [tool.coverage.run]
