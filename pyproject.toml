@@ -1,0 +1,258 @@
+[build-system]
+requires = ["setuptools>= 77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# --------------------------------------------------------------------------------------------------
+# Project metadata (PEP 621)
+# --------------------------------------------------------------------------------------------------
+[project]
+name = "pythresh"
+dynamic = ["version"]
+description = "A Python toolbox for outlier detection thresholding in machine learning and data science"
+readme = { file = "README.rst", content-type = "text/x-rst" }
+requires-python = ">=3.8"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+
+keywords = [
+    "outlier-detection",
+    "anomaly-detection",
+    "thresholding",
+    "machine-learning",
+    "data-science",
+    "statistics",
+    "unsupervised-learning",
+]
+
+authors = [
+    { name = "Daniel Kulik" },
+]
+maintainers = [
+    { name = "Daniel Kulik" },
+]
+
+# --------------------------------------------------------------------------------------------------
+# Classifiers
+# --------------------------------------------------------------------------------------------------
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Information Technology",
+
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+
+    "Operating System :: OS Independent",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "numpy>=1.19",
+    "pyod",
+    "scikit-learn>=0.22.0",
+    "scipy>=1.5.1",
+]
+
+# --------------------------------------------------------------------------------------------------
+# Optional dependencies
+# --------------------------------------------------------------------------------------------------
+[project.optional-dependencies]
+
+# Full feature set
+extra = [
+    "joblib>=0.14.1",
+    "pandas",
+    "ruptures",
+    "scikit-lego",
+    "torch",
+    "tqdm",
+    "xgboost>=2.0.0,<2.1.0",
+    "pyclustering @ https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip",
+]
+
+# Dev / testing / linting
+dev = [
+    # --- constraints ---
+    "numpy>=1.19,<2.4.0",
+
+    # --- feature deps ---
+    "joblib>=0.14.1",
+    "pandas",
+    "ruptures",
+    "scikit-lego",
+    "torch",
+    "tqdm",
+    "xgboost>=2.0.0,<2.1.0",
+    "pyclustering @ https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip",
+
+    # --- dev tools ---
+    "pytest",
+    "pytest-cov",
+    "mypy",
+    "cython",
+    "ruff",
+    "pre-commit",
+]
+
+# Documentation
+docs = [
+    "docutils",
+    "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-datatables",
+    "sphinxcontrib-bibtex",
+    "sphinxcontrib-images",
+]
+
+# --------------------------------------------------------------------------------------------------
+# URLs
+# --------------------------------------------------------------------------------------------------
+[project.urls]
+Homepage = "https://github.com/KulikDM/pythresh"
+Repository = "https://github.com/KulikDM/pythresh"
+Documentation = "https://pythresh.readthedocs.io/en/latest/"
+
+# --------------------------------------------------------------------------------------------------
+# setuptools config
+# --------------------------------------------------------------------------------------------------
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = { attr = "pythresh.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pythresh", "pythresh.*"]
+exclude = ["tests", "tests.*"]
+
+
+[tool.setuptools.package-data]
+pythresh = [
+    "models/*.pkl",
+    "models/*.json",
+]
+
+# --------------------------------------------------------------------------------------------------
+# Automated model publish versioning
+# --------------------------------------------------------------------------------------------------
+[tool.bumpversion]
+current_version = "1.0.3"
+commit = true
+tag = false
+
+[[tool.bumpversion.files]]
+filename = "pythresh/__init__.py"
+search = "__version__ = \"{current_version}\""
+replace = "__version__ = \"{new_version}\""
+
+[tool.bumpversion.parts]
+patch = {}
+minor = {}
+major = {}
+
+# --------------------------------------------------------------------------------------------------
+# Linting and Cleanup
+# --------------------------------------------------------------------------------------------------
+[tool.ruff]
+line-length = 180
+target-version = "py38"
+exclude = ["*.ipynb"]
+
+# Enable auto-fixing
+fix = true
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # bugbear
+    "C4",  # comprehensions
+    "SIM", # simplifications
+    "D",   # docstrings (pydocstyle)
+    "RUF", # ruff specific
+    "PIE", # misc improvements
+]
+
+ignore = [
+    "D100", "D101",         # allow missing docstrings
+    "D102", "D103",         # allow missing docstrings
+    "D104", "D401",         # allow missing docstrings
+    "D402", "D404",         # allow missing docstrings
+    "SIM115",               # ignore context manager suggestion
+    "B028",                 # ignore missing stacklevel in warnings
+    "SIM108",               # ignore ternary operator suggestions
+    "B007",                 # ignore unused loop variable warnings
+    "C408",                 # ignore unnecessary dict() call
+    "RUF012",               # ignore mutable default value
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.isort]
+known-first-party = ["pythresh"]
+combine-as-imports = true
+split-on-trailing-comma = true
+force-single-line = false
+force-wrap-aliases = true
+
+
+[tool.ruff.format]
+quote-style = "double"     # matches double-quote-string-fixer
+indent-style = "space"
+line-ending = "lf"         # matches mixed-line-ending
+
+# --------------------------------------------------------------------------------------------------
+# Pytest
+# --------------------------------------------------------------------------------------------------
+[tool.pytest.ini_options]
+addopts = """
+-vs
+--doctest-modules
+--cov=pythresh
+--cov-branch
+--cov-report=term-missing
+--cov-report=xml
+--cov-fail-under=90
+--continue-on-collection-errors
+"""
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["pythresh"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+
+# --------------------------------------------------------------------------------------------------
+# Mypy
+# --------------------------------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.8"
+strict = false
+ignore_missing_imports = true

@@ -1,5 +1,1 @@
-from . import thresholds
-
-# TODO: add version information here
-
-__all__ = ['thresholds']
+__version__ = '1.0.3'
