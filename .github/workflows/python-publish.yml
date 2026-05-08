@@ -13,64 +13,67 @@ on:
 
 jobs:
   release:
-    if: contains(github.event.head_commit.message, 'bump') && github.actor == 'KulikDM'
+    if: contains(github.event.head_commit.message, 'release') && github.actor == 'KulikDM'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - name: Increment version number
+      - name: Install dependencies
         run: |
-          printf "Reading the current version from the file\n"
+          set -euo pipefail
+          pip install --upgrade pip setuptools wheel
+          pip install bump-my-version build twine
 
-          current_version=$(grep -oP "__version__ = '\K(\d+\.\d+\.\d+)" pythresh/version.py)
+      - name: Configure Git
+        run: |
+          git config --global user.name "${{ secrets.GIT_USER }}"
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
 
-          if [[ -z $current_version ]]; then
-              current_version="0.0.0"
-              printf "\nIssue fetching current version $current_version\n"
-              exit 1
-          fi
+      - name: Bump version
+        run: |
+          set -euo pipefail
 
-          printf "\nIncrementing the version number\n"
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          echo "Commit message: $COMMIT_MSG"
 
-          IFS='.' read -r -a version_parts <<< "$current_version"
-          patch=$(( ${version_parts[2]} + 1 ))
-
-          printf "\nHandling version part overflow\n"
-
-          if (( patch > 9 )); then
-              patch=0
-              minor=$(( ${version_parts[1]} + 1 ))
-
-              if (( minor > 9 )); then
-                  minor=0
-                  major=$(( ${version_parts[0]} + 1 ))
-              else
-                  major=${version_parts[0]}
-              fi
+          if [[ "$COMMIT_MSG" =~ patch ]]; then
+              BUMP_TYPE="patch"
+          elif [[ "$COMMIT_MSG" =~ minor ]]; then
+              BUMP_TYPE="minor"
+          elif [[ "$COMMIT_MSG" =~ major ]]; then
+              BUMP_TYPE="major"
           else
-              minor=${version_parts[1]}
-              major=${version_parts[0]}
+              echo "No bump type found, defaulting to patch."
+              BUMP_TYPE="patch"
           fi
 
-          new_version="${major}.${minor}.$patch"
+          echo "Bumping version type: $BUMP_TYPE"
+          bump-my-version bump "$BUMP_TYPE" \
+            --no-tag \
+            --commit \
+            --message "Bump version: {current_version} → {new_version} [skip ci]"
 
-          printf "\nUpdating the file with the new version number\n"
+      - name: Push version bump
+        run: |
+          set -euo pipefail
+          git push --follow-tags
 
-          sed -i "s/__version__ = '${current_version}'/__version__ = '${new_version}'/" pythresh/version.py
+          new_version=$(PYTHONPATH=. python -c "import pythresh; print(pythresh.__version__)")
 
           echo "new_version=$new_version" >> $GITHUB_ENV
           echo "WORK_DIR=$(pwd)" >> $GITHUB_ENV
 
-          printf "\nNew version updated from $current_version to $new_version\n"
-
       - name: Validate new PyPi version
         run: |
+          set -euo pipefail
           printf "Getting lastest pypi information\n"
 
           url="https://pypi.org/pypi/pythresh/json"
@@ -84,24 +87,6 @@ jobs:
           fi
 
           printf "\nNew version validated\n"
-
-      - name: Commit and push changes
-        env:
-          GIT_USER: ${{ secrets.GIT_USER }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
-        run: |
-          printf "Preparing to commit\n"
-
-          git config --global user.name $GIT_USER
-          git config --global user.email $GIT_EMAIL
-          git commit -a -m "Updated to version ${{ env.new_version }}"
-
-          printf "\nPushing the changes to the repository\n"
-
-          git push origin main
-
-          printf "\nNew version commited\n"
           sleep 1m
 
       - name: Publish to PyPI
@@ -109,12 +94,16 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
+          set -euo pipefail
           printf "Preparing to install dependancies\n"
 
-          python -m pip install --upgrade pip setuptools wheel twine build
           python -m build
 
           printf "\nPackage created locally\n"
+
+          twine check --strict dist/*
+
+          printf "\nChecks passed\n"
 
           twine upload dist/*
 
@@ -123,11 +112,12 @@ jobs:
 
       - name: Validate new Conda version
         run: |
+          set -euo pipefail
           printf "Getting lastest pypi information\n"
 
           url="https://pypi.org/pypi/pythresh/json"
           latest_version=$(curl -s "$url" | jq -r '.info.version')
-          latest_sha256=$(curl -s "$url" | jq -r '.releases."'"$latest_version"'"[1].digests."sha256"')
+          latest_sha256=$(curl -s "$url" | jq -r '.releases."'"$latest_version"'"[] | select(.packagetype == "sdist") | .digests.sha256')
 
           echo "Validating version update"
 
@@ -144,13 +134,11 @@ jobs:
       - name: Update Conda feedstock repository
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
+          set -euo pipefail
           printf "Preparing to clone feedstock repository\n"
 
-          git config --global user.name $GIT_USER
-          git config --global user.email $GIT_EMAIL
           git clone https://$GIT_USER:$GIT_TOKEN@github.com/conda-forge/pythresh-feedstock.git
 
           cd pythresh-feedstock
@@ -181,6 +169,7 @@ jobs:
         env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
+          set -euo pipefail
           printf "Preparing to create new GitHub release\n"
 
           cd "${{ env.WORK_DIR }}"
