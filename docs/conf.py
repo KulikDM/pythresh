@@ -12,27 +12,15 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 
-import os
-import re
 import sys
-from os.path import abspath, dirname
+from os.path import abspath
 
 sys.path.insert(0, abspath('..'))
-pythresh_dir = dirname(dirname(abspath(__file__)))
-
 
 try:
-    verpath = os.path.join(pythresh_dir, 'pythresh', 'version.py')
-    version_file = open(verpath)
-    __version__ = str(re.findall(r'\b\d+(?:\.\d+)+', version_file.read())[0])
-
-except Exception as error:
-    __version__ = '0.0.1'
-    sys.stderr.write("Warning: Could not open '%s' due %s\n" %
-                     (verpath, error))
-
-finally:
-    version_file.close()
+    from pythresh import __version__
+except ImportError:
+    __version__ = '0.0.1'  # fallback
 
 # -- Project information -----------------------------------------------------
 
