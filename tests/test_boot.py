@@ -85,7 +85,7 @@ def test_predict(scores, score_case):
 
     pred = check_predict_consistency(thres, s)
 
-    check_fitted_attributes(thres, expect_thresresh=True)
+    check_fitted_attributes(thres, expect_thresh=True)
     check_labels(pred, s.shape)
 
 
@@ -109,7 +109,7 @@ def test_test_data(data, scores, score_case):
 
     pred = thres.predict(test_s)
 
-    check_fitted_attributes(thres, expect_thresresh=True)
+    check_fitted_attributes(thres, expect_thresh=True)
     check_labels(pred, test_s.shape)
 
 
