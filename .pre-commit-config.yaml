@@ -9,6 +9,7 @@ repos:
       - id: name-tests-test
         always_run: true
         args: [--pytest-test-first]
+        exclude: ^tests/utils\.py$
       - id: mixed-line-ending
         args: [--fix=lf]
 
