@@ -17,6 +17,9 @@ repos:
     rev: v0.15.12
     hooks:
       - id: ruff
+        name: Fix code
         args: [--exit-non-zero-on-fix, --fix, --line-length=180]
         exclude: "\\.ipynb$"
-        name: Lint code
+      - id: ruff-format
+        name: Format code
+        exclude: "\\.ipynb$"
