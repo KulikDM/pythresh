@@ -32,7 +32,7 @@ param_grid = list(product(metrics, score_cases))
 
 @pytest.fixture(scope="module")
 def data():
-    return generate_train_test_data(n_train=1000)
+    return generate_train_test_data(n_train=10000)
 
 
 @pytest.fixture(scope="module")

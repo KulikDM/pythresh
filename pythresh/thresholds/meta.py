@@ -182,7 +182,7 @@ class META(BaseThresholder):
 
     @staticmethod
     @njit(fastmath=True, parallel=True)
-    def _wrap_around_discrepancy(data, check):
+    def _wrap_around_discrepancy(data, check): # pragma: no cover
         """Wrap-around Quasi-Monte Carlo discrepancy method."""
         n = data.shape[0]
         d = data.shape[1]

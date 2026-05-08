@@ -150,15 +150,18 @@ def test_save_and_load(tmp_path, scores, score_case):
 
 
 def test_eval_memory_error_fallback(monkeypatch):
+    import scipy.stats as stats
+
     def boom(*args, **kwargs):
         raise MemoryError()
 
-    scores = np.random.rand(1000)
+    monkeypatch.setattr(stats, "siegelslopes", boom, raising=True)
+
+    assert stats.siegelslopes is boom
+
+    scores = np.random.rand(1000).astype(float)
 
     thres = REGR(method="siegel")
-
-    monkeypatch.setattr("scipy.stats.siegelslopes", boom)
-
     labels = thres.eval(scores)
 
     eps = np.finfo(scores.dtype).eps
