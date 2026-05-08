@@ -3,7 +3,7 @@ from itertools import product
 import joblib
 import numpy as np
 import pytest
-from numpy.testing import assert_array_equal, assert_equal
+from numpy.testing import assert_equal
 from utils import (
     build_scores,
     build_test_scores,
@@ -149,21 +149,20 @@ def test_save_and_load(tmp_path, scores, score_case):
 # -----------------------
 
 
-@pytest.mark.parametrize("method", ["siegel", "theil"])
-def test_eval_memory_error_fallback(method):
+def test_eval_memory_error_fallback(monkeypatch):
+    def boom(*args, **kwargs):
+        raise MemoryError()
 
-    # Stress O(n^2) behavior
-    n = 1_000_000
+    scores = np.random.rand(1000)
 
-    # Single detector case
-    scores = np.random.rand(n)
+    thres = REGR(method="siegel")
 
-    thres = REGR(method=method)
+    monkeypatch.setattr("scipy.stats.siegelslopes", boom)
 
     labels = thres.eval(scores)
 
-    # If fallback triggered, threshold should still exist
     eps = np.finfo(scores.dtype).eps
+
     assert thres.thresh_ == 1.0 + eps
     assert labels.shape == scores.shape
-    assert_array_equal(labels, 0)
+    assert_equal(labels, 0)

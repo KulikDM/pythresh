@@ -86,7 +86,7 @@ extra = [
     "scikit-lego",
     "torch",
     "tqdm",
-    "xgboost>=2.0.0,<2.1.0",
+    "xgboost>=2.0.0",
     "pyclustering @ https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip",
 ]
 
@@ -102,7 +102,7 @@ dev = [
     "scikit-lego",
     "torch",
     "tqdm",
-    "xgboost>=2.0.0,<2.1.0",
+    "xgboost>=2.0.0",
     "pyclustering @ https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip",
 
     # --- dev tools ---
