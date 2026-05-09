@@ -11,7 +11,8 @@ dynamic = ["version"]
 description = "A Python toolbox for outlier detection thresholding in machine learning and data science"
 readme = { file = "README.rst", content-type = "text/x-rst" }
 requires-python = ">=3.8"
-license = { file = "LICENSE" }
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 
 keywords = [
     "outlier-detection",
@@ -86,7 +87,6 @@ extra = [
     "torch",
     "tqdm",
     "xgboost>=2.0.0",
-    "pyclustering @ https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip",
 ]
 
 # Dev / testing / linting
@@ -102,7 +102,6 @@ dev = [
     "torch",
     "tqdm",
     "xgboost>=2.0.0",
-    "pyclustering @ https://github.com/KulikDM/pyclustering/archive/Warning-Fix.zip",
 
     # --- dev tools ---
     "pytest",
@@ -156,7 +155,7 @@ pythresh = [
 # Automated model publish versioning
 # --------------------------------------------------------------------------------------------------
 [tool.bumpversion]
-current_version = "1.1.1"
+current_version = "1.0.3"
 commit = true
 tag = false
 
