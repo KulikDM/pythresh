@@ -46,7 +46,7 @@ plugins:
     config:
       minimum_severity: major
       tests_patterns:
-        - pythresh/test/**
+        - tests/**
 exclude_patterns:
   - "examples/"
-  - "**/test/"
+  - "tests/"
