@@ -105,7 +105,7 @@ jobs:
 
           printf "\nChecks passed\n"
 
-          twine upload dist/*
+          twine upload --verbose dist/*
 
           printf "\nNew PyPi release created\n"
           sleep 10m

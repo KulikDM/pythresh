@@ -11,8 +11,7 @@ dynamic = ["version"]
 description = "A Python toolbox for outlier detection thresholding in machine learning and data science"
 readme = { file = "README.rst", content-type = "text/x-rst" }
 requires-python = ">=3.8"
-license = "BSD-3-Clause"
-license-files = ["LICENSE"]
+license = { file = "LICENSE" }
 
 keywords = [
     "outlier-detection",
