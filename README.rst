@@ -20,9 +20,9 @@
    :alt: Documentation status
    :target: http://pythresh.readthedocs.io/?badge=latest
 
-.. |badge_testing| image:: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml/badge.svg
+.. |badge_testing| image:: https://github.com/KulikDM/pythresh/actions/workflows/ci.yml/badge.svg
    :alt: testing
-   :target: https://github.com/KulikDM/pythresh/actions/workflows/python-package.yml
+   :target: https://github.com/KulikDM/pythresh/actions/workflows/ci.yml
 
 .. |badge_coverage| image:: https://codecov.io/gh/KulikDM/pythresh/branch/main/graph/badge.svg?token=8ZAPXTLW9Y
    :alt: Codecov
