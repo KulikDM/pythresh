@@ -78,7 +78,7 @@ class YJ(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Generate KDE
-        val, _ = gen_kde(decision, 0, 1, len(decision)*3)
+        val, _ = gen_kde(decision, 0, 1, len(decision) * 3)
 
         # Use Yeo-Johnson transformation to reshape distribution
         # iterate to get average transformation
@@ -86,7 +86,7 @@ class YJ(BaseThresholder):
         for _ in range(50):
             scores = stats.yeojohnson(val)[0]
             mean_s += scores
-        mean_s = mean_s/50
+        mean_s = mean_s / 50
 
         # Set limit to the max value from the transformation
         limit = np.max(mean_s)

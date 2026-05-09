@@ -40,19 +40,17 @@ class CLF(BaseThresholder):
 
     """
 
-    def __init__(self, method='complex', random_state=1234):
+    def __init__(self, method="complex", random_state=1234):
 
         super().__init__()
 
-        if method == 'complex':
-
+        if method == "complex":
             self.m1 = 7.115947536708103
             self.m2 = -5.934885742167458
             self.m3 = -3.416078337348704
             self.c = 2.5731351150980992
 
         else:
-
             self.m = 4.0581548062264075
             self.c = -1.5357998356223497
 
@@ -60,7 +58,7 @@ class CLF(BaseThresholder):
         self.random_state = random_state
         np.random.seed(random_state)
 
-        self._attrs = ['_kde', '_knorm', '_pnorm', '_lnorm']
+        self._attrs = ["_kde", "_knorm", "_pnorm", "_lnorm"]
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -85,27 +83,26 @@ class CLF(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Calculate expected y
-        if self.method == 'complex':
-
+        if self.method == "complex":
             if self._kde is None:
                 kde = gaussian_kde(decision)
                 self._kde = kde
 
             pdf = self._kde.pdf(decision)
-            pdf = self._set_norm(pdf, '_knorm')
+            pdf = self._set_norm(pdf, "_knorm")
             pdf[pdf < 0] = 0
 
-            pdf = pdf**(1/10)
-            pdf = self._set_norm(pdf, '_pnorm')
+            pdf = pdf ** (1 / 10)
+            pdf = self._set_norm(pdf, "_pnorm")
 
             log = np.log(decision + 1)
-            log = self._set_norm(log, '_lnorm')
+            log = self._set_norm(log, "_lnorm")
             log[log < 0] = 0
 
-            pred = self.m1*decision + self.m2*log + self.m3*pdf + self.c
+            pred = self.m1 * decision + self.m2 * log + self.m3 * pdf + self.c
 
         else:
-            pred = self.m*decision + self.c
+            pred = self.m * decision + self.c
 
         # Determine labels
         pred[pred > 0] = 1

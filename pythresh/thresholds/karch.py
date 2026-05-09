@@ -49,7 +49,7 @@ class KARCH(BaseThresholder):
 
     """
 
-    def __init__(self, ndim=2, method='complex', random_state=1234):
+    def __init__(self, ndim=2, method="complex", random_state=1234):
 
         super().__init__()
         self.ndim = ndim
@@ -76,8 +76,7 @@ class KARCH(BaseThresholder):
         """
         decision = self._data_setup(decision)
 
-        if self.method == 'complex':
-
+        if self.method == "complex":
             # Create kde of scores
             val_data, _ = gen_kde(decision, 0, 1, len(decision))
             val_data = val_data.reshape(-1, 1)
@@ -109,7 +108,7 @@ class KARCH(BaseThresholder):
 
         sum_weights = np.sum(weights)
 
-        weighted_points = np.einsum('n,n...->n...', weights, points)
+        weighted_points = np.einsum("n,n...->n...", weights, points)
 
         mean = np.sum(weighted_points, axis=0) / sum_weights
         return mean

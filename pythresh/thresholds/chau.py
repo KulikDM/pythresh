@@ -81,7 +81,7 @@ class CHAU(BaseThresholder):
 
     """
 
-    def __init__(self, method='effective', random_state=1234):
+    def __init__(self, method="effective", random_state=1234):
 
         super().__init__()
         self.method = method
@@ -110,9 +110,9 @@ class CHAU(BaseThresholder):
         scaler = StandardScaler()
         z = scaler.fit_transform(decision.reshape(-1, 1))
 
-        if self.method == 'classic':
+        if self.method == "classic":
             N = len(z)
-        elif self.method == 'effective':
+        elif self.method == "effective":
             N = self._effective_sample_size_entropy(z)
 
         Pz = 1 / (2 * N)
@@ -140,7 +140,7 @@ class CHAU(BaseThresholder):
         x = np.asarray(x)
         N = len(x)
 
-        hist, _ = np.histogram(x, bins='auto', density=False)
+        hist, _ = np.histogram(x, bins="auto", density=False)
         hist = hist.astype(float)
 
         p = hist / hist.sum()

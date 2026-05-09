@@ -9,6 +9,7 @@ repos:
       - id: name-tests-test
         always_run: true
         args: [--pytest-test-first]
+        exclude: ^tests/utils\.py$
       - id: mixed-line-ending
         args: [--fix=lf]
 
@@ -16,6 +17,9 @@ repos:
     rev: v0.15.12
     hooks:
       - id: ruff
+        name: Fix code
         args: [--exit-non-zero-on-fix, --fix, --line-length=180]
         exclude: "\\.ipynb$"
-        name: Lint code
+      - id: ruff-format
+        name: Format code
+        exclude: "\\.ipynb$"

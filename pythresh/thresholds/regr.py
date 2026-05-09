@@ -63,7 +63,7 @@ class REGR(BaseThresholder):
          labels = thres.eval(decision_scores)
     """
 
-    def __init__(self, method='siegel', fallback='warn', random_state=1234):
+    def __init__(self, method="siegel", fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.method = method
@@ -90,15 +90,14 @@ class REGR(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Create a normal distribution and normalize
-        norm = np.random.default_rng(self.random_state).normal(
-            loc=0.0, scale=1.0, size=decision.shape)
+        norm = np.random.default_rng(self.random_state).normal(loc=0.0, scale=1.0, size=decision.shape)
         norm = normalize(norm)
 
         # Set limit to the y-intercept
         try:
-            if self.method == 'siegel':
+            if self.method == "siegel":
                 res = stats.siegelslopes(norm, decision)
-            elif self.method == 'theil':
+            elif self.method == "theil":
                 res = stats.theilslopes(norm, decision)
         except MemoryError:
             eps = np.finfo(decision.dtype).eps

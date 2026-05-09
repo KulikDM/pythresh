@@ -59,7 +59,7 @@ class AUCP(BaseThresholder):
 
     """
 
-    def __init__(self, fallback='warn', random_state=1234):
+    def __init__(self, fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.random_state = random_state
@@ -85,7 +85,7 @@ class AUCP(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Generate KDE
-        val, dat_range = gen_kde(decision, 0, 1, len(decision)*2)
+        val, dat_range = gen_kde(decision, 0, 1, len(decision) * 2)
         val = normalize(val)
 
         # Get the total area under the curve
@@ -93,7 +93,7 @@ class AUCP(BaseThresholder):
 
         # Get area percentage limit
         mean = np.mean(decision)
-        perc = mean+abs(mean-np.median(decision))
+        perc = mean + abs(mean - np.median(decision))
 
         # Apply the limit to where the area is less than that limit percentage
         # of the total area under the curve
@@ -101,10 +101,9 @@ class AUCP(BaseThresholder):
         limit = 1.0 + eps
 
         for i in range(len(dat_range)):
-
             splt_area = auc(dat_range[i:], val[i:])
 
-            if splt_area < perc*tot_area:
+            if splt_area < perc * tot_area:
                 limit = dat_range[i]
                 break
 

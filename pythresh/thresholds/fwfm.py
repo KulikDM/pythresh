@@ -42,7 +42,7 @@ class FWFM(BaseThresholder):
     to the base width divided by the number of scores.
     """
 
-    def __init__(self, fallback='warn', random_state=1234):
+    def __init__(self, fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.random_state = random_state
@@ -68,7 +68,7 @@ class FWFM(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Generate KDE
-        val, _ = gen_kde(decision, -1, 1, len(decision)*3)
+        val, _ = gen_kde(decision, -1, 1, len(decision) * 3)
         val = normalize(val)
 
         # Find the greatest peak of the KDE
@@ -79,7 +79,7 @@ class FWFM(BaseThresholder):
 
         # Normalize and set limit
         eps = np.finfo(decision.dtype).eps
-        limit = base_width[0]/len(val) if len(base_width) > 0 else 1.0 + eps
+        limit = base_width[0] / len(val) if len(base_width) > 0 else 1.0 + eps
 
         self._check_threshold(limit)
 

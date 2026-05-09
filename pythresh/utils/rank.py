@@ -85,10 +85,9 @@ class RANK:
          rankings = ranker.eval(X)
     """
 
-    def __init__(self, od_models, thresh, method='model', weights=None):
+    def __init__(self, od_models, thresh, method="model", weights=None):
 
-        self.od_models = od_models if isinstance(
-            od_models, list) else [od_models]
+        self.od_models = od_models if isinstance(od_models, list) else [od_models]
         self.thr_models = thresh if isinstance(thresh, list) else [thresh]
         self.method = method
 
@@ -126,23 +125,20 @@ class RANK:
         # Apply outlier detection and threshold
         for i, clf in enumerate(self.od_models):
             for j, thr in enumerate(self.thr_models):
-
                 clf.fit(X)
                 scores = clf.decision_scores_
 
                 if not (isinstance(thr, (float, int))):
-
                     thr.fit(scores)
                     labels = thr.labels_
 
                 else:
-
                     threshold = np.percentile(scores, 100 * (1 - thr))
 
-                    labels = (scores > threshold).astype('int').ravel()
+                    labels = (scores > threshold).astype("int").ravel()
 
                 # Normalize scores between 0 and 1
-                scores = (scores - scores.min())/(scores.max() - scores.min())
+                scores = (scores - scores.min()) / (scores.max() - scores.min())
 
                 # Calculate metrics
                 cdf_scores.append(self._cdf_metric(scores, labels))
@@ -151,22 +147,18 @@ class RANK:
                 all_scores.append(scores)
                 all_labels.append(labels)
 
-                contam.append(labels.sum()/len(labels))
+                contam.append(labels.sum() / len(labels))
                 models.append((od_names[i], thr_names[j]))
 
         # Get consensus based scores
-        consensus_scores = self._consensus_metric(X, all_scores,
-                                                  all_labels, contam)
+        consensus_scores = self._consensus_metric(X, all_scores, all_labels, contam)
 
         # Equally rank metrics
-        cdf_rank = self._equi_rank(np.vstack(cdf_scores),
-                                   [True, True])
+        cdf_rank = self._equi_rank(np.vstack(cdf_scores), [True, True])
 
-        clust_rank = self._equi_rank(np.vstack(clust_scores),
-                                     [True, True])
+        clust_rank = self._equi_rank(np.vstack(clust_scores), [True, True])
 
-        consensus_rank = self._equi_rank(np.vstack(consensus_scores),
-                                         [False, False])
+        consensus_rank = self._equi_rank(np.vstack(consensus_scores), [False, False])
 
         # Get combined metric rank
         comb = [cdf_rank, clust_rank, consensus_rank]
@@ -179,20 +171,17 @@ class RANK:
         self.clust_rank_ = [models[rank] for rank in clust_rank]
         self.consensus_rank_ = [models[rank] for rank in consensus_rank]
 
-        if self.method == 'model':
-
+        if self.method == "model":
             # Load trained ranking model
-            clf = 'rank_model_XGB.json'
-            model_path = files('pythresh.models').joinpath(clf)
+            clf = "rank_model_XGB.json"
+            model_path = files("pythresh.models").joinpath(clf)
             ranker = xgb.XGBRanker()
             ranker.load_model(model_path)
 
             # Transform data
             scaler = MinMaxScaler()
 
-            model_data = np.concatenate([np.vstack(consensus_scores),
-                                         np.vstack(cdf_scores),
-                                         np.vstack(clust_scores)], axis=1)
+            model_data = np.concatenate([np.vstack(consensus_scores), np.vstack(cdf_scores), np.vstack(clust_scores)], axis=1)
 
             model_data = scaler.fit_transform(model_data)
             model_data[:, -1] = np.vstack(clust_scores)[:, -1]
@@ -229,11 +218,9 @@ class RANK:
         dat_range = np.linspace(0, 1, 5000)
 
         # Integrate KDEs to get CDFs
-        cdf1 = np.array([kde1.integrate_box_1d(-1e-30, x)
-                         for x in dat_range])
+        cdf1 = np.array([kde1.integrate_box_1d(-1e-30, x) for x in dat_range])
 
-        cdf2 = np.array([kde2.integrate_box_1d(-1e-30, x)
-                         for x in dat_range])
+        cdf2 = np.array([kde2.integrate_box_1d(-1e-30, x) for x in dat_range])
 
         # Calculate metrics
         was = stats.wasserstein_distance(cdf1, cdf2)
@@ -264,7 +251,6 @@ class RANK:
         sortings = []
 
         for i in range(data.shape[1]):
-
             check = np.argsort(data[:, i].squeeze())
 
             if order[i]:
@@ -289,7 +275,6 @@ class RANK:
                     scores[value] += weights[j] * ls.index(value)
 
         # Get best to worst performing indexes
-        sorted_scores = sorted(scores.keys(),
-                               key=lambda x: scores[x])
+        sorted_scores = sorted(scores.keys(), key=lambda x: scores[x])
 
         return sorted_scores

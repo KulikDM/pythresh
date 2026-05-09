@@ -50,14 +50,20 @@ class FILTER(BaseThresholder):
     dscores_ : 1D array of decomposed decision scores
     """
 
-    def __init__(self, method='savgol', sigma='auto', random_state=1234):
+    def __init__(self, method="savgol", sigma="auto", random_state=1234):
 
         super().__init__()
         self.method = method
-        self.method_funcs = {'gaussian': self._GAU_fltr, 'savgol': self._SAV_fltr,
-                             'hilbert': self._HIL_fltr, 'wiener': self._WIE_fltr,
-                             'medfilt': self._MED_fltr, 'decimate': self._DEC_fltr,
-                             'detrend': self._DET_fltr, 'resample': self._RES_fltr}
+        self.method_funcs = {
+            "gaussian": self._GAU_fltr,
+            "savgol": self._SAV_fltr,
+            "hilbert": self._HIL_fltr,
+            "wiener": self._WIE_fltr,
+            "medfilt": self._MED_fltr,
+            "decimate": self._DEC_fltr,
+            "detrend": self._DET_fltr,
+            "resample": self._RES_fltr,
+        }
 
         self.sigma = sigma
         self.random_state = random_state
@@ -83,8 +89,7 @@ class FILTER(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Get sigma variables for various applications for each filter
-        sig = (len(decision)*np.std(decision) if self.sigma == 'auto'
-               else self.sigma)
+        sig = len(decision) * np.std(decision) if self.sigma == "auto" else self.sigma
 
         # Filter scores
         fltr = self.method_funcs[str(self.method)](decision, sig)
@@ -100,12 +105,11 @@ class FILTER(BaseThresholder):
 
     def _SAV_fltr(self, decision, sig):
         """Savgol filter scores."""
-        sig = round(0.5*sig) if self.sigma == 'auto' else sig
+        sig = round(0.5 * sig) if self.sigma == "auto" else sig
 
-        sig = sig+1 if sig % 2 == 0 else sig
+        sig = sig + 1 if sig % 2 == 0 else sig
 
-        return signal.savgol_filter(decision, window_length=round(sig),
-                                    polyorder=1)
+        return signal.savgol_filter(decision, window_length=round(sig), polyorder=1)
 
     def _HIL_fltr(self, decision, sig):
         """Hilbert filter scores."""
@@ -119,22 +123,20 @@ class FILTER(BaseThresholder):
         """Medfilt filter scores."""
         sig = round(sig)
 
-        sig = sig+1 if sig % 2 == 0 else sig
+        sig = sig + 1 if sig % 2 == 0 else sig
 
         return signal.medfilt(decision, kernel_size=[sig])
 
     def _DEC_fltr(self, decision, sig):
         """Decimate filter scores."""
-        return signal.decimate(decision, q=round(sig), ftype='fir')
+        return signal.decimate(decision, q=round(sig), ftype="fir")
 
     def _DET_fltr(self, decision, sig):
         """Detrend filter scores."""
-        return signal.detrend(decision, bp=np.linspace(0, len(decision)-1,
-                                                       round(sig)).astype(int))
+        return signal.detrend(decision, bp=np.linspace(0, len(decision) - 1, round(sig)).astype(int))
 
     def _RES_fltr(self, decision, sig):
         """Resampling filter scores."""
-        sig = np.sqrt(sig) if self.sigma == 'auto' else sig
+        sig = np.sqrt(sig) if self.sigma == "auto" else sig
 
-        return signal.resample(decision, num=round(np.sqrt(len(decision))),
-                               window=round(sig))
+        return signal.resample(decision, num=round(np.sqrt(len(decision))), window=round(sig))

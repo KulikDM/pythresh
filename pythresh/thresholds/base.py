@@ -32,7 +32,7 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
-    def __init__(self, fallback='warn'):
+    def __init__(self, fallback="warn"):
 
         self.fallback = fallback
 
@@ -40,9 +40,7 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
         self.confidence_interval_ = None
         self.dscores_ = None
 
-        self._base_attrs = ['_prenorm', '_postnorm',
-                            '_decomp', '_is_fitted',
-                            'labels_']
+        self._base_attrs = ["_prenorm", "_postnorm", "_decomp", "_is_fitted", "labels_"]
         self._set_attributes(self._base_attrs, None)
 
     @abc.abstractmethod
@@ -101,32 +99,26 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
         check_is_fitted(self)
 
         if self.thresh_ is None:
-
             return self.eval(X)
 
         else:
-
             X = self._data_setup(X)
             return cut(X, self.thresh_)
 
     def __sklearn_is_fitted__(self):
         """Check fitted status and return a Boolean value."""
-        return hasattr(self, '_is_fitted') and self._is_fitted
+        return hasattr(self, "_is_fitted") and self._is_fitted
 
     def _data_setup(self, data):
         """Data preprocessing step to normalize and decompose data."""
         if self._is_fitted is None:
             self._set_attributes(self._base_attrs, None)
 
-        self._set_norm(data, '_prenorm', return_norm=False)
+        self._set_norm(data, "_prenorm", return_norm=False)
 
-        data, self._decomp = check_scores(data,
-                                          self._decomp,
-                                          self._prenorm[0],
-                                          self._prenorm[1],
-                                          random_state=self.random_state)
+        data, self._decomp = check_scores(data, self._decomp, self._prenorm[0], self._prenorm[1], random_state=self.random_state)
 
-        data = self._set_norm(data, '_postnorm')
+        data = self._set_norm(data, "_postnorm")
 
         if self._is_fitted is None:
             self.dscores_ = data
@@ -146,15 +138,14 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
         """Setting attributes required for fit predict tracking."""
         if isinstance(values, list):
             if len(attrs) != len(values):
-                raise ValueError(
-                    'Length of attribute list and value list must be the same')
+                raise ValueError("Length of attribute list and value list must be the same")
             for attr, val in zip(attrs, values):
                 setattr(self, attr, val)
         else:
             for attr in attrs:
                 setattr(self, attr, values)
 
-    def _check_threshold(self,  threshold, max_contam=None):
+    def _check_threshold(self, threshold, max_contam=None):
         """Check if the threshold is valid and act according to fallback.
 
         Parameters
@@ -170,13 +161,13 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
 
         if threshold > 1 or threshold < max_contam:
             msg = f"Computed threshold {threshold} is outside the range of {max_contam} and 1."
-            if self.fallback == 'ignore':
+            if self.fallback == "ignore":
                 pass
-            elif self.fallback == 'warn':
+            elif self.fallback == "warn":
                 limit = 1 if max_contam == 0 else max_contam
-                msg += f'\nDefaulting to threshold limit {limit}'
+                msg += f"\nDefaulting to threshold limit {limit}"
                 warnings.warn(msg, UserWarning)
-            elif self.fallback == 'raise':
+            elif self.fallback == "raise":
                 raise ValueError(msg)
             else:
                 raise ValueError(f"Unknown fallback value: {self.fallback}")

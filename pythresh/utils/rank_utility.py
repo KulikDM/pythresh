@@ -66,7 +66,7 @@ def Contam_score(data, labels, contam):
 
     # Find the deviation of the contamination of each model from the decomposed model
     thr = np.zeros(len(labels[0]))
-    thr[dat > np.percentile(dat, (1-np.mean(contam))*100)] = 1
+    thr[dat > np.percentile(dat, (1 - np.mean(contam)) * 100)] = 1
 
     dev = np.sum(np.abs(np.vstack(labels) - thr), axis=1)
 

@@ -59,20 +59,18 @@ class COMB(BaseThresholder):
     dscores_ : 1D array of decomposed decision scores
     """
 
-    def __init__(self, thresholders='default', max_contam=0.5, method='stacked', fallback='warn', random_state=1234):
+    def __init__(self, thresholders="default", max_contam=0.5, method="stacked", fallback="warn", random_state=1234):
 
         super().__init__(fallback=fallback)
         self.thresholders = thresholders
         self.max_contam = max_contam
-        func = {'mean': np.mean, 'median': np.median,
-                'mode': stats.mode, 'bagged': BaggingClassifier,
-                'stacked': StackingClassifier}
+        func = {"mean": np.mean, "median": np.median, "mode": stats.mode, "bagged": BaggingClassifier, "stacked": StackingClassifier}
         self.method = method
         self.method_func = func[method]
         self.random_state = random_state
         np.random.seed(random_state)
 
-        self._attrs = ['_clf', '_active_thresholders']
+        self._attrs = ["_clf", "_active_thresholders"]
 
     def eval(self, decision):
         """Outlier/inlier evaluation process for decision scores.
@@ -100,13 +98,12 @@ class COMB(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Initialize thresholders
-        if self.thresholders == 'default':
+        if self.thresholders == "default":
             from .dsn import DSN
             from .filter import FILTER
             from .ocsvm import OCSVM
 
-            self.thresholders = [DSN(random_state=self.random_state), FILTER(),
-                                 OCSVM(random_state=self.random_state)]
+            self.thresholders = [DSN(random_state=self.random_state), FILTER(), OCSVM(random_state=self.random_state)]
 
         # Apply each thresholder
         contam = []
@@ -116,24 +113,22 @@ class COMB(BaseThresholder):
         thresh_to_use = self._active_thresholders if self._active_thresholders else self.thresholders
 
         for thresholder in thresh_to_use:
-
             if self._is_fitted is not True:
                 thresholder.fit(scores)
 
             labels = thresholder.predict(scores)
-            outlier_ratio = np.sum(labels)/counts
+            outlier_ratio = np.sum(labels) / counts
 
             if not self._is_fitted and outlier_ratio < self.max_contam:
                 self._active_thresholders.append(thresholder)
 
             if self._is_fitted or outlier_ratio < self.max_contam:
-
                 contam.append(labels)
                 ratio.append(outlier_ratio)
 
         if not contam:
             self._check_threshold(0.0, self.max_contam)
-            q = 100*(1-self.max_contam)
+            q = 100 * (1 - self.max_contam)
             limit = np.percentile(decision, q)
             self.thresh_ = limit
             self.confidence_interval_ = [limit, limit]
@@ -145,24 +140,18 @@ class COMB(BaseThresholder):
 
         # Get lower and upper confidence interval
         if self._is_fitted is not True:
-            low, high = stats.bootstrap(ratio.reshape(1, -1),
-                                        np.mean, paired=True,
-                                        random_state=self.random_state).confidence_interval
+            low, high = stats.bootstrap(ratio.reshape(1, -1), np.mean, paired=True, random_state=self.random_state).confidence_interval
             self.confidence_interval_ = [low, high]
 
         # Get [mean, median, mode, bagged, or stacked] of inliers
-        if (self.method == 'bagged') or (self.method == 'stacked'):
-
+        if (self.method == "bagged") or (self.method == "stacked"):
             X = np.tile(decision, len(contam))
             y = np.hstack(contam)
 
-            if (self.method == 'bagged'):
-                model = self.method_func(LaplaceGaussianNB(),
-                                         n_estimators=12,
-                                         random_state=self.random_state)
+            if self.method == "bagged":
+                model = self.method_func(LaplaceGaussianNB(), n_estimators=12, random_state=self.random_state)
             else:
-                model = self.method_func([('Ridge', RidgeClassifier()),
-                                          ('GNB', LaplaceGaussianNB())])
+                model = self.method_func([("Ridge", RidgeClassifier()), ("GNB", LaplaceGaussianNB())])
 
             if self._clf is None:
                 model.fit(X.reshape(-1, 1), y)
@@ -174,8 +163,7 @@ class COMB(BaseThresholder):
 
             return lbls
 
-        elif self.method == 'mode':
-
+        elif self.method == "mode":
             self._clf = True
             self.thresh_ = None
             lbls = self.method_func(contam, axis=0)
@@ -183,13 +171,11 @@ class COMB(BaseThresholder):
             return np.squeeze(lbls[0])
 
         else:
-
             if self.thresh_ is None:
+                contam = np.sum(contam, axis=1) / contam.shape[1]
+                inlier_ratio = 1 - self.method_func(contam)
 
-                contam = np.sum(contam, axis=1)/contam.shape[1]
-                inlier_ratio = 1-self.method_func(contam)
-
-                idx = int(counts*inlier_ratio)
+                idx = int(counts * inlier_ratio)
                 ordered = np.sort(decision)
                 limit = ordered[idx] if idx < counts else 1.0
                 self.thresh_ = limit
@@ -200,7 +186,6 @@ class COMB(BaseThresholder):
 
 
 class LaplaceGaussianNB(BaseEstimator, ClassifierMixin):
-
     def __init__(self):
 
         pass
@@ -215,13 +200,11 @@ class LaplaceGaussianNB(BaseEstimator, ClassifierMixin):
         dist = [stats.laplace, stats.norm]
 
         for c in self.classes_:
-
             subset_x = X[y == c]
 
-            self.models.append(dist[c](subset_x.mean(),
-                                       subset_x.std()))
+            self.models.append(dist[c](subset_x.mean(), subset_x.std()))
 
-            self.priors.append(len(subset_x)/len(X))
+            self.priors.append(len(subset_x) / len(X))
 
         return self
 
@@ -238,7 +221,6 @@ class LaplaceGaussianNB(BaseEstimator, ClassifierMixin):
         likelihoods = []
 
         for c in self.classes_:
-
             probs = self.priors[c] * self.models[c].pdf(X)
             likelihoods.append(probs)
 

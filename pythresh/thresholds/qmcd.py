@@ -61,7 +61,7 @@ class QMCD(BaseThresholder):
     discrepancy.
     """
 
-    def __init__(self, method='WD', lim='P', random_state=1234):
+    def __init__(self, method="WD", lim="P", random_state=1234):
 
         super().__init__()
         self.method = method
@@ -89,23 +89,17 @@ class QMCD(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Get the quasi Monte-Carlo discrepancy of the labels
-        disc = stats.qmc.discrepancy(
-            decision.reshape(-1, 1), method=self.method)
+        disc = stats.qmc.discrepancy(decision.reshape(-1, 1), method=self.method)
 
         # Set the limit to either the quantile or percentile of 1-discrepancy
-        if self.lim == 'Q':
+        if self.lim == "Q":
+            limit = np.quantile(decision, 1.0 - disc)
 
-            limit = np.quantile(decision, 1.0-disc)
+        elif self.lim == "P":
+            arg_map = {"old": "interpolation", "new": "method"}
+            arg_name = arg_map["new"] if "method" in inspect.signature(np.percentile).parameters else arg_map["old"]
 
-        elif self.lim == 'P':
-
-            arg_map = {'old': 'interpolation', 'new': 'method'}
-            arg_name = (arg_map['new'] if 'method' in
-                        inspect.signature(np.percentile).parameters
-                        else arg_map['old'])
-
-            limit = np.percentile(decision, (1.0-disc) *
-                                  100, **{arg_name: 'midpoint'})
+            limit = np.percentile(decision, (1.0 - disc) * 100, **{arg_name: "midpoint"})
 
         self.thresh_ = limit
 

@@ -41,13 +41,12 @@ class CPD(BaseThresholder):
 
     """
 
-    def __init__(self, method='Dynp', transform='cdf', random_state=1234):
+    def __init__(self, method="Dynp", transform="cdf", random_state=1234):
 
         super().__init__()
         self.method = method
         self.transform = transform
-        self.method_func = {'Dynp': rpt.Dynp(), 'KernelCPD': rpt.KernelCPD(kernel='rbf'),
-                            'Binseg': rpt.Binseg(), 'BottomUp': rpt.BottomUp()}
+        self.method_func = {"Dynp": rpt.Dynp(), "KernelCPD": rpt.KernelCPD(kernel="rbf"), "Binseg": rpt.Binseg(), "BottomUp": rpt.BottomUp()}
         self.random_state = random_state
         np.random.seed(random_state)
 
@@ -71,10 +70,10 @@ class CPD(BaseThresholder):
         decision = self._data_setup(decision)
 
         # Transform data prior to fit
-        if self.transform == 'cdf':
-            val_data, data_range = gen_cdf(decision, 0, 1, len(decision)*3)
+        if self.transform == "cdf":
+            val_data, data_range = gen_cdf(decision, 0, 1, len(decision) * 3)
         else:
-            val_data, data_range = gen_kde(decision, 0, 1, len(decision)*3)
+            val_data, data_range = gen_kde(decision, 0, 1, len(decision) * 3)
 
         # Change point detection
         det = self.method_func[self.method].fit(val_data)
