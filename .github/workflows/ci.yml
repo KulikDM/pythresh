@@ -44,7 +44,7 @@ jobs:
       run: |
         pytest -q -r f --doctest-modules --cov-fail-under=90 --cov-branch --cov=pythresh --cov-report=term-missing --cov-report=xml --continue-on-collection-errors
     - name: Upload coverage to Codecov (partial)
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v6
       with:
         files: ./coverage.xml
         flags: ${{ matrix.os }}-${{ matrix.python-version }}
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Finalize Codecov uploads
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           finalize: true
         env:
