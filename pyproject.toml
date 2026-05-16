@@ -11,13 +11,18 @@ dynamic = ["version"]
 description = "A Python toolbox for outlier detection thresholding in machine learning and data science"
 readme = { file = "README.rst", content-type = "text/x-rst" }
 requires-python = ">=3.8"
-license = "BSD-3-Clause"
+license = "BSD-2-Clause"
 license-files = ["LICENSE"]
 
 keywords = [
     "outlier-detection",
     "anomaly-detection",
+    "novelty detection",
+    "out-of-distribution detection",
     "thresholding",
+    "contamination-detection",
+    "filtering-algorithm",
+    "data-cleaning",
     "machine-learning",
     "data-science",
     "statistics",
@@ -129,6 +134,7 @@ docs = [
 Homepage = "https://github.com/KulikDM/pythresh"
 Repository = "https://github.com/KulikDM/pythresh"
 Documentation = "https://pythresh.readthedocs.io/en/latest/"
+Changelog = "https://github.com/KulikDM/pythresh/blob/main/CHANGES.txt"
 
 # --------------------------------------------------------------------------------------------------
 # setuptools config

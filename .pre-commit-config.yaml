@@ -14,7 +14,7 @@ repos:
         args: [--fix=lf]
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.15.12
+    rev: v0.15.13
     hooks:
       - id: ruff
         name: Fix code
