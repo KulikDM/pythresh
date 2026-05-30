@@ -1,4 +1,4 @@
-from importlib.resources import files
+from importlib.resources import as_file, files
 
 import joblib
 import numpy as np
@@ -109,8 +109,8 @@ class META(BaseThresholder):
 
         contam = []
         counts = len(decision)
-        model_path = files("pythresh.models").joinpath(clf)
-        model = joblib.load(model_path)
+        with as_file(files("pythresh.models").joinpath(clf)) as model_path:
+            model = joblib.load(model_path)
 
         # Sklearn 1.8.0 API patch
         for e in getattr(model, "estimators_", {}).values():

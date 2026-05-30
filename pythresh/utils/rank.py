@@ -1,4 +1,4 @@
-from importlib.resources import files
+from importlib.resources import as_file, files
 
 import numpy as np
 import scipy.stats as stats
@@ -174,9 +174,9 @@ class RANK:
         if self.method == "model":
             # Load trained ranking model
             clf = "rank_model_XGB.json"
-            model_path = files("pythresh.models").joinpath(clf)
             ranker = xgb.XGBRanker()
-            ranker.load_model(model_path)
+            with as_file(files("pythresh.models").joinpath(clf)) as model_path:
+                ranker.load_model(model_path)
 
             # Transform data
             scaler = MinMaxScaler()

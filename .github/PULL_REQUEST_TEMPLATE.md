@@ -22,6 +22,6 @@
 
 - [ ] Have you created a <NewThresholder>.py in ~/pythresh/thresholds/?
 - [ ] Have you created a <NewThresholder>\_example.py in ~/examples/?
-- [ ] Have you created a test\_<NewThresholder>.py in ~/pythresh/test/?
+- [ ] Have you created a test\_<NewThresholder>.py in ~/tests/?
 - [ ] Have you lint your code locally prior to submission?
 - [ ] Have you added a reference of the new thresholder in your explanation?
