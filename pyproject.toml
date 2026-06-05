@@ -96,9 +96,6 @@ extra = [
 
 # Dev / testing / linting
 dev = [
-    # --- constraints ---
-    "numpy>=1.19,<2.4.0",
-
     # --- feature deps ---
     "joblib>=0.14.1",
     "pandas",
