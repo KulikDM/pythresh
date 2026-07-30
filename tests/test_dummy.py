@@ -1,3 +1,4 @@
+import warnings
 from itertools import product
 
 import joblib
@@ -141,3 +142,24 @@ def test_save_and_load(tmp_path, scores, score_case):
     loaded = joblib.load(file)
 
     assert_equal(thres.predict(s), loaded.predict(s))
+
+
+# -----------------------
+# Regression: no spurious out-of-range warning
+# -----------------------
+
+
+@pytest.mark.parametrize("contam,score_case", param_grid)
+def test_no_spurious_threshold_warning(scores, contam, score_case):
+    # DUMMY's threshold is a percentile of min-max normalized scores plus eps.
+    # At the maximum (contam=0) the eps used to push the limit to 1 + eps and
+    # trip the "threshold outside the range" check on every call. It must not.
+    _, idx = score_case
+    s = scores[idx]
+
+    with warnings.catch_warnings(record=True) as record:
+        warnings.simplefilter("always")
+        DUMMY(contam=contam).eval(s)
+
+    offending = [w for w in record if "outside the range" in str(w.message)]
+    assert not offending, f"DUMMY emitted a spurious out-of-range warning: {[str(w.message) for w in offending]}"
