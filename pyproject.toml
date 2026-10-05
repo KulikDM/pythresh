@@ -103,7 +103,7 @@ dev = [
     # --- feature deps ---
     "joblib>=0.14.1",
     "pandas",
-    "ruptures",
+    "ruptures; python_version < '3.14'",
     "scikit-lego",
     "torch",
     "tqdm",

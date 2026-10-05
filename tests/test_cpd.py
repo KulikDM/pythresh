@@ -13,6 +13,8 @@ from utils import (
     generate_train_test_data,
 )
 
+pytest.importorskip("ruptures")
+
 from pythresh.thresholds.cpd import CPD
 
 # -----------------------
