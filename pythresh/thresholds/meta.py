@@ -3,15 +3,16 @@ from importlib.resources import as_file, files
 import joblib
 import numpy as np
 import pandas as pd
-import scipy.stats as stats
 import sklearn
 from numba import njit, prange
+from packaging.version import parse as parse_version
+from scipy import stats
 from sklearn.linear_model import RidgeClassifierCV
 from sklearn.preprocessing import MinMaxScaler
 
 from .base import BaseThresholder
 
-_NEEDS_CLASSES = tuple(map(int, sklearn.__version__.split(".")[:2])) >= (1, 8)
+_NEEDS_CLASSES = parse_version(sklearn.__version__) >= parse_version("1.8")
 
 
 class META(BaseThresholder):

@@ -55,6 +55,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 
     "Operating System :: OS Independent",
     "Operating System :: Microsoft :: Windows",
@@ -189,16 +190,25 @@ respect-gitignore = true
 
 [tool.ruff.lint]
 select = [
-    "E",   # pycodestyle
-    "F",   # pyflakes
-    "I",   # isort
-    "UP",  # pyupgrade
-    "B",   # bugbear
-    "C4",  # comprehensions
-    "SIM", # simplifications
-    "D",   # docstrings (pydocstyle)
-    "RUF", # ruff specific
-    "PIE", # misc improvements
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+    "B",    # bugbear
+    "A",    # flake8-builtins
+    "Q",    # flake8-quotes
+    "TID",  # tidy-imports
+    "PT",   # flake8-pytest-style
+    "NPY",  # numpy specific
+    "FURB", # modernize legacy
+    "PERF", # perflint
+    "PL",   # pylint
+    "TRY",  # tryceratops
+    "C4",   # comprehensions
+    "SIM",  # simplifications
+    "D",    # docstrings (pydocstyle)
+    "RUF",  # ruff specific
+    "PIE",  # misc improvements
 ]
 
 ignore = [
@@ -213,6 +223,13 @@ ignore = [
     "C408",                 # ignore unnecessary dict() call
     "RUF012",               # ignore mutable default value
     "RUF018",               # ignore assignment expressions in assert
+    "PLR0913", "PLR0917",   # ignore too many arguments
+    "PLC0415",              # ignore imports not top-level
+    "PLR0912", "PLR0915",   # ignore too many branches and statements
+    "PLR2004",              # ignore magic values
+    "TRY003",               # ignore message outside exception class
+    "NPY002",               # ignore random seed legacy
+    "PT006"                 # ignore pytest param type
 ]
 
 [tool.ruff.lint.pydocstyle]

@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.stats as stats
+from scipy import stats
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.ensemble import BaggingClassifier, StackingClassifier
 from sklearn.linear_model import RidgeClassifier
@@ -110,7 +110,7 @@ class COMB(BaseThresholder):
         ratio = []
         counts = len(decision)
 
-        thresh_to_use = self._active_thresholders if self._active_thresholders else self.thresholders
+        thresh_to_use = self._active_thresholders or self.thresholders
 
         for thresholder in thresh_to_use:
             if self._is_fitted is not True:
@@ -144,7 +144,7 @@ class COMB(BaseThresholder):
             self.confidence_interval_ = [low, high]
 
         # Get [mean, median, mode, bagged, or stacked] of inliers
-        if (self.method == "bagged") or (self.method == "stacked"):
+        if self.method in ["bagged", "stacked"]:
             X = np.tile(decision, len(contam))
             y = np.hstack(contam)
 
@@ -163,26 +163,25 @@ class COMB(BaseThresholder):
 
             return lbls
 
-        elif self.method == "mode":
+        if self.method == "mode":
             self._clf = True
             self.thresh_ = None
             lbls = self.method_func(contam, axis=0)
 
             return np.squeeze(lbls[0])
 
-        else:
-            if self.thresh_ is None:
-                contam = np.sum(contam, axis=1) / contam.shape[1]
-                inlier_ratio = 1 - self.method_func(contam)
+        if self.thresh_ is None:
+            contam = np.sum(contam, axis=1) / contam.shape[1]
+            inlier_ratio = 1 - self.method_func(contam)
 
-                idx = int(counts * inlier_ratio)
-                ordered = np.sort(decision)
-                limit = ordered[idx] if idx < counts else 1.0
-                self.thresh_ = limit
+            idx = int(counts * inlier_ratio)
+            ordered = np.sort(decision)
+            limit = ordered[idx] if idx < counts else 1.0
+            self.thresh_ = limit
 
-                self._clf = True
+            self._clf = True
 
-            return cut(decision, self.thresh_)
+        return cut(decision, self.thresh_)
 
 
 class LaplaceGaussianNB(BaseEstimator, ClassifierMixin):

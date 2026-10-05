@@ -114,3 +114,4 @@ v<1.1.0>, <05/08/2026> -- Updated docs infrastructure based on pyproject
 v<1.1.0>, <05/08/2026> -- Modernized repo infrastructure to use pyproject
 v<1.1.0>, <05/08/2026> -- Moved tests and updated them to use pytest
 v<1.1.0>, <05/08/2026> -- Modernized CI and publish pipelines
+v<1.1.2>, <08/29/2026> -- Support python 3.14

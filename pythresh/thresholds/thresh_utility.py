@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.stats as stats
+from scipy import stats
 from scipy.interpolate import interp1d
 from scipy.special import ndtr
 from sklearn.decomposition import TruncatedSVD

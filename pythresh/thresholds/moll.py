@@ -1,6 +1,5 @@
 import numpy as np
-import scipy.signal as signal
-from scipy import integrate
+from scipy import integrate, signal
 
 from .base import BaseThresholder
 from .thresh_utility import cut

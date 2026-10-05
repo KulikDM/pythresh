@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.stats as stats
+from scipy import stats
 from sklearn.model_selection import train_test_split
 from sklearn.utils import check_array
 

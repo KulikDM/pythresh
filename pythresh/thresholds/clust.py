@@ -19,12 +19,9 @@ from sklearn.utils import check_array
 from .base import BaseThresholder
 from .thresh_utility import check_scores
 
-try:
-    if parse_version(sklearn.__version__) >= parse_version("1.3"):
-        from sklearn.cluster import HDBSCAN
-    else:
-        raise ImportError
-except ImportError:
+if parse_version(sklearn.__version__) >= parse_version("1.3"):
+    from sklearn.cluster import HDBSCAN
+else:
     HDBSCAN = None
 
 

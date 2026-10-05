@@ -3,8 +3,8 @@ from itertools import product
 import joblib
 import numpy as np
 import pytest
-import scipy.stats as stats
 from numpy.testing import assert_equal
+from scipy import stats
 from utils import (
     build_scores,
     build_test_scores,

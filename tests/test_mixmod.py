@@ -69,11 +69,14 @@ def test_eval(scores, method, tol, max_iter, score_case):
 
     nscores = thres.dscores_ + 1
 
-    assert callable(thres.mixture_.loglikelihood) and (_ := thres.mixture_.loglikelihood(nscores)) is not None
+    assert callable(thres.mixture_.loglikelihood)
+    assert (_ := thres.mixture_.loglikelihood(nscores)) is not None
 
-    assert callable(thres.mixture_.pdf) and (_ := thres.mixture_.pdf(nscores)) is not None
+    assert callable(thres.mixture_.pdf)
+    assert (_ := thres.mixture_.pdf(nscores)) is not None
 
-    assert callable(thres.mixture_.posterior) and (_ := thres.mixture_.posterior(nscores)) is not None
+    assert callable(thres.mixture_.posterior)
+    assert (_ := thres.mixture_.posterior(nscores)) is not None
 
 
 # -----------------------

@@ -1,11 +1,9 @@
 from itertools import combinations
 
 import numpy as np
-import scipy.spatial.distance as distance
-import scipy.special as special
-import scipy.stats as stats
-from scipy import interpolate
+from scipy import interpolate, special, stats
 from scipy.integrate import simpson
+from scipy.spatial import distance
 from sklearn.covariance import MinCovDet
 
 from .base import BaseThresholder

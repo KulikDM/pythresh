@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.stats as stats
+from scipy import stats
 
 from .base import BaseThresholder
 

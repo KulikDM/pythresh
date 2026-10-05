@@ -1,7 +1,7 @@
 import numpy as np
-import scipy.stats as stats
 import torch
 import torch.optim as opt
+from scipy import stats
 from torch import nn
 from torch.distributions import Normal, kl_divergence
 from torch.nn.functional import softplus
@@ -159,9 +159,9 @@ class VAE(BaseThresholder):
 
         for _ in tqdm(range(self.epochs), ascii=True, desc="Training") if self.verbose else range(self.epochs):
             for x in self.data:
-                x = x.to(self.device)
+                batch = x.to(self.device)
                 optimizer.zero_grad()
-                _ = self.model.forward(x)
+                _ = self.model.forward(batch)
 
                 optimizer.step()
 
@@ -209,21 +209,20 @@ class VAE_model(nn.Module):
             return dict(loss=loss, kl=kl, recon_loss=log_lik, **pred_result)
 
         # calculate the mmd and the forward loss
-        else:
-            x = x.squeeze()
-            batch_size = len(x)
+        x = x.squeeze()
+        batch_size = len(x)
 
-            z = pred_result["latent_dist"].rsample([self.L])
-            z = z.view(self.L * batch_size, self.latent_size)
+        z = pred_result["latent_dist"].rsample([self.L])
+        z = z.view(self.L * batch_size, self.latent_size)
 
-            x = self.prior.rsample([self.L * batch_size * self.latent_size])
-            x = x.view(self.L * batch_size, self.latent_size)
+        x = self.prior.rsample([self.L * batch_size * self.latent_size])
+        x = x.view(self.L * batch_size, self.latent_size)
 
-            mmd = self.compute_mmd(z, x)
+        mmd = self.compute_mmd(z, x)
 
-            loss = mmd - log_lik
+        loss = mmd - log_lik
 
-            return dict(loss=loss, kl=mmd, recon_loss=log_lik, **pred_result)
+        return dict(loss=loss, kl=mmd, recon_loss=log_lik, **pred_result)
 
     def predict(self, x):
 

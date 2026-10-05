@@ -101,9 +101,8 @@ class BaseThresholder(BaseEstimator, metaclass=abc.ABCMeta):
         if self.thresh_ is None:
             return self.eval(X)
 
-        else:
-            X = self._data_setup(X)
-            return cut(X, self.thresh_)
+        X = self._data_setup(X)
+        return cut(X, self.thresh_)
 
     def __sklearn_is_fitted__(self):
         """Check fitted status and return a Boolean value."""

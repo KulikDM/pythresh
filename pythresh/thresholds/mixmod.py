@@ -2,7 +2,7 @@ from itertools import combinations
 
 import numpy as np
 import scipy.optimize as opt
-import scipy.stats as stats
+from scipy import stats
 from scipy.special import digamma
 
 from .base import BaseThresholder

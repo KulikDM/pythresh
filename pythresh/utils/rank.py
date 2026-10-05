@@ -1,9 +1,9 @@
 from importlib.resources import as_file, files
 
 import numpy as np
-import scipy.stats as stats
 import xgboost as xgb
 from pyod.utils.utility import standardizer
+from scipy import stats
 from sklearn.metrics import calinski_harabasz_score
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.utils import check_array

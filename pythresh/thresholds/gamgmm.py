@@ -191,7 +191,7 @@ class GAMGMM(BaseThresholder):
                     print("Optimal hyperparameters were found")
                 break
 
-            elif self.verbose:
+            if self.verbose:
                 print("Optimal hyperparameters were not found. Rerunning the model on a new seed.")
 
             itv += 1

@@ -25,7 +25,7 @@ except ImportError:
 # -- Project information -----------------------------------------------------
 
 project = "pythresh"
-copyright = "2022, D Kulik"
+copyright = "2022, D Kulik"  # noqa: A001
 author = "D Kulik"
 
 # The short X.Y version

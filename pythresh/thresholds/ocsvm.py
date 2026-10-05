@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.stats as stats
+from scipy import stats
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.linear_model import RidgeCV, SGDOneClassSVM
 from sklearn.metrics import mean_squared_error
