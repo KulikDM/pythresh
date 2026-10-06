@@ -68,9 +68,17 @@ class DUMMY(BaseThresholder):
 
         eps = np.finfo(decision.dtype).eps
         perc = (1 - self.contam) * 100
-        limit = np.percentile(decision, perc) + eps
 
-        self._check_threshold(limit)
+        # ``decision`` is min-max normalized to [0, 1], so the percentile is
+        # also in [0, 1]. Adding eps keeps the top-scoring point an inlier at
+        # contam=0 (``cut`` uses ``decision >= limit``). Validate the in-range
+        # percentile rather than the eps-bumped limit; otherwise the maximum
+        # score (percentile == 1) makes limit == 1 + eps and trips a spurious
+        # "threshold outside the range" warning on every default call.
+        perc_val = np.percentile(decision, perc)
+        limit = perc_val + eps
+
+        self._check_threshold(perc_val)
 
         self.thresh_ = limit
 
